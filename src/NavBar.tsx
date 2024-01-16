@@ -9,12 +9,6 @@ export const Navbar: React.FC = () => (
       <li className="hover:text-gray-300">
         <a href="/about">About</a>
       </li>
-      <li className="hover:text-gray-300">
-        <a href="/services">Services</a>
-      </li>
-      <li className="hover:text-gray-300">
-        <a href="/contact">Contact</a>
-      </li>
     </ul>
   </nav>
 )
