@@ -2,12 +2,17 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
-import { App } from './components/App.tsx'
+import { HomePage } from './components/HomePage.tsx'
+import { CapturePage } from './components/CapturePage.tsx'
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
+    element: <HomePage />,
+  },
+  {
+    path: '/capture',
+    element: <CapturePage />,
   },
 ])
 

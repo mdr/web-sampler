@@ -1,9 +1,27 @@
 import { unawaited } from './utils.ts'
 
+export enum AudioRecorderState {
+  IDLE = 'IDLE',
+  RECORDING = 'RECORDING',
+}
+
+export type AudioRecorderStateChangeListener = (state: AudioRecorderState) => void
+
 export class AudioRecorder {
   private mediaRecorder: MediaRecorder | undefined = undefined
   private audioContext: AudioContext | undefined = undefined
   private audioChunks: Blob[] = []
+  private state: AudioRecorderState = AudioRecorderState.IDLE
+  private stateChangeListeners: AudioRecorderStateChangeListener[] = []
+
+  addStateChangeListener = (listener: AudioRecorderStateChangeListener): void => {
+    this.stateChangeListeners.push(listener)
+  }
+
+  private fireStateChangeListeners = (state: AudioRecorderState): void => {
+    console.log('State changed:', state)
+    this.stateChangeListeners.forEach((listener) => listener(state))
+  }
 
   private handleStreamInactive = () => {
     console.log('Stream inactive')
@@ -16,6 +34,7 @@ export class AudioRecorder {
   }
 
   private handleMediaRecorderStop = () => {
+    this.setState(AudioRecorderState.IDLE)
     console.log('Stopped recording')
     const audioBlob = new Blob(this.audioChunks, { type: this.mediaRecorder?.mimeType })
     console.log(audioBlob)
@@ -31,7 +50,16 @@ export class AudioRecorder {
     this.mediaRecorder = undefined
   }
 
+  private setState = (state: AudioRecorderState) => {
+    this.state = state
+    this.fireStateChangeListeners(state)
+  }
+
   startRecording = async (): Promise<void> => {
+    if (this.state !== AudioRecorderState.IDLE) {
+      throw new Error('Already recording')
+    }
+    this.setState(AudioRecorderState.RECORDING)
     try {
       const stream = await navigator.mediaDevices.getDisplayMedia({ audio: true })
       stream.getAudioTracks().forEach((track) => track.stop())
@@ -47,6 +75,7 @@ export class AudioRecorder {
       this.mediaRecorder = mediaRecorder
     } catch (error) {
       console.error('Error setting up recording:', error)
+      this.setState(AudioRecorderState.IDLE)
       throw error
     }
   }
