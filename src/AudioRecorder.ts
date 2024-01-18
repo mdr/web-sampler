@@ -1,23 +1,8 @@
-enum AudioRecorderStateType {
-  INACTIVE = 'INACTIVE',
-  RECORDING = 'RECORDING',
-}
-
-interface InactiveAudioRecorderState {
-  type: AudioRecorderStateType.INACTIVE
-}
-
-interface RecordingAudioRecorderState {
-  type: AudioRecorderStateType.RECORDING
-  mediaRecorder: MediaRecorder
-  audioChunks: Blob[]
-}
-
-export type AudioRecorderState = InactiveAudioRecorderState | RecordingAudioRecorderState
+import { unawaited } from './utils.ts'
 
 export class AudioRecorder {
-  // private state: AudioRecorderState = { type: AudioRecorderStateType.INACTIVE }
   private mediaRecorder: MediaRecorder | undefined = undefined
+  private audioContext: AudioContext | undefined = undefined
   private audioChunks: Blob[] = []
 
   private handleStreamInactive = () => {
@@ -35,11 +20,21 @@ export class AudioRecorder {
     const audioBlob = new Blob(this.audioChunks, { type: this.mediaRecorder?.mimeType })
     console.log(audioBlob)
     this.audioChunks = []
+    if (this.audioContext) {
+      unawaited(this.audioContext.close())
+    }
+    this.audioContext = undefined
+    if (this.mediaRecorder) {
+      this.mediaRecorder.removeEventListener('dataavailable', this.handleDataAvailable)
+      this.mediaRecorder.removeEventListener('stop', this.handleMediaRecorderStop)
+    }
+    this.mediaRecorder = undefined
   }
 
   startRecording = async (): Promise<void> => {
     try {
       const stream = await navigator.mediaDevices.getDisplayMedia({ audio: true })
+      stream.getAudioTracks().forEach((track) => track.stop())
       stream.addEventListener('inactive', this.handleStreamInactive)
       const audioContext = new AudioContext()
       const source = audioContext.createMediaStreamSource(stream)
