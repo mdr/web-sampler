@@ -1,8 +1,8 @@
 import { Navbar } from './NavBar.tsx'
-import { PrimaryButton } from './PrimaryButton.tsx'
 import { AudioRecorder, AudioRecorderState } from '../AudioRecorder.ts'
 import { useEffect, useRef, useState } from 'react'
 import { unawaited } from '../utils.ts'
+import { RecordButton } from './RecordButton.tsx'
 
 export const CapturePage = () => {
   const audioRecorderRef = useRef<AudioRecorder | undefined>()
@@ -25,9 +25,9 @@ export const CapturePage = () => {
     <>
       <Navbar />
       <div className="flex items-baseline space-x-4 p-4">
-        <PrimaryButton onPress={sampleAudio} enabled={audioRecorderState === AudioRecorderState.IDLE}>
+        <RecordButton onPress={sampleAudio} enabled={audioRecorderState === AudioRecorderState.IDLE}>
           Sample
-        </PrimaryButton>
+        </RecordButton>
       </div>
     </>
   )
