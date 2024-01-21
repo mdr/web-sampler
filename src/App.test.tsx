@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom/vitest'
 import { App } from './components/App'
 
-test('loads and displays greeting', async () => {
+test('has capture screen', async () => {
   render(<App />)
 
   await userEvent.click(screen.getByText('Capture'))
