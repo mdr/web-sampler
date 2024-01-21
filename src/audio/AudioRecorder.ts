@@ -12,6 +12,7 @@ export type RecordingCompleteListener = (audio: Blob) => void
 export class AudioRecorder {
   private mediaRecorder: MediaRecorder | undefined = undefined
   private audioContext: AudioContext | undefined = undefined
+  private getVolume: (() => number) | undefined = undefined
   private audioChunks: Blob[] = []
   private state: AudioRecorderState = AudioRecorderState.IDLE
   private stateChangeListeners: AudioRecorderStateChangeListener[] = []
@@ -68,6 +69,10 @@ export class AudioRecorder {
     this.fireStateChangeListeners(state)
   }
 
+  public get volume(): number {
+    return this.getVolume?.() ?? 0
+  }
+
   startRecording = async (): Promise<void> => {
     if (this.state !== AudioRecorderState.IDLE) {
       throw new Error('Already recording')
@@ -92,10 +97,11 @@ export class AudioRecorder {
         }
         return sum / dataArray.length
       }
-      setInterval(() => {
-        const volume = getVolume()
-        console.log('Volume:', volume)
-      }, 300)
+      this.getVolume = getVolume
+      // setInterval(() => {
+      //   const volume = getVolume()
+      //   console.log('Volume:', volume)
+      // }, 300)
       const destination = audioContext.createMediaStreamDestination()
       source.connect(destination)
       const mediaRecorder = new MediaRecorder(destination.stream)
