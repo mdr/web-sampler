@@ -22,6 +22,7 @@ export const CapturePage = () => {
     audioRecorder.addStateChangeListener(setAudioRecorderState)
     audioRecorder.addRecordingCompleteListener(handleRecordingComplete)
     audioRecorderRef.current = audioRecorder
+    return audioRecorder.dispose
   }, [])
 
   useRequestAnimationFrame(() => {
