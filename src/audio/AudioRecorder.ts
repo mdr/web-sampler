@@ -98,10 +98,6 @@ export class AudioRecorder {
         return sum / dataArray.length
       }
       this.getVolume = getVolume
-      // setInterval(() => {
-      //   const volume = getVolume()
-      //   console.log('Volume:', volume)
-      // }, 300)
       const destination = audioContext.createMediaStreamDestination()
       source.connect(destination)
       const mediaRecorder = new MediaRecorder(destination.stream)
@@ -114,6 +110,13 @@ export class AudioRecorder {
       this.setState(AudioRecorderState.IDLE)
       throw error
     }
+  }
+
+  stopRecording = (): void => {
+    if (this.state !== AudioRecorderState.RECORDING) {
+      throw new Error('Not recording')
+    }
+    this.mediaRecorder?.stop()
   }
   // https://github.com/yusitnikov/fix-webm-duration
   // https://github.com/buynao/webm-duration-fix
