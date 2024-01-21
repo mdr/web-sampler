@@ -2,7 +2,7 @@ import { expect, test } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom/vitest'
-import { App } from './components/App'
+import { App } from '../../src/components/App'
 
 test('has capture screen', async () => {
   render(<App />)
