@@ -3592,7 +3592,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^8.55.0":
+"eslint@npm:^8.56.0":
   version: 8.56.0
   resolution: "eslint@npm:8.56.0"
   dependencies:
@@ -5410,12 +5410,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:3.2.2":
-  version: 3.2.2
-  resolution: "prettier@npm:3.2.2"
+"prettier@npm:3.2.4":
+  version: 3.2.4
+  resolution: "prettier@npm:3.2.4"
   bin:
     prettier: bin/prettier.cjs
-  checksum: e84d0d2a4ce2b88ee1636904effbdf68b59da63d9f887128f2ed5382206454185432e7c0a9578bc4308bc25d099cfef47fd0b9c211066777854e23e65e34044d
+  checksum: 88dfeb78ac6096522c9a5b81f1413d875f568420d9bb6a5e5103527912519b993f2bcdcac311fcff5718d5869671d44e4f85827d3626f3a6ce32b9abc65d88e0
   languageName: node
   linkType: hard
 
@@ -5622,27 +5622,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:^6.21.2":
-  version: 6.21.2
-  resolution: "react-router-dom@npm:6.21.2"
+"react-router-dom@npm:^6.21.3":
+  version: 6.21.3
+  resolution: "react-router-dom@npm:6.21.3"
   dependencies:
     "@remix-run/router": "npm:1.14.2"
-    react-router: "npm:6.21.2"
+    react-router: "npm:6.21.3"
   peerDependencies:
     react: ">=16.8"
     react-dom: ">=16.8"
-  checksum: 4719098a544da213450b0383cb58de959dc4dd690c90b12efc0771a9915a26b0508c12ee8b52c072fb38b4cb8ea192684f9e5ae49559b2131d085baeab108999
+  checksum: 1bea7bf17eb148461a7a99c9314e5ccc662ae00f563e29c16038e0b1b40aefb7381685f21289df07ad2295087a783c897b4e841ed12b07cd9a0829274a224231
   languageName: node
   linkType: hard
 
-"react-router@npm:6.21.2":
-  version: 6.21.2
-  resolution: "react-router@npm:6.21.2"
+"react-router@npm:6.21.3":
+  version: 6.21.3
+  resolution: "react-router@npm:6.21.3"
   dependencies:
     "@remix-run/router": "npm:1.14.2"
   peerDependencies:
     react: ">=16.8"
-  checksum: 1c923b75e4a6c5e820fd6f79254b77a34a7dd4f708c7c875535a81b331c9c84e8bd1b4f9615d3a84327f689dfd3239ccece1595ba71e09f63e4ae1964acae4fc
+  checksum: 66a0377a74ef2d298b9d617c02ba7a10e7e8b8be34b303068b5b5986f05e965037c51c0d45ea3a7967438f2dfde76c2c0f638cf19d3417fb408608ee9aee1668
   languageName: node
   linkType: hard
 
@@ -6365,7 +6365,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.2.2":
+"typescript@npm:^5.3.3":
   version: 5.3.3
   resolution: "typescript@npm:5.3.3"
   bin:
@@ -6375,7 +6375,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A^5.2.2#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@npm%3A^5.3.3#optional!builtin<compat/typescript>":
   version: 5.3.3
   resolution: "typescript@patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=e012d7"
   bin:
@@ -6540,7 +6540,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^5.0.0":
+"vite@npm:^5.0.0, vite@npm:^5.0.12":
   version: 5.0.12
   resolution: "vite@npm:5.0.12"
   dependencies:
@@ -6577,46 +6577,6 @@ __metadata:
   bin:
     vite: bin/vite.js
   checksum: c51b8e458851943c903fddde6973e720099ef8a5f364fb107cddade59c9e90f6d9ad98b61a7419cdfa0c6374236e10bff965d0c2d9e7b1790c68b874e5e7950c
-  languageName: node
-  linkType: hard
-
-"vite@npm:^5.0.8":
-  version: 5.0.11
-  resolution: "vite@npm:5.0.11"
-  dependencies:
-    esbuild: "npm:^0.19.3"
-    fsevents: "npm:~2.3.3"
-    postcss: "npm:^8.4.32"
-    rollup: "npm:^4.2.0"
-  peerDependencies:
-    "@types/node": ^18.0.0 || >=20.0.0
-    less: "*"
-    lightningcss: ^1.21.0
-    sass: "*"
-    stylus: "*"
-    sugarss: "*"
-    terser: ^5.4.0
-  dependenciesMeta:
-    fsevents:
-      optional: true
-  peerDependenciesMeta:
-    "@types/node":
-      optional: true
-    less:
-      optional: true
-    lightningcss:
-      optional: true
-    sass:
-      optional: true
-    stylus:
-      optional: true
-    sugarss:
-      optional: true
-    terser:
-      optional: true
-  bin:
-    vite: bin/vite.js
-  checksum: 74a3ddc6d43cf19cb6f827a53d77c481a07517a72b7d82a178df082012ad81ab5231a287a6dcc5471c0b2a5c8dd7e6ea8e1d62d268803057d0315729f09c5e33
   languageName: node
   linkType: hard
 
@@ -6756,19 +6716,19 @@ __metadata:
     "@typescript-eslint/parser": "npm:^6.14.0"
     "@vitejs/plugin-react": "npm:^4.2.1"
     autoprefixer: "npm:^10.4.16"
-    eslint: "npm:^8.55.0"
+    eslint: "npm:^8.56.0"
     eslint-plugin-react-hooks: "npm:^4.6.0"
     eslint-plugin-react-refresh: "npm:^0.4.5"
     jsdom: "npm:^24.0.0"
     postcss: "npm:^8.4.33"
-    prettier: "npm:3.2.2"
+    prettier: "npm:3.2.4"
     react: "npm:^18.2.0"
     react-aria-components: "npm:^1.0.1"
     react-dom: "npm:^18.2.0"
-    react-router-dom: "npm:^6.21.2"
+    react-router-dom: "npm:^6.21.3"
     tailwindcss: "npm:^3.4.1"
-    typescript: "npm:^5.2.2"
-    vite: "npm:^5.0.8"
+    typescript: "npm:^5.3.3"
+    vite: "npm:^5.0.12"
     vite-plugin-checker: "npm:^0.6.2"
     vitest: "npm:^1.2.1"
   languageName: unknown
