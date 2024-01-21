@@ -1,7 +1,7 @@
 import { Navbar } from './NavBar.tsx'
-import { AudioRecorder, AudioRecorderState } from '../AudioRecorder.ts'
+import { AudioRecorder, AudioRecorderState } from '../audio/AudioRecorder.ts'
 import { useEffect, useRef, useState } from 'react'
-import { unawaited } from '../utils.ts'
+import { unawaited } from '../utils/utils.ts'
 import { RecordButton } from './RecordButton.tsx'
 
 export const CapturePage = () => {

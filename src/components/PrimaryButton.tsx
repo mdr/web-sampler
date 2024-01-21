@@ -1,5 +1,5 @@
 import React from 'react'
-import { doNothing } from '../utils.ts'
+import { doNothing } from '../utils/utils.ts'
 
 interface PrimaryButtonProps {
   onPress?: () => void

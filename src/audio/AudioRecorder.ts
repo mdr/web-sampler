@@ -1,4 +1,4 @@
-import { unawaited } from './utils.ts'
+import { unawaited } from '../utils/utils.ts'
 
 export enum AudioRecorderState {
   IDLE = 'IDLE',

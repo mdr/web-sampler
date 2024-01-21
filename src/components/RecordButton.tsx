@@ -1,5 +1,5 @@
 import React from 'react'
-import { doNothing } from '../utils.ts'
+import { doNothing } from '../utils/utils.ts'
 
 import Icon from '@mdi/react'
 import { mdiMicrophone } from '@mdi/js'
