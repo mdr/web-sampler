@@ -7,12 +7,15 @@ export enum AudioRecorderState {
 
 export type AudioRecorderStateChangeListener = (state: AudioRecorderState) => void
 
+export type RecordingCompleteListener = (audio: Blob) => void
+
 export class AudioRecorder {
   private mediaRecorder: MediaRecorder | undefined = undefined
   private audioContext: AudioContext | undefined = undefined
   private audioChunks: Blob[] = []
   private state: AudioRecorderState = AudioRecorderState.IDLE
   private stateChangeListeners: AudioRecorderStateChangeListener[] = []
+  private recordingCompleteListeners: RecordingCompleteListener[] = []
 
   addStateChangeListener = (listener: AudioRecorderStateChangeListener): void => {
     this.stateChangeListeners.push(listener)
@@ -21,6 +24,15 @@ export class AudioRecorder {
   private fireStateChangeListeners = (state: AudioRecorderState): void => {
     console.log('State changed:', state)
     this.stateChangeListeners.forEach((listener) => listener(state))
+  }
+
+  addRecordingCompleteListener = (listener: RecordingCompleteListener): void => {
+    this.recordingCompleteListeners.push(listener)
+  }
+
+  private fireRecordingCompleteListeners = (audio: Blob): void => {
+    console.log('Recording complete')
+    this.recordingCompleteListeners.forEach((listener) => listener(audio))
   }
 
   private handleStreamInactive = () => {
@@ -38,6 +50,7 @@ export class AudioRecorder {
     console.log('Stopped recording')
     const audioBlob = new Blob(this.audioChunks, { type: this.mediaRecorder?.mimeType })
     console.log(audioBlob)
+    this.fireRecordingCompleteListeners(audioBlob)
     this.audioChunks = []
     if (this.audioContext) {
       unawaited(this.audioContext.close())
@@ -62,10 +75,27 @@ export class AudioRecorder {
     this.setState(AudioRecorderState.RECORDING)
     try {
       const stream = await navigator.mediaDevices.getDisplayMedia({ audio: true })
-      stream.getAudioTracks().forEach((track) => track.stop())
+      // stream.getAudioTracks().forEach((track) => track.stop())
       stream.addEventListener('inactive', this.handleStreamInactive)
       const audioContext = new AudioContext()
       const source = audioContext.createMediaStreamSource(stream)
+      const analyser = audioContext.createAnalyser()
+      analyser.fftSize = 256
+      source.connect(analyser)
+      const dataArray = new Uint8Array(analyser.frequencyBinCount)
+      const getVolume = (): number => {
+        analyser.getByteFrequencyData(dataArray)
+
+        let sum = 0
+        for (let i = 0; i < dataArray.length; i++) {
+          sum += dataArray[i]
+        }
+        return sum / dataArray.length
+      }
+      setInterval(() => {
+        const volume = getVolume()
+        console.log('Volume:', volume)
+      }, 300)
       const destination = audioContext.createMediaStreamDestination()
       source.connect(destination)
       const mediaRecorder = new MediaRecorder(destination.stream)
@@ -79,6 +109,7 @@ export class AudioRecorder {
       throw error
     }
   }
-
+  // https://github.com/yusitnikov/fix-webm-duration
+  // https://github.com/buynao/webm-duration-fix
   // this.mediaRecorder.stop()
 }
