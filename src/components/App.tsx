@@ -1,7 +1,7 @@
 import React from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { HomePage } from './HomePage.tsx'
-import { CapturePage } from './CapturePage.tsx'
+import { CapturePage } from './capture/CapturePage.tsx'
 
 const router = createBrowserRouter([
   {

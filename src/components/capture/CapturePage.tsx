@@ -1,10 +1,10 @@
-import { Navbar } from './NavBar.tsx'
-import { AudioRecorder, AudioRecorderState } from '../audio/AudioRecorder.ts'
+import { Navbar } from '../NavBar.tsx'
+import { AudioRecorder, AudioRecorderState } from '../../audio/AudioRecorder.ts'
 import { useEffect, useRef, useState } from 'react'
-import { unawaited } from '../utils/utils.ts'
+import { unawaited } from '../../utils/utils.ts'
 import { RecordButton } from './RecordButton.tsx'
 import { VolumeMeter } from './VolumeMeter.tsx'
-import { useRequestAnimationFrame } from '../utils/hooks.ts'
+import { useRequestAnimationFrame } from '../../utils/hooks.ts'
 import { StopButton } from './StopButton.tsx'
 
 export const CapturePage = () => {
