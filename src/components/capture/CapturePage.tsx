@@ -4,21 +4,23 @@ import { useEffect, useRef, useState } from 'react'
 import { unawaited } from '../../utils/utils.ts'
 import { RecordButton } from './RecordButton.tsx'
 import { VolumeMeter } from './VolumeMeter.tsx'
-import { useRequestAnimationFrame } from '../../utils/hooks.ts'
+import { useObjectUrlCreator, useRequestAnimationFrame } from '../../utils/hooks.ts'
 import { StopButton } from './StopButton.tsx'
+import { Url } from '../../utils/Url.ts'
 
 export const CapturePage = () => {
-  const audioRecorderRef = useRef<AudioRecorder | undefined>()
   const [audioRecorderState, setAudioRecorderState] = useState<AudioRecorderState>(AudioRecorderState.IDLE)
-  const [audioUrl, setAudioUrl] = useState<string | undefined>(undefined)
+  const [audioUrl, setAudioUrl] = useState<Url | undefined>(undefined)
   const [volume, setVolume] = useState<number>(0)
+  const createObjectUrl = useObjectUrlCreator()
+
   const handleRecordingComplete = (audio: Blob) => {
-    const url = URL.createObjectURL(audio)
-    setAudioUrl(url)
+    setAudioUrl(createObjectUrl(audio))
   }
 
+  const audioRecorderRef = useRef<AudioRecorder>(new AudioRecorder())
   useEffect(() => {
-    const audioRecorder = new AudioRecorder()
+    const audioRecorder = audioRecorderRef.current
     audioRecorder.addStateChangeListener(setAudioRecorderState)
     audioRecorder.addRecordingCompleteListener(handleRecordingComplete)
     audioRecorderRef.current = audioRecorder
@@ -26,25 +28,16 @@ export const CapturePage = () => {
   }, [])
 
   useRequestAnimationFrame(() => {
-    const audioRecorder = audioRecorderRef.current
-    if (audioRecorder) {
-      setVolume(audioRecorder.volume)
-    }
+    setVolume(audioRecorderRef.current.volume)
   })
 
   const handleRecordButtonPressed = () => {
     setAudioUrl(undefined)
-    const audioRecorder = audioRecorderRef.current
-    if (audioRecorder) {
-      unawaited(audioRecorder.startRecording())
-    }
+    unawaited(audioRecorderRef.current.startRecording())
   }
 
   const handleStopButtonPressed = () => {
-    const audioRecorder = audioRecorderRef.current
-    if (audioRecorder) {
-      audioRecorder.stopRecording()
-    }
+    audioRecorderRef.current.stopRecording()
   }
 
   return (
