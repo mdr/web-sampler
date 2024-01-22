@@ -1,14 +1,10 @@
 import { MountFunction } from '../types.ts'
 import { HomePageObject } from './HomePageObject.ts'
-import { App, AppProps } from '../../../components/App.tsx'
 import { test } from '@playwright/experimental-ct-react'
-import { defaultAudioRecorderFactory } from '../../../audio/AudioRecorder.ts'
+import { TestApp } from '../TestApp.tsx'
 
-export const launchApp = (
-  mount: MountFunction,
-  { audioRecorderFactory = defaultAudioRecorderFactory }: Partial<AppProps> = {},
-): Promise<HomePageObject> =>
+export const launchApp = (mount: MountFunction): Promise<HomePageObject> =>
   test.step('launchApp', async () => {
-    const mountResult = await mount(<App audioRecorderFactory={audioRecorderFactory} />)
+    const mountResult = await mount(<TestApp />)
     return new HomePageObject(mountResult)
   })

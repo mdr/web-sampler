@@ -20,9 +20,11 @@ export const CapturePage = () => {
 
   const handleRecordingComplete = (audio: Blob) => setAudioUrl(createObjectUrl(audio))
 
-  const audioRecorderRef = useRef<IAudioRecorder>(audioRecorderFactory())
+  const audioRecorder = audioRecorderFactory()
+  const audioRecorderRef = useRef<IAudioRecorder>(audioRecorder)
   useEffect(() => {
     const audioRecorder = audioRecorderRef.current
+    console.log('audioRecorder 2', audioRecorder)
     audioRecorder.addStateChangeListener(setAudioRecorderState)
     audioRecorder.addRecordingCompleteListener(handleRecordingComplete)
     return audioRecorder.dispose
@@ -50,7 +52,7 @@ export const CapturePage = () => {
           </RecordButton>
         )}
         {audioRecorderState === AudioRecorderState.RECORDING && (
-          <StopButton data-testid={CapturePageTestIds.stopButton} onPress={handleStopButtonPressed}>
+          <StopButton testId={CapturePageTestIds.stopButton} onPress={handleStopButtonPressed}>
             Stop
           </StopButton>
         )}

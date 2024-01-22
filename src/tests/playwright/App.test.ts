@@ -7,5 +7,5 @@ test('recording audio from the Capture page should work', async ({ mount }) => {
   const capturePage = await homePage.navbar.clickCapture()
 
   await capturePage.pressRecordButton()
-  // await capturePage.pressStopButton()
+  await capturePage.pressStopButton()
 })
