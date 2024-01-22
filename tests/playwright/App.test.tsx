@@ -1,9 +1,12 @@
-import { expect, test } from '@playwright/experimental-ct-react'
-import { App } from '../../src/components/App'
+import { test } from '@playwright/experimental-ct-react'
+import { launchApp } from './pageObjects/launchApp'
 
 test.use({ viewport: { width: 500, height: 500 } })
 
-test('should work', async ({ mount }) => {
-  const component = await mount(<App />)
-  await expect(component).toContainText('Capture')
+test('navigating to the Capture page should work', async ({ mount }) => {
+  const homePage = await launchApp(mount)
+
+  const capturePage = await homePage.clickNavbarCaptureLink()
+
+  await capturePage.expectContainsText('Record')
 })

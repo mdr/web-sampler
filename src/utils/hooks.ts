@@ -29,9 +29,9 @@ export const useObjectUrlCreator = (): ((blob: Blob) => Url) => {
       URL.revokeObjectURL(objectUrl)
     }
   })
-  return (blob: Blob) => {
+  return useCallback((blob: Blob) => {
     const objectUrl = Url(URL.createObjectURL(blob))
     objectUrls.current.push(objectUrl)
     return objectUrl
-  }
+  }, [])
 }

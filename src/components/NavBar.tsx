@@ -1,7 +1,6 @@
-import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-export const Navbar: React.FC = () => (
+export const Navbar = () => (
   <nav className="bg-gray-800 text-white p-4">
     <ul className="flex items-baseline space-x-4">
       <li className="text-xl hover:text-gray-300">
@@ -9,6 +8,7 @@ export const Navbar: React.FC = () => (
       </li>
       <li>
         <NavLink
+          data-testid={Navbar.testIds.capture}
           to="/capture"
           className={({ isActive }) => (isActive ? 'font-bold text-white' : 'hover:text-gray-300')}
         >
@@ -18,3 +18,7 @@ export const Navbar: React.FC = () => (
     </ul>
   </nav>
 )
+
+Navbar.testIds = {
+  capture: 'NavBar.capture',
+}

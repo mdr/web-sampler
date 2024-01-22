@@ -14,16 +14,13 @@ export const CapturePage = () => {
   const [volume, setVolume] = useState<number>(0)
   const createObjectUrl = useObjectUrlCreator()
 
-  const handleRecordingComplete = (audio: Blob) => {
-    setAudioUrl(createObjectUrl(audio))
-  }
+  const handleRecordingComplete = (audio: Blob) => setAudioUrl(createObjectUrl(audio))
 
   const audioRecorderRef = useRef<AudioRecorder>(new AudioRecorder())
   useEffect(() => {
     const audioRecorder = audioRecorderRef.current
     audioRecorder.addStateChangeListener(setAudioRecorderState)
     audioRecorder.addRecordingCompleteListener(handleRecordingComplete)
-    audioRecorderRef.current = audioRecorder
     return audioRecorder.dispose
   }, [])
 
