@@ -1,3 +1,5 @@
+import { TestId } from '../utils/types/TestId.ts'
+
 export const NavbarTestIds = {
-  capture: 'Navbar.capture',
+  capture: TestId('Navbar.capture'),
 }

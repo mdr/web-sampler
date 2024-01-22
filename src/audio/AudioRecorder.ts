@@ -1,19 +1,17 @@
 import { unawaited } from '../utils/utils.ts'
+import {
+  AudioRecorderState,
+  AudioRecorderStateChangeListener,
+  IAudioRecorder,
+  RecordingCompleteListener,
+} from './IAudioRecorder.ts'
+import { Option } from '../utils/types/Option.ts'
 
-export enum AudioRecorderState {
-  IDLE = 'IDLE',
-  RECORDING = 'RECORDING',
-}
-
-export type AudioRecorderStateChangeListener = (state: AudioRecorderState) => void
-
-export type RecordingCompleteListener = (audio: Blob) => void
-
-export class AudioRecorder {
-  private mediaRecorder: MediaRecorder | undefined = undefined
-  private audioContext: AudioContext | undefined = undefined
-  private mediaStream: MediaStream | undefined = undefined
-  private getVolume: (() => number) | undefined = undefined
+export class AudioRecorder implements IAudioRecorder {
+  private mediaRecorder: Option<MediaRecorder> = undefined
+  private audioContext: Option<AudioContext> = undefined
+  private mediaStream: Option<MediaStream> = undefined
+  private getVolume: Option<() => number> = undefined
   private audioChunks: Blob[] = []
   private state: AudioRecorderState = AudioRecorderState.IDLE
   private stateChangeListeners: AudioRecorderStateChangeListener[] = []
@@ -148,3 +146,5 @@ export class AudioRecorder {
   // https://github.com/buynao/webm-duration-fix
   // this.mediaRecorder.stop()
 }
+
+export const defaultAudioRecorderFactory = (): IAudioRecorder => new AudioRecorder()

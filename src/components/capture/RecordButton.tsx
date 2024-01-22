@@ -3,9 +3,10 @@ import { doNothing } from '../../utils/utils.ts'
 
 import Icon from '@mdi/react'
 import { mdiMicrophone } from '@mdi/js'
+import { TestId } from '../../utils/types/TestId.ts'
 
 interface RecordButtonProps {
-  testId?: string
+  testId?: TestId
   onPress?: () => void
   enabled?: boolean
   children: React.ReactNode

@@ -1,12 +1,11 @@
 import { test } from '@playwright/experimental-ct-react'
 import { launchApp } from './pageObjects/launchApp.tsx'
 
-test.use({ viewport: { width: 500, height: 500 } })
-
-test('navigating to the Capture page should work', async ({ mount }) => {
+test('recording audio from the Capture page should work', async ({ mount }) => {
   const homePage = await launchApp(mount)
 
   const capturePage = await homePage.navbar.clickCapture()
 
   await capturePage.pressRecordButton()
+  // await capturePage.pressStopButton()
 })

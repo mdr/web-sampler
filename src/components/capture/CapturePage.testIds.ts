@@ -1,4 +1,6 @@
+import { TestId } from '../../utils/types/TestId.ts'
+
 export const CapturePageTestIds = {
-  recordButton: 'CapturePage.recordButton',
-  stopButton: 'CapturePage.stopButton',
+  recordButton: TestId('CapturePage.recordButton'),
+  stopButton: TestId('CapturePage.stopButton'),
 }

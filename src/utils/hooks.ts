@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react'
-import { Url } from './Url.ts'
+import { Url } from './types/Url.ts'
 import useUnmount from 'beautiful-react-hooks/useUnmount'
 
 export const useRequestAnimationFrame = (callback: () => void) => {
