@@ -9,4 +9,5 @@ test('navigating to the Capture page should work', async ({ mount }) => {
   const capturePage = await homePage.clickNavbarCaptureLink()
 
   await capturePage.expectContainsText('Record')
+  // await capturePage.pressRecordButton()
 })

@@ -1,4 +1,4 @@
-import { Navbar } from './NavBar.tsx'
+import { Navbar } from './Navbar.tsx'
 
 export const HomePage = () => (
   <>

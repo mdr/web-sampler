@@ -1,5 +1,4 @@
 import { test } from '@playwright/experimental-ct-react'
-import { Navbar } from '../../../src/components/NavBar'
 import { CapturePage } from './CapturePage'
 import { MountResult } from '../types'
 
@@ -8,7 +7,7 @@ export class HomePage {
 
   clickNavbarCaptureLink = (): Promise<CapturePage> =>
     test.step('Homepage.clickNavbarCaptureLink', async () => {
-      await this.mountResult.getByTestId(Navbar.testIds.capture).click()
+      await this.mountResult.getByTestId('Navbar.capture').click()
       return new CapturePage(this.mountResult)
     })
 }

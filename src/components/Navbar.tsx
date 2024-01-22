@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom'
+import { NavbarTestIds } from './NavbarTestIds.ts'
 
 export const Navbar = () => (
   <nav className="bg-gray-800 text-white p-4">
@@ -8,7 +9,7 @@ export const Navbar = () => (
       </li>
       <li>
         <NavLink
-          data-testid={Navbar.testIds.capture}
+          data-testid={NavbarTestIds.capture}
           to="/capture"
           className={({ isActive }) => (isActive ? 'font-bold text-white' : 'hover:text-gray-300')}
         >
@@ -18,7 +19,3 @@ export const Navbar = () => (
     </ul>
   </nav>
 )
-
-Navbar.testIds = {
-  capture: 'NavBar.capture',
-}
