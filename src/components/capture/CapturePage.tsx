@@ -44,7 +44,7 @@ export const CapturePage = () => {
       <Navbar />
       <div className="flex items-center space-x-4 p-4">
         {audioRecorderState === AudioRecorderState.IDLE && (
-          <RecordButton data-testid={CapturePageTestIds.recordButton} onPress={handleRecordButtonPressed}>
+          <RecordButton testId={CapturePageTestIds.recordButton} onPress={handleRecordButtonPressed}>
             Record
           </RecordButton>
         )}

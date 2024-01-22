@@ -1,6 +1,6 @@
-import { MountFunction } from '../types'
-import { HomePage } from './HomePage'
-import { App } from '../../../src/components/App'
+import { MountFunction } from '../types.ts'
+import { HomePage } from './HomePage.ts'
+import { App } from '../../../components/App.tsx'
 import { test } from '@playwright/experimental-ct-react'
 
 export const launchApp = async (mount: MountFunction): Promise<HomePage> =>
