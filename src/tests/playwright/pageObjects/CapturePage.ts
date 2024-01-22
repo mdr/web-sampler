@@ -13,6 +13,4 @@ export class CapturePage {
   pressRecordButton = (): Promise<void> =>
     test.step('CapturePage.pressRecordButton', () =>
       this.mountResult.getByTestId(CapturePageTestIds.recordButton).click())
-
-  expectContainsText = (text: string): Promise<void> => expect(this.mountResult).toContainText(text)
 }

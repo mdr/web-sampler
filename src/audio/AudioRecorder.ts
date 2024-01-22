@@ -52,7 +52,7 @@ export class AudioRecorder {
     this.fireStateChangeListeners(state)
   }
 
-  public get volume(): number {
+  get volume(): number {
     return this.getVolume?.() ?? 0
   }
 
