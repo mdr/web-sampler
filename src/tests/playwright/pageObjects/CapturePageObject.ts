@@ -18,8 +18,16 @@ export class CapturePageObject extends PageObject {
   setVolume = (volume: number): Promise<void> =>
     this.step('setVolume', () => this.page.evaluate((volume) => window.testHooks.setVolume(volume), volume))
 
-  waitForVolumeMeterToShowLevel = (volume: number): Promise<void> =>
+  completeRecording = (): Promise<void> =>
+    this.step('completeRecording', () => this.page.evaluate(() => window.testHooks.completeRecording()))
+
+  expectVolumeMeterToShowLevel = (volume: number): Promise<void> =>
     this.step('waitForVolumeMeterToShowLevel', async () => {
-      await this.page.waitForSelector(`[data-testid="${VolumeMeterTestIds.bar}"][data-volume="${volume}"]`)
+      await expect(this.mountResult.getByTestId(VolumeMeterTestIds.bar)).toHaveAttribute('data-volume', `${volume}`)
+    })
+
+  expectAudioElementToBeShown = (): Promise<void> =>
+    this.step('expectAudioElementToBeShown', async () => {
+      await expect(this.mountResult.getByTestId(CapturePageTestIds.audioElement)).toBeVisible()
     })
 }

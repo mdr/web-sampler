@@ -19,7 +19,12 @@ export const CapturePage = () => {
   const [volume, setVolume] = useState<number>(0)
   const createObjectUrl = useObjectUrlCreator()
 
-  const handleRecordingComplete = useCallback((audio: Blob) => setAudioUrl(createObjectUrl(audio)), [createObjectUrl])
+  const handleRecordingComplete = useCallback(
+    (audio: Blob) => {
+      setAudioUrl(createObjectUrl(audio))
+    },
+    [createObjectUrl],
+  )
 
   useEffect(() => {
     audioRecorder.addStateChangeListener(setAudioRecorderState)
@@ -61,7 +66,7 @@ export const CapturePage = () => {
             Stop
           </StopButton>
         )}
-        <div>{audioUrl && <audio src={audioUrl} controls />}</div>
+        <div>{audioUrl && <audio data-testId={CapturePageTestIds.audioElement} src={audioUrl} controls />}</div>
         {audioRecorderState === AudioRecorderState.RECORDING && <VolumeMeter volume={volume} />}
       </div>
     </>
