@@ -1,4 +1,4 @@
-import { mockAudioRecorderFactory } from './mocks/MockAudioRecorder.ts'
 import { App } from '../../components/App.tsx'
+import { MockAudioRecorder } from './mocks/MockAudioRecorder.ts'
 
-export const TestApp = () => <App audioRecorderFactory={mockAudioRecorderFactory} />
+export const TestApp = () => <App audioRecorder={new MockAudioRecorder()} />

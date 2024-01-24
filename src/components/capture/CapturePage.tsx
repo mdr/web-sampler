@@ -1,5 +1,5 @@
 import { Navbar } from '../Navbar.tsx'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { unawaited } from '../../utils/utils.ts'
 import { RecordButton } from './RecordButton.tsx'
 import { VolumeMeter } from './VolumeMeter.tsx'
@@ -7,40 +7,45 @@ import { useObjectUrlCreator, useRequestAnimationFrame } from '../../utils/hooks
 import { StopButton } from './StopButton.tsx'
 import { Url } from '../../utils/types/Url.ts'
 import { CapturePageTestIds } from './CapturePage.testIds.ts'
-import { AudioRecorderState, IAudioRecorder } from '../../audio/IAudioRecorder.ts'
+import { AudioRecorderState } from '../../audio/IAudioRecorder.ts'
 import { Option } from '../../utils/types/Option.ts'
-import { useAudioRecorderFactory } from '../../audio/AudioRecorderFactoryContext.ts'
+import { useAudioRecorder } from '../../audio/AudioRecorderContext.ts'
+import useUnmount from 'beautiful-react-hooks/useUnmount'
 
 export const CapturePage = () => {
-  const [audioRecorderState, setAudioRecorderState] = useState<AudioRecorderState>(AudioRecorderState.IDLE)
+  const audioRecorder = useAudioRecorder()
+  const [audioRecorderState, setAudioRecorderState] = useState<AudioRecorderState>(audioRecorder.state)
   const [audioUrl, setAudioUrl] = useState<Option<Url>>(undefined)
   const [volume, setVolume] = useState<number>(0)
-  const audioRecorderFactory = useAudioRecorderFactory()
   const createObjectUrl = useObjectUrlCreator()
 
-  const handleRecordingComplete = (audio: Blob) => setAudioUrl(createObjectUrl(audio))
+  const handleRecordingComplete = useCallback((audio: Blob) => setAudioUrl(createObjectUrl(audio)), [createObjectUrl])
 
-  const audioRecorder = audioRecorderFactory()
-  const audioRecorderRef = useRef<IAudioRecorder>(audioRecorder)
   useEffect(() => {
-    const audioRecorder = audioRecorderRef.current
-    console.log('audioRecorder 2', audioRecorder)
     audioRecorder.addStateChangeListener(setAudioRecorderState)
     audioRecorder.addRecordingCompleteListener(handleRecordingComplete)
-    return audioRecorder.dispose
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    return () => {
+      audioRecorder.removeStateChangeListener(setAudioRecorderState)
+      audioRecorder.removeRecordingCompleteListener(handleRecordingComplete)
+    }
+  }, [audioRecorder, handleRecordingComplete])
+
+  useUnmount(() => {
+    if (audioRecorder.state === AudioRecorderState.RECORDING) {
+      audioRecorder.stopRecording()
+    }
+  })
 
   useRequestAnimationFrame(() => {
-    setVolume(audioRecorderRef.current.volume)
+    setVolume(audioRecorder.volume)
   })
 
   const handleRecordButtonPressed = () => {
     setAudioUrl(undefined)
-    unawaited(audioRecorderRef.current.startRecording())
+    unawaited(audioRecorder.startRecording())
   }
 
-  const handleStopButtonPressed = () => audioRecorderRef.current.stopRecording()
+  const handleStopButtonPressed = () => audioRecorder.stopRecording()
 
   return (
     <>

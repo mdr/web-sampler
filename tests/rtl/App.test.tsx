@@ -3,10 +3,10 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom/vitest'
 import { App } from '../../src/components/App'
-import { defaultAudioRecorderFactory } from '../../src/audio/AudioRecorder'
+import { MockAudioRecorder } from '../../src/tests/playwright/mocks/MockAudioRecorder'
 
 test('has capture screen', async () => {
-  render(<App audioRecorderFactory={defaultAudioRecorderFactory} />)
+  render(<App audioRecorder={new MockAudioRecorder()} />)
 
   await userEvent.click(screen.getByText('Capture'))
 

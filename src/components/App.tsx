@@ -2,8 +2,8 @@ import React from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { HomePage } from './HomePage.tsx'
 import { CapturePage } from './capture/CapturePage.tsx'
-import { AudioRecorderFactoryContext } from '../audio/AudioRecorderFactoryContext.ts'
-import { AudioRecorderFactory } from '../audio/IAudioRecorder.ts'
+import { AudioRecorderContext } from '../audio/AudioRecorderContext.ts'
+import { IAudioRecorder } from '../audio/IAudioRecorder.ts'
 
 const router = createBrowserRouter([
   {
@@ -16,14 +16,14 @@ const router = createBrowserRouter([
   },
 ])
 
-export const App = ({ audioRecorderFactory }: AppProps) => (
+export const App = ({ audioRecorder }: AppProps) => (
   <React.StrictMode>
-    <AudioRecorderFactoryContext.Provider value={audioRecorderFactory}>
+    <AudioRecorderContext.Provider value={audioRecorder}>
       <RouterProvider router={router} />
-    </AudioRecorderFactoryContext.Provider>
+    </AudioRecorderContext.Provider>
   </React.StrictMode>
 )
 
 export interface AppProps {
-  audioRecorderFactory: AudioRecorderFactory
+  audioRecorder: IAudioRecorder
 }

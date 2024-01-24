@@ -13,12 +13,16 @@ export class AudioRecorder implements IAudioRecorder {
   private mediaStream: Option<MediaStream> = undefined
   private getVolume: Option<() => number> = undefined
   private audioChunks: Blob[] = []
-  private state: AudioRecorderState = AudioRecorderState.IDLE
+  private _state: AudioRecorderState = AudioRecorderState.IDLE
   private stateChangeListeners: AudioRecorderStateChangeListener[] = []
   private recordingCompleteListeners: RecordingCompleteListener[] = []
 
   addStateChangeListener = (listener: AudioRecorderStateChangeListener): void => {
     this.stateChangeListeners.push(listener)
+  }
+
+  removeStateChangeListener = (listenerToRemove: AudioRecorderStateChangeListener): void => {
+    this.stateChangeListeners = this.stateChangeListeners.filter((listener) => listener !== listenerToRemove)
   }
 
   private fireStateChangeListeners = (state: AudioRecorderState): void => {
@@ -28,6 +32,12 @@ export class AudioRecorder implements IAudioRecorder {
 
   addRecordingCompleteListener = (listener: RecordingCompleteListener): void => {
     this.recordingCompleteListeners.push(listener)
+  }
+
+  removeRecordingCompleteListener = (listenerToRemove: RecordingCompleteListener): void => {
+    this.recordingCompleteListeners = this.recordingCompleteListeners.filter(
+      (listener) => listener !== listenerToRemove,
+    )
   }
 
   private fireRecordingCompleteListeners = (audio: Blob): void => {
@@ -46,7 +56,7 @@ export class AudioRecorder implements IAudioRecorder {
   }
 
   private setState = (state: AudioRecorderState) => {
-    this.state = state
+    this._state = state
     this.fireStateChangeListeners(state)
   }
 
@@ -54,8 +64,12 @@ export class AudioRecorder implements IAudioRecorder {
     return this.getVolume?.() ?? 0
   }
 
+  get state(): AudioRecorderState {
+    return this._state
+  }
+
   startRecording = async (): Promise<void> => {
-    if (this.state !== AudioRecorderState.IDLE) {
+    if (this._state !== AudioRecorderState.IDLE) {
       throw new Error('Already recording')
     }
     this.setState(AudioRecorderState.RECORDING)
@@ -93,52 +107,32 @@ export class AudioRecorder implements IAudioRecorder {
 
   private handleMediaRecorderStop = () => {
     this.setState(AudioRecorderState.IDLE)
-    console.log('Stopped recording')
+    console.log('Recording finished')
     const audioBlob = new Blob(this.audioChunks, { type: this.mediaRecorder?.mimeType })
     console.log(audioBlob)
     this.fireRecordingCompleteListeners(audioBlob)
     this.audioChunks = []
+
     if (this.audioContext) {
       unawaited(this.audioContext.close())
     }
     this.audioContext = undefined
-    if (this.mediaRecorder) {
-      this.mediaRecorder.removeEventListener('dataavailable', this.handleDataAvailable)
-      this.mediaRecorder.removeEventListener('stop', this.handleMediaRecorderStop)
-    }
-    this.mediaRecorder = undefined
-    this.mediaStream = undefined
-  }
-
-  dispose = () => {
-    console.log('Disposing')
-    this.stateChangeListeners = []
-    this.recordingCompleteListeners = []
-
-    this.setState(AudioRecorderState.IDLE)
 
     if (this.mediaRecorder) {
       this.mediaRecorder.removeEventListener('dataavailable', this.handleDataAvailable)
       this.mediaRecorder.removeEventListener('stop', this.handleMediaRecorderStop)
-      this.mediaRecorder.stop()
     }
     this.mediaRecorder = undefined
 
     this.mediaStream?.getTracks().forEach((track) => track.stop())
     this.mediaStream = undefined
 
-    if (this.audioContext) {
-      unawaited(this.audioContext.close())
-    }
-    this.audioContext = undefined
+    this.getVolume = undefined
   }
 
   stopRecording = (): void => {
-    if (this.state !== AudioRecorderState.RECORDING) {
+    if (this._state !== AudioRecorderState.RECORDING) {
       throw new Error('Not recording')
-    }
-    if (this.mediaStream) {
-      this.mediaStream.getTracks().forEach((track) => track.stop())
     }
     this.mediaRecorder?.stop()
   }
@@ -146,5 +140,3 @@ export class AudioRecorder implements IAudioRecorder {
   // https://github.com/buynao/webm-duration-fix
   // this.mediaRecorder.stop()
 }
-
-export const defaultAudioRecorderFactory = (): IAudioRecorder => new AudioRecorder()

@@ -7,12 +7,19 @@ import {
 
 export class MockAudioRecorder implements IAudioRecorder {
   volume: number = 0
+  state: AudioRecorderState = AudioRecorderState.IDLE
 
   private stateChangeListeners: AudioRecorderStateChangeListener[] = []
   private recordingCompleteListeners: RecordingCompleteListener[] = []
 
   addStateChangeListener = (listener: AudioRecorderStateChangeListener): void => {
     this.stateChangeListeners.push(listener)
+  }
+
+  removeRecordingCompleteListener = (listenerToRemove: RecordingCompleteListener): void => {
+    this.recordingCompleteListeners = this.recordingCompleteListeners.filter(
+      (listener) => listener !== listenerToRemove,
+    )
   }
 
   private fireStateChangeListeners = (state: AudioRecorderState): void => {
@@ -23,6 +30,10 @@ export class MockAudioRecorder implements IAudioRecorder {
     this.recordingCompleteListeners.push(listener)
   }
 
+  removeStateChangeListener = (listenerToRemove: AudioRecorderStateChangeListener): void => {
+    this.stateChangeListeners = this.stateChangeListeners.filter((listener) => listener !== listenerToRemove)
+  }
+
   fireRecordingCompleteListeners = (audio: Blob): void => {
     this.recordingCompleteListeners.forEach((listener) => listener(audio))
   }
@@ -30,6 +41,7 @@ export class MockAudioRecorder implements IAudioRecorder {
   startRecording = async (): Promise<void> => {
     this.setState(AudioRecorderState.RECORDING)
   }
+
   stopRecording = (): void => {
     this.setState(AudioRecorderState.IDLE)
   }
@@ -37,8 +49,4 @@ export class MockAudioRecorder implements IAudioRecorder {
   setState = (state: AudioRecorderState) => {
     this.fireStateChangeListeners(state)
   }
-
-  dispose = () => {}
 }
-
-export const mockAudioRecorderFactory = () => new MockAudioRecorder()
