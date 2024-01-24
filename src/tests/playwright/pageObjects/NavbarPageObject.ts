@@ -1,14 +1,11 @@
-import { test } from '@playwright/experimental-ct-react'
 import { CapturePageObject } from './CapturePageObject.ts'
-import { MountResult } from '../types.ts'
 import { NavbarTestIds } from '../../../components/NavbarTestIds.ts'
+import { PageObject } from './PageObject.ts'
 
-export class NavbarPageObject {
-  constructor(private readonly mountResult: MountResult) {}
-
+export class NavbarPageObject extends PageObject {
   clickCapture = (): Promise<CapturePageObject> =>
-    test.step('NavbarPageObject.clickCapture', async () => {
-      await this.mountResult.getByTestId(NavbarTestIds.capture).click()
+    this.step('clickCapture', async () => {
+      await this.clickByTestId(NavbarTestIds.capture)
       return CapturePageObject.verifyOpen(this.mountResult)
     })
 }
