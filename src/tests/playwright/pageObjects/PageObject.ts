@@ -5,6 +5,10 @@ import { TestId } from '../../../utils/types/TestId.ts'
 export class PageObject {
   constructor(protected readonly mountResult: MountResult) {}
 
+  protected get page() {
+    return this.mountResult.page()
+  }
+  
   protected step = <T>(name: string, body: () => T | Promise<T>): Promise<T> =>
     test.step(`${this.constructor.name}.${name}`, body)
 
