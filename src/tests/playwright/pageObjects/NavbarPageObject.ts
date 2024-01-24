@@ -5,7 +5,7 @@ import { PageObject } from './PageObject.ts'
 export class NavbarPageObject extends PageObject {
   clickCapture = (): Promise<CapturePageObject> =>
     this.step('clickCapture', async () => {
-      await this.clickByTestId(NavbarTestIds.capture)
+      await this.click(NavbarTestIds.capture)
       return CapturePageObject.verifyOpen(this.mountResult)
     })
 }

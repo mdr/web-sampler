@@ -8,5 +8,5 @@ export class PageObject {
   protected step = <T>(name: string, body: () => T | Promise<T>): Promise<T> =>
     test.step(`${this.constructor.name}.${name}`, body)
 
-  protected clickByTestId = (testId: TestId): Promise<void> => this.mountResult.getByTestId(testId).click()
+  protected click = (testId: TestId): Promise<void> => this.mountResult.getByTestId(testId).click()
 }
