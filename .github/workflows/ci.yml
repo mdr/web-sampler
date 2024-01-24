@@ -28,6 +28,9 @@ jobs:
       - name: Run tests
         run: yarn test
 
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
       - name: Run component tests
         run: yarn test-ct
 
