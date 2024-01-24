@@ -6,7 +6,8 @@ export interface TestAppProps {}
 
 export const TestApp: FC<TestAppProps> = () => {
   const audioRecorder = new MockAudioRecorder()
-  window.setVolume = async (volume: number): Promise<void> => {
+  window.testHooks = window.testHooks || {}
+  window.testHooks.setVolume = async (volume: number): Promise<void> => {
     audioRecorder.volume = volume
   }
   return <App audioRecorder={audioRecorder} />

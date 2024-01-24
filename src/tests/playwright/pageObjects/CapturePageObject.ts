@@ -16,7 +16,7 @@ export class CapturePageObject extends PageObject {
   pressStopButton = (): Promise<void> => this.step('pressStopButton', () => this.click(CapturePageTestIds.stopButton))
 
   setVolume = (volume: number): Promise<void> =>
-    this.step('setVolume', () => this.page.evaluate((volume) => window.setVolume(volume), volume))
+    this.step('setVolume', () => this.page.evaluate((volume) => window.testHooks.setVolume(volume), volume))
 
   waitForVolumeMeterToShowLevel = (volume: number): Promise<void> =>
     this.step('waitForVolumeMeterToShowLevel', async () => {

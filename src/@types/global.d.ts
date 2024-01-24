@@ -1,6 +1,8 @@
+import { WindowTestHooks } from '../tests/playwright/WindowTestHooks.ts'
+
 declare global {
   interface Window {
-    setVolume: (volume: number) => Promise<void>
+    testHooks: WindowTestHooks
   }
 }
 
