@@ -1,4 +1,3 @@
-import { unawaited } from '../utils/utils.ts'
 import {
   AudioRecorderState,
   AudioRecorderStateChangeListener,
@@ -9,13 +8,14 @@ import { Option } from '../utils/types/Option.ts'
 
 export class AudioRecorder implements IAudioRecorder {
   private mediaRecorder: Option<MediaRecorder> = undefined
-  private audioContext: Option<AudioContext> = undefined
   private mediaStream: Option<MediaStream> = undefined
   private getVolume: Option<() => number> = undefined
   private audioChunks: Blob[] = []
   private _state: AudioRecorderState = AudioRecorderState.IDLE
   private stateChangeListeners: AudioRecorderStateChangeListener[] = []
   private recordingCompleteListeners: RecordingCompleteListener[] = []
+
+  constructor(private readonly audioContext: AudioContext) {}
 
   addStateChangeListener = (listener: AudioRecorderStateChangeListener): void => {
     this.stateChangeListeners.push(listener)
@@ -76,9 +76,8 @@ export class AudioRecorder implements IAudioRecorder {
     try {
       this.mediaStream = await navigator.mediaDevices.getDisplayMedia({ audio: true })
       this.mediaStream.addEventListener('inactive', this.handleStreamInactive)
-      const audioContext = new AudioContext()
-      const source = audioContext.createMediaStreamSource(this.mediaStream)
-      const analyser = audioContext.createAnalyser()
+      const source = this.audioContext.createMediaStreamSource(this.mediaStream)
+      const analyser = this.audioContext.createAnalyser()
       analyser.fftSize = 256
       source.connect(analyser)
       const dataArray = new Uint8Array(analyser.frequencyBinCount)
@@ -91,7 +90,7 @@ export class AudioRecorder implements IAudioRecorder {
         }
         return sum / dataArray.length
       }
-      const destination = audioContext.createMediaStreamDestination()
+      const destination = this.audioContext.createMediaStreamDestination()
       source.connect(destination)
       const mediaRecorder = new MediaRecorder(destination.stream)
       mediaRecorder.addEventListener('dataavailable', this.handleDataAvailable)
@@ -112,11 +111,6 @@ export class AudioRecorder implements IAudioRecorder {
     console.log(audioBlob)
     this.fireRecordingCompleteListeners(audioBlob)
     this.audioChunks = []
-
-    if (this.audioContext) {
-      unawaited(this.audioContext.close())
-    }
-    this.audioContext = undefined
 
     if (this.mediaRecorder) {
       this.mediaRecorder.removeEventListener('dataavailable', this.handleDataAvailable)

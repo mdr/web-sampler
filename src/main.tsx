@@ -3,4 +3,5 @@ import { App } from './components/App.tsx'
 import './main.css'
 import { AudioRecorder } from './audio/AudioRecorder.ts'
 
-ReactDOM.createRoot(document.getElementById('root')!).render(<App audioRecorder={new AudioRecorder()} />)
+const audioRecorder = new AudioRecorder(new AudioContext())
+ReactDOM.createRoot(document.getElementById('root')!).render(<App audioRecorder={audioRecorder} />)
