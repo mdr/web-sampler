@@ -1,4 +1,4 @@
-import { test } from '@playwright/experimental-ct-react'
+import { expect, test } from '@playwright/experimental-ct-react'
 import { MountResult } from '../types.ts'
 import { TestId } from '../../../utils/types/TestId.ts'
 
@@ -8,9 +8,11 @@ export class PageObject {
   protected get page() {
     return this.mountResult.page()
   }
-  
+
   protected step = <T>(name: string, body: () => T | Promise<T>): Promise<T> =>
     test.step(`${this.constructor.name}.${name}`, body)
 
   protected click = (testId: TestId): Promise<void> => this.mountResult.getByTestId(testId).click()
+
+  public checkScreenshot = (name: string) => expect(this.mountResult).toHaveScreenshot(`${name}.png`)
 }
