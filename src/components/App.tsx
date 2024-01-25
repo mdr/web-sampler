@@ -1,11 +1,11 @@
 import React from 'react'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createHashRouter, RouterProvider } from 'react-router-dom'
 import { HomePage } from './HomePage.tsx'
 import { CapturePage } from './capture/CapturePage.tsx'
 import { AudioRecorderContext } from '../audio/AudioRecorderContext.ts'
 import { IAudioRecorder } from '../audio/IAudioRecorder.ts'
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: '/',
     element: <HomePage />,
