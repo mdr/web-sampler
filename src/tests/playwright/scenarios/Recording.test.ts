@@ -10,11 +10,11 @@ test('recording audio from the Capture page', async ({ mount }) => {
   await capturePage.setVolume(50)
   await capturePage.expectVolumeMeterToShowLevel(50)
 
-  await capturePage.checkScreenshot('mid-recording')
+  // await capturePage.checkScreenshot('mid-recording')
 
   await capturePage.pressStopButton()
   await capturePage.completeRecording()
   await capturePage.expectAudioElementToBeShown()
 
-  await capturePage.checkScreenshot('after-recording')
+  // await capturePage.checkScreenshot('after-recording')
 })

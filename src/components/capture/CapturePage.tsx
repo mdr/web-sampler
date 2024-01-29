@@ -66,7 +66,7 @@ export const CapturePage = () => {
             Stop
           </StopButton>
         )}
-        <div>{audioUrl && <audio data-testId={CapturePageTestIds.audioElement} src={audioUrl} controls />}</div>
+        <div>{audioUrl && <audio data-testid={CapturePageTestIds.audioElement} src={audioUrl} controls />}</div>
         {audioRecorderState === AudioRecorderState.RECORDING && <VolumeMeter volume={volume} />}
       </div>
     </>
