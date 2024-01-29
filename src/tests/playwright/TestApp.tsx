@@ -1,7 +1,7 @@
 import { App } from '../../components/App.tsx'
 import { MockAudioRecorder } from './mocks/MockAudioRecorder.ts'
 import { FC } from 'react'
-import audioUrl from '../../assets/captured-audio-example.webm'
+import { fetchBlob } from './testData/testBlob.ts'
 
 export interface TestAppProps {}
 
@@ -17,12 +17,4 @@ export const TestApp: FC<TestAppProps> = () => {
     },
   }
   return <App audioRecorder={audioRecorder} />
-}
-
-const fetchBlob = async (): Promise<Blob> => {
-  const response = await fetch(audioUrl)
-  if (!response.ok) {
-    throw new Error('Audio file could not be loaded')
-  }
-  return await response.blob()
 }
