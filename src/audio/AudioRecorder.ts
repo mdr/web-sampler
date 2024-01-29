@@ -11,6 +11,7 @@ export class AudioRecorder implements IAudioRecorder {
   private mediaStream: Option<MediaStream> = undefined
   private getVolume: Option<() => number> = undefined
   private audioChunks: Blob[] = []
+  private audioBuffers: AudioBuffer[] = []
   private _state: AudioRecorderState = AudioRecorderState.IDLE
   private stateChangeListeners: AudioRecorderStateChangeListener[] = []
   private recordingCompleteListeners: RecordingCompleteListener[] = []
@@ -75,6 +76,7 @@ export class AudioRecorder implements IAudioRecorder {
     this.setState(AudioRecorderState.RECORDING)
     try {
       this.mediaStream = await navigator.mediaDevices.getDisplayMedia({ audio: true })
+      await this.audioContext.resume()
       this.mediaStream.addEventListener('inactive', this.handleStreamInactive)
       const source = this.audioContext.createMediaStreamSource(this.mediaStream)
       const analyser = this.audioContext.createAnalyser()
@@ -90,6 +92,14 @@ export class AudioRecorder implements IAudioRecorder {
         }
         return sum / dataArray.length
       }
+
+      const scriptProcessor = this.audioContext.createScriptProcessor(4096, 1, 1)
+      scriptProcessor.addEventListener('audioprocess', (event) => {
+        this.audioBuffers.push(event.inputBuffer)
+      })
+      source.connect(scriptProcessor)
+      scriptProcessor.connect(this.audioContext.destination)
+
       const destination = this.audioContext.createMediaStreamDestination()
       source.connect(destination)
       const mediaRecorder = new MediaRecorder(destination.stream)
@@ -107,6 +117,9 @@ export class AudioRecorder implements IAudioRecorder {
   private handleMediaRecorderStop = () => {
     this.setState(AudioRecorderState.IDLE)
     console.log('Recording finished')
+    const combinedBuffer = this.combineAudioBuffers(this.audioBuffers)
+    console.log(combinedBuffer)
+    this.audioBuffers = []
     const audioBlob = new Blob(this.audioChunks, { type: this.mediaRecorder?.mimeType })
     console.log(audioBlob)
     this.fireRecordingCompleteListeners(audioBlob)
@@ -133,4 +146,27 @@ export class AudioRecorder implements IAudioRecorder {
   // https://github.com/yusitnikov/fix-webm-duration
   // https://github.com/buynao/webm-duration-fix
   // this.mediaRecorder.stop()
+
+  private combineAudioBuffers = (audioBuffers: AudioBuffer[]): Option<AudioBuffer> => {
+    if (audioBuffers.length === 0) {
+      return undefined
+    }
+    // Calculate the total length of the combined buffer
+    const totalLength = audioBuffers.reduce((acc, buffer) => acc + buffer.length, 0)
+
+    const numberOfChannels = audioBuffers[0].numberOfChannels
+    const sampleRate = audioBuffers[0].sampleRate
+    const combinedBuffer = this.audioContext.createBuffer(numberOfChannels, totalLength, sampleRate)
+
+    let offset = 0
+    audioBuffers.forEach((buffer) => {
+      for (let channel = 0; channel < numberOfChannels; channel++) {
+        const inputData = buffer.getChannelData(channel)
+        combinedBuffer.getChannelData(channel).set(inputData, offset)
+      }
+      offset += buffer.length
+    })
+
+    return combinedBuffer
+  }
 }

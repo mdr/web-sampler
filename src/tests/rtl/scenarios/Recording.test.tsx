@@ -5,7 +5,7 @@ import { App } from '../../../components/App.tsx'
 import { MockAudioRecorder } from '../../playwright/mocks/MockAudioRecorder.ts'
 import { HomePageObject } from './pageObjects/HomePageObject.tsx'
 
-test('has capture screen', async () => {
+test('recording audio from the Capture page', async () => {
   const audioRecorder = new MockAudioRecorder()
   render(<App audioRecorder={audioRecorder} />)
   const homePage = new HomePageObject({ audioRecorder })
