@@ -5,16 +5,16 @@ import {
   RecordingCompleteListener,
 } from './IAudioRecorder.ts'
 import { Option } from '../utils/types/Option.ts'
+import toWav from 'audiobuffer-to-wav'
 
 export class AudioRecorder implements IAudioRecorder {
-  private mediaRecorder: Option<MediaRecorder> = undefined
   private mediaStream: Option<MediaStream> = undefined
   private getVolume: Option<() => number> = undefined
-  private audioChunks: Blob[] = []
   private audioBuffers: AudioBuffer[] = []
   private _state: AudioRecorderState = AudioRecorderState.IDLE
   private stateChangeListeners: AudioRecorderStateChangeListener[] = []
   private recordingCompleteListeners: RecordingCompleteListener[] = []
+  private captureAudioNode: Option<ScriptProcessorNode> = undefined
 
   constructor(private readonly audioContext: AudioContext) {}
 
@@ -48,12 +48,7 @@ export class AudioRecorder implements IAudioRecorder {
 
   private handleStreamInactive = () => {
     console.log('Stream inactive')
-    this.mediaRecorder?.stop()
-  }
-
-  private handleDataAvailable = (event: BlobEvent) => {
-    console.log('Data available', event)
-    this.audioChunks.push(event.data)
+    this.stopRecording()
   }
 
   private setState = (state: AudioRecorderState) => {
@@ -67,6 +62,11 @@ export class AudioRecorder implements IAudioRecorder {
 
   get state(): AudioRecorderState {
     return this._state
+  }
+
+  private handleAudioProcess = (event: AudioProcessingEvent) => {
+    const audioBuffer = this.cloneAudioBuffer(event.inputBuffer)
+    this.audioBuffers.push(audioBuffer)
   }
 
   startRecording = async (): Promise<void> => {
@@ -93,20 +93,11 @@ export class AudioRecorder implements IAudioRecorder {
         return sum / dataArray.length
       }
 
-      const scriptProcessor = this.audioContext.createScriptProcessor(4096, 1, 1)
-      scriptProcessor.addEventListener('audioprocess', (event) => {
-        this.audioBuffers.push(event.inputBuffer)
-      })
-      source.connect(scriptProcessor)
-      scriptProcessor.connect(this.audioContext.destination)
-
-      const destination = this.audioContext.createMediaStreamDestination()
-      source.connect(destination)
-      const mediaRecorder = new MediaRecorder(destination.stream)
-      mediaRecorder.addEventListener('dataavailable', this.handleDataAvailable)
-      mediaRecorder.addEventListener('stop', this.handleMediaRecorderStop)
-      mediaRecorder.start()
-      this.mediaRecorder = mediaRecorder
+      const captureAudioNode = this.audioContext.createScriptProcessor(4096, 1, 1)
+      captureAudioNode.addEventListener('audioprocess', this.handleAudioProcess)
+      source.connect(captureAudioNode)
+      captureAudioNode.connect(this.audioContext.destination)
+      this.captureAudioNode = captureAudioNode
     } catch (error) {
       console.error('Error setting up recording:', error)
       this.setState(AudioRecorderState.IDLE)
@@ -114,35 +105,34 @@ export class AudioRecorder implements IAudioRecorder {
     }
   }
 
-  private handleMediaRecorderStop = () => {
+  stopRecording = (): void => {
+    if (this._state !== AudioRecorderState.RECORDING) {
+      throw new Error('Not recording')
+    }
     this.setState(AudioRecorderState.IDLE)
     console.log('Recording finished')
     const combinedBuffer = this.combineAudioBuffers(this.audioBuffers)
     console.log(combinedBuffer)
     this.audioBuffers = []
-    const audioBlob = new Blob(this.audioChunks, { type: this.mediaRecorder?.mimeType })
-    console.log(audioBlob)
-    this.fireRecordingCompleteListeners(audioBlob)
-    this.audioChunks = []
 
-    if (this.mediaRecorder) {
-      this.mediaRecorder.removeEventListener('dataavailable', this.handleDataAvailable)
-      this.mediaRecorder.removeEventListener('stop', this.handleMediaRecorderStop)
+    if (combinedBuffer !== undefined) {
+      const wavBlob = new Blob([toWav(combinedBuffer)], { type: 'audio/wav' })
+      this.fireRecordingCompleteListeners(wavBlob)
+      console.log(wavBlob)
     }
-    this.mediaRecorder = undefined
 
+    if (this.captureAudioNode) {
+      this.captureAudioNode.removeEventListener('audioprocess', this.handleAudioProcess)
+    }
+    this.captureAudioNode = undefined
+
+    this.mediaStream?.removeEventListener('inactive', this.handleStreamInactive)
     this.mediaStream?.getTracks().forEach((track) => track.stop())
     this.mediaStream = undefined
 
     this.getVolume = undefined
   }
 
-  stopRecording = (): void => {
-    if (this._state !== AudioRecorderState.RECORDING) {
-      throw new Error('Not recording')
-    }
-    this.mediaRecorder?.stop()
-  }
   // https://github.com/yusitnikov/fix-webm-duration
   // https://github.com/buynao/webm-duration-fix
   // this.mediaRecorder.stop()
@@ -168,5 +158,21 @@ export class AudioRecorder implements IAudioRecorder {
     })
 
     return combinedBuffer
+  }
+
+  private cloneAudioBuffer = (originalBuffer: AudioBuffer): AudioBuffer => {
+    const numberOfChannels = originalBuffer.numberOfChannels
+    const length = originalBuffer.length
+    const sampleRate = originalBuffer.sampleRate
+
+    const newBuffer = this.audioContext.createBuffer(numberOfChannels, length, sampleRate)
+
+    for (let channel = 0; channel < numberOfChannels; channel++) {
+      const originalData = originalBuffer.getChannelData(channel)
+      const newData = newBuffer.getChannelData(channel)
+      newData.set(originalData)
+    }
+
+    return newBuffer
   }
 }
