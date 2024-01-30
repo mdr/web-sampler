@@ -8,6 +8,7 @@ import { Option } from '../utils/types/Option.ts'
 import audioBufferToWav from 'audiobuffer-to-wav'
 import { AudioBufferUtils } from './AudioBufferUtils.ts'
 import workletUrl from './CapturingAudioWorkletProcessor.ts?url'
+import { CAPTURING_AUDIO_WORKLET_NAME, STOP_MESSAGE } from './CapturingAudioWorkletConstants.ts'
 
 export class AudioRecorder implements IAudioRecorder {
   private _state: AudioRecorderState = AudioRecorderState.IDLE
@@ -22,7 +23,6 @@ export class AudioRecorder implements IAudioRecorder {
 
   constructor(private readonly audioContext: AudioContext) {
     this.audioBufferUtils = new AudioBufferUtils(audioContext)
-    console.log(workletUrl)
   }
 
   addStateChangeListener = (listener: AudioRecorderStateChangeListener): void => {
@@ -98,7 +98,7 @@ export class AudioRecorder implements IAudioRecorder {
         return average(dataArray)
       }
 
-      const captureAudioWorkletNode = new AudioWorkletNode(this.audioContext, 'CapturingAudioWorkletProcessor')
+      const captureAudioWorkletNode = new AudioWorkletNode(this.audioContext, CAPTURING_AUDIO_WORKLET_NAME)
       source.connect(captureAudioWorkletNode)
       captureAudioWorkletNode.port.onmessage = this.handleWorkletMessage
       this.captureAudioWorkletNode = captureAudioWorkletNode
@@ -126,7 +126,7 @@ export class AudioRecorder implements IAudioRecorder {
 
     if (this.captureAudioWorkletNode) {
       this.captureAudioWorkletNode.port.onmessage = null
-      this.captureAudioWorkletNode.port.postMessage('stop')
+      this.captureAudioWorkletNode.port.postMessage(STOP_MESSAGE)
     }
     this.captureAudioWorkletNode = undefined
 

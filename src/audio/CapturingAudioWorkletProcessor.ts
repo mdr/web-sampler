@@ -1,10 +1,12 @@
+import { CAPTURING_AUDIO_WORKLET_NAME, STOP_MESSAGE } from './CapturingAudioWorkletConstants.ts'
+
 class CapturingAudioWorkletProcessor extends AudioWorkletProcessor {
   private active: boolean = true
 
   constructor() {
     super()
     this.port.onmessage = (event) => {
-      if (event.data === 'stop') {
+      if (event.data === STOP_MESSAGE) {
         this.active = false
       }
     }
@@ -26,4 +28,4 @@ class CapturingAudioWorkletProcessor extends AudioWorkletProcessor {
   }
 }
 
-registerProcessor('CapturingAudioWorkletProcessor', CapturingAudioWorkletProcessor)
+registerProcessor(CAPTURING_AUDIO_WORKLET_NAME, CapturingAudioWorkletProcessor)
