@@ -7,6 +7,7 @@ import {
 import { Option } from '../utils/types/Option.ts'
 import audioBufferToWav from 'audiobuffer-to-wav'
 import { AudioBufferUtils } from './AudioBufferUtils.ts'
+import workletUrl from './CapturingAudioWorkletProcessor.ts?url'
 
 export class AudioRecorder implements IAudioRecorder {
   private _state: AudioRecorderState = AudioRecorderState.IDLE
@@ -15,11 +16,13 @@ export class AudioRecorder implements IAudioRecorder {
   private audioBuffers: AudioBuffer[] = []
   private stateChangeListeners: AudioRecorderStateChangeListener[] = []
   private recordingCompleteListeners: RecordingCompleteListener[] = []
-  private captureAudioNode: Option<ScriptProcessorNode> = undefined
+  private captureAudioWorkletNode: Option<AudioWorkletNode> = undefined
+  private source: Option<MediaStreamAudioSourceNode> = undefined
   private readonly audioBufferUtils: AudioBufferUtils
 
   constructor(private readonly audioContext: AudioContext) {
     this.audioBufferUtils = new AudioBufferUtils(audioContext)
+    console.log(workletUrl)
   }
 
   addStateChangeListener = (listener: AudioRecorderStateChangeListener): void => {
@@ -68,8 +71,8 @@ export class AudioRecorder implements IAudioRecorder {
     return this._state
   }
 
-  private handleAudioProcess = (event: AudioProcessingEvent) => {
-    const audioBuffer = this.audioBufferUtils.cloneAudioBuffer(event.inputBuffer)
+  private handleWorkletMessage = (event: MessageEvent<Float32Array>) => {
+    const audioBuffer = this.audioBufferUtils.audioBufferFromFloat32Array(event.data)
     this.audioBuffers.push(audioBuffer)
   }
 
@@ -81,8 +84,10 @@ export class AudioRecorder implements IAudioRecorder {
     try {
       this.mediaStream = await navigator.mediaDevices.getDisplayMedia({ audio: true })
       await this.audioContext.resume()
+      await this.audioContext.audioWorklet.addModule(workletUrl)
       this.mediaStream.addEventListener('inactive', this.handleStreamInactive)
       const source = this.audioContext.createMediaStreamSource(this.mediaStream)
+      this.source = source
 
       const analyser = this.audioContext.createAnalyser()
       analyser.fftSize = 256
@@ -93,11 +98,10 @@ export class AudioRecorder implements IAudioRecorder {
         return average(dataArray)
       }
 
-      const captureAudioNode = this.audioContext.createScriptProcessor(4096, 1, 1)
-      captureAudioNode.addEventListener('audioprocess', this.handleAudioProcess)
-      source.connect(captureAudioNode)
-      captureAudioNode.connect(this.audioContext.destination)
-      this.captureAudioNode = captureAudioNode
+      const captureAudioWorkletNode = new AudioWorkletNode(this.audioContext, 'CapturingAudioWorkletProcessor')
+      source.connect(captureAudioWorkletNode)
+      captureAudioWorkletNode.port.onmessage = this.handleWorkletMessage
+      this.captureAudioWorkletNode = captureAudioWorkletNode
     } catch (error) {
       console.error('Error setting up recording:', error)
       this.setState(AudioRecorderState.IDLE)
@@ -116,10 +120,15 @@ export class AudioRecorder implements IAudioRecorder {
     if (combinedBuffer !== undefined) {
       this.fireRecordingCompleteListeners(this.makeWavBlob(combinedBuffer))
     }
-    if (this.captureAudioNode) {
-      this.captureAudioNode.removeEventListener('audioprocess', this.handleAudioProcess)
+
+    this.source?.disconnect()
+    this.source = undefined
+
+    if (this.captureAudioWorkletNode) {
+      this.captureAudioWorkletNode.port.onmessage = null
+      this.captureAudioWorkletNode.port.postMessage('stop')
     }
-    this.captureAudioNode = undefined
+    this.captureAudioWorkletNode = undefined
 
     this.mediaStream?.removeEventListener('inactive', this.handleStreamInactive)
     this.mediaStream?.getTracks().forEach((track) => track.stop())

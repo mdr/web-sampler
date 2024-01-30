@@ -41,4 +41,11 @@ export class AudioBufferUtils {
 
     return newBuffer
   }
+
+  audioBufferFromFloat32Array = (audioData: Float32Array): AudioBuffer => {
+    const audioBuffer = this.audioContext.createBuffer(1, audioData.length, this.audioContext.sampleRate)
+    const channelData = audioBuffer.getChannelData(0)
+    channelData.set(audioData)
+    return audioBuffer
+  }
 }
