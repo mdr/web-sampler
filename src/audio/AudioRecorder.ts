@@ -5,18 +5,22 @@ import {
   RecordingCompleteListener,
 } from './IAudioRecorder.ts'
 import { Option } from '../utils/types/Option.ts'
-import toWav from 'audiobuffer-to-wav'
+import audioBufferToWav from 'audiobuffer-to-wav'
+import { AudioBufferUtils } from './AudioBufferUtils.ts'
 
 export class AudioRecorder implements IAudioRecorder {
+  private _state: AudioRecorderState = AudioRecorderState.IDLE
   private mediaStream: Option<MediaStream> = undefined
   private getVolume: Option<() => number> = undefined
   private audioBuffers: AudioBuffer[] = []
-  private _state: AudioRecorderState = AudioRecorderState.IDLE
   private stateChangeListeners: AudioRecorderStateChangeListener[] = []
   private recordingCompleteListeners: RecordingCompleteListener[] = []
   private captureAudioNode: Option<ScriptProcessorNode> = undefined
+  private readonly audioBufferUtils: AudioBufferUtils
 
-  constructor(private readonly audioContext: AudioContext) {}
+  constructor(private readonly audioContext: AudioContext) {
+    this.audioBufferUtils = new AudioBufferUtils(audioContext)
+  }
 
   addStateChangeListener = (listener: AudioRecorderStateChangeListener): void => {
     this.stateChangeListeners.push(listener)
@@ -65,7 +69,7 @@ export class AudioRecorder implements IAudioRecorder {
   }
 
   private handleAudioProcess = (event: AudioProcessingEvent) => {
-    const audioBuffer = this.cloneAudioBuffer(event.inputBuffer)
+    const audioBuffer = this.audioBufferUtils.cloneAudioBuffer(event.inputBuffer)
     this.audioBuffers.push(audioBuffer)
   }
 
@@ -79,18 +83,14 @@ export class AudioRecorder implements IAudioRecorder {
       await this.audioContext.resume()
       this.mediaStream.addEventListener('inactive', this.handleStreamInactive)
       const source = this.audioContext.createMediaStreamSource(this.mediaStream)
+
       const analyser = this.audioContext.createAnalyser()
       analyser.fftSize = 256
       source.connect(analyser)
       const dataArray = new Uint8Array(analyser.frequencyBinCount)
       this.getVolume = (): number => {
         analyser.getByteFrequencyData(dataArray)
-
-        let sum = 0
-        for (let i = 0; i < dataArray.length; i++) {
-          sum += dataArray[i]
-        }
-        return sum / dataArray.length
+        return average(dataArray)
       }
 
       const captureAudioNode = this.audioContext.createScriptProcessor(4096, 1, 1)
@@ -111,16 +111,11 @@ export class AudioRecorder implements IAudioRecorder {
     }
     this.setState(AudioRecorderState.IDLE)
     console.log('Recording finished')
-    const combinedBuffer = this.combineAudioBuffers(this.audioBuffers)
-    console.log(combinedBuffer)
+    const combinedBuffer = this.audioBufferUtils.combineAudioBuffers(this.audioBuffers)
     this.audioBuffers = []
-
     if (combinedBuffer !== undefined) {
-      const wavBlob = new Blob([toWav(combinedBuffer)], { type: 'audio/wav' })
-      this.fireRecordingCompleteListeners(wavBlob)
-      console.log(wavBlob)
+      this.fireRecordingCompleteListeners(this.makeWavBlob(combinedBuffer))
     }
-
     if (this.captureAudioNode) {
       this.captureAudioNode.removeEventListener('audioprocess', this.handleAudioProcess)
     }
@@ -133,46 +128,14 @@ export class AudioRecorder implements IAudioRecorder {
     this.getVolume = undefined
   }
 
-  // https://github.com/yusitnikov/fix-webm-duration
-  // https://github.com/buynao/webm-duration-fix
-  // this.mediaRecorder.stop()
+  private makeWavBlob = (audioBuffer: AudioBuffer): Blob =>
+    new Blob([audioBufferToWav(audioBuffer)], { type: 'audio/wav' })
+}
 
-  private combineAudioBuffers = (audioBuffers: AudioBuffer[]): Option<AudioBuffer> => {
-    if (audioBuffers.length === 0) {
-      return undefined
-    }
-    // Calculate the total length of the combined buffer
-    const totalLength = audioBuffers.reduce((acc, buffer) => acc + buffer.length, 0)
-
-    const numberOfChannels = audioBuffers[0].numberOfChannels
-    const sampleRate = audioBuffers[0].sampleRate
-    const combinedBuffer = this.audioContext.createBuffer(numberOfChannels, totalLength, sampleRate)
-
-    let offset = 0
-    audioBuffers.forEach((buffer) => {
-      for (let channel = 0; channel < numberOfChannels; channel++) {
-        const inputData = buffer.getChannelData(channel)
-        combinedBuffer.getChannelData(channel).set(inputData, offset)
-      }
-      offset += buffer.length
-    })
-
-    return combinedBuffer
+const average = (dataArray: Uint8Array): number => {
+  let sum = 0
+  for (let i = 0; i < dataArray.length; i++) {
+    sum += dataArray[i]
   }
-
-  private cloneAudioBuffer = (originalBuffer: AudioBuffer): AudioBuffer => {
-    const numberOfChannels = originalBuffer.numberOfChannels
-    const length = originalBuffer.length
-    const sampleRate = originalBuffer.sampleRate
-
-    const newBuffer = this.audioContext.createBuffer(numberOfChannels, length, sampleRate)
-
-    for (let channel = 0; channel < numberOfChannels; channel++) {
-      const originalData = originalBuffer.getChannelData(channel)
-      const newData = newBuffer.getChannelData(channel)
-      newData.set(originalData)
-    }
-
-    return newBuffer
-  }
+  return sum / dataArray.length
 }
