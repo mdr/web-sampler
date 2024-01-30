@@ -13,7 +13,6 @@ class CapturingAudioWorkletProcessor extends AudioWorkletProcessor {
   }
 
   process(inputs: Float32Array[][], outputs: Float32Array[][]): boolean {
-    console.log('CapturingAudioWorkletProcessor.process')
     if (!this.active) {
       return false
     }
