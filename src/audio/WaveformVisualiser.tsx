@@ -8,23 +8,23 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({ audioBuf
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   const drawWaveform = useCallback(() => {
-    const canvas = canvasRef.current
+    const canvas = canvasRef.current ?? undefined
     if (!canvas) return
-    const ctx = canvas.getContext('2d')
+    const ctx = canvas.getContext('2d') ?? undefined
     if (!ctx) return
 
     const width = canvas.width
     const height = canvas.height
-    const channelData = audioBuffer.getChannelData(0) // Assuming mono audio
+    const channelData = audioBuffer.getChannelData(0)
     const bufferLength = audioBuffer.length
     const step = Math.ceil(bufferLength / width)
     const amp = height / 2
 
     ctx.clearRect(0, 0, width, height)
-    ctx.fillStyle = '#000'
+    ctx.fillStyle = '#fff'
     ctx.fillRect(0, 0, width, height)
     ctx.lineWidth = 1
-    ctx.strokeStyle = '#FFF'
+    ctx.strokeStyle = '#3b82f6'
     ctx.beginPath()
 
     for (let i = 0; i < width; i++) {
@@ -46,5 +46,5 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({ audioBuf
     drawWaveform()
   }, [audioBuffer, drawWaveform])
 
-  return <canvas ref={canvasRef} width="600" height="200"></canvas>
+  return <canvas className="border-2 border-gray-200" ref={canvasRef} width="600" height="200"></canvas>
 }
