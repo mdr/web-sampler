@@ -12,8 +12,7 @@ import { useAudioRecorder } from '../../audio/AudioRecorderContext.ts'
 import useUnmount from 'beautiful-react-hooks/useUnmount'
 import { Duration } from 'typed-duration'
 import { TimerId } from '../../utils/types/TimerId.ts'
-
-const MAX_RECORDING_DURATION = Duration.seconds.of(20)
+import { MAX_RECORDING_DURATION } from './captureConstants.ts'
 
 export const CapturePage = () => {
   const audioRecorder = useAudioRecorder()
