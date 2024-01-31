@@ -3,6 +3,7 @@ import { MountResult } from '../types.ts'
 import { CapturePageTestIds } from '../../../components/capture/CapturePage.testIds.ts'
 import { PageObject } from './PageObject.ts'
 import { VolumeMeterTestIds } from '../../../components/capture/VolumeMeter.testIds.ts'
+import { StartRecordingOutcome } from '../../../audio/IAudioRecorder.ts'
 
 export class CapturePageObject extends PageObject {
   static verifyOpen = async (mountResult: MountResult): Promise<CapturePageObject> => {
@@ -10,8 +11,15 @@ export class CapturePageObject extends PageObject {
     return new CapturePageObject(mountResult)
   }
 
-  pressRecordButton = (): Promise<void> =>
-    this.step('pressRecordButton', () => this.click(CapturePageTestIds.recordButton))
+  pressRecordButton = ({
+    outcome = StartRecordingOutcome.SUCCESS,
+  }: {
+    outcome?: StartRecordingOutcome
+  } = {}): Promise<void> =>
+    this.step('pressRecordButton', async () => {
+      await this.page.evaluate((outcome) => window.testHooks.setStartRecordingOutcome(outcome), outcome)
+      await this.click(CapturePageTestIds.recordButton)
+    })
 
   pressStopButton = (): Promise<void> => this.step('pressStopButton', () => this.click(CapturePageTestIds.stopButton))
 
@@ -34,4 +42,7 @@ export class CapturePageObject extends PageObject {
     this.step('expectAudioElementToBeShown', async () => {
       await expect(this.mountResult.getByTestId(CapturePageTestIds.audioElement)).toBeVisible()
     })
+
+  expectToastToBeShown = (message: string) =>
+    this.step('expectToastToBeShown', () => expect(this.mountResult.getByText(message)).toBeVisible())
 }

@@ -3,10 +3,12 @@ import {
   AudioRecorderStateChangeListener,
   IAudioRecorder,
   RecordingCompleteListener,
+  StartRecordingOutcome,
 } from '../../../audio/IAudioRecorder.ts'
 
 export class MockAudioRecorder implements IAudioRecorder {
   volume: number = 0
+  startRecordingOutcome: StartRecordingOutcome = StartRecordingOutcome.SUCCESS
   state: AudioRecorderState = AudioRecorderState.IDLE
   blob: Blob = new Blob()
 
@@ -39,9 +41,11 @@ export class MockAudioRecorder implements IAudioRecorder {
     this.recordingCompleteListeners.forEach((listener) => listener(audio))
   }
 
-  startRecording = async (): Promise<boolean> => {
-    this.setState(AudioRecorderState.RECORDING)
-    return true
+  startRecording = async (): Promise<StartRecordingOutcome> => {
+    if (this.startRecordingOutcome === StartRecordingOutcome.SUCCESS) {
+      this.setState(AudioRecorderState.RECORDING)
+    }
+    return this.startRecordingOutcome
   }
 
   stopRecording = (): void => {

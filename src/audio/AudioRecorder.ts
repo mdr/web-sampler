@@ -3,6 +3,7 @@ import {
   AudioRecorderStateChangeListener,
   IAudioRecorder,
   RecordingCompleteListener,
+  StartRecordingOutcome,
 } from './IAudioRecorder.ts'
 import { Option } from '../utils/types/Option.ts'
 import audioBufferToWav from 'audiobuffer-to-wav'
@@ -79,7 +80,7 @@ export class AudioRecorder implements IAudioRecorder {
     this.audioBuffers.push(audioBuffer)
   }
 
-  startRecording = async (): Promise<boolean> => {
+  startRecording = async (): Promise<StartRecordingOutcome> => {
     if (this._state !== AudioRecorderState.IDLE) {
       throw new Error('Already recording')
     }
@@ -95,13 +96,13 @@ export class AudioRecorder implements IAudioRecorder {
       })
     } catch (error) {
       console.error('Error setting up recording:', error)
-      return false
+      return StartRecordingOutcome.PERMISSION_DENIED
     }
 
     if (mediaStream.getAudioTracks().length === 0) {
       console.error('No audio track in media stream')
       mediaStream.getTracks().forEach((track) => track.stop())
-      return false
+      return StartRecordingOutcome.NO_AUDIO_TRACK
     }
 
     this.mediaStream = mediaStream
@@ -125,7 +126,7 @@ export class AudioRecorder implements IAudioRecorder {
     source.connect(captureAudioWorkletNode)
     captureAudioWorkletNode.port.onmessage = this.handleWorkletMessage
     this.captureAudioWorkletNode = captureAudioWorkletNode
-    return true
+    return StartRecordingOutcome.SUCCESS
   }
 
   stopRecording = (): void => {

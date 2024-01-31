@@ -1,6 +1,7 @@
 import { WindowTestHooks } from './WindowTestHooks.ts'
 import { MockAudioRecorder } from './mocks/MockAudioRecorder.ts'
 import { InstalledClock } from '@sinonjs/fake-timers'
+import { StartRecordingOutcome } from '../../audio/IAudioRecorder.ts'
 
 export class DefaultWindowTestHooks implements WindowTestHooks {
   constructor(
@@ -8,9 +9,14 @@ export class DefaultWindowTestHooks implements WindowTestHooks {
     private readonly clock: InstalledClock,
   ) {}
 
-  setVolume = async (volume: number): Promise<void> => {
+  setVolume = (volume: number): void => {
     this.audioRecorder.volume = volume
   }
+
+  setStartRecordingOutcome = (outcome: StartRecordingOutcome): void => {
+    this.audioRecorder.startRecordingOutcome = outcome
+  }
+
   clockNext = () => this.clock.next()
 
   clockTick = (millis: number): void => {

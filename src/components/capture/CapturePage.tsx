@@ -6,7 +6,7 @@ import { useObjectUrlCreator, useRequestAnimationFrame } from '../../utils/hooks
 import { StopButton } from './StopButton.tsx'
 import { Url } from '../../utils/types/Url.ts'
 import { CapturePageTestIds } from './CapturePage.testIds.ts'
-import { AudioRecorderState } from '../../audio/IAudioRecorder.ts'
+import { AudioRecorderState, StartRecordingOutcome } from '../../audio/IAudioRecorder.ts'
 import { Option } from '../../utils/types/Option.ts'
 import { useAudioRecorder } from '../../audio/AudioRecorderContext.ts'
 import useUnmount from 'beautiful-react-hooks/useUnmount'
@@ -55,12 +55,17 @@ export const CapturePage = () => {
   })
 
   const handleRecordButtonPressed = async (): Promise<void> => {
-    setAudioUrl(undefined)
-    const isRecording = await audioRecorder.startRecording()
-    if (isRecording) {
-      timerIdRef.current = setTimeout(() => audioRecorder.stopRecording(), MAX_RECORDING_DURATION.toMillis())
-    } else {
-      toast.error('Unable to start recording')
+    const outcome = await audioRecorder.startRecording()
+    switch (outcome) {
+      case StartRecordingOutcome.SUCCESS:
+        setAudioUrl(undefined)
+        timerIdRef.current = setTimeout(() => audioRecorder.stopRecording(), MAX_RECORDING_DURATION.toMillis())
+        break
+      case StartRecordingOutcome.PERMISSION_DENIED:
+        break
+      case StartRecordingOutcome.NO_AUDIO_TRACK:
+        toast.error('No audio available in selected input')
+        break
     }
   }
 

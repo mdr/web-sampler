@@ -3,6 +3,12 @@ export enum AudioRecorderState {
   RECORDING = 'RECORDING',
 }
 
+export enum StartRecordingOutcome {
+  SUCCESS = 'SUCCESS',
+  PERMISSION_DENIED = 'PERMISSION_DENIED',
+  NO_AUDIO_TRACK = 'NO_AUDIO_TRACK',
+}
+
 export type AudioRecorderStateChangeListener = (state: AudioRecorderState) => void
 
 export type RecordingCompleteListener = (audio: Blob) => void
@@ -12,7 +18,7 @@ export interface IAudioRecorder {
   removeStateChangeListener: (listener: AudioRecorderStateChangeListener) => void
   addRecordingCompleteListener: (listener: RecordingCompleteListener) => void
   removeRecordingCompleteListener: (listener: RecordingCompleteListener) => void
-  startRecording: () => Promise<boolean>
+  startRecording: () => Promise<StartRecordingOutcome>
   stopRecording: () => void
   state: AudioRecorderState
   volume: number
