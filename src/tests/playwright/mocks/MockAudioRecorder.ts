@@ -8,6 +8,7 @@ import {
 export class MockAudioRecorder implements IAudioRecorder {
   volume: number = 0
   state: AudioRecorderState = AudioRecorderState.IDLE
+  blob: Blob = new Blob()
 
   private stateChangeListeners: AudioRecorderStateChangeListener[] = []
   private recordingCompleteListeners: RecordingCompleteListener[] = []
@@ -45,6 +46,7 @@ export class MockAudioRecorder implements IAudioRecorder {
 
   stopRecording = (): void => {
     this.setState(AudioRecorderState.IDLE)
+    this.fireRecordingCompleteListeners(this.blob)
   }
 
   setState = (state: AudioRecorderState) => {

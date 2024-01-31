@@ -21,12 +21,13 @@ export class CapturePageObject extends PageObject {
       await this.page.evaluate(() => window.testHooks.clockNext())
     })
 
-  completeRecording = (): Promise<void> =>
-    this.step('completeRecording', () => this.page.evaluate(() => window.testHooks.completeRecording()))
-
   expectVolumeMeterToShowLevel = (volume: number): Promise<void> =>
     this.step('waitForVolumeMeterToShowLevel', async () => {
       await expect(this.mountResult.getByTestId(VolumeMeterTestIds.bar)).toHaveAttribute('data-volume', `${volume}`)
+    })
+  expectStopButtonToBeShown = (): Promise<void> =>
+    this.step('expectStopButtonToBeShown', async () => {
+      await expect(this.mountResult.getByTestId(CapturePageTestIds.stopButton)).toBeVisible()
     })
 
   expectAudioElementToBeShown = (): Promise<void> =>

@@ -1,3 +1,3 @@
-import { Duration, TimeDuration } from 'typed-duration'
+import { Duration } from 'luxon'
 
-export const MAX_RECORDING_DURATION: TimeDuration = Duration.seconds.of(20)
+export const MAX_RECORDING_DURATION: Duration = Duration.fromObject({ seconds: 20 })

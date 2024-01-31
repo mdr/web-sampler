@@ -10,7 +10,6 @@ import { AudioRecorderState } from '../../audio/IAudioRecorder.ts'
 import { Option } from '../../utils/types/Option.ts'
 import { useAudioRecorder } from '../../audio/AudioRecorderContext.ts'
 import useUnmount from 'beautiful-react-hooks/useUnmount'
-import { Duration } from 'typed-duration'
 import { TimerId } from '../../utils/types/TimerId.ts'
 import { MAX_RECORDING_DURATION } from './captureConstants.ts'
 
@@ -58,9 +57,7 @@ export const CapturePage = () => {
     setAudioUrl(undefined)
     const isRecording = await audioRecorder.startRecording()
     if (isRecording) {
-      timerIdRef.current = setTimeout(() => {
-        audioRecorder.stopRecording()
-      }, Duration.milliseconds.from(MAX_RECORDING_DURATION))
+      timerIdRef.current = setTimeout(() => audioRecorder.stopRecording(), MAX_RECORDING_DURATION.toMillis())
     }
   }
 
