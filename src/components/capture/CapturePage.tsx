@@ -1,6 +1,5 @@
 import { Navbar } from '../Navbar.tsx'
-import { useCallback, useEffect, useState } from 'react'
-import { unawaited } from '../../utils/utils.ts'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { RecordButton } from './RecordButton.tsx'
 import { VolumeMeter } from './VolumeMeter.tsx'
 import { useObjectUrlCreator, useRequestAnimationFrame } from '../../utils/hooks.ts'
@@ -11,6 +10,9 @@ import { AudioRecorderState } from '../../audio/IAudioRecorder.ts'
 import { Option } from '../../utils/types/Option.ts'
 import { useAudioRecorder } from '../../audio/AudioRecorderContext.ts'
 import useUnmount from 'beautiful-react-hooks/useUnmount'
+import { Duration } from 'typed-duration'
+
+const MAX_RECORDING_DURATION = Duration.seconds.of(20)
 
 export const CapturePage = () => {
   const audioRecorder = useAudioRecorder()
@@ -18,10 +20,14 @@ export const CapturePage = () => {
   const [audioUrl, setAudioUrl] = useState<Option<Url>>(undefined)
   const [volume, setVolume] = useState<number>(0)
   const createObjectUrl = useObjectUrlCreator()
+  const timerIdRef = useRef<Option<TimerId>>()
 
   const handleRecordingComplete = useCallback(
     (audio: Blob) => {
       setAudioUrl(createObjectUrl(audio))
+      if (timerIdRef.current) {
+        clearTimeout(timerIdRef.current)
+      }
     },
     [createObjectUrl],
   )
@@ -39,15 +45,23 @@ export const CapturePage = () => {
     if (audioRecorder.state === AudioRecorderState.RECORDING) {
       audioRecorder.stopRecording()
     }
+    if (timerIdRef.current) {
+      clearTimeout(timerIdRef.current)
+    }
   })
 
   useRequestAnimationFrame(() => {
     setVolume(audioRecorder.volume)
   })
 
-  const handleRecordButtonPressed = () => {
+  const handleRecordButtonPressed = async (): Promise<void> => {
     setAudioUrl(undefined)
-    unawaited(audioRecorder.startRecording())
+    const isRecording = await audioRecorder.startRecording()
+    if (isRecording) {
+      timerIdRef.current = setTimeout(() => {
+        audioRecorder.stopRecording()
+      }, Duration.milliseconds.from(MAX_RECORDING_DURATION))
+    }
   }
 
   const handleStopButtonPressed = () => audioRecorder.stopRecording()

@@ -12,7 +12,7 @@ export interface IAudioRecorder {
   removeStateChangeListener: (listener: AudioRecorderStateChangeListener) => void
   addRecordingCompleteListener: (listener: RecordingCompleteListener) => void
   removeRecordingCompleteListener: (listener: RecordingCompleteListener) => void
-  startRecording: () => Promise<void>
+  startRecording: () => Promise<boolean>
   stopRecording: () => void
   state: AudioRecorderState
   volume: number

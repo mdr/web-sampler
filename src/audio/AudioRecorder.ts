@@ -93,7 +93,7 @@ export class AudioRecorder implements IAudioRecorder {
     this.audioBuffers.push(audioBuffer)
   }
 
-  startRecording = async (): Promise<void> => {
+  startRecording = async (): Promise<boolean> => {
     if (this._state !== AudioRecorderState.IDLE) {
       throw new Error('Already recording')
     }
@@ -107,7 +107,7 @@ export class AudioRecorder implements IAudioRecorder {
       })
     } catch (error) {
       console.error('Error setting up recording:', error)
-      return
+      return false
     }
 
     this.setState(AudioRecorderState.RECORDING)
@@ -129,6 +129,7 @@ export class AudioRecorder implements IAudioRecorder {
     source.connect(captureAudioWorkletNode)
     captureAudioWorkletNode.port.onmessage = this.handleWorkletMessage
     this.captureAudioWorkletNode = captureAudioWorkletNode
+    return true
   }
 
   stopRecording = (): void => {

@@ -38,8 +38,9 @@ export class MockAudioRecorder implements IAudioRecorder {
     this.recordingCompleteListeners.forEach((listener) => listener(audio))
   }
 
-  startRecording = async (): Promise<void> => {
+  startRecording = async (): Promise<boolean> => {
     this.setState(AudioRecorderState.RECORDING)
+    return true
   }
 
   stopRecording = (): void => {
