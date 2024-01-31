@@ -12,6 +12,7 @@ import { useAudioRecorder } from '../../audio/AudioRecorderContext.ts'
 import useUnmount from 'beautiful-react-hooks/useUnmount'
 import { TimerId } from '../../utils/types/TimerId.ts'
 import { MAX_RECORDING_DURATION } from './captureConstants.ts'
+import { toast } from 'react-toastify'
 
 export const CapturePage = () => {
   const audioRecorder = useAudioRecorder()
@@ -58,6 +59,8 @@ export const CapturePage = () => {
     const isRecording = await audioRecorder.startRecording()
     if (isRecording) {
       timerIdRef.current = setTimeout(() => audioRecorder.stopRecording(), MAX_RECORDING_DURATION.toMillis())
+    } else {
+      toast.error('Unable to start recording')
     }
   }
 

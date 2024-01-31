@@ -9,21 +9,7 @@ import audioBufferToWav from 'audiobuffer-to-wav'
 import { AudioBufferUtils } from './AudioBufferUtils.ts'
 import workletUrl from './CapturingAudioWorkletProcessor?worker&url'
 import { CAPTURING_AUDIO_WORKLET_NAME, STOP_MESSAGE } from './CapturingAudioWorkletConstants.ts'
-
-export class LazyAudioContextProvider implements AudioContextProvider {
-  private _audioContext: Option<AudioContext> = undefined
-
-  get audioContext(): AudioContext {
-    if (this._audioContext === undefined) {
-      this._audioContext = new AudioContext()
-    }
-    return this._audioContext
-  }
-}
-
-export interface AudioContextProvider {
-  audioContext: AudioContext
-}
+import { AudioContextProvider } from './AudioContextProvider.ts'
 
 export class AudioRecorder implements IAudioRecorder {
   private _state: AudioRecorderState = AudioRecorderState.IDLE
@@ -35,6 +21,8 @@ export class AudioRecorder implements IAudioRecorder {
   private captureAudioWorkletNode: Option<AudioWorkletNode> = undefined
   private source: Option<MediaStreamAudioSourceNode> = undefined
 
+  constructor(private readonly audioContextProvider: AudioContextProvider) {}
+
   private get audioContext(): AudioContext {
     return this.audioContextProvider.audioContext
   }
@@ -42,8 +30,6 @@ export class AudioRecorder implements IAudioRecorder {
   private get audioBufferUtils(): AudioBufferUtils {
     return new AudioBufferUtils(this.audioContext)
   }
-
-  constructor(private readonly audioContextProvider: AudioContextProvider) {}
 
   addStateChangeListener = (listener: AudioRecorderStateChangeListener): void => {
     this.stateChangeListeners.push(listener)
@@ -97,8 +83,10 @@ export class AudioRecorder implements IAudioRecorder {
     if (this._state !== AudioRecorderState.IDLE) {
       throw new Error('Already recording')
     }
+    let mediaStream: MediaStream
+
     try {
-      this.mediaStream = await navigator.mediaDevices.getDisplayMedia({
+      mediaStream = await navigator.mediaDevices.getDisplayMedia({
         audio: {
           noiseSuppression: false,
           echoCancellation: false,
@@ -110,9 +98,17 @@ export class AudioRecorder implements IAudioRecorder {
       return false
     }
 
+    if (mediaStream.getAudioTracks().length === 0) {
+      console.error('No audio track in media stream')
+      mediaStream.getTracks().forEach((track) => track.stop())
+      return false
+    }
+
+    this.mediaStream = mediaStream
+
     this.setState(AudioRecorderState.RECORDING)
     await this.audioContext.audioWorklet.addModule(workletUrl)
-    this.mediaStream.addEventListener('inactive', this.handleStreamInactive)
+    mediaStream.addEventListener('inactive', this.handleStreamInactive)
     const source = this.audioContext.createMediaStreamSource(this.mediaStream)
     this.source = source
 
