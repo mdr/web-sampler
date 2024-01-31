@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 
 interface WaveformVisualiserProps {
   audioBuffer: AudioBuffer
@@ -7,7 +7,7 @@ interface WaveformVisualiserProps {
 export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({ audioBuffer }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
-  const drawWaveform = () => {
+  const drawWaveform = useCallback(() => {
     const canvas = canvasRef.current
     if (!canvas) return
     const ctx = canvas.getContext('2d')
@@ -40,11 +40,11 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({ audioBuf
     }
 
     ctx.stroke()
-  }
+  }, [audioBuffer])
 
   useEffect(() => {
     drawWaveform()
-  }, [audioBuffer]) // Redraw when audioBuffer changes
+  }, [audioBuffer, drawWaveform])
 
   return <canvas ref={canvasRef} width="600" height="200"></canvas>
 }
