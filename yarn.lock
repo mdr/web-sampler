@@ -2643,19 +2643,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/luxon@npm:^3":
+"@types/luxon@npm:^3.4.2":
   version: 3.4.2
   resolution: "@types/luxon@npm:3.4.2"
   checksum: d835467de3daf7e17ba78b50bb5a14efd94272439ca067990d71332a54b311544459c69623eddd243b511b28d70194c9591a9ee8cf9c038962c965f991affd7e
   languageName: node
   linkType: hard
 
-"@types/node@npm:^20.11.13":
-  version: 20.11.13
-  resolution: "@types/node@npm:20.11.13"
+"@types/node@npm:^20.11.14":
+  version: 20.11.14
+  resolution: "@types/node@npm:20.11.14"
   dependencies:
     undici-types: "npm:~5.26.4"
-  checksum: 8ff8526fa0dbabcf4e9c538c6a7220675f750c39d0794e34998daa0656d7e0dfdf3e47403d2ab8beb756422a517e1f2646b4494afa59ef330495d65fc58fa4d8
+  checksum: 81a55ddf68811439e58bdc2e4b8e501c6c6ea3d5351aa6362a36f5829055f58195bc201b0992ffda306fcd848c84b1eca327befb71f12f24e0d356e997e17add
   languageName: node
   linkType: hard
 
@@ -5049,6 +5049,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash-es@npm:^4.17.21":
+  version: 4.17.21
+  resolution: "lodash-es@npm:4.17.21"
+  checksum: fb407355f7e6cd523a9383e76e6b455321f0f153a6c9625e21a8827d10c54c2a2341bd2ae8d034358b60e07325e1330c14c224ff582d04612a46a4f0479ff2f2
+  languageName: node
+  linkType: hard
+
 "lodash.debounce@npm:^4.0.8":
   version: 4.0.8
   resolution: "lodash.debounce@npm:4.0.8"
@@ -5060,13 +5067,6 @@ __metadata:
   version: 4.6.2
   resolution: "lodash.merge@npm:4.6.2"
   checksum: 402fa16a1edd7538de5b5903a90228aa48eb5533986ba7fa26606a49db2572bf414ff73a2c9f5d5fd36b31c46a5d5c7e1527749c07cbcf965ccff5fbdf32c506
-  languageName: node
-  linkType: hard
-
-"lodash.pick@npm:^4.4.0":
-  version: 4.4.0
-  resolution: "lodash.pick@npm:4.4.0"
-  checksum: a04c460b95d1aaa44e9513d1dacf72ea74d838da843e45831de9de64c303f13cdde1859702a6f4dcef417816898ffd47c6ae0614c957ac70245bed2809b8d2e2
   languageName: node
   linkType: hard
 
@@ -6920,9 +6920,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-checker@npm:^0.6.2":
-  version: 0.6.2
-  resolution: "vite-plugin-checker@npm:0.6.2"
+"vite-plugin-checker@npm:^0.6.3":
+  version: 0.6.3
+  resolution: "vite-plugin-checker@npm:0.6.3"
   dependencies:
     "@babel/code-frame": "npm:^7.12.13"
     ansi-escapes: "npm:^4.3.0"
@@ -6931,8 +6931,7 @@ __metadata:
     commander: "npm:^8.0.0"
     fast-glob: "npm:^3.2.7"
     fs-extra: "npm:^11.1.0"
-    lodash.debounce: "npm:^4.0.8"
-    lodash.pick: "npm:^4.4.0"
+    lodash-es: "npm:^4.17.21"
     npm-run-path: "npm:^4.0.1"
     semver: "npm:^7.5.0"
     strip-ansi: "npm:^6.0.0"
@@ -6968,7 +6967,7 @@ __metadata:
       optional: true
     vue-tsc:
       optional: true
-  checksum: 8c991c63b61e52fc69a22033aa34c6cb698d6af7dd7505a9fecb62c6e8486bc6f9667c23f5ad6f7289d9d2780bdb4711740433a5cabc27c4c7d763d028d54b2a
+  checksum: 3315b0a14d503ae2f563029f8bf98c5f7c587ae2463b443035a22f9f847a5a59001b43e689da20b51c0a36f3eaf7df46e3b8fd47405ac629ed5b2c4859f5f847
   languageName: node
   linkType: hard
 
@@ -7185,8 +7184,8 @@ __metadata:
     "@testing-library/react-hooks": "npm:^8.0.1"
     "@testing-library/user-event": "npm:^14.5.2"
     "@types/audiobuffer-to-wav": "npm:^1.0.4"
-    "@types/luxon": "npm:^3"
-    "@types/node": "npm:^20.11.13"
+    "@types/luxon": "npm:^3.4.2"
+    "@types/node": "npm:^20.11.14"
     "@types/react": "npm:^18.2.48"
     "@types/react-dom": "npm:^18.2.18"
     "@types/sinonjs__fake-timers": "npm:^8.1.5"
@@ -7211,7 +7210,7 @@ __metadata:
     tailwindcss: "npm:^3.4.1"
     typescript: "npm:^5.3.3"
     vite: "npm:^5.0.12"
-    vite-plugin-checker: "npm:^0.6.2"
+    vite-plugin-checker: "npm:^0.6.3"
     vitest: "npm:^1.2.2"
   languageName: unknown
   linkType: soft
