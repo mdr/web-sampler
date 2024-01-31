@@ -7,7 +7,7 @@ import {
 import { Option } from '../utils/types/Option.ts'
 import audioBufferToWav from 'audiobuffer-to-wav'
 import { AudioBufferUtils } from './AudioBufferUtils.ts'
-import workletUrl from './CapturingAudioWorkletProcessor.ts?url'
+import workletUrl from './CapturingAudioWorkletProcessor?worker&url'
 import { CAPTURING_AUDIO_WORKLET_NAME, STOP_MESSAGE } from './CapturingAudioWorkletConstants.ts'
 
 export class AudioRecorder implements IAudioRecorder {
