@@ -54,7 +54,6 @@ export class AudioRecorder implements IAudioRecorder {
   }
 
   private fireStateChangeListeners = (state: AudioRecorderState): void => {
-    console.log('State changed:', state)
     this.stateChangeListeners.forEach((listener) => listener(state))
   }
 
@@ -69,12 +68,10 @@ export class AudioRecorder implements IAudioRecorder {
   }
 
   private fireRecordingCompleteListeners = (audio: Blob): void => {
-    console.log('Recording complete')
     this.recordingCompleteListeners.forEach((listener) => listener(audio))
   }
 
   private handleStreamInactive = () => {
-    console.log('Stream inactive')
     this.stopRecording()
   }
 
@@ -100,33 +97,38 @@ export class AudioRecorder implements IAudioRecorder {
     if (this._state !== AudioRecorderState.IDLE) {
       throw new Error('Already recording')
     }
-    this.setState(AudioRecorderState.RECORDING)
     try {
-      this.mediaStream = await navigator.mediaDevices.getDisplayMedia({ audio: true })
-      await this.audioContext.resume()
-      await this.audioContext.audioWorklet.addModule(workletUrl)
-      this.mediaStream.addEventListener('inactive', this.handleStreamInactive)
-      const source = this.audioContext.createMediaStreamSource(this.mediaStream)
-      this.source = source
-
-      const analyser = this.audioContext.createAnalyser()
-      analyser.fftSize = 256
-      source.connect(analyser)
-      const dataArray = new Uint8Array(analyser.frequencyBinCount)
-      this.getVolume = (): number => {
-        analyser.getByteFrequencyData(dataArray)
-        return average(dataArray)
-      }
-
-      const captureAudioWorkletNode = new AudioWorkletNode(this.audioContext, CAPTURING_AUDIO_WORKLET_NAME)
-      source.connect(captureAudioWorkletNode)
-      captureAudioWorkletNode.port.onmessage = this.handleWorkletMessage
-      this.captureAudioWorkletNode = captureAudioWorkletNode
+      this.mediaStream = await navigator.mediaDevices.getDisplayMedia({
+        audio: {
+          noiseSuppression: false,
+          echoCancellation: false,
+          autoGainControl: false,
+        },
+      })
     } catch (error) {
       console.error('Error setting up recording:', error)
-      this.setState(AudioRecorderState.IDLE)
-      throw error
+      return
     }
+
+    this.setState(AudioRecorderState.RECORDING)
+    await this.audioContext.audioWorklet.addModule(workletUrl)
+    this.mediaStream.addEventListener('inactive', this.handleStreamInactive)
+    const source = this.audioContext.createMediaStreamSource(this.mediaStream)
+    this.source = source
+
+    const analyser = this.audioContext.createAnalyser()
+    analyser.fftSize = 256
+    source.connect(analyser)
+    const dataArray = new Uint8Array(analyser.frequencyBinCount)
+    this.getVolume = (): number => {
+      analyser.getByteFrequencyData(dataArray)
+      return average(dataArray)
+    }
+
+    const captureAudioWorkletNode = new AudioWorkletNode(this.audioContext, CAPTURING_AUDIO_WORKLET_NAME)
+    source.connect(captureAudioWorkletNode)
+    captureAudioWorkletNode.port.onmessage = this.handleWorkletMessage
+    this.captureAudioWorkletNode = captureAudioWorkletNode
   }
 
   stopRecording = (): void => {
@@ -134,7 +136,6 @@ export class AudioRecorder implements IAudioRecorder {
       throw new Error('Not recording')
     }
     this.setState(AudioRecorderState.IDLE)
-    console.log('Recording finished')
     const combinedBuffer = this.audioBufferUtils.combineAudioBuffers(this.audioBuffers)
     this.audioBuffers = []
     if (combinedBuffer !== undefined) {
