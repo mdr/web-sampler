@@ -54,8 +54,8 @@ export class AudioRecorder implements IAudioRecorder {
     )
   }
 
-  private fireRecordingCompleteListeners = (audio: Blob): void => {
-    this.recordingCompleteListeners.forEach((listener) => listener(audio))
+  private fireRecordingCompleteListeners = (audioBuffer: AudioBuffer, audioBlob: Blob): void => {
+    this.recordingCompleteListeners.forEach((listener) => listener(audioBuffer, audioBlob))
   }
 
   private handleStreamInactive = () => {
@@ -137,7 +137,7 @@ export class AudioRecorder implements IAudioRecorder {
     const combinedBuffer = this.audioBufferUtils.combineAudioBuffers(this.audioBuffers)
     this.audioBuffers = []
     if (combinedBuffer !== undefined) {
-      this.fireRecordingCompleteListeners(this.makeWavBlob(combinedBuffer))
+      this.fireRecordingCompleteListeners(combinedBuffer, this.makeWavBlob(combinedBuffer))
     }
 
     this.source?.disconnect()

@@ -5,6 +5,7 @@ import {
   RecordingCompleteListener,
   StartRecordingOutcome,
 } from '../../../audio/IAudioRecorder.ts'
+import { todo } from '../../../utils/utils.ts'
 
 export class MockAudioRecorder implements IAudioRecorder {
   volume: number = 0
@@ -37,8 +38,8 @@ export class MockAudioRecorder implements IAudioRecorder {
     this.stateChangeListeners = this.stateChangeListeners.filter((listener) => listener !== listenerToRemove)
   }
 
-  fireRecordingCompleteListeners = (audio: Blob): void => {
-    this.recordingCompleteListeners.forEach((listener) => listener(audio))
+  fireRecordingCompleteListeners = (audioBuffer: AudioBuffer, audioBlob: Blob): void => {
+    this.recordingCompleteListeners.forEach((listener) => listener(audioBuffer, audioBlob))
   }
 
   startRecording = async (): Promise<StartRecordingOutcome> => {
@@ -50,7 +51,7 @@ export class MockAudioRecorder implements IAudioRecorder {
 
   stopRecording = (): void => {
     this.setState(AudioRecorderState.IDLE)
-    this.fireRecordingCompleteListeners(this.blob)
+    this.fireRecordingCompleteListeners(todo(), this.blob)
   }
 
   setState = (state: AudioRecorderState) => {

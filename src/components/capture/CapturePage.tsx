@@ -13,18 +13,21 @@ import useUnmount from 'beautiful-react-hooks/useUnmount'
 import { TimerId } from '../../utils/types/TimerId.ts'
 import { MAX_RECORDING_DURATION } from './captureConstants.ts'
 import { toast } from 'react-toastify'
+import { WaveformVisualiser } from '../../audio/WaveformVisualiser.tsx'
 
 export const CapturePage = () => {
   const audioRecorder = useAudioRecorder()
   const [audioRecorderState, setAudioRecorderState] = useState<AudioRecorderState>(audioRecorder.state)
   const [audioUrl, setAudioUrl] = useState<Option<Url>>(undefined)
+  const [audioBuffer, setAudioBuffer] = useState<Option<AudioBuffer>>(undefined)
   const [volume, setVolume] = useState<number>(0)
   const createObjectUrl = useObjectUrlCreator()
   const timerIdRef = useRef<Option<TimerId>>()
 
   const handleRecordingComplete = useCallback(
-    (audio: Blob) => {
-      setAudioUrl(createObjectUrl(audio))
+    (buffer: AudioBuffer, audioBlob: Blob) => {
+      setAudioUrl(createObjectUrl(audioBlob))
+      setAudioBuffer(buffer)
       if (timerIdRef.current) {
         clearTimeout(timerIdRef.current)
       }
@@ -59,6 +62,7 @@ export const CapturePage = () => {
     switch (outcome) {
       case StartRecordingOutcome.SUCCESS:
         setAudioUrl(undefined)
+        setAudioBuffer(undefined)
         timerIdRef.current = setTimeout(() => audioRecorder.stopRecording(), MAX_RECORDING_DURATION.toMillis())
         break
       case StartRecordingOutcome.PERMISSION_DENIED:
@@ -86,6 +90,7 @@ export const CapturePage = () => {
           </StopButton>
         )}
         <div>{audioUrl && <audio data-testid={CapturePageTestIds.audioElement} src={audioUrl} controls />}</div>
+        {audioBuffer && <WaveformVisualiser audioBuffer={audioBuffer} />}
         {audioRecorderState === AudioRecorderState.RECORDING && <VolumeMeter volume={volume} />}
       </div>
     </>
