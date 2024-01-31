@@ -10,6 +10,21 @@ import { AudioBufferUtils } from './AudioBufferUtils.ts'
 import workletUrl from './CapturingAudioWorkletProcessor?worker&url'
 import { CAPTURING_AUDIO_WORKLET_NAME, STOP_MESSAGE } from './CapturingAudioWorkletConstants.ts'
 
+export class LazyAudioContextProvider implements AudioContextProvider {
+  private _audioContext: Option<AudioContext> = undefined
+
+  get audioContext(): AudioContext {
+    if (this._audioContext === undefined) {
+      this._audioContext = new AudioContext()
+    }
+    return this._audioContext
+  }
+}
+
+export interface AudioContextProvider {
+  audioContext: AudioContext
+}
+
 export class AudioRecorder implements IAudioRecorder {
   private _state: AudioRecorderState = AudioRecorderState.IDLE
   private mediaStream: Option<MediaStream> = undefined
@@ -19,12 +34,16 @@ export class AudioRecorder implements IAudioRecorder {
   private recordingCompleteListeners: RecordingCompleteListener[] = []
   private captureAudioWorkletNode: Option<AudioWorkletNode> = undefined
   private source: Option<MediaStreamAudioSourceNode> = undefined
-  private readonly audioBufferUtils: AudioBufferUtils
 
-  constructor(private readonly audioContext: AudioContext) {
-    console.log(workletUrl)
-    this.audioBufferUtils = new AudioBufferUtils(audioContext)
+  private get audioContext(): AudioContext {
+    return this.audioContextProvider.audioContext
   }
+
+  private get audioBufferUtils(): AudioBufferUtils {
+    return new AudioBufferUtils(this.audioContext)
+  }
+
+  constructor(private readonly audioContextProvider: AudioContextProvider) {}
 
   addStateChangeListener = (listener: AudioRecorderStateChangeListener): void => {
     this.stateChangeListeners.push(listener)
