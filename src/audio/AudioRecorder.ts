@@ -22,6 +22,7 @@ export class AudioRecorder implements IAudioRecorder {
   private readonly audioBufferUtils: AudioBufferUtils
 
   constructor(private readonly audioContext: AudioContext) {
+    console.log(workletUrl)
     this.audioBufferUtils = new AudioBufferUtils(audioContext)
   }
 
