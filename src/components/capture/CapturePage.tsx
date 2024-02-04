@@ -1,5 +1,5 @@
 import { Navbar } from '../Navbar.tsx'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { RecordButton } from './RecordButton.tsx'
 import { VolumeMeter } from './VolumeMeter.tsx'
 import { useObjectUrlCreator } from '../../utils/hooks.ts'
@@ -8,17 +8,21 @@ import { Url } from '../../utils/types/Url.ts'
 import { CapturePageTestIds } from './CapturePage.testIds.ts'
 import { AudioRecorderState, StartRecordingOutcome } from '../../audio/IAudioRecorder.ts'
 import { Option } from '../../utils/types/Option.ts'
-import { useAudioRecorder } from '../../audio/AudioRecorderContext.ts'
 import useUnmount from 'beautiful-react-hooks/useUnmount'
 import { TimerId } from '../../utils/types/TimerId.ts'
 import { MAX_RECORDING_DURATION } from './captureConstants.ts'
 import { toast } from 'react-toastify'
 import { WaveformVisualiser } from '../../audio/WaveformVisualiser.tsx'
 import { SoundNameTextField } from './SoundNameTextField.tsx'
-import { useAudioRecorderState, useAudioRecorderVolume } from '../../audio/audioRecorderHooks.ts'
+import {
+  useAudioRecorderActions,
+  useAudioRecorderState,
+  useAudioRecorderVolume,
+  useAudioRecordingComplete,
+} from '../../audio/audioRecorderHooks.ts'
 
 export const CapturePage = () => {
-  const audioRecorder = useAudioRecorder()
+  const audioRecorderActions = useAudioRecorderActions()
   const [soundName, setSoundName] = useState('')
   const audioRecorderState = useAudioRecorderState()
   const volume = useAudioRecorderVolume()
@@ -37,17 +41,11 @@ export const CapturePage = () => {
     },
     [createObjectUrl],
   )
-
-  useEffect(() => {
-    audioRecorder.addRecordingCompleteListener(handleRecordingComplete)
-    return () => {
-      audioRecorder.removeRecordingCompleteListener(handleRecordingComplete)
-    }
-  }, [audioRecorder, handleRecordingComplete])
+  useAudioRecordingComplete(handleRecordingComplete)
 
   useUnmount(() => {
-    if (audioRecorder.state === AudioRecorderState.RECORDING) {
-      audioRecorder.stopRecording()
+    if (audioRecorderState === AudioRecorderState.RECORDING) {
+      audioRecorderActions.stopRecording()
     }
     if (timerIdRef.current) {
       clearTimeout(timerIdRef.current)
@@ -55,12 +53,12 @@ export const CapturePage = () => {
   })
 
   const handleRecordButtonPressed = async (): Promise<void> => {
-    const outcome = await audioRecorder.startRecording()
+    const outcome = await audioRecorderActions.startRecording()
     switch (outcome) {
       case StartRecordingOutcome.SUCCESS:
         setAudioUrl(undefined)
         setAudioBuffer(undefined)
-        timerIdRef.current = setTimeout(() => audioRecorder.stopRecording(), MAX_RECORDING_DURATION.toMillis())
+        timerIdRef.current = setTimeout(() => audioRecorderActions.stopRecording(), MAX_RECORDING_DURATION.toMillis())
         break
       case StartRecordingOutcome.PERMISSION_DENIED:
         break
@@ -70,7 +68,7 @@ export const CapturePage = () => {
     }
   }
 
-  const handleStopButtonPressed = () => audioRecorder.stopRecording()
+  const handleStopButtonPressed = () => audioRecorderActions.stopRecording()
 
   return (
     <>

@@ -1,7 +1,20 @@
-import { useAudioRecorder } from './AudioRecorderContext.ts'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { useRequestAnimationFrame } from '../utils/hooks.ts'
-import { AudioRecorderState } from './IAudioRecorder.ts'
+import {
+  AudioRecorderState,
+  IAudioRecorder,
+  RecordingCompleteListener,
+  StartRecordingOutcome,
+} from './IAudioRecorder.ts'
+import { AudioRecorderContext } from './AudioRecorderContext.ts'
+
+const useAudioRecorder = (): IAudioRecorder => {
+  const audioRecorder = useContext(AudioRecorderContext)
+  if (audioRecorder === undefined) {
+    throw new Error('no AudioRecorder available in context')
+  }
+  return audioRecorder
+}
 
 export const useAudioRecorderState = (): AudioRecorderState => {
   const audioRecorder = useAudioRecorder()
@@ -13,6 +26,7 @@ export const useAudioRecorderState = (): AudioRecorderState => {
   }, [audioRecorder, handleStateChanged])
   return state
 }
+
 export const useAudioRecorderVolume = (): number => {
   const audioRecorder = useAudioRecorder()
   const [volume, setVolume] = useState<number>(audioRecorder.volume)
@@ -20,3 +34,19 @@ export const useAudioRecorderVolume = (): number => {
   useRequestAnimationFrame(handleAnimationFrame)
   return volume
 }
+
+export const useAudioRecordingComplete = (onRecordingComplete: RecordingCompleteListener): void => {
+  const audioRecorder = useAudioRecorder()
+  useEffect(() => {
+    audioRecorder.addRecordingCompleteListener(onRecordingComplete)
+    return () => audioRecorder.removeRecordingCompleteListener(onRecordingComplete)
+  }, [audioRecorder, onRecordingComplete])
+}
+
+export interface AudioRecorderActions {
+  startRecording(): Promise<StartRecordingOutcome>
+
+  stopRecording(): void
+}
+
+export const useAudioRecorderActions = (): AudioRecorderActions => useAudioRecorder()
