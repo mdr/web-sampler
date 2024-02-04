@@ -1,4 +1,5 @@
 import { Option } from '../utils/types/Option.ts'
+import audioBufferToWav from 'audiobuffer-to-wav'
 
 export class AudioBufferUtils {
   constructor(private readonly audioContext: AudioContext) {}
@@ -7,7 +8,6 @@ export class AudioBufferUtils {
     if (audioBuffers.length === 0) {
       return undefined
     }
-    // Calculate the total length of the combined buffer
     const totalLength = audioBuffers.reduce((acc, buffer) => acc + buffer.length, 0)
 
     const numberOfChannels = audioBuffers[0].numberOfChannels
@@ -26,22 +26,6 @@ export class AudioBufferUtils {
     return combinedBuffer
   }
 
-  cloneAudioBuffer = (originalBuffer: AudioBuffer): AudioBuffer => {
-    const numberOfChannels = originalBuffer.numberOfChannels
-    const length = originalBuffer.length
-    const sampleRate = originalBuffer.sampleRate
-
-    const newBuffer = this.audioContext.createBuffer(numberOfChannels, length, sampleRate)
-
-    for (let channel = 0; channel < numberOfChannels; channel++) {
-      const originalData = originalBuffer.getChannelData(channel)
-      const newData = newBuffer.getChannelData(channel)
-      newData.set(originalData)
-    }
-
-    return newBuffer
-  }
-
   audioBufferFromFloat32Array = (audioData: Float32Array): AudioBuffer => {
     const audioBuffer = this.audioContext.createBuffer(1, audioData.length, this.audioContext.sampleRate)
     const channelData = audioBuffer.getChannelData(0)
@@ -49,3 +33,14 @@ export class AudioBufferUtils {
     return audioBuffer
   }
 }
+
+export const convertMonoAudioBufferToArrayBuffer = (audioBuffer: AudioBuffer): ArrayBuffer => {
+  const floatAudioData = audioBuffer.getChannelData(0)
+  const buffer = new ArrayBuffer(floatAudioData.length * Float32Array.BYTES_PER_ELEMENT)
+  const array = new Float32Array(buffer)
+  array.set(floatAudioData)
+  return buffer
+}
+
+export const audioBufferToWavBlob = (audioBuffer: AudioBuffer): Blob =>
+  new Blob([audioBufferToWav(audioBuffer)], { type: 'audio/wav' })

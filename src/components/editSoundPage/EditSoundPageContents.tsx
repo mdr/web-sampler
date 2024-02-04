@@ -20,8 +20,8 @@ import {
 import { useSound, useSoundActions } from '../../sounds/soundHooks.ts'
 import { SoundId } from '../../types/Sound.ts'
 import { fireAndForget } from '../../utils/utils.ts'
-import audioBufferToWav from 'audiobuffer-to-wav'
 import { Url } from '../../utils/types/Url.ts'
+import { audioBufferToWavBlob, convertMonoAudioBufferToArrayBuffer } from '../../audio/AudioBufferUtils.ts'
 
 export interface EditSoundPageProps {
   soundId: SoundId
@@ -104,14 +104,3 @@ export const EditSoundPageContents = ({ soundId }: EditSoundPageProps) => {
     </>
   )
 }
-
-const convertMonoAudioBufferToArrayBuffer = (audioBuffer: AudioBuffer): ArrayBuffer => {
-  const floatAudioData = audioBuffer.getChannelData(0)
-  const buffer = new ArrayBuffer(floatAudioData.length * Float32Array.BYTES_PER_ELEMENT)
-  const array = new Float32Array(buffer)
-  array.set(floatAudioData)
-  return buffer
-}
-
-const audioBufferToWavBlob = (audioBuffer: AudioBuffer): Blob =>
-  new Blob([audioBufferToWav(audioBuffer)], { type: 'audio/wav' })
