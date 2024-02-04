@@ -18,7 +18,7 @@ import {
   useAudioRecorderState,
   useAudioRecordingComplete,
 } from '../../audio/audioRecorderHooks.ts'
-import { useSound } from '../../sounds/soundHooks.ts'
+import { useSound, useSoundActions } from '../../sounds/soundHooks.ts'
 import { SoundId } from '../../types/Sound.ts'
 
 export interface EditSoundPageProps {
@@ -27,7 +27,7 @@ export interface EditSoundPageProps {
 
 export const EditSoundPageContents = ({ soundId }: EditSoundPageProps) => {
   const sound = useSound(soundId)
-
+  const soundActions = useSoundActions()
   const audioRecorderActions = useAudioRecorderActions()
   const audioRecorderState = useAudioRecorderState()
 
@@ -77,9 +77,13 @@ export const EditSoundPageContents = ({ soundId }: EditSoundPageProps) => {
 
   const handleStopButtonPressed = () => audioRecorderActions.stopRecording()
 
+  const handleSoundNameBlurred = () => {
+    soundActions.setName(soundId, soundName)
+  }
+
   return (
     <>
-      <SoundNameTextField soundName={soundName} setSoundName={setSoundName} />
+      <SoundNameTextField soundName={soundName} setSoundName={setSoundName} onBlur={handleSoundNameBlurred} />
       <div className="flex items-center space-x-4 p-4">
         {audioRecorderState === AudioRecorderState.IDLE && <RecordButton onPress={handleRecordButtonPressed} />}
         {audioRecorderState === AudioRecorderState.RECORDING && (

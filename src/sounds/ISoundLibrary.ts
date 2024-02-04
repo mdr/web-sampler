@@ -2,14 +2,18 @@ import { Sound, SoundId } from '../types/Sound.ts'
 import { Option } from '../utils/types/Option.ts'
 import { SoundUpdateListener } from './SoundLibrary.ts'
 
-export interface ISoundLibrary {
+export interface SoundActions {
+  newSound(): Sound
+
+  setName(id: SoundId, name: string): void
+}
+
+export interface ISoundLibrary extends SoundActions {
   readonly sounds: Sound[]
 
   addListener(listener: SoundUpdateListener): void
 
   removeListener(listener: SoundUpdateListener): void
-
-  newSound(): Sound
 
   findSound(id: SoundId): Option<Sound>
 }
