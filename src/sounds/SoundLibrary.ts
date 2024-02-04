@@ -30,7 +30,7 @@ export class SoundLibrary implements ISoundLibrary {
 
   newSound = (): Sound => {
     const soundId = SoundId(uuid.v4())
-    const sound: Sound = { id: soundId, name: 'Bob' }
+    const sound: Sound = { id: soundId, name: '' }
     this._sounds.push(sound)
     this.notifyListeners()
     return sound

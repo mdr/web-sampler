@@ -32,7 +32,7 @@ test('recording should stop automatically after 20 seconds', async ({ mount }) =
 
 test('an error toast should be shown if no audio is available on the selected source', async ({ mount }) => {
   const homePage = await launchApp(mount)
-  const editSoundPage = await homePage.navbar.clickCapture()
+  const editSoundPage = await homePage.clickNewSoundButton()
 
   await editSoundPage.pressRecordButton({ outcome: StartRecordingOutcome.NO_AUDIO_TRACK })
 
@@ -41,7 +41,7 @@ test('an error toast should be shown if no audio is available on the selected so
 
 const launchAndStartRecordingOnCapturePage = async (mount: MountFunction): Promise<EditSoundPageObject> => {
   const homePage = await launchApp(mount)
-  const editSoundPage = await homePage.navbar.clickCapture()
+  const editSoundPage = await homePage.clickNewSoundButton()
   await editSoundPage.pressRecordButton()
   return editSoundPage
 }
