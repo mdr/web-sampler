@@ -32,8 +32,6 @@ export const EditSoundPageContents = ({ soundId }: EditSoundPageProps) => {
   const audioRecorderActions = useAudioRecorderActions()
   const audioRecorderState = useAudioRecorderState()
 
-  const [soundName, setSoundName] = useState<string>(sound.name)
-
   const [audioUrl, setAudioUrl] = useState<Option<Url>>(undefined)
   const [audioBuffer, setAudioBuffer] = useState<Option<AudioBuffer>>(undefined)
   const createObjectUrl = useObjectUrlCreator()
@@ -79,18 +77,16 @@ export const EditSoundPageContents = ({ soundId }: EditSoundPageProps) => {
 
   const handleStopButtonPressed = () => audioRecorderActions.stopRecording()
 
-  const handleSoundNameBlurred = () => {
-    soundActions.setName(soundId, soundName)
-  }
-
   const audio: Option<ArrayBuffer> = useMemo(
     () => (audioBuffer === undefined ? undefined : convertMonoAudioBufferToArrayBuffer(audioBuffer)),
     [audioBuffer],
   )
 
+  const setSoundName = (name: string) => soundActions.setName(soundId, name)
+
   return (
     <>
-      <SoundNameTextField soundName={soundName} setSoundName={setSoundName} onBlur={handleSoundNameBlurred} />
+      <SoundNameTextField soundName={sound.name} setSoundName={setSoundName} />
       <div className="flex items-center space-x-4 p-4">
         {audioRecorderState === AudioRecorderState.IDLE && <RecordButton onPress={handleRecordButtonPressed} />}
         {audioRecorderState === AudioRecorderState.RECORDING && (
