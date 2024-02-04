@@ -2,24 +2,22 @@ import { expect } from '@playwright/experimental-ct-react'
 import { MountResult } from '../types.ts'
 import { EditSoundPageTestIds } from '../../../components/editSoundPage/EditSoundPage.testIds.ts'
 import { PageObject } from './PageObject.ts'
-import { VolumeMeterTestIds } from '../../../components/editSoundPage/VolumeMeter.testIds.ts'
 import { StartRecordingOutcome } from '../../../audio/IAudioRecorder.ts'
-import { RecordButtonTestIds } from '../../../components/editSoundPage/RecordButton.testIds.ts'
 
 export class EditSoundPageObject extends PageObject {
   static verifyOpen = async (mountResult: MountResult): Promise<EditSoundPageObject> => {
-    await expect(mountResult.getByTestId(RecordButtonTestIds.button)).toBeVisible()
+    await expect(mountResult.getByTestId(EditSoundPageTestIds.recordButton)).toBeVisible()
     return new EditSoundPageObject(mountResult)
   }
 
   pressRecordButton = ({
-    outcome = StartRecordingOutcome.SUCCESS,
+    primedOutcome = StartRecordingOutcome.SUCCESS,
   }: {
-    outcome?: StartRecordingOutcome
+    primedOutcome?: StartRecordingOutcome
   } = {}): Promise<void> =>
     this.step('pressRecordButton', async () => {
-      await this.page.evaluate((outcome) => window.testHooks.setStartRecordingOutcome(outcome), outcome)
-      await this.click(RecordButtonTestIds.button)
+      await this.page.evaluate((outcome) => window.testHooks.setStartRecordingOutcome(outcome), primedOutcome)
+      await this.click(EditSoundPageTestIds.recordButton)
     })
 
   pressStopButton = (): Promise<void> => this.step('pressStopButton', () => this.click(EditSoundPageTestIds.stopButton))
@@ -31,19 +29,16 @@ export class EditSoundPageObject extends PageObject {
     })
 
   expectVolumeMeterToShowLevel = (volume: number): Promise<void> =>
-    this.step('waitForVolumeMeterToShowLevel', async () => {
-      await expect(this.mountResult.getByTestId(VolumeMeterTestIds.bar)).toHaveAttribute('data-volume', `${volume}`)
+    this.step('expectVolumeMeterToShowLevel', async () => {
+      await expect(this.get(EditSoundPageTestIds.volumeMeter)).toHaveAttribute('data-volume', `${volume}`)
     })
+
   expectStopButtonToBeShown = (): Promise<void> =>
-    this.step('expectStopButtonToBeShown', async () => {
-      await expect(this.mountResult.getByTestId(EditSoundPageTestIds.stopButton)).toBeVisible()
-    })
+    this.step('expectStopButtonToBeShown', () => this.expectToBeVisible(EditSoundPageTestIds.stopButton))
 
   expectAudioElementToBeShown = (): Promise<void> =>
-    this.step('expectAudioElementToBeShown', async () => {
-      await expect(this.mountResult.getByTestId(EditSoundPageTestIds.audioElement)).toBeVisible()
-    })
+    this.step('expectAudioElementToBeShown', () => this.expectToBeVisible(EditSoundPageTestIds.audioElement))
 
-  expectToastToBeShown = (message: string) =>
+  expectToastToBeShown = (message: string): Promise<void> =>
     this.step('expectToastToBeShown', () => expect(this.mountResult.getByText(message)).toBeVisible())
 }

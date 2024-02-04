@@ -13,7 +13,11 @@ export class PageObject {
   protected step = <T>(name: string, body: () => T | Promise<T>): Promise<T> =>
     test.step(`${this.constructor.name}.${name}`, body)
 
-  protected click = (testId: TestId): Promise<void> => this.mountResult.getByTestId(testId).click()
+  protected get = (testId: TestId) => this.mountResult.getByTestId(testId)
+
+  protected click = (testId: TestId): Promise<void> => this.get(testId).click()
+
+  protected expectToBeVisible = (testId: TestId): Promise<void> => expect(this.get(testId)).toBeVisible()
 
   public wait = (duration: Duration): Promise<void> =>
     this.step('wait', () => this.page.evaluate((millis) => window.testHooks.clockTick(millis), duration.toMillis()))

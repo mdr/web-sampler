@@ -34,7 +34,7 @@ test('an error toast should be shown if no audio is available on the selected so
   const homePage = await launchApp(mount)
   const editSoundPage = await homePage.clickNewSoundButton()
 
-  await editSoundPage.pressRecordButton({ outcome: StartRecordingOutcome.NO_AUDIO_TRACK })
+  await editSoundPage.pressRecordButton({ primedOutcome: StartRecordingOutcome.NO_AUDIO_TRACK })
 
   await editSoundPage.expectToastToBeShown('No audio available in selected input')
 })
