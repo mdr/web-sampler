@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useMemo, useRef, useState } from 'react'
 import { RecordButton } from './RecordButton.tsx'
 import { VolumeMeter } from './VolumeMeter.tsx'
 import { useObjectUrlCreator } from '../../utils/hooks.ts'
@@ -83,6 +83,11 @@ export const EditSoundPageContents = ({ soundId }: EditSoundPageProps) => {
     soundActions.setName(soundId, soundName)
   }
 
+  const audio: Option<ArrayBuffer> = useMemo(
+    () => (audioBuffer === undefined ? undefined : convertMonoAudioBufferToArrayBuffer(audioBuffer)),
+    [audioBuffer],
+  )
+
   return (
     <>
       <SoundNameTextField soundName={soundName} setSoundName={setSoundName} onBlur={handleSoundNameBlurred} />
@@ -93,10 +98,18 @@ export const EditSoundPageContents = ({ soundId }: EditSoundPageProps) => {
             Stop
           </StopButton>
         )}
-        <div>{audioUrl && <audio data-testid={EditSoundPageTestIds.audioElement} src={audioUrl} controls />}</div>
-        {audioBuffer && <WaveformVisualiser audioBuffer={audioBuffer} />}
+        {audioUrl !== undefined && <audio data-testid={EditSoundPageTestIds.audioElement} src={audioUrl} controls />}
+        {audio !== undefined && <WaveformVisualiser audio={audio} />}
         {audioRecorderState === AudioRecorderState.RECORDING && <VolumeMeter />}
       </div>
     </>
   )
+}
+
+const convertMonoAudioBufferToArrayBuffer = (audioBuffer: AudioBuffer): ArrayBuffer => {
+  const floatAudioData = audioBuffer.getChannelData(0)
+  const buffer = new ArrayBuffer(floatAudioData.length * Float32Array.BYTES_PER_ELEMENT)
+  const array = new Float32Array(buffer)
+  array.set(floatAudioData)
+  return buffer
 }

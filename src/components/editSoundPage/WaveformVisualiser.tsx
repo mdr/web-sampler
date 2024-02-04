@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useRef } from 'react'
 
 interface WaveformVisualiserProps {
-  audioBuffer: AudioBuffer
+  audio: ArrayBuffer
 }
 
-export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({ audioBuffer }) => {
+export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({ audio }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   const drawWaveform = useCallback(() => {
@@ -15,9 +15,8 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({ audioBuf
 
     const width = canvas.width
     const height = canvas.height
-    const channelData = audioBuffer.getChannelData(0)
-    const bufferLength = audioBuffer.length
-    const step = Math.ceil(bufferLength / width)
+    const audioArray = new Float32Array(audio)
+    const step = Math.ceil(audioArray.length / width)
     const amp = height / 2
 
     ctx.clearRect(0, 0, width, height)
@@ -31,7 +30,7 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({ audioBuf
       let min = 1.0
       let max = -1.0
       for (let j = 0; j < step; j++) {
-        const datum = channelData[i * step + j]
+        const datum = audioArray[i * step + j]
         if (datum < min) min = datum
         if (datum > max) max = datum
       }
@@ -40,11 +39,11 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({ audioBuf
     }
 
     ctx.stroke()
-  }, [audioBuffer])
+  }, [audio])
 
   useEffect(() => {
     drawWaveform()
-  }, [audioBuffer, drawWaveform])
+  }, [drawWaveform])
 
-  return <canvas className="border-2 border-gray-200" ref={canvasRef} width="600" height="200"></canvas>
+  return <canvas className="border-2 border-gray-200" ref={canvasRef} width="600" height="200" />
 }
