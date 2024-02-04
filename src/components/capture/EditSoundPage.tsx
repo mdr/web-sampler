@@ -20,13 +20,27 @@ import {
   useAudioRecorderVolume,
   useAudioRecordingComplete,
 } from '../../audio/audioRecorderHooks.ts'
+import { useParams } from 'react-router-dom'
+import { SoundId } from '../../types/Sound.ts'
+import { useMaybeSound } from '../../sounds/soundHooks.ts'
+
+const useSoundIdParam = (): SoundId => {
+  const { soundId } = useParams()
+  if (soundId === undefined) {
+    throw new Error('soundId route param was expected but not found')
+  }
+  return SoundId(soundId)
+}
 
 export const EditSoundPage = () => {
+  const soundId = useSoundIdParam()
+  const sound = useMaybeSound(soundId)
+
   const audioRecorderActions = useAudioRecorderActions()
   const audioRecorderState = useAudioRecorderState()
   const volume = useAudioRecorderVolume()
 
-  const [soundName, setSoundName] = useState('')
+  const [soundName, setSoundName] = useState<string>(sound?.name ?? '')
 
   const [audioUrl, setAudioUrl] = useState<Option<Url>>(undefined)
   const [audioBuffer, setAudioBuffer] = useState<Option<AudioBuffer>>(undefined)
@@ -72,7 +86,9 @@ export const EditSoundPage = () => {
 
   const handleStopButtonPressed = () => audioRecorderActions.stopRecording()
 
-  return (
+  return sound === undefined ? (
+    <div>Not found</div>
+  ) : (
     <>
       <Navbar />
       <SoundNameTextField soundName={soundName} setSoundName={setSoundName} />

@@ -14,7 +14,7 @@ const router = createHashRouter([
     element: <HomePage />,
   },
   {
-    path: '/sound',
+    path: '/sound/:soundId',
     element: <EditSoundPage />,
   },
 ])

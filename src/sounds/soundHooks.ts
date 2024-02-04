@@ -1,5 +1,5 @@
 import { Sound, SoundId } from '../types/Sound.ts'
-import { useContext } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { ISoundLibrary } from './ISoundLibrary.ts'
 import { SoundLibraryContext } from './SoundLibraryContext.ts'
 import { Option } from '../utils/types/Option.ts'
@@ -12,7 +12,32 @@ const useSoundLibrary = (): ISoundLibrary => {
   return soundLibrary
 }
 
-export const useSound = (id: SoundId): Option<Sound> => {
+export const useSounds = (): Sound[] => {
+  const soundLibrary = useSoundLibrary()
+  const [sounds, setSounds] = useState<Sound[]>(soundLibrary.sounds)
+  const handleSoundsChanged = useCallback((newSounds: Sound[]) => setSounds(newSounds), [setSounds])
+  useEffect(() => {
+    soundLibrary.addListener(handleSoundsChanged)
+    return () => soundLibrary.removeListener(handleSoundsChanged)
+  }, [soundLibrary, handleSoundsChanged])
+  return sounds
+}
+
+export const useMaybeSound = (id: SoundId): Option<Sound> => {
   const soundLibrary = useSoundLibrary()
   return soundLibrary.findSound(id)
 }
+
+export const useSound = (id: SoundId): Sound => {
+  const sound = useMaybeSound(id)
+  if (sound === undefined) {
+    throw new Error(`no sound found with id ${id}`)
+  }
+  return sound
+}
+
+export interface SoundActions {
+  newSound(): Sound
+}
+
+export const useSoundActions = (): SoundActions => useSoundLibrary()
