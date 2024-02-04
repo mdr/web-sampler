@@ -5,7 +5,7 @@ import { PageObject } from './PageObject.ts'
 import { StartRecordingOutcome } from '../../../audio/IAudioRecorder.ts'
 
 export class EditSoundPageObject extends PageObject {
-  static verifyOpen = async (mountResult: MountResult): Promise<EditSoundPageObject> => {
+  static verifyIsShown = async (mountResult: MountResult): Promise<EditSoundPageObject> => {
     await expect(mountResult.getByTestId(EditSoundPageTestIds.recordButton)).toBeVisible()
     return new EditSoundPageObject(mountResult)
   }

@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom'
 import { SoundId } from '../../types/Sound.ts'
 import { useMaybeSound } from '../../sounds/soundHooks.ts'
 import { EditSoundPageContents } from './EditSoundPageContents.tsx'
-import { Navbar } from '../Navbar.tsx'
+import { Navbar } from '../shared/Navbar.tsx'
 import { SoundNotFound } from './SoundNotFound.tsx'
 
 const useSoundIdParam = (): SoundId => {
