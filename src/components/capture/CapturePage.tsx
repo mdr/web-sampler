@@ -14,9 +14,11 @@ import { TimerId } from '../../utils/types/TimerId.ts'
 import { MAX_RECORDING_DURATION } from './captureConstants.ts'
 import { toast } from 'react-toastify'
 import { WaveformVisualiser } from '../../audio/WaveformVisualiser.tsx'
+import { SoundNameTextField } from './SoundNameTextField.tsx'
 
 export const CapturePage = () => {
   const audioRecorder = useAudioRecorder()
+  const [soundName, setSoundName] = useState('')
   const [audioRecorderState, setAudioRecorderState] = useState<AudioRecorderState>(audioRecorder.state)
   const [audioUrl, setAudioUrl] = useState<Option<Url>>(undefined)
   const [audioBuffer, setAudioBuffer] = useState<Option<AudioBuffer>>(undefined)
@@ -78,6 +80,7 @@ export const CapturePage = () => {
   return (
     <>
       <Navbar />
+      <SoundNameTextField soundName={soundName} setSoundName={setSoundName} />
       <div className="flex items-center space-x-4 p-4">
         {audioRecorderState === AudioRecorderState.IDLE && (
           <RecordButton testId={CapturePageTestIds.recordButton} onPress={handleRecordButtonPressed}>
