@@ -5,6 +5,6 @@ export type SoundId = string & Brand.Brand<'SoundId'>
 export const SoundId = Brand.nominal<SoundId>()
 
 export interface Sound {
-  id: SoundId
-  name: string
+  readonly id: SoundId
+  readonly name: string
 }

@@ -1,7 +1,7 @@
 import { Option } from '../utils/types/Option.ts'
 
 export interface AudioContextProvider {
-  audioContext: AudioContext
+  readonly audioContext: AudioContext
 }
 
 export class LazyAudioContextProvider implements AudioContextProvider {

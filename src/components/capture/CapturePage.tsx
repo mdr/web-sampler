@@ -6,7 +6,7 @@ import { useObjectUrlCreator, useRequestAnimationFrame } from '../../utils/hooks
 import { StopButton } from './StopButton.tsx'
 import { Url } from '../../utils/types/Url.ts'
 import { CapturePageTestIds } from './CapturePage.testIds.ts'
-import { AudioRecorderState, StartRecordingOutcome } from '../../audio/IAudioRecorder.ts'
+import { AudioRecorderState, StartRecordingOutcome, useAudioRecorderState } from '../../audio/IAudioRecorder.ts'
 import { Option } from '../../utils/types/Option.ts'
 import { useAudioRecorder } from '../../audio/AudioRecorderContext.ts'
 import useUnmount from 'beautiful-react-hooks/useUnmount'
@@ -19,7 +19,7 @@ import { SoundNameTextField } from './SoundNameTextField.tsx'
 export const CapturePage = () => {
   const audioRecorder = useAudioRecorder()
   const [soundName, setSoundName] = useState('')
-  const [audioRecorderState, setAudioRecorderState] = useState<AudioRecorderState>(audioRecorder.state)
+  const audioRecorderState = useAudioRecorderState()
   const [audioUrl, setAudioUrl] = useState<Option<Url>>(undefined)
   const [audioBuffer, setAudioBuffer] = useState<Option<AudioBuffer>>(undefined)
   const [volume, setVolume] = useState<number>(0)
@@ -38,10 +38,8 @@ export const CapturePage = () => {
   )
 
   useEffect(() => {
-    audioRecorder.addStateChangeListener(setAudioRecorderState)
     audioRecorder.addRecordingCompleteListener(handleRecordingComplete)
     return () => {
-      audioRecorder.removeStateChangeListener(setAudioRecorderState)
       audioRecorder.removeRecordingCompleteListener(handleRecordingComplete)
     }
   }, [audioRecorder, handleRecordingComplete])
