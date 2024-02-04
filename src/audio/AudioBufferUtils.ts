@@ -11,8 +11,7 @@ export class AudioBufferUtils {
     const totalLength = audioBuffers.reduce((acc, buffer) => acc + buffer.length, 0)
 
     const numberOfChannels = audioBuffers[0].numberOfChannels
-    const sampleRate = audioBuffers[0].sampleRate
-    const combinedBuffer = this.audioContext.createBuffer(numberOfChannels, totalLength, sampleRate)
+    const combinedBuffer = this.createMonoAudioBuffer(totalLength)
 
     let offset = 0
     audioBuffers.forEach((buffer) => {
@@ -27,11 +26,17 @@ export class AudioBufferUtils {
   }
 
   audioBufferFromFloat32Array = (audioData: Float32Array): AudioBuffer => {
-    const audioBuffer = this.audioContext.createBuffer(1, audioData.length, this.audioContext.sampleRate)
+    const audioBuffer = this.createMonoAudioBuffer(audioData.length)
     const channelData = audioBuffer.getChannelData(0)
     channelData.set(audioData)
     return audioBuffer
   }
+
+  audioBufferFromArrayBuffer = async (arrayBuffer: ArrayBuffer): Promise<AudioBuffer> =>
+    this.audioBufferFromFloat32Array(new Float32Array(arrayBuffer))
+
+  private createMonoAudioBuffer = (length: number): AudioBuffer =>
+    this.audioContext.createBuffer(1, length, this.audioContext.sampleRate)
 }
 
 export const convertMonoAudioBufferToArrayBuffer = (audioBuffer: AudioBuffer): ArrayBuffer => {
