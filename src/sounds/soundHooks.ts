@@ -24,8 +24,8 @@ export const useSounds = (): Sound[] => {
 }
 
 export const useMaybeSound = (id: SoundId): Option<Sound> => {
-  const soundLibrary = useSoundLibrary()
-  return soundLibrary.findSound(id)
+  const sounds = useSounds()
+  return sounds.find((sound) => sound.id === id)
 }
 
 export const useSound = (id: SoundId): Sound => {
