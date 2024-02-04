@@ -5,7 +5,7 @@ import { VolumeMeter } from './VolumeMeter.tsx'
 import { useObjectUrlCreator } from '../../utils/hooks.ts'
 import { StopButton } from './StopButton.tsx'
 import { Url } from '../../utils/types/Url.ts'
-import { CapturePageTestIds } from './CapturePage.testIds.ts'
+import { EditSoundPageTestIds } from './EditSoundPage.testIds.ts'
 import { AudioRecorderState, StartRecordingOutcome } from '../../audio/IAudioRecorder.ts'
 import { Option } from '../../utils/types/Option.ts'
 import useUnmount from 'beautiful-react-hooks/useUnmount'
@@ -21,7 +21,7 @@ import {
   useAudioRecordingComplete,
 } from '../../audio/audioRecorderHooks.ts'
 
-export const CapturePage = () => {
+export const EditSoundPage = () => {
   const audioRecorderActions = useAudioRecorderActions()
   const audioRecorderState = useAudioRecorderState()
   const volume = useAudioRecorderVolume()
@@ -78,16 +78,16 @@ export const CapturePage = () => {
       <SoundNameTextField soundName={soundName} setSoundName={setSoundName} />
       <div className="flex items-center space-x-4 p-4">
         {audioRecorderState === AudioRecorderState.IDLE && (
-          <RecordButton testId={CapturePageTestIds.recordButton} onPress={handleRecordButtonPressed}>
+          <RecordButton testId={EditSoundPageTestIds.recordButton} onPress={handleRecordButtonPressed}>
             Record
           </RecordButton>
         )}
         {audioRecorderState === AudioRecorderState.RECORDING && (
-          <StopButton testId={CapturePageTestIds.stopButton} onPress={handleStopButtonPressed}>
+          <StopButton testId={EditSoundPageTestIds.stopButton} onPress={handleStopButtonPressed}>
             Stop
           </StopButton>
         )}
-        <div>{audioUrl && <audio data-testid={CapturePageTestIds.audioElement} src={audioUrl} controls />}</div>
+        <div>{audioUrl && <audio data-testid={EditSoundPageTestIds.audioElement} src={audioUrl} controls />}</div>
         {audioBuffer && <WaveformVisualiser audioBuffer={audioBuffer} />}
         {audioRecorderState === AudioRecorderState.RECORDING && <VolumeMeter volume={volume} />}
       </div>

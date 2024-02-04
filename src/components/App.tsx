@@ -1,7 +1,7 @@
 import React from 'react'
 import { createHashRouter, RouterProvider } from 'react-router-dom'
 import { HomePage } from './HomePage.tsx'
-import { CapturePage } from './capture/CapturePage.tsx'
+import { EditSoundPage } from './capture/EditSoundPage.tsx'
 import { AudioRecorderContext } from '../audio/AudioRecorderContext.ts'
 import { IAudioRecorder } from '../audio/IAudioRecorder.ts'
 import { ToastContainer } from 'react-toastify'
@@ -13,7 +13,7 @@ const router = createHashRouter([
   },
   {
     path: '/capture',
-    element: <CapturePage />,
+    element: <EditSoundPage />,
   },
 ])
 
