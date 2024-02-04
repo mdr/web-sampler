@@ -15,17 +15,17 @@ export class MockAudioRecorder extends AbstractAudioRecorder implements AudioRec
 
   stopRecording = (): void => {
     this.setState(AudioRecorderState.IDLE)
-    const audioBuffer = createSilentArrayBuffer(Duration.fromObject({ seconds: 1 }))
-    this.fireRecordingCompleteListeners(audioBuffer)
+    const silentAudio = createSilentAudio(Duration.fromObject({ seconds: 1 }))
+    this.fireRecordingCompleteListeners(silentAudio)
   }
 }
 
 const DEFAULT_SAMPLE_RATE = 44100
 
-const createSilentArrayBuffer = (duration: Duration): ArrayBuffer => {
+const createSilentAudio = (duration: Duration): Float32Array => {
   const durationInSeconds = duration.as('seconds')
   const numberOfSamples = DEFAULT_SAMPLE_RATE * durationInSeconds
   const channelData = new Float32Array(numberOfSamples)
   channelData.fill(0)
-  return channelData.buffer
+  return channelData
 }

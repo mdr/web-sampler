@@ -90,7 +90,7 @@ export class WebAudioRecorder extends AbstractAudioRecorder implements AudioReco
     const combinedPcm = concatenateFloat32Arrays(this.audioBuffers)
     this.audioBuffers = []
     if (combinedPcm !== undefined) {
-      this.fireRecordingCompleteListeners(combinedPcm.buffer)
+      this.fireRecordingCompleteListeners(combinedPcm)
     }
 
     this.source?.disconnect()

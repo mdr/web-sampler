@@ -38,8 +38,8 @@ export class AudioBufferUtils {
   private createMonoAudioBuffer = (length: number): AudioBuffer =>
     this.audioContext.createBuffer(1, length, this.audioContext.sampleRate)
 
-  arrayBufferToWavBlob = (audio: ArrayBuffer): Blob => {
-    const audioBuffer = this.audioBufferFromArrayBuffer(audio)
+  float32ArrayToWavBlob = (audio: Float32Array): Blob => {
+    const audioBuffer = this.audioBufferFromFloat32Array(audio)
     const wavBuffer = audioBufferToWav(audioBuffer)
     return new Blob([wavBuffer], { type: 'audio/wav' })
   }

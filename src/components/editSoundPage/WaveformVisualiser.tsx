@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef } from 'react'
 
 interface WaveformVisualiserProps {
-  audio: ArrayBuffer
+  audio: Float32Array
 }
 
 export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({ audio }) => {
@@ -15,8 +15,7 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({ audio })
 
     const width = canvas.width
     const height = canvas.height
-    const audioArray = new Float32Array(audio)
-    const step = Math.ceil(audioArray.length / width)
+    const step = Math.ceil(audio.length / width)
     const amp = height / 2
 
     ctx.clearRect(0, 0, width, height)
@@ -30,7 +29,7 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({ audio })
       let min = 1.0
       let max = -1.0
       for (let j = 0; j < step; j++) {
-        const datum = audioArray[i * step + j]
+        const datum = audio[i * step + j]
         if (datum < min) min = datum
         if (datum > max) max = datum
       }

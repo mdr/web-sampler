@@ -33,12 +33,12 @@ export const EditSoundPageContents = ({ soundId }: EditSoundPageProps) => {
   const audioRecorderActions = useAudioRecorderActions()
   const audioRecorderState = useAudioRecorderState()
 
-  const [audio, setAudio] = useState<Option<ArrayBuffer>>(undefined)
+  const [audio, setAudio] = useState<Option<Float32Array>>(undefined)
   const createObjectUrl = useObjectUrlCreator()
   const timerIdRef = useRef<Option<TimerId>>()
 
   const handleRecordingComplete = useCallback(
-    (audio: ArrayBuffer) => {
+    (audio: Float32Array) => {
       setAudio(audio)
       if (timerIdRef.current) {
         clearTimeout(timerIdRef.current)
@@ -77,7 +77,7 @@ export const EditSoundPageContents = ({ soundId }: EditSoundPageProps) => {
 
   const audioUrl: Option<Url> = useMemo(() => {
     const audioBufferUtils = new AudioBufferUtils(new AudioContext())
-    return audio === undefined ? undefined : createObjectUrl(audioBufferUtils.arrayBufferToWavBlob(audio))
+    return audio === undefined ? undefined : createObjectUrl(audioBufferUtils.float32ArrayToWavBlob(audio))
   }, [audio, createObjectUrl])
 
   const setSoundName = (name: string) => soundActions.setName(soundId, name)
