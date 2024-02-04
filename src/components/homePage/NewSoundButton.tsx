@@ -1,8 +1,8 @@
 import React from 'react'
 import Icon from '@mdi/react'
 import { mdiPlus } from '@mdi/js'
-import { TestId } from '../utils/types/TestId.ts'
-import { doNothing } from '../utils/utils.ts'
+import { TestId } from '../../utils/types/TestId.ts'
+import { doNothing } from '../../utils/utils.ts'
 
 interface NewSoundButtonProps {
   testId?: TestId

@@ -1,6 +1,6 @@
-import { Navbar } from './Navbar.tsx'
+import { Navbar } from '../Navbar.tsx'
 import { NewSoundButton } from './NewSoundButton.tsx'
-import { useSoundActions } from '../sounds/soundHooks.ts'
+import { useSoundActions } from '../../sounds/soundHooks.ts'
 import { useNavigate } from 'react-router-dom'
 import { HomePageTestIds } from './HomePage.testIds.ts'
 

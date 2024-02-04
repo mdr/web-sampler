@@ -1,7 +1,7 @@
 import { NavbarPageObject } from './NavbarPageObject.ts'
 import { PageObject } from './PageObject.ts'
 import { EditSoundPageObject } from './EditSoundPageObject.ts'
-import { HomePageTestIds } from '../../../components/HomePage.testIds.ts'
+import { HomePageTestIds } from '../../../components/homePage/HomePage.testIds.ts'
 
 export class HomePageObject extends PageObject {
   get navbar(): NavbarPageObject {

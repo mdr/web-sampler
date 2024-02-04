@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { NavbarTestIds } from './NavbarTestIds.ts'
+import { NavbarTestIds } from './Navbar.testIds.ts'
 
 export const Navbar = () => (
   <nav className="bg-gray-800 text-white p-4">

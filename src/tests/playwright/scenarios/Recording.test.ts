@@ -1,6 +1,6 @@
 import { test } from '@playwright/experimental-ct-react'
 import { launchApp } from '../pageObjects/launchApp.tsx'
-import { MAX_RECORDING_DURATION } from '../../../components/editSound/captureConstants.ts'
+import { MAX_RECORDING_DURATION } from '../../../components/editSoundPage/recordingConstants.ts'
 import { StartRecordingOutcome } from '../../../audio/IAudioRecorder.ts'
 import { MountFunction } from '../types.ts'
 import { EditSoundPageObject } from '../pageObjects/EditSoundPageObject.ts'

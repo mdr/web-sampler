@@ -1,5 +1,5 @@
 import { EditSoundPageObject } from './EditSoundPageObject.ts'
-import { NavbarTestIds } from '../../../components/NavbarTestIds.ts'
+import { NavbarTestIds } from '../../../components/Navbar.testIds.ts'
 import { PageObject } from './PageObject.ts'
 
 export class NavbarPageObject extends PageObject {
