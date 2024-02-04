@@ -4,10 +4,11 @@ import { EditSoundPageTestIds } from '../../../components/editSoundPage/EditSoun
 import { PageObject } from './PageObject.ts'
 import { VolumeMeterTestIds } from '../../../components/editSoundPage/VolumeMeter.testIds.ts'
 import { StartRecordingOutcome } from '../../../audio/IAudioRecorder.ts'
+import { RecordButtonTestIds } from '../../../components/editSoundPage/RecordButton.testIds.ts'
 
 export class EditSoundPageObject extends PageObject {
   static verifyOpen = async (mountResult: MountResult): Promise<EditSoundPageObject> => {
-    await expect(mountResult.getByTestId(EditSoundPageTestIds.recordButton)).toBeVisible()
+    await expect(mountResult.getByTestId(RecordButtonTestIds.button)).toBeVisible()
     return new EditSoundPageObject(mountResult)
   }
 
@@ -18,7 +19,7 @@ export class EditSoundPageObject extends PageObject {
   } = {}): Promise<void> =>
     this.step('pressRecordButton', async () => {
       await this.page.evaluate((outcome) => window.testHooks.setStartRecordingOutcome(outcome), outcome)
-      await this.click(EditSoundPageTestIds.recordButton)
+      await this.click(RecordButtonTestIds.button)
     })
 
   pressStopButton = (): Promise<void> => this.step('pressStopButton', () => this.click(EditSoundPageTestIds.stopButton))

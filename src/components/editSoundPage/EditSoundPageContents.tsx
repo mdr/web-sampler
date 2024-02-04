@@ -81,11 +81,7 @@ export const EditSoundPageContents = ({ soundId }: EditSoundPageProps) => {
     <>
       <SoundNameTextField soundName={soundName} setSoundName={setSoundName} />
       <div className="flex items-center space-x-4 p-4">
-        {audioRecorderState === AudioRecorderState.IDLE && (
-          <RecordButton testId={EditSoundPageTestIds.recordButton} onPress={handleRecordButtonPressed}>
-            Record
-          </RecordButton>
-        )}
+        {audioRecorderState === AudioRecorderState.IDLE && <RecordButton onPress={handleRecordButtonPressed} />}
         {audioRecorderState === AudioRecorderState.RECORDING && (
           <StopButton testId={EditSoundPageTestIds.stopButton} onPress={handleStopButtonPressed}>
             Stop
