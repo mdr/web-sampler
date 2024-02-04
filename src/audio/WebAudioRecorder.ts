@@ -1,6 +1,5 @@
 import { AudioRecorder, AudioRecorderState, StartRecordingOutcome } from './AudioRecorder.ts'
 import { Option } from '../utils/types/Option.ts'
-import { audioBufferToArrayBuffer, AudioBufferUtils } from './AudioBufferUtils.ts'
 import workletUrl from './CapturingAudioWorkletProcessor?worker&url'
 import { CAPTURING_AUDIO_WORKLET_NAME, STOP_MESSAGE } from './CapturingAudioWorkletConstants.ts'
 import { AudioContextProvider } from './AudioContextProvider.ts'
@@ -10,7 +9,7 @@ import _ from 'lodash'
 export class WebAudioRecorder extends AbstractAudioRecorder implements AudioRecorder {
   private mediaStream: Option<MediaStream> = undefined
   private getVolume: Option<() => number> = undefined
-  private audioBuffers: AudioBuffer[] = []
+  private audioBuffers: Float32Array[] = []
   private captureAudioWorkletNode: Option<AudioWorkletNode> = undefined
   private source: Option<MediaStreamAudioSourceNode> = undefined
 
@@ -22,10 +21,6 @@ export class WebAudioRecorder extends AbstractAudioRecorder implements AudioReco
     return this.audioContextProvider.audioContext
   }
 
-  private get audioBufferUtils(): AudioBufferUtils {
-    return new AudioBufferUtils(this.audioContext)
-  }
-
   private handleStreamInactive = () => {
     this.stopRecording()
   }
@@ -35,8 +30,7 @@ export class WebAudioRecorder extends AbstractAudioRecorder implements AudioReco
   }
 
   private handleWorkletMessage = (event: MessageEvent<Float32Array>) => {
-    const audioBuffer = this.audioBufferUtils.audioBufferFromFloat32Array(event.data)
-    this.audioBuffers.push(audioBuffer)
+    this.audioBuffers.push(event.data)
   }
 
   startRecording = async (): Promise<StartRecordingOutcome> => {
@@ -93,11 +87,10 @@ export class WebAudioRecorder extends AbstractAudioRecorder implements AudioReco
       throw new Error('Not recording')
     }
     this.setState(AudioRecorderState.IDLE)
-    const combinedBuffer = this.audioBufferUtils.combineAudioBuffers(this.audioBuffers)
+    const combinedPcm = concatenateFloat32Arrays(this.audioBuffers)
     this.audioBuffers = []
-    if (combinedBuffer !== undefined) {
-      const audio = audioBufferToArrayBuffer(combinedBuffer)
-      this.fireRecordingCompleteListeners(audio)
+    if (combinedPcm !== undefined) {
+      this.fireRecordingCompleteListeners(combinedPcm.buffer)
     }
 
     this.source?.disconnect()
@@ -122,4 +115,15 @@ const average = (dataArray: Uint8Array): number => {
     return 0
   }
   return _.sum(dataArray) / dataArray.length
+}
+
+const concatenateFloat32Arrays = (arrays: Float32Array[]): Float32Array => {
+  const totalLength = _.sumBy(arrays, (buffer) => buffer.length)
+  const combinedBuffer = new Float32Array(totalLength)
+  let offset = 0
+  arrays.forEach((buffer) => {
+    combinedBuffer.set(buffer, offset)
+    offset += buffer.length
+  })
+  return combinedBuffer
 }
