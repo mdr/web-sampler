@@ -26,8 +26,8 @@ export class AbstractAudioRecorder {
     _.remove(this.recordingCompleteListeners, (l) => l === listener)
   }
 
-  protected fireRecordingCompleteListeners = (audioBuffer: AudioBuffer): void => {
-    this.recordingCompleteListeners.forEach((listener) => listener(audioBuffer))
+  protected fireRecordingCompleteListeners = (audio: ArrayBuffer): void => {
+    this.recordingCompleteListeners.forEach((listener) => listener(audio))
   }
 
   protected setState = (state: AudioRecorderState) => {

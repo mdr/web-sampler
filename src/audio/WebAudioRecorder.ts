@@ -1,6 +1,6 @@
 import { AudioRecorder, AudioRecorderState, StartRecordingOutcome } from './AudioRecorder.ts'
 import { Option } from '../utils/types/Option.ts'
-import { AudioBufferUtils } from './AudioBufferUtils.ts'
+import { audioBufferToArrayBuffer, AudioBufferUtils } from './AudioBufferUtils.ts'
 import workletUrl from './CapturingAudioWorkletProcessor?worker&url'
 import { CAPTURING_AUDIO_WORKLET_NAME, STOP_MESSAGE } from './CapturingAudioWorkletConstants.ts'
 import { AudioContextProvider } from './AudioContextProvider.ts'
@@ -96,7 +96,8 @@ export class WebAudioRecorder extends AbstractAudioRecorder implements AudioReco
     const combinedBuffer = this.audioBufferUtils.combineAudioBuffers(this.audioBuffers)
     this.audioBuffers = []
     if (combinedBuffer !== undefined) {
-      this.fireRecordingCompleteListeners(combinedBuffer)
+      const audio = audioBufferToArrayBuffer(combinedBuffer)
+      this.fireRecordingCompleteListeners(audio)
     }
 
     this.source?.disconnect()

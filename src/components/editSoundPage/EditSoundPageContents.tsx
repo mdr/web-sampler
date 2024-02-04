@@ -21,7 +21,7 @@ import { useSound, useSoundActions } from '../../sounds/soundHooks.ts'
 import { SoundId } from '../../types/Sound.ts'
 import { fireAndForget } from '../../utils/utils.ts'
 import { Url } from '../../utils/types/Url.ts'
-import { audioBufferToWavBlob, convertMonoAudioBufferToArrayBuffer } from '../../audio/AudioBufferUtils.ts'
+import { AudioBufferUtils } from '../../audio/AudioBufferUtils.ts'
 
 export interface EditSoundPageProps {
   soundId: SoundId
@@ -33,18 +33,18 @@ export const EditSoundPageContents = ({ soundId }: EditSoundPageProps) => {
   const audioRecorderActions = useAudioRecorderActions()
   const audioRecorderState = useAudioRecorderState()
 
-  const [audioBuffer, setAudioBuffer] = useState<Option<AudioBuffer>>(undefined)
+  const [audio, setAudio] = useState<Option<ArrayBuffer>>(undefined)
   const createObjectUrl = useObjectUrlCreator()
   const timerIdRef = useRef<Option<TimerId>>()
 
   const handleRecordingComplete = useCallback(
-    (buffer: AudioBuffer) => {
-      setAudioBuffer(buffer)
+    (audio: ArrayBuffer) => {
+      setAudio(audio)
       if (timerIdRef.current) {
         clearTimeout(timerIdRef.current)
       }
     },
-    [setAudioBuffer],
+    [setAudio],
   )
   useAudioRecordingComplete(handleRecordingComplete)
 
@@ -62,7 +62,7 @@ export const EditSoundPageContents = ({ soundId }: EditSoundPageProps) => {
       const outcome = await audioRecorderActions.startRecording()
       switch (outcome) {
         case StartRecordingOutcome.SUCCESS:
-          setAudioBuffer(undefined)
+          setAudio(undefined)
           timerIdRef.current = setTimeout(() => audioRecorderActions.stopRecording(), MAX_RECORDING_DURATION.toMillis())
           break
         case StartRecordingOutcome.PERMISSION_DENIED:
@@ -75,15 +75,10 @@ export const EditSoundPageContents = ({ soundId }: EditSoundPageProps) => {
 
   const handleStopButtonPressed = () => audioRecorderActions.stopRecording()
 
-  const audio: Option<ArrayBuffer> = useMemo(
-    () => (audioBuffer === undefined ? undefined : convertMonoAudioBufferToArrayBuffer(audioBuffer)),
-    [audioBuffer],
-  )
-
-  const audioUrl: Option<Url> = useMemo(
-    () => (audioBuffer === undefined ? undefined : createObjectUrl(audioBufferToWavBlob(audioBuffer))),
-    [audioBuffer, createObjectUrl],
-  )
+  const audioUrl: Option<Url> = useMemo(() => {
+    const audioBufferUtils = new AudioBufferUtils(new AudioContext())
+    return audio === undefined ? undefined : createObjectUrl(audioBufferUtils.arrayBufferToWavBlob(audio))
+  }, [audio, createObjectUrl])
 
   const setSoundName = (name: string) => soundActions.setName(soundId, name)
 

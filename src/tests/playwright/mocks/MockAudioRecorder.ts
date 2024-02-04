@@ -5,7 +5,6 @@ import { Duration } from 'luxon'
 export class MockAudioRecorder extends AbstractAudioRecorder implements AudioRecorder {
   volume: number = 0
   startRecordingOutcome: StartRecordingOutcome = StartRecordingOutcome.SUCCESS
-  blob: Blob = new Blob()
 
   startRecording = (): Promise<StartRecordingOutcome> => {
     if (this.startRecordingOutcome === StartRecordingOutcome.SUCCESS) {
@@ -16,15 +15,17 @@ export class MockAudioRecorder extends AbstractAudioRecorder implements AudioRec
 
   stopRecording = (): void => {
     this.setState(AudioRecorderState.IDLE)
-    const audioBuffer = createSilentAudioBuffer(new AudioContext(), Duration.fromMillis(100))
+    const audioBuffer = createSilentArrayBuffer(Duration.fromObject({ seconds: 1 }))
     this.fireRecordingCompleteListeners(audioBuffer)
   }
 }
 
-const createSilentAudioBuffer = (context: AudioContext, duration: Duration): AudioBuffer => {
-  const sampleRate = context.sampleRate
-  const buffer = context.createBuffer(1, sampleRate * duration.toMillis(), sampleRate)
-  const channelData = buffer.getChannelData(0)
+const DEFAULT_SAMPLE_RATE = 44100
+
+const createSilentArrayBuffer = (duration: Duration): ArrayBuffer => {
+  const durationInSeconds = duration.as('seconds')
+  const numberOfSamples = DEFAULT_SAMPLE_RATE * durationInSeconds
+  const channelData = new Float32Array(numberOfSamples)
   channelData.fill(0)
-  return buffer
+  return channelData.buffer
 }

@@ -32,20 +32,20 @@ export class AudioBufferUtils {
     return audioBuffer
   }
 
-  audioBufferFromArrayBuffer = async (arrayBuffer: ArrayBuffer): Promise<AudioBuffer> =>
+  audioBufferFromArrayBuffer = (arrayBuffer: ArrayBuffer): AudioBuffer =>
     this.audioBufferFromFloat32Array(new Float32Array(arrayBuffer))
 
   private createMonoAudioBuffer = (length: number): AudioBuffer =>
     this.audioContext.createBuffer(1, length, this.audioContext.sampleRate)
+
+  arrayBufferToWavBlob = (audio: ArrayBuffer): Blob => {
+    const audioBuffer = this.audioBufferFromArrayBuffer(audio)
+    const wavBuffer = audioBufferToWav(audioBuffer)
+    return new Blob([wavBuffer], { type: 'audio/wav' })
+  }
 }
 
-export const convertMonoAudioBufferToArrayBuffer = (audioBuffer: AudioBuffer): ArrayBuffer => {
-  const floatAudioData = audioBuffer.getChannelData(0)
-  const buffer = new ArrayBuffer(floatAudioData.length * Float32Array.BYTES_PER_ELEMENT)
-  const array = new Float32Array(buffer)
-  array.set(floatAudioData)
-  return buffer
+export const audioBufferToArrayBuffer = (audioBuffer: AudioBuffer): ArrayBuffer => {
+  const channelData = audioBuffer.getChannelData(0)
+  return new Float32Array(channelData).buffer
 }
-
-export const audioBufferToWavBlob = (audioBuffer: AudioBuffer): Blob =>
-  new Blob([audioBufferToWav(audioBuffer)], { type: 'audio/wav' })

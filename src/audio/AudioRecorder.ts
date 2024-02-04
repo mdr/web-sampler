@@ -11,7 +11,7 @@ export enum StartRecordingOutcome {
 
 export type AudioRecorderStateChangeListener = (state: AudioRecorderState) => void
 
-export type RecordingCompleteListener = (audioBuffer: AudioBuffer) => void
+export type RecordingCompleteListener = (audio: ArrayBuffer) => void
 
 export interface AudioRecorder {
   addStateChangeListener(listener: AudioRecorderStateChangeListener): void
