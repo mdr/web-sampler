@@ -3,7 +3,6 @@ import { RecordButton } from './RecordButton.tsx'
 import { VolumeMeter } from './VolumeMeter.tsx'
 import { useObjectUrlCreator } from '../../utils/hooks.ts'
 import { StopButton } from './StopButton.tsx'
-import { Url } from '../../utils/types/Url.ts'
 import { EditSoundPageTestIds } from './EditSoundPage.testIds.ts'
 import { AudioRecorderState, StartRecordingOutcome } from '../../audio/AudioRecorder.ts'
 import { Option } from '../../utils/types/Option.ts'
@@ -21,6 +20,8 @@ import {
 import { useSound, useSoundActions } from '../../sounds/soundHooks.ts'
 import { SoundId } from '../../types/Sound.ts'
 import { fireAndForget } from '../../utils/utils.ts'
+import audioBufferToWav from 'audiobuffer-to-wav'
+import { Url } from '../../utils/types/Url.ts'
 
 export interface EditSoundPageProps {
   soundId: SoundId
@@ -32,20 +33,18 @@ export const EditSoundPageContents = ({ soundId }: EditSoundPageProps) => {
   const audioRecorderActions = useAudioRecorderActions()
   const audioRecorderState = useAudioRecorderState()
 
-  const [audioUrl, setAudioUrl] = useState<Option<Url>>(undefined)
   const [audioBuffer, setAudioBuffer] = useState<Option<AudioBuffer>>(undefined)
   const createObjectUrl = useObjectUrlCreator()
   const timerIdRef = useRef<Option<TimerId>>()
 
   const handleRecordingComplete = useCallback(
-    (buffer: AudioBuffer, audioBlob: Blob) => {
-      setAudioUrl(createObjectUrl(audioBlob))
+    (buffer: AudioBuffer) => {
       setAudioBuffer(buffer)
       if (timerIdRef.current) {
         clearTimeout(timerIdRef.current)
       }
     },
-    [createObjectUrl],
+    [setAudioBuffer],
   )
   useAudioRecordingComplete(handleRecordingComplete)
 
@@ -63,7 +62,6 @@ export const EditSoundPageContents = ({ soundId }: EditSoundPageProps) => {
       const outcome = await audioRecorderActions.startRecording()
       switch (outcome) {
         case StartRecordingOutcome.SUCCESS:
-          setAudioUrl(undefined)
           setAudioBuffer(undefined)
           timerIdRef.current = setTimeout(() => audioRecorderActions.stopRecording(), MAX_RECORDING_DURATION.toMillis())
           break
@@ -80,6 +78,11 @@ export const EditSoundPageContents = ({ soundId }: EditSoundPageProps) => {
   const audio: Option<ArrayBuffer> = useMemo(
     () => (audioBuffer === undefined ? undefined : convertMonoAudioBufferToArrayBuffer(audioBuffer)),
     [audioBuffer],
+  )
+
+  const audioUrl: Option<Url> = useMemo(
+    () => (audioBuffer === undefined ? undefined : createObjectUrl(audioBufferToWavBlob(audioBuffer))),
+    [audioBuffer, createObjectUrl],
   )
 
   const setSoundName = (name: string) => soundActions.setName(soundId, name)
@@ -109,3 +112,6 @@ const convertMonoAudioBufferToArrayBuffer = (audioBuffer: AudioBuffer): ArrayBuf
   array.set(floatAudioData)
   return buffer
 }
+
+const audioBufferToWavBlob = (audioBuffer: AudioBuffer): Blob =>
+  new Blob([audioBufferToWav(audioBuffer)], { type: 'audio/wav' })

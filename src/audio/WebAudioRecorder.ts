@@ -1,6 +1,5 @@
 import { AudioRecorder, AudioRecorderState, StartRecordingOutcome } from './AudioRecorder.ts'
 import { Option } from '../utils/types/Option.ts'
-import audioBufferToWav from 'audiobuffer-to-wav'
 import { AudioBufferUtils } from './AudioBufferUtils.ts'
 import workletUrl from './CapturingAudioWorkletProcessor?worker&url'
 import { CAPTURING_AUDIO_WORKLET_NAME, STOP_MESSAGE } from './CapturingAudioWorkletConstants.ts'
@@ -97,7 +96,7 @@ export class WebAudioRecorder extends AbstractAudioRecorder implements AudioReco
     const combinedBuffer = this.audioBufferUtils.combineAudioBuffers(this.audioBuffers)
     this.audioBuffers = []
     if (combinedBuffer !== undefined) {
-      this.fireRecordingCompleteListeners(combinedBuffer, this.makeWavBlob(combinedBuffer))
+      this.fireRecordingCompleteListeners(combinedBuffer)
     }
 
     this.source?.disconnect()
@@ -115,9 +114,6 @@ export class WebAudioRecorder extends AbstractAudioRecorder implements AudioReco
 
     this.getVolume = undefined
   }
-
-  private makeWavBlob = (audioBuffer: AudioBuffer): Blob =>
-    new Blob([audioBufferToWav(audioBuffer)], { type: 'audio/wav' })
 }
 
 const average = (dataArray: Uint8Array): number => {
