@@ -2,11 +2,11 @@ import { Navbar } from '../Navbar.tsx'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { RecordButton } from './RecordButton.tsx'
 import { VolumeMeter } from './VolumeMeter.tsx'
-import { useObjectUrlCreator, useRequestAnimationFrame } from '../../utils/hooks.ts'
+import { useObjectUrlCreator } from '../../utils/hooks.ts'
 import { StopButton } from './StopButton.tsx'
 import { Url } from '../../utils/types/Url.ts'
 import { CapturePageTestIds } from './CapturePage.testIds.ts'
-import { AudioRecorderState, StartRecordingOutcome, useAudioRecorderState } from '../../audio/IAudioRecorder.ts'
+import { AudioRecorderState, StartRecordingOutcome } from '../../audio/IAudioRecorder.ts'
 import { Option } from '../../utils/types/Option.ts'
 import { useAudioRecorder } from '../../audio/AudioRecorderContext.ts'
 import useUnmount from 'beautiful-react-hooks/useUnmount'
@@ -15,14 +15,15 @@ import { MAX_RECORDING_DURATION } from './captureConstants.ts'
 import { toast } from 'react-toastify'
 import { WaveformVisualiser } from '../../audio/WaveformVisualiser.tsx'
 import { SoundNameTextField } from './SoundNameTextField.tsx'
+import { useAudioRecorderState, useAudioRecorderVolume } from '../../audio/audioRecorderHooks.ts'
 
 export const CapturePage = () => {
   const audioRecorder = useAudioRecorder()
   const [soundName, setSoundName] = useState('')
   const audioRecorderState = useAudioRecorderState()
+  const volume = useAudioRecorderVolume()
   const [audioUrl, setAudioUrl] = useState<Option<Url>>(undefined)
   const [audioBuffer, setAudioBuffer] = useState<Option<AudioBuffer>>(undefined)
-  const [volume, setVolume] = useState<number>(0)
   const createObjectUrl = useObjectUrlCreator()
   const timerIdRef = useRef<Option<TimerId>>()
 
@@ -51,10 +52,6 @@ export const CapturePage = () => {
     if (timerIdRef.current) {
       clearTimeout(timerIdRef.current)
     }
-  })
-
-  useRequestAnimationFrame(() => {
-    setVolume(audioRecorder.volume)
   })
 
   const handleRecordButtonPressed = async (): Promise<void> => {

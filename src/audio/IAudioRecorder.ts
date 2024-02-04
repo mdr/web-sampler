@@ -1,6 +1,3 @@
-import { useCallback, useEffect, useState } from 'react'
-import { useAudioRecorder } from './AudioRecorderContext.ts'
-
 export enum AudioRecorderState {
   IDLE = 'IDLE',
   RECORDING = 'RECORDING',
@@ -32,15 +29,4 @@ export interface IAudioRecorder {
   readonly state: AudioRecorderState
 
   readonly volume: number
-}
-
-export const useAudioRecorderState = () => {
-  const audioRecorder = useAudioRecorder()
-  const [state, setState] = useState<AudioRecorderState>(audioRecorder.state)
-  const handleStateChanged = useCallback((newState: AudioRecorderState) => setState(newState), [setState])
-  useEffect(() => {
-    audioRecorder.addStateChangeListener(handleStateChanged)
-    return () => audioRecorder.removeStateChangeListener(handleStateChanged)
-  })
-  return state
 }
