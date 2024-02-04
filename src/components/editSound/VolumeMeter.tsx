@@ -1,14 +1,9 @@
-import React from 'react'
 import { VolumeMeterTestIds } from './VolumeMeter.testIds.ts'
+import { useAudioRecorderVolume } from '../../audio/audioRecorderHooks.ts'
 
-type VolumeMeterProps = {
-  volume: number
-}
-
-export const VolumeMeter: React.FC<VolumeMeterProps> = ({ volume }) => {
-  const volumeBarStyle = {
-    height: `${Math.min(volume, 100)}%`, // Ensure the height doesn't exceed 100%
-  }
+export const VolumeMeter = () => {
+  const volume = useAudioRecorderVolume()
+  const volumeBarStyle = { height: `${volume}%` }
   return (
     <div className="w-8 h-20 bg-gray-200 rounded flex flex-col justify-end">
       <div

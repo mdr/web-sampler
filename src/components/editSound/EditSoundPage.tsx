@@ -17,7 +17,6 @@ import { SoundNameTextField } from './SoundNameTextField.tsx'
 import {
   useAudioRecorderActions,
   useAudioRecorderState,
-  useAudioRecorderVolume,
   useAudioRecordingComplete,
 } from '../../audio/audioRecorderHooks.ts'
 import { useParams } from 'react-router-dom'
@@ -38,7 +37,6 @@ export const EditSoundPage = () => {
 
   const audioRecorderActions = useAudioRecorderActions()
   const audioRecorderState = useAudioRecorderState()
-  const volume = useAudioRecorderVolume()
 
   const [soundName, setSoundName] = useState<string>(sound?.name ?? '')
 
@@ -105,7 +103,7 @@ export const EditSoundPage = () => {
         )}
         <div>{audioUrl && <audio data-testid={EditSoundPageTestIds.audioElement} src={audioUrl} controls />}</div>
         {audioBuffer && <WaveformVisualiser audioBuffer={audioBuffer} />}
-        {audioRecorderState === AudioRecorderState.RECORDING && <VolumeMeter volume={volume} />}
+        {audioRecorderState === AudioRecorderState.RECORDING && <VolumeMeter />}
       </div>
     </>
   )
