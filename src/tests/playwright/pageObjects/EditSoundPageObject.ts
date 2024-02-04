@@ -2,7 +2,7 @@ import { expect } from '@playwright/experimental-ct-react'
 import { MountResult } from '../types.ts'
 import { EditSoundPageTestIds } from '../../../components/editSoundPage/EditSoundPage.testIds.ts'
 import { PageObject } from './PageObject.ts'
-import { StartRecordingOutcome } from '../../../audio/IAudioRecorder.ts'
+import { StartRecordingOutcome } from '../../../audio/AudioRecorder.ts'
 
 export class EditSoundPageObject extends PageObject {
   static verifyIsShown = async (mountResult: MountResult): Promise<EditSoundPageObject> => {

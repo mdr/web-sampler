@@ -1,7 +1,7 @@
 import React from 'react'
 import { RouterProvider } from 'react-router-dom'
 import { AudioRecorderContext } from '../audio/AudioRecorderContext.ts'
-import { IAudioRecorder } from '../audio/IAudioRecorder.ts'
+import { AudioRecorder } from '../audio/AudioRecorder.ts'
 import { ToastContainer } from 'react-toastify'
 import { SoundLibraryContext } from '../sounds/SoundLibraryContext.ts'
 import { SoundLibrary } from '../sounds/SoundLibrary.ts'
@@ -23,5 +23,5 @@ export const App = ({ audioRecorder }: AppProps) => (
 )
 
 export interface AppProps {
-  audioRecorder: IAudioRecorder
+  audioRecorder: AudioRecorder
 }

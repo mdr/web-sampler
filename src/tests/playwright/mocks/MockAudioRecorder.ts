@@ -1,8 +1,8 @@
-import { AudioRecorderState, IAudioRecorder, StartRecordingOutcome } from '../../../audio/IAudioRecorder.ts'
+import { AudioRecorder, AudioRecorderState, StartRecordingOutcome } from '../../../audio/AudioRecorder.ts'
 import { todo } from '../../../utils/utils.ts'
 import { AbstractAudioRecorder } from '../../../audio/AbstractAudioRecorder.ts'
 
-export class MockAudioRecorder extends AbstractAudioRecorder implements IAudioRecorder {
+export class MockAudioRecorder extends AbstractAudioRecorder implements AudioRecorder {
   volume: number = 0
   startRecordingOutcome: StartRecordingOutcome = StartRecordingOutcome.SUCCESS
   blob: Blob = new Blob()

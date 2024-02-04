@@ -1,4 +1,4 @@
-import { StartRecordingOutcome } from '../../audio/IAudioRecorder.ts'
+import { StartRecordingOutcome } from '../../audio/AudioRecorder.ts'
 
 export interface WindowTestHooks {
   setVolume: (volume: number) => void

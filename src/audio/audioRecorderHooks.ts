@@ -1,14 +1,9 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { useRequestAnimationFrame } from '../utils/hooks.ts'
-import {
-  AudioRecorderState,
-  IAudioRecorder,
-  RecordingCompleteListener,
-  StartRecordingOutcome,
-} from './IAudioRecorder.ts'
+import { AudioRecorder, AudioRecorderState, RecordingCompleteListener, StartRecordingOutcome } from './AudioRecorder.ts'
 import { AudioRecorderContext } from './AudioRecorderContext.ts'
 
-const useAudioRecorder = (): IAudioRecorder => {
+const useAudioRecorder = (): AudioRecorder => {
   const audioRecorder = useContext(AudioRecorderContext)
   if (audioRecorder === undefined) {
     throw new Error('no AudioRecorder available in context')

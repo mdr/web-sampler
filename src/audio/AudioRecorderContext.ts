@@ -1,5 +1,5 @@
 import { Context, createContext } from 'react'
-import { IAudioRecorder } from './IAudioRecorder.ts'
+import { AudioRecorder } from './AudioRecorder.ts'
 import { Option } from '../utils/types/Option.ts'
 
-export const AudioRecorderContext: Context<Option<IAudioRecorder>> = createContext<Option<IAudioRecorder>>(undefined)
+export const AudioRecorderContext: Context<Option<AudioRecorder>> = createContext<Option<AudioRecorder>>(undefined)

@@ -1,4 +1,4 @@
-import { AudioRecorderState, AudioRecorderStateChangeListener, RecordingCompleteListener } from './IAudioRecorder.ts'
+import { AudioRecorderState, AudioRecorderStateChangeListener, RecordingCompleteListener } from './AudioRecorder.ts'
 import _ from 'lodash'
 
 export class AbstractAudioRecorder {
