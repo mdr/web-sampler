@@ -22,12 +22,15 @@ export const useRequestAnimationFrame = (callback: () => void) => {
   return requestRef
 }
 
-export const useObjectUrlCreator = (): ((blob: Blob) => Url) => {
+export type ObjectUrlCreator = (blob: Blob) => Url
+
+export const useObjectUrlCreator = (): ObjectUrlCreator => {
   const objectUrls = useRef<Url[]>([])
   useUnmount(() => {
     for (const objectUrl of objectUrls.current) {
       URL.revokeObjectURL(objectUrl)
     }
+    objectUrls.current = []
   })
   return useCallback((blob: Blob) => {
     const objectUrl = Url(URL.createObjectURL(blob))
