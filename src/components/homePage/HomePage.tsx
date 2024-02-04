@@ -2,6 +2,7 @@ import { Navbar } from '../shared/Navbar.tsx'
 import { NewSoundButton } from './NewSoundButton.tsx'
 import { useSoundActions } from '../../sounds/soundHooks.ts'
 import { useNavigate } from 'react-router-dom'
+import { editSoundRoute } from '../router.tsx'
 
 export const HomePage = () => {
   const soundActions = useSoundActions()
@@ -9,7 +10,7 @@ export const HomePage = () => {
 
   const handleNewSound = () => {
     const sound = soundActions.newSound()
-    navigate(`/sound/${sound.id}`)
+    navigate(editSoundRoute(sound.id))
   }
 
   return (

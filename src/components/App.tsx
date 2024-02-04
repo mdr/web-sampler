@@ -1,7 +1,5 @@
 import React from 'react'
-import { createHashRouter, RouterProvider } from 'react-router-dom'
-import { HomePage } from './homePage/HomePage.tsx'
-import { EditSoundPage } from './editSoundPage/EditSoundPage.tsx'
+import { RouterProvider } from 'react-router-dom'
 import { AudioRecorderContext } from '../audio/AudioRecorderContext.ts'
 import { IAudioRecorder } from '../audio/IAudioRecorder.ts'
 import { ToastContainer } from 'react-toastify'
@@ -9,19 +7,7 @@ import { SoundLibraryContext } from '../sounds/SoundLibraryContext.ts'
 import { SoundLibrary } from '../sounds/SoundLibrary.ts'
 import { ErrorBoundary } from 'react-error-boundary'
 import { ErrorFallback } from './ErrorFallback.tsx'
-
-const router = createHashRouter([
-  {
-    path: '/',
-    element: <HomePage />,
-    errorElement: <ErrorFallback />,
-  },
-  {
-    path: '/sound/:soundId',
-    element: <EditSoundPage />,
-    errorElement: <ErrorFallback />,
-  },
-])
+import { router } from './router.tsx'
 
 export const App = ({ audioRecorder }: AppProps) => (
   <React.StrictMode>
