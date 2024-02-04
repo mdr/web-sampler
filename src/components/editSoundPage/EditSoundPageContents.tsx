@@ -86,15 +86,23 @@ export const EditSoundPageContents = ({ soundId }: EditSoundPageProps) => {
     <>
       <SoundNameTextField soundName={sound.name} setSoundName={setSoundName} />
       <div className="flex items-center space-x-4 p-4">
-        {audioRecorderState === AudioRecorderState.IDLE && <RecordButton onPress={handleRecordButtonPressed} />}
-        {audioRecorderState === AudioRecorderState.RECORDING && (
-          <StopButton testId={EditSoundPageTestIds.stopButton} onPress={handleStopButtonPressed}>
-            Stop
-          </StopButton>
+        {audioRecorderState === AudioRecorderState.IDLE && (
+          <>
+            <RecordButton onPress={handleRecordButtonPressed} />
+            {audioUrl !== undefined && (
+              <audio data-testid={EditSoundPageTestIds.audioElement} src={audioUrl} controls />
+            )}
+            {audio !== undefined && <WaveformVisualiser audio={audio} />}
+          </>
         )}
-        {audioUrl !== undefined && <audio data-testid={EditSoundPageTestIds.audioElement} src={audioUrl} controls />}
-        {audio !== undefined && <WaveformVisualiser audio={audio} />}
-        {audioRecorderState === AudioRecorderState.RECORDING && <VolumeMeter />}
+        {audioRecorderState === AudioRecorderState.RECORDING && (
+          <>
+            <StopButton testId={EditSoundPageTestIds.stopButton} onPress={handleStopButtonPressed}>
+              Stop
+            </StopButton>
+            <VolumeMeter />
+          </>
+        )}
       </div>
     </>
   )
