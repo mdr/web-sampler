@@ -20,6 +20,7 @@ import {
 } from '../../audio/audioRecorderHooks.ts'
 import { useSound, useSoundActions } from '../../sounds/soundHooks.ts'
 import { SoundId } from '../../types/Sound.ts'
+import { fireAndForget } from '../../utils/utils.ts'
 
 export interface EditSoundPageProps {
   soundId: SoundId
@@ -31,7 +32,7 @@ export const EditSoundPageContents = ({ soundId }: EditSoundPageProps) => {
   const audioRecorderActions = useAudioRecorderActions()
   const audioRecorderState = useAudioRecorderState()
 
-  const [soundName, setSoundName] = useState<string>(sound?.name ?? '')
+  const [soundName, setSoundName] = useState<string>(sound.name)
 
   const [audioUrl, setAudioUrl] = useState<Option<Url>>(undefined)
   const [audioBuffer, setAudioBuffer] = useState<Option<AudioBuffer>>(undefined)
@@ -59,21 +60,22 @@ export const EditSoundPageContents = ({ soundId }: EditSoundPageProps) => {
     }
   })
 
-  const handleRecordButtonPressed = async (): Promise<void> => {
-    const outcome = await audioRecorderActions.startRecording()
-    switch (outcome) {
-      case StartRecordingOutcome.SUCCESS:
-        setAudioUrl(undefined)
-        setAudioBuffer(undefined)
-        timerIdRef.current = setTimeout(() => audioRecorderActions.stopRecording(), MAX_RECORDING_DURATION.toMillis())
-        break
-      case StartRecordingOutcome.PERMISSION_DENIED:
-        break
-      case StartRecordingOutcome.NO_AUDIO_TRACK:
-        toast.error('No audio available in selected input')
-        break
-    }
-  }
+  const handleRecordButtonPressed = () =>
+    fireAndForget(async () => {
+      const outcome = await audioRecorderActions.startRecording()
+      switch (outcome) {
+        case StartRecordingOutcome.SUCCESS:
+          setAudioUrl(undefined)
+          setAudioBuffer(undefined)
+          timerIdRef.current = setTimeout(() => audioRecorderActions.stopRecording(), MAX_RECORDING_DURATION.toMillis())
+          break
+        case StartRecordingOutcome.PERMISSION_DENIED:
+          break
+        case StartRecordingOutcome.NO_AUDIO_TRACK:
+          toast.error('No audio available in selected input')
+          break
+      }
+    })
 
   const handleStopButtonPressed = () => audioRecorderActions.stopRecording()
 

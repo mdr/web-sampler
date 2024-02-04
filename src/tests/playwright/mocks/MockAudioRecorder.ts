@@ -7,11 +7,11 @@ export class MockAudioRecorder extends AbstractAudioRecorder implements AudioRec
   startRecordingOutcome: StartRecordingOutcome = StartRecordingOutcome.SUCCESS
   blob: Blob = new Blob()
 
-  startRecording = async (): Promise<StartRecordingOutcome> => {
+  startRecording = (): Promise<StartRecordingOutcome> => {
     if (this.startRecordingOutcome === StartRecordingOutcome.SUCCESS) {
       this.setState(AudioRecorderState.RECORDING)
     }
-    return this.startRecordingOutcome
+    return Promise.resolve(this.startRecordingOutcome)
   }
 
   stopRecording = (): void => {

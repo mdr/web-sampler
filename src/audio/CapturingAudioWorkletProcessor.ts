@@ -16,8 +16,7 @@ class CapturingAudioWorkletProcessor extends AudioWorkletProcessor {
     if (!this.active) {
       return false
     }
-    const input = inputs[0]
-    const inputChannelData = input[0]
+    const inputChannelData = inputs.at(0)?.at(0)
     if (inputChannelData !== undefined) {
       this.port.postMessage(inputChannelData)
     }
