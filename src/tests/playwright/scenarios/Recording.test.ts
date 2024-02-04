@@ -3,45 +3,45 @@ import { launchApp } from '../pageObjects/launchApp.tsx'
 import { MAX_RECORDING_DURATION } from '../../../components/capture/captureConstants.ts'
 import { StartRecordingOutcome } from '../../../audio/IAudioRecorder.ts'
 import { MountFunction } from '../types.ts'
-import { CapturePageObject } from '../pageObjects/CapturePageObject.ts'
+import { EditSoundPageObject } from '../pageObjects/EditSoundPageObject.ts'
 
 test('a captured audio file should be shown after recording', async ({ mount }) => {
-  const capturePage = await launchAndStartRecordingOnCapturePage(mount)
+  const editSoundPage = await launchAndStartRecordingOnCapturePage(mount)
 
-  await capturePage.pressStopButton()
+  await editSoundPage.pressStopButton()
 
-  await capturePage.expectAudioElementToBeShown()
+  await editSoundPage.expectAudioElementToBeShown()
 })
 
 test('a volume meter should indicate audio level during recording', async ({ mount }) => {
-  const capturePage = await launchAndStartRecordingOnCapturePage(mount)
+  const editSoundPage = await launchAndStartRecordingOnCapturePage(mount)
 
-  await capturePage.setVolume(50)
+  await editSoundPage.setVolume(50)
 
-  await capturePage.expectVolumeMeterToShowLevel(50)
+  await editSoundPage.expectVolumeMeterToShowLevel(50)
 })
 
 test('recording should stop automatically after 20 seconds', async ({ mount }) => {
-  const capturePage = await launchAndStartRecordingOnCapturePage(mount)
-  await capturePage.expectStopButtonToBeShown()
+  const editSoundPage = await launchAndStartRecordingOnCapturePage(mount)
+  await editSoundPage.expectStopButtonToBeShown()
 
-  await capturePage.wait(MAX_RECORDING_DURATION)
+  await editSoundPage.wait(MAX_RECORDING_DURATION)
 
-  await capturePage.expectAudioElementToBeShown()
+  await editSoundPage.expectAudioElementToBeShown()
 })
 
 test('an error toast should be shown if no audio is available on the selected source', async ({ mount }) => {
   const homePage = await launchApp(mount)
-  const capturePage = await homePage.navbar.clickCapture()
+  const editSoundPage = await homePage.navbar.clickCapture()
 
-  await capturePage.pressRecordButton({ outcome: StartRecordingOutcome.NO_AUDIO_TRACK })
+  await editSoundPage.pressRecordButton({ outcome: StartRecordingOutcome.NO_AUDIO_TRACK })
 
-  await capturePage.expectToastToBeShown('No audio available in selected input')
+  await editSoundPage.expectToastToBeShown('No audio available in selected input')
 })
 
-const launchAndStartRecordingOnCapturePage = async (mount: MountFunction): Promise<CapturePageObject> => {
+const launchAndStartRecordingOnCapturePage = async (mount: MountFunction): Promise<EditSoundPageObject> => {
   const homePage = await launchApp(mount)
-  const capturePage = await homePage.navbar.clickCapture()
-  await capturePage.pressRecordButton()
-  return capturePage
+  const editSoundPage = await homePage.navbar.clickCapture()
+  await editSoundPage.pressRecordButton()
+  return editSoundPage
 }

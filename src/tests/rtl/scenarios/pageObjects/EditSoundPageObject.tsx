@@ -6,7 +6,7 @@ import { expect } from 'vitest'
 import userEvent from '@testing-library/user-event'
 import { todo } from '../../../../utils/utils.ts'
 
-export class CapturePageObject extends PageObject {
+export class EditSoundPageObject extends PageObject {
   pressRecordButton = (): Promise<void> => userEvent.click(screen.getByTestId(EditSoundPageTestIds.recordButton))
   pressStopButton = (): Promise<void> => userEvent.click(screen.getByTestId(EditSoundPageTestIds.stopButton))
 

@@ -10,7 +10,7 @@ export const Navbar = () => (
       <li>
         <NavLink
           data-testid={NavbarTestIds.capture}
-          to="/capture"
+          to="/sound"
           className={({ isActive }) => (isActive ? 'font-bold text-white' : 'hover:text-gray-300')}
         >
           Capture

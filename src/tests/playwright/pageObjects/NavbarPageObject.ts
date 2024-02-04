@@ -1,11 +1,11 @@
-import { CapturePageObject } from './CapturePageObject.ts'
+import { EditSoundPageObject } from './EditSoundPageObject.ts'
 import { NavbarTestIds } from '../../../components/NavbarTestIds.ts'
 import { PageObject } from './PageObject.ts'
 
 export class NavbarPageObject extends PageObject {
-  clickCapture = (): Promise<CapturePageObject> =>
+  clickCapture = (): Promise<EditSoundPageObject> =>
     this.step('clickCapture', async () => {
       await this.click(NavbarTestIds.capture)
-      return CapturePageObject.verifyOpen(this.mountResult)
+      return EditSoundPageObject.verifyOpen(this.mountResult)
     })
 }

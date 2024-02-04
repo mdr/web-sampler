@@ -5,10 +5,10 @@ import { PageObject } from './PageObject.ts'
 import { VolumeMeterTestIds } from '../../../components/capture/VolumeMeter.testIds.ts'
 import { StartRecordingOutcome } from '../../../audio/IAudioRecorder.ts'
 
-export class CapturePageObject extends PageObject {
-  static verifyOpen = async (mountResult: MountResult): Promise<CapturePageObject> => {
+export class EditSoundPageObject extends PageObject {
+  static verifyOpen = async (mountResult: MountResult): Promise<EditSoundPageObject> => {
     await expect(mountResult.getByTestId(EditSoundPageTestIds.recordButton)).toBeVisible()
-    return new CapturePageObject(mountResult)
+    return new EditSoundPageObject(mountResult)
   }
 
   pressRecordButton = ({

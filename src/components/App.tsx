@@ -12,7 +12,7 @@ const router = createHashRouter([
     element: <HomePage />,
   },
   {
-    path: '/capture',
+    path: '/sound',
     element: <EditSoundPage />,
   },
 ])
