@@ -1,24 +1,24 @@
 import { Sound, SoundId } from '../types/Sound.ts'
 import { Option } from '../utils/types/Option.ts'
-import { ISoundLibrary } from './ISoundLibrary.ts'
 import * as uuid from 'uuid'
 import _ from 'lodash'
+import { SoundActions } from './soundHooks.ts'
 
-export type SoundUpdateListener = (sounds: Sound[]) => void
+export type SoundsUpdatedListener = (sounds: Sound[]) => void
 
-export class SoundLibrary implements ISoundLibrary {
+export class SoundLibrary implements SoundActions {
   private _sounds: Sound[] = []
-  private readonly listeners: SoundUpdateListener[] = []
+  private readonly listeners: SoundsUpdatedListener[] = []
 
   get sounds(): Sound[] {
     return this._sounds
   }
 
-  addListener = (listener: SoundUpdateListener): void => {
+  addListener = (listener: SoundsUpdatedListener): void => {
     this.listeners.push(listener)
   }
 
-  removeListener = (listener: SoundUpdateListener): void => {
+  removeListener = (listener: SoundsUpdatedListener): void => {
     _.remove(this.listeners, (l) => l === listener)
   }
 

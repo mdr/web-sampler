@@ -1,10 +1,10 @@
 import { Sound, SoundId } from '../types/Sound.ts'
 import { useCallback, useContext, useEffect, useState } from 'react'
-import { ISoundLibrary, SoundActions } from './ISoundLibrary.ts'
 import { SoundLibraryContext } from './SoundLibraryContext.ts'
 import { Option } from '../utils/types/Option.ts'
+import { SoundLibrary } from './SoundLibrary.ts'
 
-const useSoundLibrary = (): ISoundLibrary => {
+const useSoundLibrary = (): SoundLibrary => {
   const soundLibrary = useContext(SoundLibraryContext)
   if (soundLibrary === undefined) {
     throw new Error('no SoundLibrary available in context')
@@ -34,6 +34,12 @@ export const useSound = (id: SoundId): Sound => {
     throw new Error(`no sound found with id ${id}`)
   }
   return sound
+}
+
+export interface SoundActions {
+  newSound(): Sound
+
+  setName(id: SoundId, name: string): void
 }
 
 export const useSoundActions = (): SoundActions => useSoundLibrary()

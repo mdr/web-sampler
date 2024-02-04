@@ -1,28 +1,22 @@
-import {
-  AudioRecorderState,
-  AudioRecorderStateChangeListener,
-  IAudioRecorder,
-  RecordingCompleteListener,
-  StartRecordingOutcome,
-} from './IAudioRecorder.ts'
+import { AudioRecorderState, IAudioRecorder, StartRecordingOutcome } from './IAudioRecorder.ts'
 import { Option } from '../utils/types/Option.ts'
 import audioBufferToWav from 'audiobuffer-to-wav'
 import { AudioBufferUtils } from './AudioBufferUtils.ts'
 import workletUrl from './CapturingAudioWorkletProcessor?worker&url'
 import { CAPTURING_AUDIO_WORKLET_NAME, STOP_MESSAGE } from './CapturingAudioWorkletConstants.ts'
 import { AudioContextProvider } from './AudioContextProvider.ts'
+import { AbstractAudioRecorder } from './AbstractAudioRecorder.ts'
 
-export class AudioRecorder implements IAudioRecorder {
-  private _state: AudioRecorderState = AudioRecorderState.IDLE
+export class AudioRecorder extends AbstractAudioRecorder implements IAudioRecorder {
   private mediaStream: Option<MediaStream> = undefined
   private getVolume: Option<() => number> = undefined
   private audioBuffers: AudioBuffer[] = []
-  private stateChangeListeners: AudioRecorderStateChangeListener[] = []
-  private recordingCompleteListeners: RecordingCompleteListener[] = []
   private captureAudioWorkletNode: Option<AudioWorkletNode> = undefined
   private source: Option<MediaStreamAudioSourceNode> = undefined
 
-  constructor(private readonly audioContextProvider: AudioContextProvider) {}
+  constructor(private readonly audioContextProvider: AudioContextProvider) {
+    super()
+  }
 
   private get audioContext(): AudioContext {
     return this.audioContextProvider.audioContext
@@ -32,47 +26,12 @@ export class AudioRecorder implements IAudioRecorder {
     return new AudioBufferUtils(this.audioContext)
   }
 
-  addStateChangeListener = (listener: AudioRecorderStateChangeListener): void => {
-    this.stateChangeListeners.push(listener)
-  }
-
-  removeStateChangeListener = (listenerToRemove: AudioRecorderStateChangeListener): void => {
-    this.stateChangeListeners = this.stateChangeListeners.filter((listener) => listener !== listenerToRemove)
-  }
-
-  private fireStateChangeListeners = (state: AudioRecorderState): void => {
-    this.stateChangeListeners.forEach((listener) => listener(state))
-  }
-
-  addRecordingCompleteListener = (listener: RecordingCompleteListener): void => {
-    this.recordingCompleteListeners.push(listener)
-  }
-
-  removeRecordingCompleteListener = (listenerToRemove: RecordingCompleteListener): void => {
-    this.recordingCompleteListeners = this.recordingCompleteListeners.filter(
-      (listener) => listener !== listenerToRemove,
-    )
-  }
-
-  private fireRecordingCompleteListeners = (audioBuffer: AudioBuffer, audioBlob: Blob): void => {
-    this.recordingCompleteListeners.forEach((listener) => listener(audioBuffer, audioBlob))
-  }
-
   private handleStreamInactive = () => {
     this.stopRecording()
   }
 
-  private setState = (state: AudioRecorderState) => {
-    this._state = state
-    this.fireStateChangeListeners(state)
-  }
-
   get volume(): number {
     return this.getVolume?.() ?? 0
-  }
-
-  get state(): AudioRecorderState {
-    return this._state
   }
 
   private handleWorkletMessage = (event: MessageEvent<Float32Array>) => {
@@ -81,7 +40,7 @@ export class AudioRecorder implements IAudioRecorder {
   }
 
   startRecording = async (): Promise<StartRecordingOutcome> => {
-    if (this._state !== AudioRecorderState.IDLE) {
+    if (this.state !== AudioRecorderState.IDLE) {
       throw new Error('Already recording')
     }
     let mediaStream: MediaStream
@@ -130,7 +89,7 @@ export class AudioRecorder implements IAudioRecorder {
   }
 
   stopRecording = (): void => {
-    if (this._state !== AudioRecorderState.RECORDING) {
+    if (this.state !== AudioRecorderState.RECORDING) {
       throw new Error('Not recording')
     }
     this.setState(AudioRecorderState.IDLE)
