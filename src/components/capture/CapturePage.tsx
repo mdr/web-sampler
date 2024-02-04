@@ -12,7 +12,7 @@ import useUnmount from 'beautiful-react-hooks/useUnmount'
 import { TimerId } from '../../utils/types/TimerId.ts'
 import { MAX_RECORDING_DURATION } from './captureConstants.ts'
 import { toast } from 'react-toastify'
-import { WaveformVisualiser } from '../../audio/WaveformVisualiser.tsx'
+import { WaveformVisualiser } from './WaveformVisualiser.tsx'
 import { SoundNameTextField } from './SoundNameTextField.tsx'
 import {
   useAudioRecorderActions,
@@ -23,9 +23,11 @@ import {
 
 export const CapturePage = () => {
   const audioRecorderActions = useAudioRecorderActions()
-  const [soundName, setSoundName] = useState('')
   const audioRecorderState = useAudioRecorderState()
   const volume = useAudioRecorderVolume()
+
+  const [soundName, setSoundName] = useState('')
+
   const [audioUrl, setAudioUrl] = useState<Option<Url>>(undefined)
   const [audioBuffer, setAudioBuffer] = useState<Option<AudioBuffer>>(undefined)
   const createObjectUrl = useObjectUrlCreator()
