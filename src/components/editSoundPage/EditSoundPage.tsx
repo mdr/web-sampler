@@ -4,6 +4,7 @@ import { useMaybeSound } from '../../sounds/soundHooks.ts'
 import { EditSoundPageContents } from './EditSoundPageContents.tsx'
 import { Navbar } from '../shared/Navbar.tsx'
 import { SoundNotFound } from './SoundNotFound.tsx'
+import { SoundSidebar } from './SoundSidebar.tsx'
 
 const useSoundIdParam = (): SoundId => {
   const { soundId } = useParams()
@@ -17,9 +18,16 @@ export const EditSoundPage = () => {
   const soundId = useSoundIdParam()
   const sound = useMaybeSound(soundId)
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <Navbar />
-      {sound === undefined ? <SoundNotFound /> : <EditSoundPageContents soundId={sound.id} />}
-    </>
+      <div className="flex flex-1">
+        <div className="w-64 flex-none">
+          <SoundSidebar />
+        </div>
+        <div className="flex-grow border-l border-gray-200">
+          {sound === undefined ? <SoundNotFound /> : <EditSoundPageContents soundId={sound.id} />}
+        </div>
+      </div>
+    </div>
   )
 }

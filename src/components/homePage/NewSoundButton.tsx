@@ -1,4 +1,3 @@
-import React from 'react'
 import Icon from '@mdi/react'
 import { mdiPlus } from '@mdi/js'
 import { doNothing } from '../../utils/utils.ts'
@@ -7,9 +6,8 @@ import { HomePageTestIds } from './HomePage.testIds.ts'
 
 interface NewSoundButtonProps {
   onPress: () => void
-  children: React.ReactNode
 }
-
+ 
 export const NewSoundButton = ({ onPress = doNothing }: NewSoundButtonProps) => (
   <Button
     data-testid={HomePageTestIds.newSoundButton}

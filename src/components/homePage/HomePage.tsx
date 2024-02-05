@@ -17,7 +17,7 @@ export const HomePage = () => {
     <>
       <Navbar />
       <div className="p-4">
-        <NewSoundButton onPress={handleNewSound}>New Sound</NewSoundButton>
+        <NewSoundButton onPress={handleNewSound} />
       </div>
     </>
   )
