@@ -20,7 +20,7 @@ export class MockAudioRecorder extends AbstractAudioRecorder implements AudioRec
   }
 }
 
-const DEFAULT_SAMPLE_RATE = 44100
+const DEFAULT_SAMPLE_RATE = 48000
 
 const createSilentAudio = (duration: Duration): Float32Array => {
   const durationInSeconds = duration.as('seconds')

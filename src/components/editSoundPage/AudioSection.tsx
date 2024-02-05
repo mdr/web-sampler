@@ -19,9 +19,9 @@ export const AudioSection = ({ audio }: AudioSectionProps) => {
   }, [audio])
 
   return (
-    <>
-      <audio data-testid={EditSoundPageTestIds.audioElement} src={audioUrl} controls />
+    <div className="flex flex-col items-center">
       <WaveformVisualiser audio={audio} />
-    </>
+      <audio className="mt-4" data-testid={EditSoundPageTestIds.audioElement} src={audioUrl} controls />
+    </div>
   )
 }

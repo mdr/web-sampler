@@ -37,6 +37,7 @@ export class WebAudioRecorder extends AbstractAudioRecorder implements AudioReco
     if (this.state !== AudioRecorderState.IDLE) {
       throw new Error('Already recording')
     }
+    console.log('sampleRate', this.audioContext.sampleRate)
 
     let mediaStream: MediaStream
     try {
@@ -110,11 +111,11 @@ export class WebAudioRecorder extends AbstractAudioRecorder implements AudioReco
   }
 }
 
-const average = (dataArray: Uint8Array): number => {
-  if (dataArray.length === 0) {
+const average = (array: Uint8Array): number => {
+  if (array.length === 0) {
     return 0
   }
-  return _.sum(dataArray) / dataArray.length
+  return _.sum(array) / array.length
 }
 
 const concatenateFloat32Arrays = (arrays: Float32Array[]): Float32Array => {
