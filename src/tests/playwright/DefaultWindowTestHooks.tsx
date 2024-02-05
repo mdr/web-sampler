@@ -9,11 +9,11 @@ export class DefaultWindowTestHooks implements WindowTestHooks {
     private readonly clock: InstalledClock,
   ) {}
 
-  setVolume = (volume: number): void => {
+  simulateVolume = (volume: number): void => {
     this.audioRecorder.volume = volume
   }
 
-  setStartRecordingOutcome = (outcome: StartRecordingOutcome): void => {
+  primeStartRecordingOutcome = (outcome: StartRecordingOutcome): void => {
     this.audioRecorder.startRecordingOutcome = outcome
   }
 

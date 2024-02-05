@@ -15,10 +15,10 @@ test('captured audio should be shown after recording', async ({ mount }) => {
 test('a volume meter should indicate audio level during recording', async ({ mount }) => {
   const editSoundPage = await launchAndStartRecordingOnEditSoundPage(mount)
 
-  await editSoundPage.setVolume(25)
+  await editSoundPage.simulateVolume(25)
   await editSoundPage.expectVolumeMeterToShowLevel(25)
 
-  await editSoundPage.setVolume(50)
+  await editSoundPage.simulateVolume(50)
   await editSoundPage.expectVolumeMeterToShowLevel(50)
 })
 
@@ -28,6 +28,16 @@ test('recording should stop automatically after 20 seconds', async ({ mount }) =
   await editSoundPage.wait(MAX_RECORDING_DURATION)
 
   await editSoundPage.expectAudioToBeShown()
+})
+
+test('a user can cancel selecting a source for recording', async ({ mount }) => {
+  const homePage = await launchApp(mount)
+  const editSoundPage = await homePage.pressNewSound()
+
+  await editSoundPage.pressRecord({ primedOutcome: StartRecordingOutcome.CANCELLED_BY_USER })
+
+  await editSoundPage.expectAudioRecorderStateToBe(AudioRecorderState.IDLE)
+  await editSoundPage.expectRecordButtonToBeShown()
 })
 
 test('an error toast should be shown if no audio is available on the selected source', async ({ mount }) => {

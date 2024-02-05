@@ -15,11 +15,9 @@ export class EditSoundPageObject extends PageObject {
 
   pressRecord = ({
     primedOutcome = StartRecordingOutcome.SUCCESS,
-  }: {
-    primedOutcome?: StartRecordingOutcome
-  } = {}): Promise<void> =>
+  }: Partial<{ primedOutcome: StartRecordingOutcome }> = {}): Promise<void> =>
     this.step(`pressRecordButton primedOutcome=${primedOutcome}`, async () => {
-      await this.page.evaluate((outcome) => window.testHooks.setStartRecordingOutcome(outcome), primedOutcome)
+      await this.page.evaluate((outcome) => window.testHooks.primeStartRecordingOutcome(outcome), primedOutcome)
       await this.press(EditSoundPageTestIds.recordButton)
     })
 
@@ -31,9 +29,9 @@ export class EditSoundPageObject extends PageObject {
       return HomePageObject.verifyIsShown(this.mountResult)
     })
 
-  setVolume = (volume: number): Promise<void> =>
-    this.step(`setVolume ${volume}`, async () => {
-      await this.page.evaluate((volume) => window.testHooks.setVolume(volume), volume)
+  simulateVolume = (volume: number): Promise<void> =>
+    this.step(`simulateVolume ${volume}`, async () => {
+      await this.page.evaluate((volume) => window.testHooks.simulateVolume(volume), volume)
       await this.page.evaluate(() => window.testHooks.clockNext())
     })
 
@@ -52,6 +50,9 @@ export class EditSoundPageObject extends PageObject {
 
   expectStopButtonToBeShown = (): Promise<void> =>
     this.step('expectStopButtonToBeShown', () => this.expectToBeVisible(EditSoundPageTestIds.stopButton))
+
+  expectRecordButtonToBeShown = (): Promise<void> =>
+    this.step('expectRecordButtonToBeShown', () => this.expectToBeVisible(EditSoundPageTestIds.recordButton))
 
   expectAudioToBeShown = (): Promise<void> =>
     this.step('expectAudioToBeShown', () => this.expectToBeVisible(EditSoundPageTestIds.audioElement))

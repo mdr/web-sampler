@@ -58,7 +58,7 @@ export const EditSoundPageContents = ({ soundId }: EditSoundPageProps) => {
         case StartRecordingOutcome.SUCCESS:
           timerIdRef.current = setTimeout(() => audioRecorderActions.stopRecording(), MAX_RECORDING_DURATION.toMillis())
           break
-        case StartRecordingOutcome.PERMISSION_DENIED:
+        case StartRecordingOutcome.CANCELLED_BY_USER:
           break
         case StartRecordingOutcome.NO_AUDIO_TRACK:
           toast.error('No audio available in selected input')

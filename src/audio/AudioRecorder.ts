@@ -5,7 +5,7 @@ export enum AudioRecorderState {
 
 export enum StartRecordingOutcome {
   SUCCESS = 'SUCCESS',
-  PERMISSION_DENIED = 'PERMISSION_DENIED',
+  CANCELLED_BY_USER = 'CANCELLED_BY_USER',
   NO_AUDIO_TRACK = 'NO_AUDIO_TRACK',
 }
 

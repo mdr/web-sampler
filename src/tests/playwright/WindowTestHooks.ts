@@ -1,8 +1,8 @@
 import { AudioRecorderState, StartRecordingOutcome } from '../../audio/AudioRecorder.ts'
 
 export interface WindowTestHooks {
-  setVolume: (volume: number) => void
-  setStartRecordingOutcome: (outcome: StartRecordingOutcome) => void
+  simulateVolume: (volume: number) => void
+  primeStartRecordingOutcome: (outcome: StartRecordingOutcome) => void
 
   getAudioRecorderState(): AudioRecorderState
 

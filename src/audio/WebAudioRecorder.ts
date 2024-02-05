@@ -50,7 +50,7 @@ export class WebAudioRecorder extends AbstractAudioRecorder implements AudioReco
       })
     } catch (error) {
       console.error('Error setting up recording:', error)
-      return StartRecordingOutcome.PERMISSION_DENIED
+      return StartRecordingOutcome.CANCELLED_BY_USER
     }
 
     if (mediaStream.getAudioTracks().length === 0) {
