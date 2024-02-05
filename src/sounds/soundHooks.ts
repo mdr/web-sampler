@@ -40,6 +40,8 @@ export interface SoundActions {
   newSound(): Sound
 
   setName(id: SoundId, name: string): void
+
+  setAudio(id: SoundId, audio: Float32Array): void
 }
 
 export const useSoundActions = (): SoundActions => useSoundLibrary()

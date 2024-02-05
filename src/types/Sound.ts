@@ -7,5 +7,5 @@ export const SoundId = Brand.nominal<SoundId>()
 export interface Sound {
   readonly id: SoundId
   readonly name: string
-  readonly audio?: ArrayBuffer
+  readonly audio?: Float32Array
 }

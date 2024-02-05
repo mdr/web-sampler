@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useRef } from 'react'
 import { RecordButton } from './RecordButton.tsx'
 import { VolumeMeter } from './VolumeMeter.tsx'
 import { StopButton } from './StopButton.tsx'
@@ -30,18 +30,18 @@ export const EditSoundPageContents = ({ soundId }: EditSoundPageProps) => {
   const audioRecorderActions = useAudioRecorderActions()
   const audioRecorderState = useAudioRecorderState()
 
-  const [audio, setAudio] = useState<Option<Float32Array>>(undefined)
   const timerIdRef = useRef<Option<TimerId>>()
 
   const handleRecordingComplete = useCallback(
     (audio: Float32Array) => {
-      setAudio(audio)
+      soundActions.setAudio(sound.id, audio)
       if (timerIdRef.current) {
         clearTimeout(timerIdRef.current)
       }
     },
-    [setAudio],
+    [soundActions, sound],
   )
+
   useAudioRecordingComplete(handleRecordingComplete)
 
   useUnmount(() => {
@@ -58,7 +58,6 @@ export const EditSoundPageContents = ({ soundId }: EditSoundPageProps) => {
       const outcome = await audioRecorderActions.startRecording()
       switch (outcome) {
         case StartRecordingOutcome.SUCCESS:
-          setAudio(undefined)
           timerIdRef.current = setTimeout(() => audioRecorderActions.stopRecording(), MAX_RECORDING_DURATION.toMillis())
           break
         case StartRecordingOutcome.PERMISSION_DENIED:
@@ -80,7 +79,7 @@ export const EditSoundPageContents = ({ soundId }: EditSoundPageProps) => {
         {audioRecorderState === AudioRecorderState.IDLE && (
           <>
             <RecordButton onPress={handleRecordButtonPressed} />
-            {audio !== undefined && <AudioSection audio={audio} />}
+            {sound.audio !== undefined && <AudioSection audio={sound.audio} />}
           </>
         )}
         {audioRecorderState === AudioRecorderState.RECORDING && (

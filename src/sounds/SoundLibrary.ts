@@ -38,6 +38,8 @@ export class SoundLibrary implements SoundActions {
 
   setName = (id: SoundId, name: string): void => this.updateSound(id, (sound) => ({ ...sound, name }))
 
+  setAudio = (id: SoundId, audio: Float32Array) => this.updateSound(id, (sound) => ({ ...sound, audio }))
+
   private updateSound = (id: SoundId, update: (sound: Sound) => Sound): void => {
     const sound = this.findSound(id)
     if (sound === undefined) {

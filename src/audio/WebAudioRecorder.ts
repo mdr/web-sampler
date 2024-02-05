@@ -5,6 +5,7 @@ import { CAPTURING_AUDIO_WORKLET_NAME, STOP_MESSAGE } from './CapturingAudioWork
 import { AudioContextProvider } from './AudioContextProvider.ts'
 import { AbstractAudioRecorder } from './AbstractAudioRecorder.ts'
 import _ from 'lodash'
+import { concatenateFloat32Arrays } from '../utils/utils.ts'
 
 export class WebAudioRecorder extends AbstractAudioRecorder implements AudioRecorder {
   private mediaStream: Option<MediaStream> = undefined
@@ -37,7 +38,6 @@ export class WebAudioRecorder extends AbstractAudioRecorder implements AudioReco
     if (this.state !== AudioRecorderState.IDLE) {
       throw new Error('Already recording')
     }
-    console.log('sampleRate', this.audioContext.sampleRate)
 
     let mediaStream: MediaStream
     try {
@@ -116,15 +116,4 @@ const average = (array: Uint8Array): number => {
     return 0
   }
   return _.sum(array) / array.length
-}
-
-const concatenateFloat32Arrays = (arrays: Float32Array[]): Float32Array => {
-  const totalLength = _.sumBy(arrays, (buffer) => buffer.length)
-  const combinedBuffer = new Float32Array(totalLength)
-  let offset = 0
-  arrays.forEach((buffer) => {
-    combinedBuffer.set(buffer, offset)
-    offset += buffer.length
-  })
-  return combinedBuffer
 }
