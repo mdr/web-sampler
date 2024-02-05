@@ -6,5 +6,5 @@ import { TestApp, TestAppProps } from '../TestApp.tsx'
 export const launchApp = (mount: MountFunction, props: Partial<TestAppProps> = {}): Promise<HomePageObject> =>
   test.step('launchApp', async () => {
     const mountResult = await mount(<TestApp {...props} />)
-    return new HomePageObject(mountResult)
+    return HomePageObject.verifyIsShown(mountResult)
   })

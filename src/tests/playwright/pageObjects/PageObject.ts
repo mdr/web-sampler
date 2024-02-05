@@ -15,7 +15,7 @@ export class PageObject {
 
   protected get = (testId: TestId) => this.mountResult.getByTestId(testId)
 
-  protected click = (testId: TestId): Promise<void> => this.get(testId).click()
+  protected press = (testId: TestId): Promise<void> => this.get(testId).click()
 
   protected expectToBeVisible = (testId: TestId): Promise<void> => expect(this.get(testId)).toBeVisible()
 

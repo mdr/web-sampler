@@ -14,6 +14,9 @@ export class MockAudioRecorder extends AbstractAudioRecorder implements AudioRec
   }
 
   stopRecording = (): void => {
+    if (this.state !== AudioRecorderState.RECORDING) {
+      return
+    }
     this.setState(AudioRecorderState.IDLE)
     const silentAudio = createSilentAudio(Duration.fromObject({ seconds: 1 }))
     this.fireRecordingCompleteListeners(silentAudio)

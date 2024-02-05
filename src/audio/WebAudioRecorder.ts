@@ -10,7 +10,7 @@ import { concatenateFloat32Arrays } from '../utils/utils.ts'
 export class WebAudioRecorder extends AbstractAudioRecorder implements AudioRecorder {
   private mediaStream: Option<MediaStream> = undefined
   private getVolume: Option<() => number> = undefined
-  private audioBuffers: Float32Array[] = []
+  private audioPieces: Float32Array[] = []
   private captureAudioWorkletNode: Option<AudioWorkletNode> = undefined
   private source: Option<MediaStreamAudioSourceNode> = undefined
 
@@ -31,7 +31,7 @@ export class WebAudioRecorder extends AbstractAudioRecorder implements AudioReco
   }
 
   private handleWorkletMessage = (event: MessageEvent<Float32Array>) => {
-    this.audioBuffers.push(event.data)
+    this.audioPieces.push(event.data)
   }
 
   startRecording = async (): Promise<StartRecordingOutcome> => {
@@ -85,13 +85,13 @@ export class WebAudioRecorder extends AbstractAudioRecorder implements AudioReco
 
   stopRecording = (): void => {
     if (this.state !== AudioRecorderState.RECORDING) {
-      throw new Error('Not recording')
+      return
     }
     this.setState(AudioRecorderState.IDLE)
-    const combinedPcm = concatenateFloat32Arrays(this.audioBuffers)
-    this.audioBuffers = []
-    if (combinedPcm !== undefined) {
-      this.fireRecordingCompleteListeners(combinedPcm)
+    const combinedAudio = concatenateFloat32Arrays(this.audioPieces)
+    this.audioPieces = []
+    if (combinedAudio !== undefined) {
+      this.fireRecordingCompleteListeners(combinedAudio)
     }
 
     this.source?.disconnect()

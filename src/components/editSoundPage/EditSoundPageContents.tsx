@@ -45,9 +45,7 @@ export const EditSoundPageContents = ({ soundId }: EditSoundPageProps) => {
   useAudioRecordingComplete(handleRecordingComplete)
 
   useUnmount(() => {
-    if (audioRecorderState === AudioRecorderState.RECORDING) {
-      audioRecorderActions.stopRecording()
-    }
+    audioRecorderActions.stopRecording()
     if (timerIdRef.current) {
       clearTimeout(timerIdRef.current)
     }
