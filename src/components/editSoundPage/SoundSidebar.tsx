@@ -17,12 +17,12 @@ export const SoundSidebar = () => {
   }
 
   return (
-    <div className="flex flex-col border-r border-gray-200 h-full">
+    <div className="flex flex-col h-full">
       <div className="flex-grow overflow-auto">
         <ul>
           {sounds.map((sound) => (
             <li key={sound.id} className="hover:bg-gray-100">
-              <Link to={`/sound/${sound.id}`} className="block w-full p-2">
+              <Link to={`/sound/${sound.id}`} className="block w-full p-2" draggable={false}>
                 {displayName(sound)}
               </Link>
             </li>
