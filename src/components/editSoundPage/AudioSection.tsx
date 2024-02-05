@@ -1,21 +1,22 @@
 import { EditSoundPageTestIds } from './EditSoundPage.testIds.ts'
 import { WaveformVisualiser } from './WaveformVisualiser.tsx'
 import { Url } from '../../utils/types/Url.ts'
-import { useMemo } from 'react'
+import { useEffect, useState } from 'react'
 import { AudioBufferUtils } from '../../audio/AudioBufferUtils.ts'
-import { useObjectUrlCreator } from '../../utils/hooks.ts'
+import { Option } from '../../utils/types/Option.ts'
 
 export interface AudioSectionProps {
   audio: Float32Array
 }
 
 export const AudioSection = ({ audio }: AudioSectionProps) => {
-  const createObjectUrl = useObjectUrlCreator()
-
-  const audioUrl: Url = useMemo(() => {
+  const [audioUrl, setAudioUrl] = useState<Option<Url>>()
+  useEffect(() => {
     const audioBufferUtils = new AudioBufferUtils(new AudioContext())
-    return createObjectUrl(audioBufferUtils.float32ArrayToWavBlob(audio))
-  }, [audio, createObjectUrl])
+    const blob = audioBufferUtils.float32ArrayToWavBlob(audio)
+    const objectUrl = Url(URL.createObjectURL(blob))
+    setAudioUrl(objectUrl)
+  }, [audio])
 
   return (
     <>

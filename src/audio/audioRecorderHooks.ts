@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
-import { useRequestAnimationFrame } from '../utils/hooks.ts'
+import { useRequestAnimationFrame } from '../utils/hooks/useRequestAnimationFrame.ts'
 import { AudioRecorder, AudioRecorderState, RecordingCompleteListener, StartRecordingOutcome } from './AudioRecorder.ts'
 import { AudioRecorderContext } from './AudioRecorderContext.ts'
 

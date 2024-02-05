@@ -1,7 +1,6 @@
-import { useCallback, useMemo, useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { RecordButton } from './RecordButton.tsx'
 import { VolumeMeter } from './VolumeMeter.tsx'
-import { useObjectUrlCreator } from '../../utils/hooks.ts'
 import { StopButton } from './StopButton.tsx'
 import { EditSoundPageTestIds } from './EditSoundPage.testIds.ts'
 import { AudioRecorderState, StartRecordingOutcome } from '../../audio/AudioRecorder.ts'
@@ -10,7 +9,6 @@ import useUnmount from 'beautiful-react-hooks/useUnmount'
 import { TimerId } from '../../utils/types/TimerId.ts'
 import { MAX_RECORDING_DURATION } from './recordingConstants.ts'
 import { toast } from 'react-toastify'
-import { WaveformVisualiser } from './WaveformVisualiser.tsx'
 import { SoundNameTextField } from './SoundNameTextField.tsx'
 import {
   useAudioRecorderActions,
@@ -20,8 +18,7 @@ import {
 import { useSound, useSoundActions } from '../../sounds/soundHooks.ts'
 import { SoundId } from '../../types/Sound.ts'
 import { fireAndForget } from '../../utils/utils.ts'
-import { Url } from '../../utils/types/Url.ts'
-import { AudioBufferUtils } from '../../audio/AudioBufferUtils.ts'
+import { AudioSection } from './AudioSection.tsx'
 
 export interface EditSoundPageProps {
   soundId: SoundId
@@ -34,7 +31,6 @@ export const EditSoundPageContents = ({ soundId }: EditSoundPageProps) => {
   const audioRecorderState = useAudioRecorderState()
 
   const [audio, setAudio] = useState<Option<Float32Array>>(undefined)
-  const createObjectUrl = useObjectUrlCreator()
   const timerIdRef = useRef<Option<TimerId>>()
 
   const handleRecordingComplete = useCallback(
@@ -75,11 +71,6 @@ export const EditSoundPageContents = ({ soundId }: EditSoundPageProps) => {
 
   const handleStopButtonPressed = () => audioRecorderActions.stopRecording()
 
-  const audioUrl: Option<Url> = useMemo(() => {
-    const audioBufferUtils = new AudioBufferUtils(new AudioContext())
-    return audio === undefined ? undefined : createObjectUrl(audioBufferUtils.float32ArrayToWavBlob(audio))
-  }, [audio, createObjectUrl])
-
   const setSoundName = (name: string) => soundActions.setName(soundId, name)
 
   return (
@@ -89,10 +80,7 @@ export const EditSoundPageContents = ({ soundId }: EditSoundPageProps) => {
         {audioRecorderState === AudioRecorderState.IDLE && (
           <>
             <RecordButton onPress={handleRecordButtonPressed} />
-            {audioUrl !== undefined && (
-              <audio data-testid={EditSoundPageTestIds.audioElement} src={audioUrl} controls />
-            )}
-            {audio !== undefined && <WaveformVisualiser audio={audio} />}
+            {audio !== undefined && <AudioSection audio={audio} />}
           </>
         )}
         {audioRecorderState === AudioRecorderState.RECORDING && (
