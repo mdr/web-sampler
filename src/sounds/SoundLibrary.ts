@@ -14,6 +14,7 @@ const PERSIST_DIRTY_INTERVAL = Duration.fromObject({ seconds: 1 })
 export class SoundLibrary implements SoundActions {
   private _sounds: readonly Sound[] = []
   private readonly dirtySounds: SoundId[] = []
+  private isLoading = true
   private isPersisting = false
   private readonly listeners: SoundsUpdatedListener[] = []
 
@@ -25,6 +26,7 @@ export class SoundLibrary implements SoundActions {
   private loadSounds = async (): Promise<void> => {
     const sounds = await db.sounds.toArray()
     this._sounds = sounds
+    this.isLoading = false
     this.notifyListeners()
   }
 
@@ -46,7 +48,14 @@ export class SoundLibrary implements SoundActions {
 
   findSound = (id: SoundId): Option<Sound> => this._sounds.find((sound) => sound.id === id)
 
+  private checkNotLoading = (): void => {
+    if (this.isLoading) {
+      throw new Error('Sounds are still loading')
+    }
+  }
+
   newSound = (): Sound => {
+    this.checkNotLoading()
     const id = SoundId(uuid.v4())
     const sound: Sound = { id, name: '' }
     this._sounds = [...this._sounds, sound]
@@ -68,6 +77,7 @@ export class SoundLibrary implements SoundActions {
   setAudio = (id: SoundId, audio: Float32Array) => this.updateSound(id, (sound) => ({ ...sound, audio }))
 
   private updateSound = (id: SoundId, update: (sound: Sound) => Sound): void => {
+    this.checkNotLoading()
     const sound = this.findSound(id)
     if (sound === undefined) {
       throw new Error(`No sound found with id ${id}`)
