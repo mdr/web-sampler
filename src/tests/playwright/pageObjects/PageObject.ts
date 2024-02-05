@@ -20,7 +20,9 @@ export class PageObject {
   protected expectToBeVisible = (testId: TestId): Promise<void> => expect(this.get(testId)).toBeVisible()
 
   public wait = (duration: Duration): Promise<void> =>
-    this.step('wait', () => this.page.evaluate((millis) => window.testHooks.clockTick(millis), duration.toMillis()))
+    this.step(`wait ${duration.toHuman()}`, () =>
+      this.page.evaluate((millis) => window.testHooks.clockTick(millis), duration.toMillis()),
+    )
 
   public checkScreenshot = (name: string) => expect(this.mountResult).toHaveScreenshot(`${name}.png`)
 }

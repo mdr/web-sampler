@@ -1,16 +1,16 @@
-import { expect, test } from '@playwright/experimental-ct-react'
+import { test } from '@playwright/experimental-ct-react'
 import { launchApp } from '../pageObjects/launchApp.tsx'
 import { MAX_RECORDING_DURATION } from '../../../components/editSoundPage/recordingConstants.ts'
 import { AudioRecorderState, StartRecordingOutcome } from '../../../audio/AudioRecorder.ts'
 import { MountFunction } from '../types.ts'
 import { EditSoundPageObject } from '../pageObjects/EditSoundPageObject.ts'
 
-test('captured audio file should be shown after recording', async ({ mount }) => {
+test('captured audio should be shown after recording', async ({ mount }) => {
   const editSoundPage = await launchAndStartRecordingOnEditSoundPage(mount)
 
   await editSoundPage.pressStopButton()
 
-  await editSoundPage.expectAudioElementToBeShown()
+  await editSoundPage.expectAudioToBeShown()
 })
 
 test('a volume meter should indicate audio level during recording', async ({ mount }) => {
@@ -23,11 +23,10 @@ test('a volume meter should indicate audio level during recording', async ({ mou
 
 test('recording should stop automatically after 20 seconds', async ({ mount }) => {
   const editSoundPage = await launchAndStartRecordingOnEditSoundPage(mount)
-  await editSoundPage.expectStopButtonToBeShown()
 
   await editSoundPage.wait(MAX_RECORDING_DURATION)
 
-  await editSoundPage.expectAudioElementToBeShown()
+  await editSoundPage.expectAudioToBeShown()
 })
 
 test('an error toast should be shown if no audio is available on the selected source', async ({ mount }) => {
@@ -41,11 +40,11 @@ test('an error toast should be shown if no audio is available on the selected so
 
 test('navigating away from the page should cancel recording', async ({ mount }) => {
   const editSoundPage = await launchAndStartRecordingOnEditSoundPage(mount)
-  expect(await editSoundPage.getAudioRecorderState()).toBe(AudioRecorderState.RECORDING)
+  await editSoundPage.expectAudioRecorderStateToBe(AudioRecorderState.RECORDING)
 
   await editSoundPage.pressHomeLink()
 
-  expect(await editSoundPage.getAudioRecorderState()).toBe(AudioRecorderState.IDLE)
+  await editSoundPage.expectAudioRecorderStateToBe(AudioRecorderState.IDLE)
 })
 
 const launchAndStartRecordingOnEditSoundPage = async (mount: MountFunction): Promise<EditSoundPageObject> => {

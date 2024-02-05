@@ -17,7 +17,7 @@ export class EditSoundPageObject extends PageObject {
   }: {
     primedOutcome?: StartRecordingOutcome
   } = {}): Promise<void> =>
-    this.step('pressRecordButton', async () => {
+    this.step(`pressRecordButton primedOutcome=${primedOutcome}`, async () => {
       await this.page.evaluate((outcome) => window.testHooks.setStartRecordingOutcome(outcome), primedOutcome)
       await this.press(EditSoundPageTestIds.recordButton)
     })
@@ -31,7 +31,7 @@ export class EditSoundPageObject extends PageObject {
     })
 
   setVolume = (volume: number): Promise<void> =>
-    this.step('setVolume', async () => {
+    this.step(`setVolume ${volume}`, async () => {
       await this.page.evaluate((volume) => window.testHooks.setVolume(volume), volume)
       await this.page.evaluate(() => window.testHooks.clockNext())
     })
@@ -39,17 +39,22 @@ export class EditSoundPageObject extends PageObject {
   getAudioRecorderState = (): Promise<AudioRecorderState> =>
     this.page.evaluate(() => window.testHooks.getAudioRecorderState())
 
+  expectAudioRecorderStateToBe = async (state: AudioRecorderState): Promise<void> =>
+    this.step(`expectAudioRecorderStateToBe ${state}`, async () => {
+      expect(await this.getAudioRecorderState()).toBe(state)
+    })
+
   expectVolumeMeterToShowLevel = (volume: number): Promise<void> =>
-    this.step('expectVolumeMeterToShowLevel', async () => {
+    this.step(`expectVolumeMeterToShowLevel ${volume}`, async () => {
       await expect(this.get(EditSoundPageTestIds.volumeMeter)).toHaveAttribute('data-volume', `${volume}`)
     })
 
   expectStopButtonToBeShown = (): Promise<void> =>
     this.step('expectStopButtonToBeShown', () => this.expectToBeVisible(EditSoundPageTestIds.stopButton))
 
-  expectAudioElementToBeShown = (): Promise<void> =>
-    this.step('expectAudioElementToBeShown', () => this.expectToBeVisible(EditSoundPageTestIds.audioElement))
+  expectAudioToBeShown = (): Promise<void> =>
+    this.step('expectAudioToBeShown', () => this.expectToBeVisible(EditSoundPageTestIds.audioElement))
 
   expectToastToBeShown = (message: string): Promise<void> =>
-    this.step('expectToastToBeShown', () => expect(this.mountResult.getByText(message)).toBeVisible())
+    this.step(`expectToastToBeShown ${message}`, () => expect(this.mountResult.getByText(message)).toBeVisible())
 }
