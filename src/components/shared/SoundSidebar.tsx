@@ -1,20 +1,13 @@
-import { useSoundActions, useSounds } from '../../sounds/soundHooks.ts'
-import { Link, useNavigate } from 'react-router-dom'
-import { NewSoundButton } from '../homePage/NewSoundButton.tsx'
-import { editSoundRoute } from '../router.tsx'
+import { useSounds } from '../../sounds/soundHooks.ts'
+import { Link } from 'react-router-dom'
+import { NewSoundButton } from './NewSoundButton.tsx'
 import { Sound } from '../../types/Sound.ts'
+import { SoundSidebarTestIds } from './shared.testIds.ts'
 
 const displayName = (sound: Sound) => (sound.name.trim() === '' ? 'Untitled Sound' : sound.name)
 
 export const SoundSidebar = () => {
   const sounds = useSounds() // Fetch sounds using the custom hook
-  const soundActions = useSoundActions()
-  const navigate = useNavigate()
-
-  const handleNewSound = () => {
-    const sound = soundActions.newSound()
-    navigate(editSoundRoute(sound.id))
-  }
 
   return (
     <div className="flex flex-col h-full">
@@ -30,7 +23,7 @@ export const SoundSidebar = () => {
         </ul>
       </div>
       <div className="mt-auto py-4 flex justify-center">
-        <NewSoundButton onPress={handleNewSound} />
+        <NewSoundButton testId={SoundSidebarTestIds.newSoundButton} />
       </div>
     </div>
   )

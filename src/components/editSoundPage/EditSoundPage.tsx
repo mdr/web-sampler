@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom'
 import { SoundId } from '../../types/Sound.ts'
 import { useMaybeSound } from '../../sounds/soundHooks.ts'
 import { EditSoundPageContents } from './EditSoundPageContents.tsx'
-import { EditSoundPageLayout } from './EditSoundPageLayout.tsx'
+import { SoundSidebarPageLayout } from '../shared/SoundSidebarPageLayout.tsx'
 import { SoundNotFound } from './SoundNotFound.tsx'
 
 const useSoundIdParam = (): SoundId => {
@@ -18,7 +18,7 @@ export const EditSoundPage = () => {
   const sound = useMaybeSound(soundId)
 
   return (
-    <EditSoundPageLayout>
+    <SoundSidebarPageLayout>
       {sound === undefined ? (
         <div className="flex justify-center items-center h-full">
           <SoundNotFound />
@@ -26,6 +26,6 @@ export const EditSoundPage = () => {
       ) : (
         <EditSoundPageContents soundId={sound.id} />
       )}
-    </EditSoundPageLayout>
+    </SoundSidebarPageLayout>
   )
 }
