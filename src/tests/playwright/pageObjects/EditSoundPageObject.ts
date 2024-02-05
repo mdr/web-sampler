@@ -6,12 +6,20 @@ import { AudioRecorderState, StartRecordingOutcome } from '../../../audio/AudioR
 import { NavbarTestIds } from '../../../components/shared/NavbarTestIds.ts'
 import { HomePageObject } from './HomePageObject.ts'
 import { launchApp } from './launchApp.tsx'
+import { SoundSidebarPageObject } from './SoundSidebarPageObject.ts'
 
 export class EditSoundPageObject extends PageObject {
   static verifyIsShown = async (mountResult: MountResult): Promise<EditSoundPageObject> => {
     await expect(mountResult.getByTestId(EditSoundPageTestIds.recordButton)).toBeVisible()
     return new EditSoundPageObject(mountResult)
   }
+
+  get sidebar() {
+    return new SoundSidebarPageObject(this.mountResult)
+  }
+
+  enterSoundName = (name: string): Promise<void> =>
+    this.step(`enterName ${name}`, () => this.get(EditSoundPageTestIds.soundNameInput).fill(name))
 
   pressRecord = ({
     primedOutcome = StartRecordingOutcome.SUCCESS,
@@ -22,6 +30,9 @@ export class EditSoundPageObject extends PageObject {
     })
 
   pressStopButton = (): Promise<void> => this.step('pressStopButton', () => this.press(EditSoundPageTestIds.stopButton))
+
+  waitForTimeout = (duration: number): Promise<void> =>
+    this.step(`waitForTimeout ${duration}`, () => this.page.waitForTimeout(duration))
 
   pressHomeLink = (): Promise<HomePageObject> =>
     this.step('pressHomeLink', async () => {
@@ -63,7 +74,7 @@ export class EditSoundPageObject extends PageObject {
 
 export const launchAndStartRecordingOnEditSoundPage = async (mount: MountFunction): Promise<EditSoundPageObject> => {
   const homePage = await launchApp(mount)
-  const editSoundPage = await homePage.pressNewSound()
+  const editSoundPage = await homePage.sidebar.pressNewSound()
   await editSoundPage.pressRecord()
   return editSoundPage
 }

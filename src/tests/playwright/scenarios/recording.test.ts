@@ -6,7 +6,8 @@ import { launchAndStartRecordingOnEditSoundPage } from '../pageObjects/EditSound
 
 test('captured audio should be shown after recording', async ({ mount }) => {
   const editSoundPage = await launchAndStartRecordingOnEditSoundPage(mount)
-
+  // wait 5 real seconds
+  await editSoundPage.waitForTimeout(5000)
   await editSoundPage.pressStopButton()
 
   await editSoundPage.expectAudioToBeShown()
@@ -32,7 +33,7 @@ test('recording should stop automatically after 20 seconds', async ({ mount }) =
 
 test('a user can cancel selecting a source for recording', async ({ mount }) => {
   const homePage = await launchApp(mount)
-  const editSoundPage = await homePage.pressNewSound()
+  const editSoundPage = await homePage.sidebar.pressNewSound()
 
   await editSoundPage.pressRecord({ primedOutcome: StartRecordingOutcome.CANCELLED_BY_USER })
 
@@ -42,7 +43,7 @@ test('a user can cancel selecting a source for recording', async ({ mount }) => 
 
 test('an error toast should be shown if no audio is available on the selected source', async ({ mount }) => {
   const homePage = await launchApp(mount)
-  const editSoundPage = await homePage.pressNewSound()
+  const editSoundPage = await homePage.sidebar.pressNewSound()
 
   await editSoundPage.pressRecord({ primedOutcome: StartRecordingOutcome.NO_AUDIO_TRACK })
 

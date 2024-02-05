@@ -9,12 +9,12 @@ import { LazyAudioContextProvider } from '../../audio/AudioContextProvider.ts'
 export interface TestAppProps {}
 
 export const TestApp: FC<TestAppProps> = () => {
-  const audioRecorder = new MockAudioRecorder()
+  const mockAudioRecorder = new MockAudioRecorder()
   const audioContextProvider = new LazyAudioContextProvider()
   useDidMount(() => {
     const clock = FakeTimers.install()
-    window.testHooks = new DefaultWindowTestHooks(audioRecorder, clock)
+    window.testHooks = new DefaultWindowTestHooks(mockAudioRecorder, clock)
     return () => clock.uninstall()
   })
-  return <App audioRecorder={audioRecorder} audioContextProvider={audioContextProvider} />
+  return <App audioRecorder={mockAudioRecorder} audioContextProvider={audioContextProvider} />
 }

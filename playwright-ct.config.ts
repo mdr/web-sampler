@@ -28,19 +28,19 @@ export default defineConfig({
     ctPort: 3100,
   },
 
-  /* Configure projects for major browsers */
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: {
+        ...devices['Desktop Chrome'],
+        launchOptions: {
+          args: [
+            // '--use-fake-ui-for-media-stream',
+            // '--use-fake-device-for-media-stream',
+            // '--use-file-for-fake-audio-capture=/Users/matt/Downloads/78084f90-c328-4866-8127-a84cbfff7233.wav',
+          ],
+        },
+      },
     },
-    // {
-    //   name: 'firefox',
-    //   use: { ...devices['Desktop Firefox'] },
-    // },
-    // {
-    //   name: 'webkit',
-    //   use: { ...devices['Desktop Safari'] },
-    // },
   ],
 })

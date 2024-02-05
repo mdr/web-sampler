@@ -114,7 +114,6 @@ export class SoundLibrary implements SoundActions {
       .map((id) => this.findSound(id))
       .filter((sound): sound is Sound => sound !== undefined)
     this.dirtySounds.length = 0
-    console.log('Persisting sounds', soundsToPersist)
     await db.sounds.bulkPut(soundsToPersist)
   }
 }

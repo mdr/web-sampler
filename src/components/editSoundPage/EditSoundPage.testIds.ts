@@ -5,4 +5,5 @@ export const EditSoundPageTestIds = {
   audioElement: TestId('EditSoundPage.audioElement'),
   recordButton: TestId('EditSoundPage.button'),
   volumeMeter: TestId('EditSoundPage.volumeMeter'),
+  soundNameInput: TestId('EditSoundPage.soundNameInput'),
 }
