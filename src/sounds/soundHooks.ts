@@ -12,10 +12,10 @@ const useSoundLibrary = (): SoundLibrary => {
   return soundLibrary
 }
 
-export const useSounds = (): Sound[] => {
+export const useSounds = (): readonly Sound[] => {
   const soundLibrary = useSoundLibrary()
-  const [sounds, setSounds] = useState<Sound[]>(soundLibrary.sounds)
-  const handleSoundsChanged = useCallback((newSounds: Sound[]) => setSounds(newSounds), [setSounds])
+  const [sounds, setSounds] = useState<readonly Sound[]>(soundLibrary.sounds)
+  const handleSoundsChanged = useCallback((newSounds: readonly Sound[]) => setSounds(newSounds), [setSounds])
   useEffect(() => {
     soundLibrary.addListener(handleSoundsChanged)
     return () => soundLibrary.removeListener(handleSoundsChanged)

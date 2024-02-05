@@ -3,14 +3,32 @@ import { Option } from '../utils/types/Option.ts'
 import * as uuid from 'uuid'
 import _ from 'lodash'
 import { SoundActions } from './soundHooks.ts'
+import { db } from './soundDb.ts'
+import { fireAndForget } from '../utils/utils.ts'
+import { Duration } from 'luxon'
 
-export type SoundsUpdatedListener = (sounds: Sound[]) => void
+export type SoundsUpdatedListener = (sounds: readonly Sound[]) => void
+
+const PERSIST_DIRTY_INTERVAL = Duration.fromObject({ seconds: 1 })
 
 export class SoundLibrary implements SoundActions {
-  private _sounds: Sound[] = []
+  private _sounds: readonly Sound[] = []
+  private readonly dirtySounds: SoundId[] = []
+  private isPersisting = false
   private readonly listeners: SoundsUpdatedListener[] = []
 
-  get sounds(): Sound[] {
+  constructor() {
+    setInterval(this.tryPersistDirty, PERSIST_DIRTY_INTERVAL.toMillis())
+    fireAndForget(() => this.loadSounds())
+  }
+
+  private loadSounds = async (): Promise<void> => {
+    const sounds = await db.sounds.toArray()
+    this._sounds = sounds
+    this.notifyListeners()
+  }
+
+  get sounds(): readonly Sound[] {
     return this._sounds
   }
 
@@ -29,11 +47,20 @@ export class SoundLibrary implements SoundActions {
   findSound = (id: SoundId): Option<Sound> => this._sounds.find((sound) => sound.id === id)
 
   newSound = (): Sound => {
-    const soundId = SoundId(uuid.v4())
-    const sound: Sound = { id: soundId, name: '' }
+    const id = SoundId(uuid.v4())
+    const sound: Sound = { id, name: '' }
     this._sounds = [...this._sounds, sound]
+    this.markAsDirty(id)
     this.notifyListeners()
     return sound
+  }
+
+  private markAsDirty = (id: SoundId): void => {
+    if (!this.dirtySounds.includes(id)) {
+      this.dirtySounds.push(id)
+      // Try an immediate persist to save as soon as possible
+      this.tryPersistDirty()
+    }
   }
 
   setName = (id: SoundId, name: string): void => this.updateSound(id, (sound) => ({ ...sound, name }))
@@ -46,7 +73,38 @@ export class SoundLibrary implements SoundActions {
       throw new Error(`No sound found with id ${id}`)
     }
     const newSound = update(sound)
-    this._sounds = this._sounds.map((s) => (s.id === id ? newSound : s))
-    this.notifyListeners()
+    if (!_.isEqual(sound, newSound)) {
+      this._sounds = this._sounds.map((s) => (s.id === id ? newSound : s))
+      this.markAsDirty(id)
+      this.notifyListeners()
+    }
+  }
+
+  /**
+   * Tries to persist dirty sounds. If another persist is already in progress, does nothing.
+   */
+  private tryPersistDirty = () =>
+    fireAndForget(async (): Promise<void> => {
+      if (this.isPersisting) {
+        return
+      }
+      this.isPersisting = true
+      try {
+        await this.persistDirty()
+      } finally {
+        this.isPersisting = false
+      }
+    })
+
+  private persistDirty = async (): Promise<void> => {
+    if (this.dirtySounds.length === 0) {
+      return
+    }
+    const soundsToPersist = this.dirtySounds
+      .map((id) => this.findSound(id))
+      .filter((sound): sound is Sound => sound !== undefined)
+    this.dirtySounds.length = 0
+    console.log('Persisting sounds', soundsToPersist)
+    await db.sounds.bulkPut(soundsToPersist)
   }
 }
