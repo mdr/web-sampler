@@ -8,20 +8,24 @@ import { SoundLibrary } from '../sounds/SoundLibrary.ts'
 import { ErrorBoundary } from 'react-error-boundary'
 import { ErrorFallback } from './ErrorFallback.tsx'
 import { router } from './router.tsx'
+import { AudioContextProvider, AudioContextProviderContext } from '../audio/AudioContextProvider.ts'
 
-export const App = ({ audioRecorder }: AppProps) => (
+export interface AppProps {
+  audioContextProvider: AudioContextProvider
+  audioRecorder: AudioRecorder
+}
+
+export const App = ({ audioRecorder, audioContextProvider }: AppProps) => (
   <React.StrictMode>
     <ErrorBoundary fallback={<ErrorFallback />}>
       <ToastContainer position="top-center" hideProgressBar closeOnClick closeButton={false} />
-      <AudioRecorderContext.Provider value={audioRecorder}>
-        <SoundLibraryContext.Provider value={new SoundLibrary()}>
-          <RouterProvider router={router} />
-        </SoundLibraryContext.Provider>
-      </AudioRecorderContext.Provider>
+      <AudioContextProviderContext.Provider value={audioContextProvider}>
+        <AudioRecorderContext.Provider value={audioRecorder}>
+          <SoundLibraryContext.Provider value={new SoundLibrary()}>
+            <RouterProvider router={router} />
+          </SoundLibraryContext.Provider>
+        </AudioRecorderContext.Provider>
+      </AudioContextProviderContext.Provider>
     </ErrorBoundary>
   </React.StrictMode>
 )
-
-export interface AppProps {
-  audioRecorder: AudioRecorder
-}

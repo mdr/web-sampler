@@ -5,7 +5,8 @@ import { LazyAudioContextProvider } from './audio/AudioContextProvider.ts'
 import 'react-toastify/dist/ReactToastify.css'
 import './main.css'
 
-const audioRecorder = new WebAudioRecorder(new LazyAudioContextProvider())
+const audioContextProvider = new LazyAudioContextProvider()
+const audioRecorder = new WebAudioRecorder(audioContextProvider)
 
 const getDocumentRoot = (): HTMLElement => {
   const root = document.getElementById('root') ?? undefined
@@ -15,4 +16,6 @@ const getDocumentRoot = (): HTMLElement => {
   return root
 }
 
-ReactDOM.createRoot(getDocumentRoot()).render(<App audioRecorder={audioRecorder} />)
+ReactDOM.createRoot(getDocumentRoot()).render(
+  <App audioRecorder={audioRecorder} audioContextProvider={audioContextProvider} />,
+)
