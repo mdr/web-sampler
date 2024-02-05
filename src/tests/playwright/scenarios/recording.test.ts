@@ -2,8 +2,7 @@ import { test } from '@playwright/experimental-ct-react'
 import { launchApp } from '../pageObjects/launchApp.tsx'
 import { MAX_RECORDING_DURATION } from '../../../components/editSoundPage/recordingConstants.ts'
 import { AudioRecorderState, StartRecordingOutcome } from '../../../audio/AudioRecorder.ts'
-import { MountFunction } from '../types.ts'
-import { EditSoundPageObject } from '../pageObjects/EditSoundPageObject.ts'
+import { launchAndStartRecordingOnEditSoundPage } from '../pageObjects/EditSoundPageObject.ts'
 
 test('captured audio should be shown after recording', async ({ mount }) => {
   const editSoundPage = await launchAndStartRecordingOnEditSoundPage(mount)
@@ -48,10 +47,3 @@ test('navigating away from the page should cancel recording', async ({ mount }) 
 
   await editSoundPage.expectAudioRecorderStateToBe(AudioRecorderState.IDLE)
 })
-
-const launchAndStartRecordingOnEditSoundPage = async (mount: MountFunction): Promise<EditSoundPageObject> => {
-  const homePage = await launchApp(mount)
-  const editSoundPage = await homePage.pressNewSound()
-  await editSoundPage.pressRecord()
-  return editSoundPage
-}

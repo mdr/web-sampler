@@ -1,10 +1,11 @@
 import { expect } from '@playwright/experimental-ct-react'
-import { MountResult } from '../types.ts'
+import { MountFunction, MountResult } from '../types.ts'
 import { EditSoundPageTestIds } from '../../../components/editSoundPage/EditSoundPage.testIds.ts'
 import { PageObject } from './PageObject.ts'
 import { AudioRecorderState, StartRecordingOutcome } from '../../../audio/AudioRecorder.ts'
 import { NavbarTestIds } from '../../../components/shared/NavbarTestIds.ts'
 import { HomePageObject } from './HomePageObject.ts'
+import { launchApp } from './launchApp.tsx'
 
 export class EditSoundPageObject extends PageObject {
   static verifyIsShown = async (mountResult: MountResult): Promise<EditSoundPageObject> => {
@@ -57,4 +58,11 @@ export class EditSoundPageObject extends PageObject {
 
   expectToastToBeShown = (message: string): Promise<void> =>
     this.step(`expectToastToBeShown ${message}`, () => expect(this.mountResult.getByText(message)).toBeVisible())
+}
+
+export const launchAndStartRecordingOnEditSoundPage = async (mount: MountFunction): Promise<EditSoundPageObject> => {
+  const homePage = await launchApp(mount)
+  const editSoundPage = await homePage.pressNewSound()
+  await editSoundPage.pressRecord()
+  return editSoundPage
 }
