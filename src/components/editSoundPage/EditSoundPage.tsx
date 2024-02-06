@@ -1,30 +1,31 @@
 import { useParams } from 'react-router-dom'
 import { SoundId } from '../../types/Sound.ts'
-import { useMaybeSound } from '../../sounds/soundHooks.ts'
-import { EditSoundPane } from './EditSoundPane.tsx'
 import { SoundSidebarPageLayout } from '../shared/SoundSidebarPageLayout.tsx'
-import { SoundNotFound } from './SoundNotFound.tsx'
+import { EditSoundPane } from './EditSoundPane.tsx'
+import { Option } from '../../utils/types/Option.ts'
+import { NoSoundsMessage } from '../homePage/NoSoundsMessage.tsx'
+import { EditOrCreateSoundMessage } from '../homePage/EditOrCreateSoundMessage.tsx'
+import { useSounds } from '../../sounds/soundHooks.ts'
 
-const useSoundIdParam = (): SoundId => {
+const useSoundIdParam = (): Option<SoundId> => {
   const { soundId } = useParams()
-  if (soundId === undefined) {
-    throw new Error('soundId route param was expected but not found')
-  }
-  return SoundId(soundId)
+  return soundId === undefined ? undefined : SoundId(soundId)
 }
 
 export const EditSoundPage = () => {
   const soundId = useSoundIdParam()
-  const sound = useMaybeSound(soundId)
+  const sounds = useSounds()
 
   return (
     <SoundSidebarPageLayout>
-      {sound === undefined ? (
-        <div className="flex justify-center items-center h-full">
-          <SoundNotFound />
-        </div>
+      {soundId === undefined ? (
+        sounds.length === 0 ? (
+          <NoSoundsMessage />
+        ) : (
+          <EditOrCreateSoundMessage />
+        )
       ) : (
-        <EditSoundPane soundId={sound.id} />
+        <EditSoundPane soundId={soundId} />
       )}
     </SoundSidebarPageLayout>
   )

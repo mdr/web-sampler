@@ -5,7 +5,7 @@ import { Sound } from '../../types/Sound.ts'
 import { SoundSidebarTestIds } from './shared.testIds.ts'
 import _ from 'lodash'
 
-const displayName = (sound: Sound) => (sound.name.trim() === '' ? 'Untitled Sound' : sound.name)
+const displayName = (sound: Sound): string => (sound.name.trim() === '' ? 'Untitled Sound' : sound.name)
 
 export const SoundSidebar = () => {
   const sounds = useSounds()
@@ -21,7 +21,7 @@ export const SoundSidebar = () => {
                 to={`/sound/${sound.id}`}
                 className="block w-full p-2"
                 draggable={false}
-                data-testId={SoundSidebarTestIds.soundName}
+                data-testid={SoundSidebarTestIds.soundName}
               >
                 {displayName(sound)}
               </Link>
