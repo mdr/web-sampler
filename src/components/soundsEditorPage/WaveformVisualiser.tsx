@@ -2,9 +2,17 @@ import React, { useCallback, useEffect, useRef } from 'react'
 
 interface WaveformVisualiserProps {
   audio: Float32Array
+  currentTime: number
+  audioDuration: number
+  onPositionChange: (position: number) => void
 }
 
-export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({ audio }) => {
+export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
+  audio,
+  currentTime,
+  audioDuration,
+  onPositionChange,
+}) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   const drawWaveform = useCallback(() => {
@@ -38,11 +46,37 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({ audio })
     }
 
     ctx.stroke()
-  }, [audio])
+
+    // Draw current playback position
+    if (audioDuration > 0) {
+      const currentPosition = (currentTime / audioDuration) * width
+      ctx.strokeStyle = '#ff0000'
+      ctx.beginPath()
+      ctx.moveTo(currentPosition, 0)
+      ctx.lineTo(currentPosition, height)
+      ctx.stroke()
+    }
+  }, [audio, currentTime, audioDuration])
+
+  const handleCanvasClick = useCallback(
+    (event: React.MouseEvent<HTMLCanvasElement>) => {
+      const canvas = canvasRef.current
+      if (!canvas || !onPositionChange) return
+
+      const rect = canvas.getBoundingClientRect()
+      const x = event.clientX - rect.left
+      const position = (x / canvas.width) * audioDuration
+
+      onPositionChange(position)
+    },
+    [audioDuration, onPositionChange],
+  )
 
   useEffect(() => {
     drawWaveform()
   }, [drawWaveform])
 
-  return <canvas className="border-2 border-gray-200" ref={canvasRef} width="600" height="200" />
+  return (
+    <canvas className="border-2 border-gray-200" ref={canvasRef} width="600" height="200" onClick={handleCanvasClick} />
+  )
 }
