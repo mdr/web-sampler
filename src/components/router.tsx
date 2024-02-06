@@ -1,6 +1,6 @@
 import { createHashRouter } from 'react-router-dom'
 import { ErrorFallback } from './ErrorFallback.tsx'
-import { SoundsEditorPage } from './editSoundPage/SoundsEditorPage.tsx'
+import { SoundsEditorPage } from './soundsEditorPage/SoundsEditorPage.tsx'
 import { SoundId } from '../types/Sound.ts'
 
 export const router = createHashRouter([

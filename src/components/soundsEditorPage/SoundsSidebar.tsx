@@ -2,12 +2,12 @@ import { useSounds } from '../../sounds/soundHooks.ts'
 import { Link, useParams } from 'react-router-dom'
 import { NewSoundButton } from './NewSoundButton.tsx'
 import { Sound } from '../../types/Sound.ts'
-import { SoundSidebarTestIds } from './shared.testIds.ts'
+import { SoundSidebarTestIds } from '../shared/shared.testIds.ts'
 import _ from 'lodash'
 
 const displayName = (sound: Sound): string => (sound.name.trim() === '' ? 'Untitled Sound' : sound.name)
 
-export const SoundSidebar = () => {
+export const SoundsSidebar = () => {
   const sounds = useSounds()
   const sortedSounds = _.sortBy(sounds, (sound) => displayName(sound).toLowerCase())
   const { soundId: selectedSoundId } = useParams()

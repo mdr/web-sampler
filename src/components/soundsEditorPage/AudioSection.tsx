@@ -1,4 +1,4 @@
-import { EditSoundPageTestIds } from './EditSoundPage.testIds.ts'
+import { SoundsEditorPageTestIds } from './SoundsEditorPage.testIds.ts'
 import { WaveformVisualiser } from './WaveformVisualiser.tsx'
 import { Url } from '../../utils/types/Url.ts'
 import { useEffect, useState } from 'react'
@@ -23,7 +23,7 @@ export const AudioSection = ({ audio }: AudioSectionProps) => {
   return (
     <div className="flex flex-col items-center">
       <WaveformVisualiser audio={audio} />
-      <audio className="mt-4" data-testid={EditSoundPageTestIds.audioElement} src={audioUrl} controls />
+      <audio className="mt-4" data-testid={SoundsEditorPageTestIds.audioElement} src={audioUrl} controls />
     </div>
   )
 }

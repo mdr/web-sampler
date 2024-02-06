@@ -1,10 +1,10 @@
 import { useParams } from 'react-router-dom'
 import { SoundId } from '../../types/Sound.ts'
-import { SoundsEditorPageLayout } from '../shared/SoundsEditorPageLayout.tsx'
+import { SoundsEditorPageLayout } from './SoundsEditorPageLayout.tsx'
 import { EditSoundPane } from './EditSoundPane.tsx'
 import { Option } from '../../utils/types/Option.ts'
-import { NoSoundsMessage } from '../homePage/NoSoundsMessage.tsx'
-import { EditOrCreateSoundMessage } from '../homePage/EditOrCreateSoundMessage.tsx'
+import { NoSoundsMessage } from './NoSoundsMessage.tsx'
+import { EditOrCreateSoundMessage } from './EditOrCreateSoundMessage.tsx'
 import { useSounds } from '../../sounds/soundHooks.ts'
 
 const useSoundIdParam = (): Option<SoundId> => {

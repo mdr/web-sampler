@@ -1,6 +1,6 @@
 import React from 'react'
-import { Navbar } from './Navbar.tsx'
-import { SoundSidebar } from './SoundSidebar.tsx'
+import { Navbar } from '../shared/Navbar.tsx'
+import { SoundsSidebar } from './SoundsSidebar.tsx'
 
 interface SoundSidebarPageLayoutProps {
   children?: React.ReactNode
@@ -11,7 +11,7 @@ export const SoundsEditorPageLayout = ({ children }: SoundSidebarPageLayoutProps
     <Navbar />
     <div className="flex flex-grow">
       <div className="w-96 flex-none">
-        <SoundSidebar />
+        <SoundsSidebar />
       </div>
       <div className="flex-grow border-l border-gray-200">{children}</div>
     </div>

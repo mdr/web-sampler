@@ -1,6 +1,6 @@
 import { expect } from '@playwright/experimental-ct-react'
 import { MountFunction, MountResult } from '../types.ts'
-import { EditSoundPageTestIds } from '../../../components/editSoundPage/EditSoundPage.testIds.ts'
+import { SoundsEditorPageTestIds } from '../../../components/soundsEditorPage/SoundsEditorPage.testIds.ts'
 import { PageObject } from './PageObject.ts'
 import { AudioRecorderState, StartRecordingOutcome } from '../../../audio/AudioRecorder.ts'
 import { NavbarTestIds } from '../../../components/shared/NavbarTestIds.ts'
@@ -10,7 +10,7 @@ import { SoundSidebarPageObject } from './SoundSidebarPageObject.ts'
 
 export class EditSoundPageObject extends PageObject {
   static verifyIsShown = async (mountResult: MountResult): Promise<EditSoundPageObject> => {
-    await expect(mountResult.getByTestId(EditSoundPageTestIds.recordButton)).toBeVisible()
+    await expect(mountResult.getByTestId(SoundsEditorPageTestIds.recordButton)).toBeVisible()
     return new EditSoundPageObject(mountResult)
   }
 
@@ -19,17 +19,18 @@ export class EditSoundPageObject extends PageObject {
   }
 
   enterSoundName = (name: string): Promise<void> =>
-    this.step(`enterName ${name}`, () => this.get(EditSoundPageTestIds.soundNameInput).fill(name))
+    this.step(`enterName ${name}`, () => this.get(SoundsEditorPageTestIds.soundNameInput).fill(name))
 
   pressRecord = ({
     primedOutcome = StartRecordingOutcome.SUCCESS,
   }: Partial<{ primedOutcome: StartRecordingOutcome }> = {}): Promise<void> =>
     this.step(`pressRecordButton primedOutcome=${primedOutcome}`, async () => {
       await this.page.evaluate((outcome) => window.testHooks.primeStartRecordingOutcome(outcome), primedOutcome)
-      await this.press(EditSoundPageTestIds.recordButton)
+      await this.press(SoundsEditorPageTestIds.recordButton)
     })
 
-  pressStopButton = (): Promise<void> => this.step('pressStopButton', () => this.press(EditSoundPageTestIds.stopButton))
+  pressStopButton = (): Promise<void> =>
+    this.step('pressStopButton', () => this.press(SoundsEditorPageTestIds.stopButton))
 
   waitForTimeout = (duration: number): Promise<void> =>
     this.step(`waitForTimeout ${duration}`, () => this.page.waitForTimeout(duration))
@@ -56,17 +57,17 @@ export class EditSoundPageObject extends PageObject {
 
   expectVolumeMeterToShowLevel = (volume: number): Promise<void> =>
     this.step(`expectVolumeMeterToShowLevel ${volume}`, async () => {
-      await expect(this.get(EditSoundPageTestIds.volumeMeter)).toHaveAttribute('data-volume', `${volume}`)
+      await expect(this.get(SoundsEditorPageTestIds.volumeMeter)).toHaveAttribute('data-volume', `${volume}`)
     })
 
   expectStopButtonToBeShown = (): Promise<void> =>
-    this.step('expectStopButtonToBeShown', () => this.expectToBeVisible(EditSoundPageTestIds.stopButton))
+    this.step('expectStopButtonToBeShown', () => this.expectToBeVisible(SoundsEditorPageTestIds.stopButton))
 
   expectRecordButtonToBeShown = (): Promise<void> =>
-    this.step('expectRecordButtonToBeShown', () => this.expectToBeVisible(EditSoundPageTestIds.recordButton))
+    this.step('expectRecordButtonToBeShown', () => this.expectToBeVisible(SoundsEditorPageTestIds.recordButton))
 
   expectAudioToBeShown = (): Promise<void> =>
-    this.step('expectAudioToBeShown', () => this.expectToBeVisible(EditSoundPageTestIds.audioElement))
+    this.step('expectAudioToBeShown', () => this.expectToBeVisible(SoundsEditorPageTestIds.audioElement))
 
   expectToastToBeShown = (message: string): Promise<void> =>
     this.step(`expectToastToBeShown ${message}`, () => expect(this.mountResult.getByText(message)).toBeVisible())
