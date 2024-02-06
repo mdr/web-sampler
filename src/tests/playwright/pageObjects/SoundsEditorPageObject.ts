@@ -1,6 +1,6 @@
 import { expect } from '@playwright/experimental-ct-react'
 import { MountFunction, MountResult } from '../types.ts'
-import { EditSoundPaneTestIds } from '../../../components/soundsEditorPage/EditSoundPaneTestIds.ts'
+import { EditSoundPaneTestIds, SoundSidebarTestIds } from '../../../components/soundsEditorPage/EditSoundPaneTestIds.ts'
 import { PageObject } from './PageObject.ts'
 import { AudioRecorderState, StartRecordingOutcome } from '../../../audio/AudioRecorder.ts'
 import { NavbarTestIds } from '../../../components/shared/NavbarTestIds.ts'
@@ -8,10 +8,10 @@ import { HomePageObject } from './HomePageObject.ts'
 import { launchApp } from './launchApp.tsx'
 import { SoundSidebarPageObject } from './SoundSidebarPageObject.ts'
 
-export class EditSoundPageObject extends PageObject {
-  static verifyIsShown = async (mountResult: MountResult): Promise<EditSoundPageObject> => {
-    await expect(mountResult.getByTestId(EditSoundPaneTestIds.recordButton)).toBeVisible()
-    return new EditSoundPageObject(mountResult)
+export class SoundsEditorPageObject extends PageObject {
+  static verifyIsShown = async (mountResult: MountResult): Promise<SoundsEditorPageObject> => {
+    await expect(mountResult.getByTestId(SoundSidebarTestIds.newSoundButton)).toBeVisible()
+    return new SoundsEditorPageObject(mountResult)
   }
 
   get sidebar() {
@@ -72,9 +72,9 @@ export class EditSoundPageObject extends PageObject {
     this.step(`expectToastToBeShown ${message}`, () => expect(this.mountResult.getByText(message)).toBeVisible())
 }
 
-export const launchAndStartRecordingOnEditSoundPage = async (mount: MountFunction): Promise<EditSoundPageObject> => {
-  const homePage = await launchApp(mount)
-  const editSoundPage = await homePage.sidebar.pressNewSound()
-  await editSoundPage.pressRecord()
-  return editSoundPage
+export const launchAndStartRecording = async (mount: MountFunction): Promise<SoundsEditorPageObject> => {
+  const soundsEditorPage = await launchApp(mount)
+  await soundsEditorPage.sidebar.pressNewSound()
+  await soundsEditorPage.pressRecord()
+  return soundsEditorPage
 }

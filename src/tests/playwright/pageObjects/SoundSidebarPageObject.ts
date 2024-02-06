@@ -1,7 +1,6 @@
 import { PageObject } from './PageObject.ts'
 import { MountResult } from '../types.ts'
 import { expect } from '@playwright/experimental-ct-react'
-import { EditSoundPageObject } from './EditSoundPageObject.ts'
 import { SoundSidebarTestIds } from '../../../components/soundsEditorPage/EditSoundPaneTestIds.ts'
 
 export class SoundSidebarPageObject extends PageObject {
@@ -10,11 +9,7 @@ export class SoundSidebarPageObject extends PageObject {
     return new SoundSidebarPageObject(mountResult)
   }
 
-  pressNewSound = (): Promise<EditSoundPageObject> =>
-    this.step('pressNewSound', async () => {
-      await this.press(SoundSidebarTestIds.newSoundButton)
-      return EditSoundPageObject.verifyIsShown(this.mountResult)
-    })
+  pressNewSound = (): Promise<void> => this.step('pressNewSound', () => this.press(SoundSidebarTestIds.newSoundButton))
 
   expectSoundNamesToBe = (expectedNamesInOrder: string[]) =>
     this.step(`expectSoundNamesToBe [${expectedNamesInOrder.join(', ')}]`, async () => {

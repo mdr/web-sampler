@@ -2,15 +2,16 @@ import { test } from '@playwright/experimental-ct-react'
 import { launchApp } from '../pageObjects/launchApp.tsx'
 
 test('sounds can be created and named', async ({ mount }) => {
-  const homePage = await launchApp(mount)
-  const editSoundPage = await homePage.sidebar.pressNewSound()
-  await editSoundPage.enterSoundName('Sound CCC')
+  const soundsEditorPage = await launchApp(mount)
 
-  await editSoundPage.sidebar.pressNewSound()
-  await editSoundPage.enterSoundName('Sound AAA')
+  await soundsEditorPage.sidebar.pressNewSound()
+  await soundsEditorPage.enterSoundName('Sound CCC')
 
-  await editSoundPage.sidebar.pressNewSound()
-  await editSoundPage.enterSoundName('Sound BBB')
+  await soundsEditorPage.sidebar.pressNewSound()
+  await soundsEditorPage.enterSoundName('Sound AAA')
 
-  await editSoundPage.sidebar.expectSoundNamesToBe(['Sound AAA', 'Sound BBB', 'Sound CCC'])
+  await soundsEditorPage.sidebar.pressNewSound()
+  await soundsEditorPage.enterSoundName('Sound BBB')
+
+  await soundsEditorPage.sidebar.expectSoundNamesToBe(['Sound AAA', 'Sound BBB', 'Sound CCC'])
 })
