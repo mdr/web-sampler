@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom'
 import { SoundId } from '../../types/Sound.ts'
-import { SoundSidebarPageLayout } from '../shared/SoundSidebarPageLayout.tsx'
+import { SoundsEditorPageLayout } from '../shared/SoundsEditorPageLayout.tsx'
 import { EditSoundPane } from './EditSoundPane.tsx'
 import { Option } from '../../utils/types/Option.ts'
 import { NoSoundsMessage } from '../homePage/NoSoundsMessage.tsx'
@@ -12,12 +12,12 @@ const useSoundIdParam = (): Option<SoundId> => {
   return soundId === undefined ? undefined : SoundId(soundId)
 }
 
-export const EditSoundPage = () => {
+export const SoundsEditorPage = () => {
   const soundId = useSoundIdParam()
   const sounds = useSounds()
 
   return (
-    <SoundSidebarPageLayout>
+    <SoundsEditorPageLayout>
       {soundId === undefined ? (
         sounds.length === 0 ? (
           <NoSoundsMessage />
@@ -27,6 +27,6 @@ export const EditSoundPage = () => {
       ) : (
         <EditSoundPane soundId={soundId} />
       )}
-    </SoundSidebarPageLayout>
+    </SoundsEditorPageLayout>
   )
 }

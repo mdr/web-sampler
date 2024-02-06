@@ -1,5 +1,6 @@
 import { NewSoundButton } from '../shared/NewSoundButton.tsx'
-import { NoSoundsMessageTestIds } from './HomePage.testIds.ts'
+
+import { NoSoundsMessageTestIds } from '../editSoundPage/EditSoundPage.testIds.ts'
 
 export const NoSoundsMessage = () => (
   <div className="flex items-center justify-center h-">

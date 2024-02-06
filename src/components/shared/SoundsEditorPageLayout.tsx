@@ -6,7 +6,7 @@ interface SoundSidebarPageLayoutProps {
   children?: React.ReactNode
 }
 
-export const SoundSidebarPageLayout = ({ children }: SoundSidebarPageLayoutProps) => (
+export const SoundsEditorPageLayout = ({ children }: SoundSidebarPageLayoutProps) => (
   <div className="flex flex-col min-h-screen">
     <Navbar />
     <div className="flex flex-grow">

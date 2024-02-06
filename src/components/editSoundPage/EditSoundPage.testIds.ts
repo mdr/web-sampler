@@ -7,3 +7,7 @@ export const EditSoundPageTestIds = {
   volumeMeter: TestId('EditSoundPage.volumeMeter'),
   soundNameInput: TestId('EditSoundPage.soundNameInput'),
 }
+
+export const NoSoundsMessageTestIds = {
+  newSoundButton: TestId('NoSoundsMessage.newSoundButton'),
+}
