@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { SoundId } from '../../types/Sound.ts'
 import { useMaybeSound } from '../../sounds/soundHooks.ts'
-import { EditSoundPageContents } from './EditSoundPageContents.tsx'
+import { EditSoundPane } from './EditSoundPane.tsx'
 import { SoundSidebarPageLayout } from '../shared/SoundSidebarPageLayout.tsx'
 import { SoundNotFound } from './SoundNotFound.tsx'
 
@@ -24,7 +24,7 @@ export const EditSoundPage = () => {
           <SoundNotFound />
         </div>
       ) : (
-        <EditSoundPageContents soundId={sound.id} />
+        <EditSoundPane soundId={sound.id} />
       )}
     </SoundSidebarPageLayout>
   )

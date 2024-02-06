@@ -24,7 +24,7 @@ export interface EditSoundPageProps {
   soundId: SoundId
 }
 
-export const EditSoundPageContents = ({ soundId }: EditSoundPageProps) => {
+export const EditSoundPane = ({ soundId }: EditSoundPageProps) => {
   const sound = useSound(soundId)
   const soundActions = useSoundActions()
   const audioRecorderActions = useAudioRecorderActions()
