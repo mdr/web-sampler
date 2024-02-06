@@ -4,11 +4,11 @@ import { EditSoundPaneTestIds, SoundSidebarTestIds } from '../../../components/s
 import { PageObject } from './PageObject.ts'
 import { AudioRecorderState, StartRecordingOutcome } from '../../../audio/AudioRecorder.ts'
 import { NavbarTestIds } from '../../../components/shared/NavbarTestIds.ts'
-import { HomePageObject } from './HomePageObject.ts'
 import { launchApp } from './launchApp.tsx'
 import { SoundSidebarPageObject } from './SoundSidebarPageObject.ts'
 
 export class SoundsEditorPageObject extends PageObject {
+  protected readonly name = 'SoundsEditorPage'
   static verifyIsShown = async (mountResult: MountResult): Promise<SoundsEditorPageObject> => {
     await expect(mountResult.getByTestId(SoundSidebarTestIds.newSoundButton)).toBeVisible()
     return new SoundsEditorPageObject(mountResult)
@@ -31,14 +31,7 @@ export class SoundsEditorPageObject extends PageObject {
 
   pressStopButton = (): Promise<void> => this.step('pressStopButton', () => this.press(EditSoundPaneTestIds.stopButton))
 
-  waitForTimeout = (duration: number): Promise<void> =>
-    this.step(`waitForTimeout ${duration}`, () => this.page.waitForTimeout(duration))
-
-  pressHomeLink = (): Promise<HomePageObject> =>
-    this.step('pressHomeLink', async () => {
-      await this.press(NavbarTestIds.homeLink)
-      return HomePageObject.verifyIsShown(this.mountResult)
-    })
+  pressHomeLink = (): Promise<void> => this.step('pressHomeLink', () => this.press(NavbarTestIds.homeLink))
 
   simulateVolume = (volume: number): Promise<void> =>
     this.step(`simulateVolume ${volume}`, async () => {

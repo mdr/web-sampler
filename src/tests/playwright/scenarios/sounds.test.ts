@@ -15,3 +15,11 @@ test('sounds can be created and named', async ({ mount }) => {
 
   await soundsEditorPage.sidebar.expectSoundNamesToBe(['Sound AAA', 'Sound BBB', 'Sound CCC'])
 })
+
+test('a sound without a name is displayed as "Untitled Sound"', async ({ mount }) => {
+  const soundsEditorPage = await launchApp(mount)
+
+  await soundsEditorPage.sidebar.pressNewSound()
+
+  await soundsEditorPage.sidebar.expectSoundNamesToBe(['Untitled Sound'])
+})

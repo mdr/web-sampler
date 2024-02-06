@@ -3,15 +3,16 @@ import { MountResult } from '../types.ts'
 import { TestId } from '../../../utils/types/TestId.ts'
 import { Duration } from 'luxon'
 
-export class PageObject {
+export abstract class PageObject {
   constructor(protected readonly mountResult: MountResult) {}
 
   protected get page() {
     return this.mountResult.page()
   }
 
-  protected step = <T>(name: string, body: () => T | Promise<T>): Promise<T> =>
-    test.step(`${this.constructor.name}.${name}`, body)
+  protected abstract readonly name: string
+
+  protected step = <T>(name: string, body: () => T | Promise<T>): Promise<T> => test.step(`${this.name}.${name}`, body)
 
   protected get = (testId: TestId) => this.mountResult.getByTestId(testId)
 
