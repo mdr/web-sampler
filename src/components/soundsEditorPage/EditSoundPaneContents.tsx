@@ -2,7 +2,7 @@ import { useCallback, useRef } from 'react'
 import { RecordButton } from './RecordButton.tsx'
 import { VolumeMeter } from './VolumeMeter.tsx'
 import { StopButton } from './StopButton.tsx'
-import { SoundsEditorPageTestIds } from './SoundsEditorPage.testIds.ts'
+import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
 import { AudioRecorderState, StartRecordingOutcome } from '../../audio/AudioRecorder.ts'
 import { Option } from '../../utils/types/Option.ts'
 import useUnmount from 'beautiful-react-hooks/useUnmount'
@@ -82,7 +82,7 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPageProps) => {
         )}
         {audioRecorderState === AudioRecorderState.RECORDING && (
           <>
-            <StopButton testId={SoundsEditorPageTestIds.stopButton} onPress={handleStopButtonPressed}>
+            <StopButton testId={EditSoundPaneTestIds.stopButton} onPress={handleStopButtonPressed}>
               Stop
             </StopButton>
             <VolumeMeter />

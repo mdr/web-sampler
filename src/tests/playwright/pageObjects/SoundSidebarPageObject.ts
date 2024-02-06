@@ -1,8 +1,8 @@
 import { PageObject } from './PageObject.ts'
 import { MountResult } from '../types.ts'
 import { expect } from '@playwright/experimental-ct-react'
-import { SoundSidebarTestIds } from '../../../components/shared/shared.testIds.ts'
 import { EditSoundPageObject } from './EditSoundPageObject.ts'
+import { SoundSidebarTestIds } from '../../../components/soundsEditorPage/EditSoundPaneTestIds.ts'
 
 export class SoundSidebarPageObject extends PageObject {
   static verifyIsShown = async (mountResult: MountResult): Promise<SoundSidebarPageObject> => {

@@ -9,3 +9,5 @@ export interface Sound {
   readonly name: string
   readonly audio?: Float32Array
 }
+
+export const getDisplayName = (sound: Sound): string => (sound.name.trim() === '' ? 'Untitled Sound' : sound.name)

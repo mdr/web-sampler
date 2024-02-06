@@ -1,15 +1,13 @@
 import { useSounds } from '../../sounds/soundHooks.ts'
 import { Link, useParams } from 'react-router-dom'
 import { NewSoundButton } from './NewSoundButton.tsx'
-import { Sound } from '../../types/Sound.ts'
-import { SoundSidebarTestIds } from '../shared/shared.testIds.ts'
+import { getDisplayName } from '../../types/Sound.ts'
 import _ from 'lodash'
-
-const displayName = (sound: Sound): string => (sound.name.trim() === '' ? 'Untitled Sound' : sound.name)
+import { SoundSidebarTestIds } from './EditSoundPaneTestIds.ts'
 
 export const SoundsSidebar = () => {
   const sounds = useSounds()
-  const sortedSounds = _.sortBy(sounds, (sound) => displayName(sound).toLowerCase())
+  const sortedSounds = _.sortBy(sounds, (sound) => getDisplayName(sound).toLowerCase())
   const { soundId: selectedSoundId } = useParams()
   return (
     <div className="flex flex-col h-full">
@@ -23,7 +21,7 @@ export const SoundsSidebar = () => {
                 draggable={false}
                 data-testid={SoundSidebarTestIds.soundName}
               >
-                {displayName(sound)}
+                {getDisplayName(sound)}
               </Link>
             </li>
           ))}
