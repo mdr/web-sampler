@@ -4,7 +4,8 @@ import { Button } from 'react-aria-components'
 import { useSoundActions } from '../../sounds/soundHooks.ts'
 import { useNavigate } from 'react-router-dom'
 import { editSoundRoute } from '../router.tsx'
-import { TestId } from '../../utils/types/TestId.ts'
+
+import { TestId } from '../../utils/types/brandedTypes.ts'
 
 export interface NewSoundButtonProps {
   testId: TestId

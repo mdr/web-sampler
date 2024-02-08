@@ -59,7 +59,7 @@ export class SoundsEditorPageObject extends PageObject {
     this.step('expectRecordButtonToBeShown', () => this.expectToBeVisible(EditSoundPaneTestIds.recordButton))
 
   expectAudioToBeShown = (): Promise<void> =>
-    this.step('expectAudioToBeShown', () => this.expectToBeVisible(EditSoundPaneTestIds.audioElement))
+    this.step('expectAudioToBeShown', () => this.expectToBeVisible(EditSoundPaneTestIds.playButton))
 
   expectToastToBeShown = (message: string): Promise<void> =>
     this.step(`expectToastToBeShown ${message}`, () => expect(this.mountResult.getByText(message)).toBeVisible())

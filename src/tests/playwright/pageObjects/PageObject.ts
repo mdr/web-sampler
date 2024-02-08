@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/experimental-ct-react'
 import { MountResult } from '../types.ts'
-import { TestId } from '../../../utils/types/TestId.ts'
 import { Duration } from 'luxon'
+import { TestId } from '../../../utils/types/brandedTypes.ts'
 
 export abstract class PageObject {
   constructor(protected readonly mountResult: MountResult) {}

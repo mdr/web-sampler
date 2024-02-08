@@ -2,7 +2,8 @@ import React from 'react'
 import Icon from '@mdi/react'
 import { mdiStop } from '@mdi/js'
 import { doNothing } from '../../utils/utils.ts'
-import { TestId } from '../../utils/types/TestId.ts' // Importing the stop icon
+
+import { TestId } from '../../utils/types/brandedTypes.ts'
 
 interface StopButtonProps {
   testId?: TestId

@@ -1,15 +1,24 @@
 import React, { useCallback, useEffect, useRef } from 'react'
+import { Seconds } from '../../utils/types/brandedTypes.ts'
 
 interface WaveformVisualiserProps {
   audio: Float32Array
-  currentTime: number
-  audioDuration: number
-  onPositionChange: (position: number) => void
+  currentPosition: Seconds
+  audioDuration: Seconds
+  onPositionChange: (position: Seconds) => void
+}
+
+const getCanvasRenderingContext2D = (canvas: HTMLCanvasElement): CanvasRenderingContext2D => {
+  const ctx = canvas.getContext('2d') ?? undefined
+  if (ctx === undefined) {
+    throw new Error('Canvas rendering context is null')
+  }
+  return ctx
 }
 
 export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
   audio,
-  currentTime,
+  currentPosition,
   audioDuration,
   onPositionChange,
 }) => {
@@ -17,18 +26,30 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
 
   const drawWaveform = useCallback(() => {
     const canvas = canvasRef.current ?? undefined
-    if (!canvas) return
-    const ctx = canvas.getContext('2d') ?? undefined
-    if (!ctx) return
+    if (canvas === undefined) {
+      return
+    }
+    const ctx = getCanvasRenderingContext2D(canvas)
 
     const width = canvas.width
     const height = canvas.height
     const step = Math.ceil(audio.length / width)
     const amp = height / 2
 
+    // Clear canvas
     ctx.clearRect(0, 0, width, height)
     ctx.fillStyle = '#fff'
     ctx.fillRect(0, 0, width, height)
+
+    // Draw horizontal line at 0 amplitude
+    ctx.strokeStyle = '#000'
+    ctx.lineWidth = 1
+    ctx.beginPath()
+    ctx.moveTo(0, amp)
+    ctx.lineTo(width, amp)
+    ctx.stroke()
+
+    // Draw waveform
     ctx.lineWidth = 1
     ctx.strokeStyle = '#3b82f6'
     ctx.beginPath()
@@ -47,25 +68,28 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
 
     ctx.stroke()
 
-    // Draw current playback position
+    // Draw current position line
     if (audioDuration > 0) {
-      const currentPosition = (currentTime / audioDuration) * width
+      const x = (currentPosition / audioDuration) * width
       ctx.strokeStyle = '#ff0000'
+      ctx.lineWidth = 2
       ctx.beginPath()
-      ctx.moveTo(currentPosition, 0)
-      ctx.lineTo(currentPosition, height)
+      ctx.moveTo(x, 0)
+      ctx.lineTo(x, height)
       ctx.stroke()
     }
-  }, [audio, currentTime, audioDuration])
+  }, [audio, currentPosition, audioDuration])
 
   const handleCanvasClick = useCallback(
     (event: React.MouseEvent<HTMLCanvasElement>) => {
-      const canvas = canvasRef.current
-      if (!canvas || !onPositionChange) return
+      const canvas = canvasRef.current ?? undefined
+      if (canvas === undefined) {
+        return
+      }
 
       const rect = canvas.getBoundingClientRect()
       const x = event.clientX - rect.left
-      const position = (x / canvas.width) * audioDuration
+      const position = Seconds((x / canvas.width) * audioDuration)
 
       onPositionChange(position)
     },
