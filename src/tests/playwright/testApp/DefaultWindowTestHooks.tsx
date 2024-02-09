@@ -1,7 +1,7 @@
 import { WindowTestHooks } from './WindowTestHooks.ts'
-import { MockAudioRecorder } from './mocks/MockAudioRecorder.ts'
+import { MockAudioRecorder } from '../mocks/MockAudioRecorder.ts'
 import { InstalledClock } from '@sinonjs/fake-timers'
-import { AudioRecorderState, StartRecordingOutcome } from '../../audio/AudioRecorder.ts'
+import { AudioRecorderState, StartRecordingOutcome } from '../../../audio/AudioRecorder.ts'
 
 export class DefaultWindowTestHooks implements WindowTestHooks {
   constructor(

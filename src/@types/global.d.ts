@@ -1,4 +1,4 @@
-import { WindowTestHooks } from '../tests/playwright/WindowTestHooks.ts'
+import { WindowTestHooks } from '../tests/playwright/testApp/WindowTestHooks.ts'
 
 declare global {
   interface Window {
