@@ -16,35 +16,35 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Use Node.js 20.10.0
+      - name: Use Node.js 20.10.0 📦
         uses: actions/setup-node@v4
         with:
           node-version: '20.10.0'
           cache: 'yarn'
 
-      - name: Install dependencies
+      - name: Install dependencies 📥
         run: yarn install
 
-      - name: Lint
+      - name: Lint 🧹
         run: yarn lint
 
-      - name: Run tests
+      - name: Run tests 🧪
         run: yarn test
 
-      - name: Install Playwright Browsers
+      - name: Install Playwright Browsers 🌐
         run: yarn playwright install
 
-      - name: Run component tests
+      - name: Run component tests 🎭
         run: yarn test-ct
 
-      - name: Upload snapshots if component tests fail
+      - name: Upload test results if component tests fail 😭
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: snapshots
-          path: tests/__snapshots__/scenarios
+          name: test-results
+          path: test-results
 
-      - name: Build
+      - name: Build 🏗️
         run: yarn build
 
       - name: Deploy 🚀
