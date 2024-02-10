@@ -1,6 +1,7 @@
 import { AudioRecorder, AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
 import { AbstractAudioRecorder } from '../../../audioRecorder/AbstractAudioRecorder.ts'
 import { Duration } from 'luxon'
+import { SOUND_DURATION } from '../testConstants.ts'
 
 export class MockAudioRecorder extends AbstractAudioRecorder implements AudioRecorder {
   volume: number = 0
@@ -18,7 +19,7 @@ export class MockAudioRecorder extends AbstractAudioRecorder implements AudioRec
       return
     }
     this.setState(AudioRecorderState.IDLE)
-    this.fireRecordingCompleteListeners(createSineWave(Duration.fromObject({ seconds: 5 })))
+    this.fireRecordingCompleteListeners(createSineWave(SOUND_DURATION))
   }
 }
 
