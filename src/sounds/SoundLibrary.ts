@@ -116,8 +116,10 @@ export class SoundLibrary implements SoundActions {
       .map((id) => this.findSound(id))
       .filter((sound): sound is Sound => sound !== undefined)
     const soundIdsToDelete = this.dirtySoundIds.filter((id) => this.findSound(id) === undefined)
+    await db.transaction('rw', db.sounds, async () => {
+      await db.sounds.bulkPut(soundsToPersist)
+      await db.sounds.bulkDelete(soundIdsToDelete)
+    })
     this.dirtySoundIds.length = 0
-    await db.sounds.bulkPut(soundsToPersist)
-    await db.sounds.bulkDelete(soundIdsToDelete)
   }
 }
