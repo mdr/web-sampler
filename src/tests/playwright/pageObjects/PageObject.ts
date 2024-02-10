@@ -32,12 +32,12 @@ export abstract class PageObject {
 
   isAudioPlaying = (): Promise<boolean> => this.page.evaluate(() => window.testHooks.isAudioPlaying)
 
-  public wait = (duration: Duration): Promise<void> =>
+  wait = (duration: Duration): Promise<void> =>
     this.step(`wait ${duration.toHuman()}`, () =>
       this.page.evaluate((millis) => window.testHooks.clockTick(millis), duration.toMillis()),
     )
 
-  public checkScreenshot = async (name: string, testId: Option<TestId> = undefined): Promise<void> => {
+  checkScreenshot = async (name: string, testId: Option<TestId> = undefined): Promise<void> => {
     if (platform() !== 'linux') {
       return
     }
