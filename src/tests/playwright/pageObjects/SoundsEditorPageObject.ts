@@ -69,9 +69,6 @@ export class SoundsEditorPageObject extends PageObject {
   expectAudioWaveformToBeShown = (): Promise<void> =>
     this.step('expectAudioWaveformToBeShown', () => this.expectToBeVisible(EditSoundPaneTestIds.waveformCanvas))
 
-  expectToastToBeShown = (message: string): Promise<void> =>
-    this.step(`expectToastToBeShown "${message}"`, () => expect(this.mountResult.getByText(message)).toBeVisible())
-
   expectPauseButtonToBeShown = (): Promise<void> =>
     this.step('expectPauseButtonToBeShown', () => this.expectToBeVisible(EditSoundPaneTestIds.pauseButton))
 

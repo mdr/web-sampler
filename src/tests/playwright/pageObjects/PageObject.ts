@@ -23,6 +23,9 @@ export abstract class PageObject {
   protected expectToBeVisibleImmediate = (testId: TestId): Promise<void> =>
     expect(this.get(testId)).toBeVisible({ timeout: 1 })
 
+  expectToastToBeShown = (message: string): Promise<void> =>
+    this.step(`expectToastToBeShown "${message}"`, () => expect(this.mountResult.getByText(message)).toBeVisible())
+
   public wait = (duration: Duration): Promise<void> =>
     this.step(`wait ${duration.toHuman()}`, () =>
       this.page.evaluate((millis) => window.testHooks.clockTick(millis), duration.toMillis()),
