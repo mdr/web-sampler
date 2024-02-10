@@ -10,6 +10,7 @@ test('captured audio should be shown after recording', async ({ mount }) => {
   await soundsEditorPage.pressStop()
 
   await soundsEditorPage.expectAudioWaveformToBeShown()
+  await soundsEditorPage.checkScreenshot('captured audio')
 })
 
 test('a volume meter should indicate audio level during recording', async ({ mount }) => {
