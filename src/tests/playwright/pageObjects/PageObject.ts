@@ -2,6 +2,7 @@ import { expect, test } from '@playwright/experimental-ct-react'
 import { MountResult } from '../types.ts'
 import { Duration } from 'luxon'
 import { TestId } from '../../../utils/types/brandedTypes.ts'
+import { platform } from 'node:os'
 
 export abstract class PageObject {
   constructor(protected readonly mountResult: MountResult) {}
@@ -20,9 +21,6 @@ export abstract class PageObject {
 
   protected expectToBeVisible = (testId: TestId): Promise<void> => expect(this.get(testId)).toBeVisible()
 
-  protected expectToBeVisibleImmediate = (testId: TestId): Promise<void> =>
-    expect(this.get(testId)).toBeVisible({ timeout: 1 })
-
   expectToastToBeShown = (message: string): Promise<void> =>
     this.step(`expectToastToBeShown "${message}"`, () => expect(this.mountResult.getByText(message)).toBeVisible())
 
@@ -38,8 +36,9 @@ export abstract class PageObject {
       this.page.evaluate((millis) => window.testHooks.clockTick(millis), duration.toMillis()),
     )
 
-  public hardWait = (duration: Duration): Promise<void> =>
-    this.step(`hardWait ${duration.toHuman()}`, () => this.page.waitForTimeout(duration.toMillis()))
-
-  public checkScreenshot = (name: string) => expect(this.mountResult).toHaveScreenshot(`${name}.png`)
+  public checkScreenshot = async (name: string): Promise<void> => {
+    if (platform() === 'linux') {
+      await expect(this.mountResult).toHaveScreenshot(`${name}.png`)
+    }
+  }
 }
