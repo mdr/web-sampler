@@ -16,9 +16,11 @@ import {
   useAudioRecordingComplete,
 } from '../../audioRecorder/audioRecorderHooks.ts'
 import { useSound, useSoundActions } from '../../sounds/soundHooks.ts'
-import { SoundId } from '../../types/Sound.ts'
+import { getDisplayName, SoundId } from '../../types/Sound.ts'
 import { fireAndForget } from '../../utils/utils.ts'
 import { AudioSection } from './AudioSection.tsx'
+import { DeleteButton } from './DeleteButton.tsx'
+import { useNavigate } from 'react-router-dom'
 
 export interface EditSoundPageProps {
   soundId: SoundId
@@ -29,8 +31,8 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPageProps) => {
   const soundActions = useSoundActions()
   const audioRecorderActions = useAudioRecorderActions()
   const audioRecorderState = useAudioRecorderState()
-
   const timerIdRef = useRef<Option<TimerId>>()
+  const navigate = useNavigate()
 
   const handleRecordingComplete = useCallback(
     (audio: Float32Array) => {
@@ -70,6 +72,12 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPageProps) => {
 
   const setSoundName = (name: string) => soundActions.setName(soundId, name)
 
+  const handleDeleteButtonPressed = () => {
+    soundActions.deleteSound(soundId)
+    navigate('/')
+    toast.info(`Deleted sound ${getDisplayName(sound)}`)
+  }
+
   return (
     <>
       <SoundNameTextField soundName={sound.name} setSoundName={setSoundName} />
@@ -88,6 +96,7 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPageProps) => {
             <VolumeMeter />
           </>
         )}
+        <DeleteButton onPress={handleDeleteButtonPressed} />
       </div>
     </>
   )

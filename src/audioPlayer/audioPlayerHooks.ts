@@ -3,6 +3,7 @@ import { AudioPlayer } from './AudioPlayer.ts'
 import { AudioPlayerContext } from './AudioPlayerContext.ts'
 import { Seconds, Url } from '../utils/types/brandedTypes.ts'
 import { useRequestAnimationFrame } from '../utils/hooks/useRequestAnimationFrame.ts'
+import { Option } from '../utils/types/Option.ts'
 
 const useAudioPlayer = (): AudioPlayer => {
   const audioPlayer = useContext(AudioPlayerContext)
@@ -14,20 +15,21 @@ const useAudioPlayer = (): AudioPlayer => {
 
 export const useAudioPlayerIsPlaying = (): boolean => {
   const audioPlayer = useAudioPlayer()
-  const [isPlaying, setIsPlaying] = useState<boolean>(false)
+  const [isPlaying, setIsPlaying] = useState<boolean>(audioPlayer.isPlaying)
   const handlePlay = useCallback(() => setIsPlaying(true), [setIsPlaying])
-  const handlePause = useCallback(() => setIsPlaying(false), [setIsPlaying])
-  const handleEnded = useCallback(() => setIsPlaying(false), [setIsPlaying])
+  const handlePauseOrEnded = useCallback(() => setIsPlaying(false), [setIsPlaying])
   useEffect(() => {
     audioPlayer.addPlayListener(handlePlay)
-    audioPlayer.addPauseListener(handlePause)
-    audioPlayer.addEndedListener(handleEnded)
+    audioPlayer.addPauseListener(handlePauseOrEnded)
+    audioPlayer.addEndedListener(handlePauseOrEnded)
+    audioPlayer.addLoadStartListener(handlePauseOrEnded)
     return () => {
       audioPlayer.removePlayListener(handlePlay)
-      audioPlayer.removePauseListener(handlePause)
-      audioPlayer.removeEndedListener(handleEnded)
+      audioPlayer.removePauseListener(handlePauseOrEnded)
+      audioPlayer.removeEndedListener(handlePauseOrEnded)
+      audioPlayer.removeLoadStartListener(handlePauseOrEnded)
     }
-  }, [audioPlayer, setIsPlaying, handlePlay, handlePause, handleEnded])
+  }, [audioPlayer, setIsPlaying, handlePlay, handlePauseOrEnded])
   return isPlaying
 }
 
@@ -44,7 +46,7 @@ export const useAudioPlayerCurrentTimeAndDuration = (): [Seconds, Seconds] => {
 }
 
 export interface AudioPlayerActions {
-  setUrl: (url: Url) => void
+  setUrl: (url: Option<Url>) => void
   play: () => Promise<void>
   pause: () => void
   seek: (time: Seconds) => void

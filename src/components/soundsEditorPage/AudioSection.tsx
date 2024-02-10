@@ -25,10 +25,16 @@ export const AudioSection = ({ audio }: AudioSectionProps) => {
 
   const audioContext = useAudioContext()
   useEffect(() => {
-    const audioBufferUtils = new AudioBufferUtils(audioContext)
-    const blob = audioBufferUtils.float32ArrayToWavBlob(audio)
-    const objectUrl = Url(URL.createObjectURL(blob))
-    audioPlayerActions.setUrl(objectUrl)
+    if (audio.length > 0) {
+      const audioBufferUtils = new AudioBufferUtils(audioContext)
+      const blob = audioBufferUtils.float32ArrayToWavBlob(audio)
+      const objectUrl = Url(URL.createObjectURL(blob))
+      audioPlayerActions.setUrl(objectUrl)
+    }
+    return () => {
+      audioPlayerActions.pause()
+      audioPlayerActions.setUrl(undefined)
+    }
   }, [audio, audioContext, audioPlayerActions])
 
   const handlePositionChange = (position: Seconds) => {

@@ -13,7 +13,7 @@ const PERSIST_DIRTY_INTERVAL = Duration.fromObject({ seconds: 1 })
 
 export class SoundLibrary implements SoundActions {
   private _sounds: readonly Sound[] = []
-  private readonly dirtySounds: SoundId[] = []
+  private readonly dirtySoundIds: SoundId[] = []
   private isLoading = true
   private isPersisting = false
   private readonly listeners: SoundsUpdatedListener[] = []
@@ -24,8 +24,7 @@ export class SoundLibrary implements SoundActions {
   }
 
   private loadSounds = async (): Promise<void> => {
-    const sounds = await db.sounds.toArray()
-    this._sounds = sounds
+    this._sounds = await db.sounds.toArray()
     this.isLoading = false
     this.notifyListeners()
   }
@@ -65,8 +64,8 @@ export class SoundLibrary implements SoundActions {
   }
 
   private markAsDirty = (id: SoundId): void => {
-    if (!this.dirtySounds.includes(id)) {
-      this.dirtySounds.push(id)
+    if (!this.dirtySoundIds.includes(id)) {
+      this.dirtySoundIds.push(id)
       // Try an immediate persist to save as soon as possible
       this.tryPersistDirtySounds()
     }
@@ -89,6 +88,12 @@ export class SoundLibrary implements SoundActions {
       this.notifyListeners()
     }
   }
+  deleteSound = (id: SoundId): void => {
+    this.checkNotLoading()
+    this._sounds = this._sounds.filter((sound) => sound.id !== id)
+    this.dirtySoundIds.push(id)
+    this.notifyListeners()
+  }
 
   private tryPersistDirtySounds = () =>
     fireAndForget(async (): Promise<void> => {
@@ -104,13 +109,15 @@ export class SoundLibrary implements SoundActions {
     })
 
   private persistDirtySounds = async (): Promise<void> => {
-    if (this.dirtySounds.length === 0) {
+    if (this.dirtySoundIds.length === 0) {
       return
     }
-    const soundsToPersist = this.dirtySounds
+    const soundsToPersist = this.dirtySoundIds
       .map((id) => this.findSound(id))
       .filter((sound): sound is Sound => sound !== undefined)
-    this.dirtySounds.length = 0
+    const soundIdsToDelete = this.dirtySoundIds.filter((id) => this.findSound(id) === undefined)
+    this.dirtySoundIds.length = 0
     await db.sounds.bulkPut(soundsToPersist)
+    await db.sounds.bulkDelete(soundIdsToDelete)
   }
 }
