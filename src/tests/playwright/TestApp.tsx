@@ -4,7 +4,7 @@ import { FC } from 'react'
 import { default as FakeTimers } from '@sinonjs/fake-timers'
 import useDidMount from 'beautiful-react-hooks/useDidMount'
 import { DefaultWindowTestHooks } from './testApp/DefaultWindowTestHooks.tsx'
-import { LazyAudioContextProvider } from '../../audio/AudioContextProvider.ts'
+import { LazyAudioContextProvider } from '../../audioRecorder/AudioContextProvider.ts'
 
 export interface TestAppProps {}
 

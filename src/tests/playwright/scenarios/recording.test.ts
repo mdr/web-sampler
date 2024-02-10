@@ -1,7 +1,7 @@
 import { test } from '@playwright/experimental-ct-react'
 import { launchApp } from '../pageObjects/launchApp.tsx'
 import { MAX_RECORDING_DURATION } from '../../../components/soundsEditorPage/recordingConstants.ts'
-import { AudioRecorderState, StartRecordingOutcome } from '../../../audio/AudioRecorder.ts'
+import { AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
 import { launchAndStartRecording } from '../pageObjects/SoundsEditorPageObject.ts'
 
 test('captured audio should be shown after recording', async ({ mount }) => {

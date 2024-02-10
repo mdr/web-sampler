@@ -1,14 +1,14 @@
 import React from 'react'
 import { RouterProvider } from 'react-router-dom'
-import { AudioRecorderContext } from '../audio/AudioRecorderContext.ts'
-import { AudioRecorder } from '../audio/AudioRecorder.ts'
+import { AudioRecorderContext } from '../audioRecorder/AudioRecorderContext.ts'
+import { AudioRecorder } from '../audioRecorder/AudioRecorder.ts'
 import { ToastContainer } from 'react-toastify'
 import { SoundLibraryContext } from '../sounds/SoundLibraryContext.ts'
 import { SoundLibrary } from '../sounds/SoundLibrary.ts'
 import { ErrorBoundary } from 'react-error-boundary'
 import { ErrorFallback } from './ErrorFallback.tsx'
 import { router } from './router.tsx'
-import { AudioContextProvider, AudioContextProviderContext } from '../audio/AudioContextProvider.ts'
+import { AudioContextProvider, AudioContextProviderContext } from '../audioRecorder/AudioContextProvider.ts'
 
 export interface AppProps {
   audioContextProvider: AudioContextProvider

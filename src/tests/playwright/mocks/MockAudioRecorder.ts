@@ -1,5 +1,5 @@
-import { AudioRecorder, AudioRecorderState, StartRecordingOutcome } from '../../../audio/AudioRecorder.ts'
-import { AbstractAudioRecorder } from '../../../audio/AbstractAudioRecorder.ts'
+import { AudioRecorder, AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
+import { AbstractAudioRecorder } from '../../../audioRecorder/AbstractAudioRecorder.ts'
 import { Duration } from 'luxon'
 
 export class MockAudioRecorder extends AbstractAudioRecorder implements AudioRecorder {

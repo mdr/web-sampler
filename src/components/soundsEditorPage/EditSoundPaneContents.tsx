@@ -3,7 +3,7 @@ import { RecordButton } from './RecordButton.tsx'
 import { VolumeMeter } from './VolumeMeter.tsx'
 import { StopButton } from './StopButton.tsx'
 import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
-import { AudioRecorderState, StartRecordingOutcome } from '../../audio/AudioRecorder.ts'
+import { AudioRecorderState, StartRecordingOutcome } from '../../audioRecorder/AudioRecorder.ts'
 import { Option } from '../../utils/types/Option.ts'
 import useUnmount from 'beautiful-react-hooks/useUnmount'
 import { TimerId } from '../../utils/types/TimerId.ts'
@@ -14,7 +14,7 @@ import {
   useAudioRecorderActions,
   useAudioRecorderState,
   useAudioRecordingComplete,
-} from '../../audio/audioRecorderHooks.ts'
+} from '../../audioRecorder/audioRecorderHooks.ts'
 import { useSound, useSoundActions } from '../../sounds/soundHooks.ts'
 import { SoundId } from '../../types/Sound.ts'
 import { fireAndForget } from '../../utils/utils.ts'

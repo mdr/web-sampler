@@ -1,8 +1,8 @@
 import ReactDOM from 'react-dom/client'
 import { App } from './components/App.tsx'
 import { TestApp } from './tests/playwright/TestApp.tsx'
-import { WebAudioRecorder } from './audio/WebAudioRecorder.ts'
-import { LazyAudioContextProvider } from './audio/AudioContextProvider.ts'
+import { WebAudioRecorder } from './audioRecorder/WebAudioRecorder.ts'
+import { LazyAudioContextProvider } from './audioRecorder/AudioContextProvider.ts'
 import 'react-toastify/dist/ReactToastify.css'
 import './main.css'
 
