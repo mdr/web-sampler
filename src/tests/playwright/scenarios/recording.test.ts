@@ -7,9 +7,9 @@ import { launchAndStartRecording } from '../pageObjects/SoundsEditorPageObject.t
 test('captured audio should be shown after recording', async ({ mount }) => {
   const soundsEditorPage = await launchAndStartRecording(mount)
 
-  await soundsEditorPage.pressStopButton()
+  await soundsEditorPage.pressStop()
 
-  await soundsEditorPage.expectAudioToBeShown()
+  await soundsEditorPage.expectAudioWaveformToBeShown()
 })
 
 test('a volume meter should indicate audio level during recording', async ({ mount }) => {
@@ -27,7 +27,7 @@ test('recording should stop automatically after 20 seconds', async ({ mount }) =
 
   await soundsEditorPage.wait(MAX_RECORDING_DURATION)
 
-  await soundsEditorPage.expectAudioToBeShown()
+  await soundsEditorPage.expectAudioWaveformToBeShown()
 })
 
 test('a user can cancel selecting a source for recording', async ({ mount }) => {

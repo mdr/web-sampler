@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef } from 'react'
 import { Seconds } from '../../utils/types/brandedTypes.ts'
+import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
 
 interface WaveformVisualiserProps {
   audio: Float32Array
@@ -101,6 +102,13 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
   }, [drawWaveform])
 
   return (
-    <canvas className="border-2 border-gray-200" ref={canvasRef} width="600" height="200" onClick={handleCanvasClick} />
+    <canvas
+      data-testid={EditSoundPaneTestIds.waveformCanvas}
+      className="border-2 border-gray-200"
+      ref={canvasRef}
+      width="600"
+      height="200"
+      onClick={handleCanvasClick}
+    />
   )
 }

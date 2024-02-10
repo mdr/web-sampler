@@ -18,17 +18,22 @@ export class MockAudioRecorder extends AbstractAudioRecorder implements AudioRec
       return
     }
     this.setState(AudioRecorderState.IDLE)
-    const silentAudio = createSilentAudio(Duration.fromObject({ seconds: 1 }))
-    this.fireRecordingCompleteListeners(silentAudio)
+    this.fireRecordingCompleteListeners(createSineWave(Duration.fromObject({ seconds: 5 })))
   }
 }
 
 const DEFAULT_SAMPLE_RATE = 48000
 
-const createSilentAudio = (duration: Duration): Float32Array => {
+const createSineWave = (duration: Duration): Float32Array => {
   const durationInSeconds = duration.as('seconds')
   const numberOfSamples = DEFAULT_SAMPLE_RATE * durationInSeconds
   const channelData = new Float32Array(numberOfSamples)
-  channelData.fill(0)
+  const frequency = 440
+  for (let sampleIndex = 0; sampleIndex < numberOfSamples; sampleIndex++) {
+    const time = sampleIndex / DEFAULT_SAMPLE_RATE
+    const amplitude = Math.sin(2 * Math.PI * frequency * time)
+    channelData[sampleIndex] = amplitude
+  }
+
   return channelData
 }

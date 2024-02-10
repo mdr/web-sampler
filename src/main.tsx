@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom/client'
 import { App } from './components/App.tsx'
+import { TestApp } from './tests/playwright/TestApp.tsx'
 import { WebAudioRecorder } from './audio/WebAudioRecorder.ts'
 import { LazyAudioContextProvider } from './audio/AudioContextProvider.ts'
 import 'react-toastify/dist/ReactToastify.css'
@@ -16,6 +17,8 @@ const getDocumentRoot = (): HTMLElement => {
   return root
 }
 
+const USE_TEST_APP = false
+
 ReactDOM.createRoot(getDocumentRoot()).render(
-  <App audioRecorder={audioRecorder} audioContextProvider={audioContextProvider} />,
+  USE_TEST_APP ? <TestApp /> : <App audioRecorder={audioRecorder} audioContextProvider={audioContextProvider} />,
 )

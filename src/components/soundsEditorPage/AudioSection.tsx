@@ -9,6 +9,7 @@ import { Seconds, Url } from '../../utils/types/brandedTypes.ts'
 import Icon from '@mdi/react'
 import { mdiPause, mdiPlay } from '@mdi/js'
 import { Button } from 'react-aria-components'
+import { unawaited } from '../../utils/utils.ts'
 
 export interface AudioSectionProps {
   audio: Float32Array
@@ -29,13 +30,6 @@ export const AudioSection = ({ audio }: AudioSectionProps) => {
     setAudioUrl(objectUrl)
   }, [audio, audioContext])
 
-  useEffect(() => {
-    const audio = audioElementRef.current ?? undefined
-    if (audio !== undefined) {
-      isPlaying ? audio.play() : audio.pause()
-    }
-  }, [isPlaying])
-
   useRequestAnimationFrame(() => {
     const audioElement = audioElementRef.current ?? undefined
     if (audioElement !== undefined) {
@@ -49,9 +43,39 @@ export const AudioSection = ({ audio }: AudioSectionProps) => {
       audioElementRef.current.currentTime = position
     }
   }
+
+  useEffect(() => {
+    const audioElement = audioElementRef.current ?? undefined
+    if (audioElement === undefined) {
+      return
+    }
+    const handleAudioPlay = () => setIsPlaying(true)
+    const handleAudioPause = () => setIsPlaying(false)
+    const handleAudioEnd = () => setIsPlaying(false)
+
+    audioElement.addEventListener('play', handleAudioPlay)
+    audioElement.addEventListener('pause', handleAudioPause)
+    audioElement.addEventListener('ended', handleAudioEnd)
+
+    return () => {
+      audioElement.removeEventListener('play', handleAudioPlay)
+      audioElement.removeEventListener('pause', handleAudioPause)
+      audioElement.removeEventListener('ended', handleAudioEnd)
+    }
+  }, [])
+
   const togglePlayPause = () => {
-    setIsPlaying(!isPlaying)
+    const audioElement = audioElementRef.current ?? undefined
+    if (audioElement === undefined) {
+      return
+    }
+    if (isPlaying) {
+      audioElement.pause()
+    } else {
+      unawaited(audioElement.play())
+    }
   }
+
   return (
     <div className="flex flex-col items-center">
       <WaveformVisualiser
@@ -64,7 +88,7 @@ export const AudioSection = ({ audio }: AudioSectionProps) => {
       <Button
         onPress={togglePlayPause}
         className="mt-4 flex items-center justify-center p-2 rounded-md bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-        data-testid={EditSoundPaneTestIds.playButton}
+        data-testid={isPlaying ? EditSoundPaneTestIds.pauseButton : EditSoundPaneTestIds.playButton}
       >
         <Icon path={isPlaying ? mdiPause : mdiPlay} size={1} />
       </Button>

@@ -20,10 +20,16 @@ export abstract class PageObject {
 
   protected expectToBeVisible = (testId: TestId): Promise<void> => expect(this.get(testId)).toBeVisible()
 
+  protected expectToBeVisibleImmediate = (testId: TestId): Promise<void> =>
+    expect(this.get(testId)).toBeVisible({ timeout: 1 })
+
   public wait = (duration: Duration): Promise<void> =>
     this.step(`wait ${duration.toHuman()}`, () =>
       this.page.evaluate((millis) => window.testHooks.clockTick(millis), duration.toMillis()),
     )
+
+  public hardWait = (duration: Duration): Promise<void> =>
+    this.step(`hardWait ${duration.toHuman()}`, () => this.page.waitForTimeout(duration.toMillis()))
 
   public checkScreenshot = (name: string) => expect(this.mountResult).toHaveScreenshot(`${name}.png`)
 }

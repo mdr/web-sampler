@@ -19,7 +19,7 @@ export class SoundLibrary implements SoundActions {
   private readonly listeners: SoundsUpdatedListener[] = []
 
   constructor() {
-    setInterval(this.tryPersistDirty, PERSIST_DIRTY_INTERVAL.toMillis())
+    setInterval(this.tryPersistDirtySounds, PERSIST_DIRTY_INTERVAL.toMillis())
     fireAndForget(() => this.loadSounds())
   }
 
@@ -68,7 +68,7 @@ export class SoundLibrary implements SoundActions {
     if (!this.dirtySounds.includes(id)) {
       this.dirtySounds.push(id)
       // Try an immediate persist to save as soon as possible
-      this.tryPersistDirty()
+      this.tryPersistDirtySounds()
     }
   }
 
@@ -90,23 +90,20 @@ export class SoundLibrary implements SoundActions {
     }
   }
 
-  /**
-   * Tries to persist dirty sounds. If another persist is already in progress, does nothing.
-   */
-  private tryPersistDirty = () =>
+  private tryPersistDirtySounds = () =>
     fireAndForget(async (): Promise<void> => {
       if (this.isPersisting) {
         return
       }
       this.isPersisting = true
       try {
-        await this.persistDirty()
+        await this.persistDirtySounds()
       } finally {
         this.isPersisting = false
       }
     })
 
-  private persistDirty = async (): Promise<void> => {
+  private persistDirtySounds = async (): Promise<void> => {
     if (this.dirtySounds.length === 0) {
       return
     }

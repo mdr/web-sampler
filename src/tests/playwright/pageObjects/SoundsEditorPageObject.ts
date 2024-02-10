@@ -24,12 +24,17 @@ export class SoundsEditorPageObject extends PageObject {
   pressRecord = ({
     primedOutcome = StartRecordingOutcome.SUCCESS,
   }: Partial<{ primedOutcome: StartRecordingOutcome }> = {}): Promise<void> =>
-    this.step(`pressRecordButton primedOutcome=${primedOutcome}`, async () => {
+    this.step(`pressRecord primedOutcome=${primedOutcome}`, async () => {
       await this.page.evaluate((outcome) => window.testHooks.primeStartRecordingOutcome(outcome), primedOutcome)
       await this.press(EditSoundPaneTestIds.recordButton)
     })
 
-  pressStopButton = (): Promise<void> => this.step('pressStopButton', () => this.press(EditSoundPaneTestIds.stopButton))
+  pressStop = (): Promise<void> => this.step('pressStop', () => this.press(EditSoundPaneTestIds.stopButton))
+
+  pressPlayButton = (): Promise<void> => this.step('pressPlayButton', () => this.press(EditSoundPaneTestIds.playButton))
+
+  pressPauseButton = (): Promise<void> =>
+    this.step('pressPauseButton', () => this.press(EditSoundPaneTestIds.pauseButton))
 
   pressHomeLink = (): Promise<void> => this.step('pressHomeLink', () => this.press(NavbarTestIds.homeLink))
 
@@ -52,17 +57,28 @@ export class SoundsEditorPageObject extends PageObject {
       await expect(this.get(EditSoundPaneTestIds.volumeMeter)).toHaveAttribute('data-volume', `${volume}`)
     })
 
-  expectStopButtonToBeShown = (): Promise<void> =>
-    this.step('expectStopButtonToBeShown', () => this.expectToBeVisible(EditSoundPaneTestIds.stopButton))
-
   expectRecordButtonToBeShown = (): Promise<void> =>
     this.step('expectRecordButtonToBeShown', () => this.expectToBeVisible(EditSoundPaneTestIds.recordButton))
 
-  expectAudioToBeShown = (): Promise<void> =>
-    this.step('expectAudioToBeShown', () => this.expectToBeVisible(EditSoundPaneTestIds.playButton))
+  expectStopButtonToBeShown = (): Promise<void> =>
+    this.step('expectStopButtonToBeShown', () => this.expectToBeVisible(EditSoundPaneTestIds.stopButton))
+
+  expectAudioWaveformToBeShown = (): Promise<void> =>
+    this.step('expectAudioWaveformToBeShown', () => this.expectToBeVisible(EditSoundPaneTestIds.waveformCanvas))
 
   expectToastToBeShown = (message: string): Promise<void> =>
     this.step(`expectToastToBeShown ${message}`, () => expect(this.mountResult.getByText(message)).toBeVisible())
+
+  expectPauseButtonToBeShown = (): Promise<void> =>
+    this.step('expectPauseButtonToBeShown', () => this.expectToBeVisible(EditSoundPaneTestIds.pauseButton))
+
+  expectPlayButtonToBeShown = (): Promise<void> =>
+    this.step('expectPlayButtonToBeShown', () => this.expectToBeVisible(EditSoundPaneTestIds.playButton))
+
+  expectPlayButtonToBeShownImmediate = (): Promise<void> =>
+    this.step('expectPlayButtonToBeShownImmediate', () =>
+      this.expectToBeVisibleImmediate(EditSoundPaneTestIds.playButton),
+    )
 }
 
 export const launchAndStartRecording = async (mount: MountFunction): Promise<SoundsEditorPageObject> => {
