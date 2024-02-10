@@ -13,4 +13,9 @@ export class SoundSidebarPageObject extends PageObject {
       const textContents = await soundNames.evaluateAll((nodes) => nodes.map((node) => (node as HTMLElement).innerText))
       expect(textContents).toEqual(expectedNamesInOrder)
     })
+
+  pickSound = (name: string): Promise<void> =>
+    this.step(`pickSound ${name}`, () =>
+      this.mountResult.getByTestId(SoundSidebarTestIds.sidebar).getByText(name).click(),
+    )
 }

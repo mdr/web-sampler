@@ -10,7 +10,7 @@ export const SoundsSidebar = () => {
   const sortedSounds = _.sortBy(sounds, (sound) => getDisplayName(sound).toLowerCase())
   const { soundId: selectedSoundId } = useParams()
   return (
-    <div className="flex flex-col h-full">
+    <div data-testid={SoundSidebarTestIds.sidebar} className="flex flex-col h-full">
       <div className="flex-grow overflow-auto">
         <ul>
           {sortedSounds.map((sound) => (

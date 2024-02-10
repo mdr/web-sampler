@@ -9,6 +9,7 @@ import { SoundSidebarPageObject } from './SoundSidebarPageObject.ts'
 
 export class SoundsEditorPageObject extends PageObject {
   protected readonly name = 'SoundsEditorPage'
+
   static verifyIsShown = async (mountResult: MountResult): Promise<SoundsEditorPageObject> => {
     await expect(mountResult.getByTestId(SoundSidebarTestIds.newSoundButton)).toBeVisible()
     return new SoundsEditorPageObject(mountResult)
@@ -35,6 +36,8 @@ export class SoundsEditorPageObject extends PageObject {
 
   pressPauseButton = (): Promise<void> =>
     this.step('pressPauseButton', () => this.press(EditSoundPaneTestIds.pauseButton))
+
+  pressDelete = (): Promise<void> => this.step('pressDelete', () => this.press(EditSoundPaneTestIds.deleteButton))
 
   pressHomeLink = (): Promise<void> => this.step('pressHomeLink', () => this.press(NavbarTestIds.homeLink))
 
@@ -67,7 +70,7 @@ export class SoundsEditorPageObject extends PageObject {
     this.step('expectAudioWaveformToBeShown', () => this.expectToBeVisible(EditSoundPaneTestIds.waveformCanvas))
 
   expectToastToBeShown = (message: string): Promise<void> =>
-    this.step(`expectToastToBeShown ${message}`, () => expect(this.mountResult.getByText(message)).toBeVisible())
+    this.step(`expectToastToBeShown "${message}"`, () => expect(this.mountResult.getByText(message)).toBeVisible())
 
   expectPauseButtonToBeShown = (): Promise<void> =>
     this.step('expectPauseButtonToBeShown', () => this.expectToBeVisible(EditSoundPaneTestIds.pauseButton))
