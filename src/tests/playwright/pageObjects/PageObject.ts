@@ -3,6 +3,7 @@ import { MountResult } from '../types.ts'
 import { Duration } from 'luxon'
 import { TestId } from '../../../utils/types/brandedTypes.ts'
 import { platform } from 'node:os'
+import { Option } from '../../../utils/types/Option.ts'
 
 export abstract class PageObject {
   constructor(protected readonly mountResult: MountResult) {}
@@ -36,8 +37,13 @@ export abstract class PageObject {
       this.page.evaluate((millis) => window.testHooks.clockTick(millis), duration.toMillis()),
     )
 
-  public checkScreenshot = async (name: string): Promise<void> => {
-    if (platform() === 'linux') {
+  public checkScreenshot = async (name: string, testId: Option<TestId> = undefined): Promise<void> => {
+    if (platform() !== 'linux') {
+      return
+    }
+    if (testId !== undefined) {
+      await expect(this.get(testId)).toHaveScreenshot(`${name}.png`)
+    } else {
       await expect(this.mountResult).toHaveScreenshot(`${name}.png`)
     }
   }
