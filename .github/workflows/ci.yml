@@ -37,6 +37,13 @@ jobs:
       - name: Run component tests
         run: yarn test-ct
 
+      - name: Upload snapshots if component tests fail
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: snapshots
+          path: tests/__snapshots__/scenarios
+
       - name: Build
         run: yarn build
 
