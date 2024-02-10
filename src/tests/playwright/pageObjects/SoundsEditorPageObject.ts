@@ -47,6 +47,11 @@ export class SoundsEditorPageObject extends PageObject {
       await this.page.evaluate(() => window.testHooks.clockNext())
     })
 
+  simulateAudioPlaybackComplete = (): Promise<void> =>
+    this.step('simulateAudioPlaybackComplete', () => {
+      this.page.evaluate(() => window.testHooks.simulateAudioPlaybackComplete())
+    })
+
   getAudioRecorderState = (): Promise<AudioRecorderState> =>
     this.page.evaluate(() => window.testHooks.getAudioRecorderState())
 
@@ -74,16 +79,19 @@ export class SoundsEditorPageObject extends PageObject {
 
   expectPlayButtonToBeShown = (): Promise<void> =>
     this.step('expectPlayButtonToBeShown', () => this.expectToBeVisible(EditSoundPaneTestIds.playButton))
-
-  expectPlayButtonToBeShownImmediate = (): Promise<void> =>
-    this.step('expectPlayButtonToBeShownImmediate', () =>
-      this.expectToBeVisibleImmediate(EditSoundPaneTestIds.playButton),
-    )
 }
 
 export const launchAndStartRecording = async (mount: MountFunction): Promise<SoundsEditorPageObject> => {
   const soundsEditorPage = await launchApp(mount)
   await soundsEditorPage.sidebar.pressNewSound()
   await soundsEditorPage.pressRecord()
+  return soundsEditorPage
+}
+
+export const launchAndRecordNewSound = async (mount: MountFunction): Promise<SoundsEditorPageObject> => {
+  const soundsEditorPage = await launchApp(mount)
+  await soundsEditorPage.sidebar.pressNewSound()
+  await soundsEditorPage.pressRecord()
+  await soundsEditorPage.pressStop()
   return soundsEditorPage
 }

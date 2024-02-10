@@ -10,6 +10,9 @@ export class MockAudioPlayer implements AudioPlayer {
 
   play = async (): Promise<void> => {
     this.isPlaying = true
+    if (this.currentTime === this.duration) {
+      this.currentTime = Seconds(0)
+    }
     this.firePlayListeners()
   }
 
@@ -79,5 +82,14 @@ export class MockAudioPlayer implements AudioPlayer {
 
   fireLoadStartListeners = () => {
     this.loadStartListeners.forEach((listener) => listener())
+  }
+
+  completePlayback = () => {
+    if (!this.isPlaying) {
+      throw new Error('Cannot complete playback when not playing')
+    }
+    this.isPlaying = false
+    this.currentTime = this.duration
+    this.fireEndedListeners()
   }
 }

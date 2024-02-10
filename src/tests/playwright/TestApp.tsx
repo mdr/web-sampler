@@ -10,13 +10,14 @@ import { MockAudioPlayer } from './mocks/MockAudioPlayer.ts'
 export interface TestAppProps {}
 
 export const TestApp: FC<TestAppProps> = () => {
-  const mockAudioRecorder = new MockAudioRecorder()
+  const audioRecorder = new MockAudioRecorder()
   const audioContextProvider = new LazyAudioContextProvider()
   const audioPlayer = new MockAudioPlayer()
   useDidMount(() => {
     const clock = FakeTimers.install()
-    window.testHooks = new DefaultWindowTestHooks(mockAudioRecorder, clock)
+    const windowTestHooks = new DefaultWindowTestHooks(audioRecorder, audioPlayer, clock)
+    window.testHooks = windowTestHooks
     return () => clock.uninstall()
   })
-  return <App audioRecorder={mockAudioRecorder} audioContextProvider={audioContextProvider} audioPlayer={audioPlayer} />
+  return <App audioRecorder={audioRecorder} audioContextProvider={audioContextProvider} audioPlayer={audioPlayer} />
 }

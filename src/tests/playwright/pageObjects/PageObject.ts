@@ -26,6 +26,13 @@ export abstract class PageObject {
   expectToastToBeShown = (message: string): Promise<void> =>
     this.step(`expectToastToBeShown "${message}"`, () => expect(this.mountResult.getByText(message)).toBeVisible())
 
+  expectAudioToBePlaying = async (playing: boolean): Promise<void> =>
+    this.step(`expectAudioToBePlaying ${playing}`, async () => {
+      expect(await this.isAudioPlaying()).toBe(playing)
+    })
+
+  isAudioPlaying = (): Promise<boolean> => this.page.evaluate(() => window.testHooks.isAudioPlaying)
+
   public wait = (duration: Duration): Promise<void> =>
     this.step(`wait ${duration.toHuman()}`, () =>
       this.page.evaluate((millis) => window.testHooks.clockTick(millis), duration.toMillis()),
