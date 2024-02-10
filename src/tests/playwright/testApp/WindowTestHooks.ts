@@ -3,6 +3,7 @@ import { AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorde
 export interface WindowTestHooks {
   simulateVolume: (volume: number) => void
   primeStartRecordingOutcome: (outcome: StartRecordingOutcome) => void
+  primeNoAudioOnStopRecording: () => void
   simulateAudioPlaybackComplete: () => void
 
   getAudioRecorderState(): AudioRecorderState

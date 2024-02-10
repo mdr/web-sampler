@@ -6,6 +6,7 @@ import { SOUND_DURATION } from '../testConstants.ts'
 export class MockAudioRecorder extends AbstractAudioRecorder implements AudioRecorder {
   volume: number = 0
   startRecordingOutcome: StartRecordingOutcome = StartRecordingOutcome.SUCCESS
+  noAudioOnStopRecording: boolean = false
 
   startRecording = (): Promise<StartRecordingOutcome> => {
     if (this.startRecordingOutcome === StartRecordingOutcome.SUCCESS) {
@@ -19,7 +20,7 @@ export class MockAudioRecorder extends AbstractAudioRecorder implements AudioRec
       return
     }
     this.setState(AudioRecorderState.IDLE)
-    this.fireRecordingCompleteListeners(createSineWave(SOUND_DURATION))
+    this.fireRecordingCompleteListeners(this.noAudioOnStopRecording ? undefined : createSineWave(SOUND_DURATION))
   }
 }
 

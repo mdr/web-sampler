@@ -1,7 +1,7 @@
 import { test } from '@playwright/experimental-ct-react'
 import { launchAndRecordNewSound } from '../pageObjects/SoundsEditorPageObject.ts'
 
-test('it should be possible to start and pause playback of recorded audio', async ({ mount }) => {
+test('start, pause and resume playback of recorded audio', async ({ mount }) => {
   const soundsEditorPage = await launchAndRecordNewSound(mount)
 
   await soundsEditorPage.pressPlayButton()
@@ -11,9 +11,13 @@ test('it should be possible to start and pause playback of recorded audio', asyn
   await soundsEditorPage.pressPauseButton()
   await soundsEditorPage.expectAudioToBePlaying(false)
   await soundsEditorPage.expectPlayButtonToBeShown()
+
+  await soundsEditorPage.pressPlayButton()
+  await soundsEditorPage.expectAudioToBePlaying(true)
+  await soundsEditorPage.expectPauseButtonToBeShown()
 })
 
-test('it should handle audio completing playback', async ({ mount }) => {
+test('when playback reaches the end of the audio, stop playback', async ({ mount }) => {
   const soundsEditorPage = await launchAndRecordNewSound(mount)
   await soundsEditorPage.pressPlayButton()
   await soundsEditorPage.expectPauseButtonToBeShown()

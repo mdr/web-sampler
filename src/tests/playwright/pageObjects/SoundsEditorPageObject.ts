@@ -30,6 +30,11 @@ export class SoundsEditorPageObject extends PageObject {
       await this.press(EditSoundPaneTestIds.recordButton)
     })
 
+  primeNoAudioOnStopRecording = (): Promise<void> =>
+    this.step('primeNoAudioOnStopRecording', () =>
+      this.page.evaluate(() => window.testHooks.primeNoAudioOnStopRecording()),
+    )
+
   pressStop = (): Promise<void> => this.step('pressStop', () => this.press(EditSoundPaneTestIds.stopButton))
 
   pressPlayButton = (): Promise<void> => this.step('pressPlayButton', () => this.press(EditSoundPaneTestIds.playButton))
@@ -89,9 +94,7 @@ export const launchAndStartRecording = async (mount: MountFunction): Promise<Sou
 }
 
 export const launchAndRecordNewSound = async (mount: MountFunction): Promise<SoundsEditorPageObject> => {
-  const soundsEditorPage = await launchApp(mount)
-  await soundsEditorPage.sidebar.pressNewSound()
-  await soundsEditorPage.pressRecord()
+  const soundsEditorPage = await launchAndStartRecording(mount)
   await soundsEditorPage.pressStop()
   return soundsEditorPage
 }

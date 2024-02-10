@@ -19,6 +19,9 @@ export class DefaultWindowTestHooks implements WindowTestHooks {
     this.audioRecorder.startRecordingOutcome = outcome
   }
 
+  primeNoAudioOnStopRecording = (): void => {
+    this.audioRecorder.noAudioOnStopRecording = true
+  }
   simulateAudioPlaybackComplete = () => {
     this.audioPlayer.completePlayback()
   }

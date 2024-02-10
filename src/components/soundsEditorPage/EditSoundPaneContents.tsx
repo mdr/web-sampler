@@ -35,8 +35,12 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPageProps) => {
   const navigate = useNavigate()
 
   const handleRecordingComplete = useCallback(
-    (audio: Float32Array) => {
-      soundActions.setAudio(sound.id, audio)
+    (audio: Option<Float32Array>) => {
+      if (audio === undefined) {
+        toast.error('No audio captured')
+      } else {
+        soundActions.setAudio(sound.id, audio)
+      }
       if (timerIdRef.current) {
         clearTimeout(timerIdRef.current)
       }

@@ -1,11 +1,12 @@
 import { AudioRecorder, AudioRecorderState, StartRecordingOutcome } from './AudioRecorder.ts'
 import { Option } from '../utils/types/Option.ts'
-import workletUrl from './CapturingAudioWorkletProcessor?worker&url'
 import { CAPTURING_AUDIO_WORKLET_NAME, STOP_MESSAGE } from './CapturingAudioWorkletConstants.ts'
 import { AudioContextProvider } from './AudioContextProvider.ts'
 import { AbstractAudioRecorder } from './AbstractAudioRecorder.ts'
-import _ from 'lodash'
 import { concatenateFloat32Arrays } from '../utils/utils.ts'
+import _ from 'lodash'
+
+import workletUrl from './CapturingAudioWorkletProcessor?worker&url'
 
 export class WebAudioRecorder extends AbstractAudioRecorder implements AudioRecorder {
   private mediaStream: Option<MediaStream> = undefined
@@ -90,9 +91,7 @@ export class WebAudioRecorder extends AbstractAudioRecorder implements AudioReco
     this.setState(AudioRecorderState.IDLE)
     const combinedAudio = concatenateFloat32Arrays(this.audioPieces)
     this.audioPieces = []
-    if (combinedAudio !== undefined) {
-      this.fireRecordingCompleteListeners(combinedAudio)
-    }
+    this.fireRecordingCompleteListeners(combinedAudio?.length > 0 ? combinedAudio : undefined)
 
     this.source?.disconnect()
     this.source = undefined

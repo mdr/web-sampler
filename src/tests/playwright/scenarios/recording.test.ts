@@ -57,3 +57,14 @@ test('navigating away from the page should cancel recording', async ({ mount }) 
 
   await soundsEditorPage.expectAudioRecorderStateToBe(AudioRecorderState.IDLE)
 })
+
+test('a toast should be shown if no audio was captured', async ({ mount }) => {
+  const soundsEditorPage = await launchApp(mount)
+  await soundsEditorPage.sidebar.pressNewSound()
+  await soundsEditorPage.pressRecord()
+  await soundsEditorPage.primeNoAudioOnStopRecording()
+
+  await soundsEditorPage.pressStop()
+
+  await soundsEditorPage.expectToastToBeShown('No audio captured')
+})
