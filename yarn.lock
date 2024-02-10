@@ -6848,6 +6848,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typeface-roboto@npm:^1.1.13":
+  version: 1.1.13
+  resolution: "typeface-roboto@npm:1.1.13"
+  checksum: 7a6caf5aa084d7e968311ab23415cb921f30bc6c89fe9886fb998b1095673cde2e5d77386a0249a3493f93ed58046c4685d4e718b08d129bc88fd46c798f37dd
+  languageName: node
+  linkType: hard
+
 "typescript@npm:^5.3.3":
   version: 5.3.3
   resolution: "typescript@npm:5.3.3"
@@ -7283,6 +7290,7 @@ __metadata:
     react-router-dom: "npm:^6.21.3"
     react-toastify: "npm:^10.0.4"
     tailwindcss: "npm:^3.4.1"
+    typeface-roboto: "npm:^1.1.13"
     typescript: "npm:^5.3.3"
     uuid: "npm:^9.0.1"
     vite: "npm:^5.0.12"

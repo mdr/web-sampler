@@ -3,9 +3,10 @@ import { App } from './components/App.tsx'
 import { TestApp } from './tests/playwright/TestApp.tsx'
 import { WebAudioRecorder } from './audioRecorder/WebAudioRecorder.ts'
 import { LazyAudioContextProvider } from './audioRecorder/AudioContextProvider.ts'
+import { WebAudioPlayer } from './audioPlayer/WebAudioPlayer.ts'
+import 'typeface-roboto'
 import 'react-toastify/dist/ReactToastify.css'
 import './main.css'
-import { WebAudioPlayer } from './audioPlayer/WebAudioPlayer.ts'
 
 const audioContextProvider = new LazyAudioContextProvider()
 const audioRecorder = new WebAudioRecorder(audioContextProvider)

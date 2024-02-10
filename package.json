@@ -28,6 +28,7 @@
     "react-error-boundary": "^4.0.12",
     "react-router-dom": "^6.21.3",
     "react-toastify": "^10.0.4",
+    "typeface-roboto": "^1.1.13",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
