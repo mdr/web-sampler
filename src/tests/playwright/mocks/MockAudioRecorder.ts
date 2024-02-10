@@ -20,22 +20,29 @@ export class MockAudioRecorder extends AbstractAudioRecorder implements AudioRec
       return
     }
     this.setState(AudioRecorderState.IDLE)
-    this.fireRecordingCompleteListeners(this.noAudioOnStopRecording ? undefined : createSineWave(SOUND_DURATION))
+    this.fireRecordingCompleteListeners(this.noAudioOnStopRecording ? undefined : createSampleAudio(SOUND_DURATION))
   }
 }
 
 const DEFAULT_SAMPLE_RATE = 48000
 
-const createSineWave = (duration: Duration): Float32Array => {
+const createSampleAudio = (duration: Duration): Float32Array => {
   const durationInSeconds = duration.as('seconds')
   const numberOfSamples = DEFAULT_SAMPLE_RATE * durationInSeconds
   const channelData = new Float32Array(numberOfSamples)
-  const frequency = 440
+  const frequency = 440 // Frequency of the sine wave in Hz
+  const lfoFrequency = 2 // LFO frequency in Hz - controls volume oscillation speed
+
   for (let sampleIndex = 0; sampleIndex < numberOfSamples; sampleIndex++) {
     const time = sampleIndex / DEFAULT_SAMPLE_RATE
-    const amplitude = Math.sin(2 * Math.PI * frequency * time)
+    // Generate the primary sine wave
+    const primarySine = Math.sin(2 * Math.PI * frequency * time)
+    // Generate the LFO sine wave for amplitude modulation
+    const lfoSine = Math.sin(2 * Math.PI * lfoFrequency * time)
+    // Use the LFO to modulate the amplitude of the primary sine wave
+    // The LFO value ranges from -1 to 1, so (lfoSine + 1) / 2 adjusts it to range from 0 to 1
+    const amplitude = primarySine * ((lfoSine + 1) / 2)
     channelData[sampleIndex] = amplitude
   }
-
   return channelData
 }
