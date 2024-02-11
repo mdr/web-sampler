@@ -5,6 +5,7 @@ import { SoundActions } from './soundHooks.ts'
 import { fireAndForget } from '../utils/utils.ts'
 import { Duration } from 'luxon'
 import { SoundStore } from './SoundStore.ts'
+import { Pcm } from '../utils/types/brandedTypes.ts'
 
 export type SoundLibraryUpdatedListener = () => void
 
@@ -90,7 +91,7 @@ export class SoundLibrary implements SoundActions {
 
   setName = (id: SoundId, name: string): void => this.updateSound(id, (sound) => ({ ...sound, name }))
 
-  setAudioPcm = (id: SoundId, pcm: Float32Array) => this.updateSound(id, (sound) => ({ ...sound, audio: { pcm } }))
+  setAudioPcm = (id: SoundId, pcm: Pcm) => this.updateSound(id, (sound) => ({ ...sound, audio: { pcm } }))
 
   private updateSound = (id: SoundId, update: (sound: Sound) => Sound): void => {
     this.checkNotLoading()

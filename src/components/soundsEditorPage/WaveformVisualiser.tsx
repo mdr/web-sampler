@@ -80,7 +80,7 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
       ctx.lineTo(x, height)
       ctx.stroke()
     }
-  }, [audio, currentPosition, audioDuration])
+  }, [pcm, currentPosition, audioDuration])
 
   const handleCanvasClick = useCallback(
     (event: React.MouseEvent<HTMLCanvasElement>) => {

@@ -21,6 +21,7 @@ import { fireAndForget } from '../../utils/utils.ts'
 import { AudioSection } from './AudioSection.tsx'
 import { DeleteButton } from './DeleteButton.tsx'
 import { useNavigate } from 'react-router-dom'
+import { Pcm } from '../../utils/types/brandedTypes.ts'
 
 export interface EditSoundPageProps {
   soundId: SoundId
@@ -35,7 +36,7 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPageProps) => {
   const navigate = useNavigate()
 
   const handleRecordingComplete = useCallback(
-    (audio: Option<Float32Array>) => {
+    (audio: Option<Pcm>) => {
       if (audio === undefined) {
         toast.error('No audio captured')
       } else {

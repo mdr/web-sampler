@@ -1,17 +1,18 @@
 import audioBufferToWav from 'audiobuffer-to-wav'
+import { Pcm } from '../utils/types/brandedTypes.ts'
 
 export class AudioBufferUtils {
   constructor(private readonly audioContext: AudioContext) {}
 
-  float32ArrayToAudioBuffer = (audioData: Float32Array): AudioBuffer => {
-    const audioBuffer = this.audioContext.createBuffer(1, audioData.length, this.audioContext.sampleRate)
+  pcmToAudioBuffer = (pcm: Pcm): AudioBuffer => {
+    const audioBuffer = this.audioContext.createBuffer(1, pcm.length, this.audioContext.sampleRate)
     const channelData = audioBuffer.getChannelData(0)
-    channelData.set(audioData)
+    channelData.set(pcm)
     return audioBuffer
   }
 
-  float32ArrayToWavBlob = (audio: Float32Array): Blob => {
-    const audioBuffer = this.float32ArrayToAudioBuffer(audio)
+  pcmToWavBlob = (pcm: Pcm): Blob => {
+    const audioBuffer = this.pcmToAudioBuffer(pcm)
     const wavBuffer = audioBufferToWav(audioBuffer)
     return new Blob([wavBuffer], { type: 'audio/wav' })
   }

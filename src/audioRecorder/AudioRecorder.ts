@@ -1,4 +1,5 @@
 import { Option } from '../utils/types/Option.ts'
+import { Pcm } from '../utils/types/brandedTypes.ts'
 
 export enum AudioRecorderState {
   IDLE = 'IDLE',
@@ -14,7 +15,7 @@ export enum StartRecordingOutcome {
 export type AudioRecorderStateChangeListener = (state: AudioRecorderState) => void
 
 // audio is undefined if the recording was empty
-export type RecordingCompleteListener = (audio: Option<Float32Array>) => void
+export type RecordingCompleteListener = (audio: Option<Pcm>) => void
 
 export interface AudioRecorder {
   addStateChangeListener(listener: AudioRecorderStateChangeListener): void

@@ -1,12 +1,13 @@
 import { Brand } from 'effect'
 import * as uuid from 'uuid'
+import { Pcm } from '../utils/types/brandedTypes.ts'
 
 export type SoundId = string & Brand.Brand<'SoundId'>
 
 export const SoundId = Brand.nominal<SoundId>()
 
 export interface SoundAudio {
-  readonly pcm: Float32Array
+  readonly pcm: Pcm
 }
 
 export interface Sound {

@@ -27,7 +27,7 @@ export const AudioSection = ({ audio }: AudioSectionProps) => {
   const audioContext = useAudioContext()
   useEffect(() => {
     const audioBufferUtils = new AudioBufferUtils(audioContext)
-    const blob = audioBufferUtils.float32ArrayToWavBlob(audio.pcm)
+    const blob = audioBufferUtils.pcmToWavBlob(audio.pcm)
     const objectUrl = Url(URL.createObjectURL(blob))
     audioPlayerActions.setUrl(objectUrl)
     return () => {

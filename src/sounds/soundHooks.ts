@@ -3,6 +3,7 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 import { SoundLibraryContext } from './SoundLibraryContext.ts'
 import { Option } from '../utils/types/Option.ts'
 import { SoundLibrary } from './SoundLibrary.ts'
+import { Pcm } from '../utils/types/brandedTypes.ts'
 
 const useSoundLibrary = (): SoundLibrary => {
   const soundLibrary = useContext(SoundLibraryContext)
@@ -63,7 +64,7 @@ export interface SoundActions {
 
   setName(id: SoundId, name: string): void
 
-  setAudioPcm(id: SoundId, audio: Float32Array): void
+  setAudioPcm(id: SoundId, pcm: Pcm): void
 
   deleteSound(id: SoundId): void
 

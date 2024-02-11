@@ -7,6 +7,7 @@ import { concatenateFloat32Arrays } from '../utils/utils.ts'
 import _ from 'lodash'
 
 import workletUrl from './CapturingAudioWorkletProcessor?worker&url'
+import { Pcm } from '../utils/types/brandedTypes.ts'
 
 export class WebAudioRecorder extends AbstractAudioRecorder implements AudioRecorder {
   private mediaStream: Option<MediaStream> = undefined
@@ -91,7 +92,7 @@ export class WebAudioRecorder extends AbstractAudioRecorder implements AudioReco
     this.setState(AudioRecorderState.IDLE)
     const combinedAudio = concatenateFloat32Arrays(this.audioPieces)
     this.audioPieces = []
-    this.fireRecordingCompleteListeners(combinedAudio?.length > 0 ? combinedAudio : undefined)
+    this.fireRecordingCompleteListeners(combinedAudio?.length > 0 ? Pcm(combinedAudio) : undefined)
 
     this.source?.disconnect()
     this.source = undefined

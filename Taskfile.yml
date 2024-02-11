@@ -4,3 +4,6 @@ tasks:
   update-screenshots:
     cmds:
       - docker run -it --rm -v $(pwd):$(pwd) mcr.microsoft.com/playwright:v1.41.1-jammy sh -c "cd $(pwd) && yarn && yarn test-ct --update-snapshots"
+  check-all:
+    cmds:
+      - yarn && yarn lint && yarn tsc && yarn test --run && yarn test-ct
