@@ -82,3 +82,15 @@ test('undo/redo should handle sound deletion', async ({ mount }) => {
   await soundsEditorPage.pressRedo()
   await soundsEditorPage.sidebar.expectSoundNamesToBe([])
 })
+
+test('keyboard shortcuts should work for undo/redo', async ({ mount }) => {
+  const soundsEditorPage = await launchApp(mount)
+  await soundsEditorPage.sidebar.pressNewSound()
+  await soundsEditorPage.enterSoundName('A')
+
+  await soundsEditorPage.undoWithKeyboardShortcut()
+  await soundsEditorPage.sidebar.expectSoundNamesToBe(['Untitled Sound'])
+
+  await soundsEditorPage.redoWithKeyboardShortcut()
+  await soundsEditorPage.sidebar.expectSoundNamesToBe(['A'])
+})

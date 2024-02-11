@@ -6058,6 +6058,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-hotkeys-hook@npm:^4.5.0":
+  version: 4.5.0
+  resolution: "react-hotkeys-hook@npm:4.5.0"
+  peerDependencies:
+    react: ">=16.8.1"
+    react-dom: ">=16.8.1"
+  checksum: ae3ee47c623aaece4c21ce8027b0fff18caaee8c6cb22fafcbebbb54cee27ef7d0097145f04da1bd67b5af1d89cb4f983ae6a72b32451de81dca193255187480
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^16.13.1":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
@@ -7295,6 +7305,7 @@ __metadata:
     react-aria-components: "npm:^1.0.1"
     react-dom: "npm:^18.2.0"
     react-error-boundary: "npm:^4.0.12"
+    react-hotkeys-hook: "npm:^4.5.0"
     react-router-dom: "npm:^6.21.3"
     react-toastify: "npm:^10.0.4"
     tailwindcss: "npm:^3.4.1"

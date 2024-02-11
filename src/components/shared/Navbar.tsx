@@ -4,11 +4,16 @@ import Icon from '@mdi/react'
 import { Button } from 'react-aria-components'
 import { useCanRedo, useCanUndo, useSoundActions } from '../../sounds/soundHooks.ts'
 import { NavbarTestIds } from './NavbarTestIds.ts'
+import { useHotkeys } from 'react-hotkeys-hook'
 
 export const Navbar = () => {
   const soundActions = useSoundActions()
   const canUndo = useCanUndo()
   const canRedo = useCanRedo()
+  useHotkeys('mod+z', () => soundActions.undo(), [soundActions])
+  useHotkeys('mod+shift+z', () => soundActions.redo(), [soundActions])
+  useHotkeys('ctrl+y', () => soundActions.redo(), [soundActions])
+
   return (
     <nav className="bg-gray-800 text-white p-4">
       <ul className="flex space-x-4">

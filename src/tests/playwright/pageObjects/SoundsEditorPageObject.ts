@@ -48,6 +48,12 @@ export class SoundsEditorPageObject extends PageObject {
 
   pressUndo = (): Promise<void> => this.step('pressUndo', () => this.press(NavbarTestIds.undoButton))
 
+  undoWithKeyboardShortcut = (): Promise<void> =>
+    this.step('undoWithKeyboardShortcut', () => this.page.keyboard.press('Meta+KeyZ'))
+
+  redoWithKeyboardShortcut = (): Promise<void> =>
+    this.step('redoWithKeyboardShortcut', () => this.page.keyboard.press('Meta+Shift+KeyZ'))
+
   pressRedo = (): Promise<void> => this.step('pressRedo', () => this.press(NavbarTestIds.redoButton))
 
   simulateVolume = (volume: number): Promise<void> =>
