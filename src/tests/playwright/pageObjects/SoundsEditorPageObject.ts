@@ -6,6 +6,7 @@ import { AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorde
 import { NavbarTestIds } from '../../../components/shared/NavbarTestIds.ts'
 import { launchApp } from './launchApp.tsx'
 import { SoundSidebarPageObject } from './SoundSidebarPageObject.ts'
+import { platform } from 'node:os'
 
 export class SoundsEditorPageObject extends PageObject {
   protected readonly name = 'SoundsEditorPage'
@@ -49,10 +50,14 @@ export class SoundsEditorPageObject extends PageObject {
   pressUndo = (): Promise<void> => this.step('pressUndo', () => this.press(NavbarTestIds.undoButton))
 
   undoWithKeyboardShortcut = (): Promise<void> =>
-    this.step('undoWithKeyboardShortcut', () => this.page.keyboard.press('Meta+KeyZ'))
+    this.step('undoWithKeyboardShortcut', () =>
+      this.page.keyboard.press(platform() === 'darwin' ? 'Meta+KeyZ' : 'Control+KeyZ'),
+    )
 
   redoWithKeyboardShortcut = (): Promise<void> =>
-    this.step('redoWithKeyboardShortcut', () => this.page.keyboard.press('Meta+Shift+KeyZ'))
+    this.step('redoWithKeyboardShortcut', () =>
+      this.page.keyboard.press(platform() === 'darwin' ? 'Meta+Shift+KeyZ' : 'Control+KeyY'),
+    )
 
   pressRedo = (): Promise<void> => this.step('pressRedo', () => this.press(NavbarTestIds.redoButton))
 
