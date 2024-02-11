@@ -9,5 +9,6 @@ export const Url = Brand.nominal<Url>()
 export type Seconds = number & Brand.Brand<'Seconds'>
 export const Seconds = Brand.nominal<Seconds>()
 
+// Mono, 48000 Hz
 export type Pcm = Float32Array & Brand.Brand<'Pcm'>
 export const Pcm = Brand.nominal<Pcm>()
