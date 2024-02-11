@@ -6,7 +6,7 @@ import { fireAndForget } from '../utils/utils.ts'
 import { Duration } from 'luxon'
 import { SoundStore } from './SoundStore.ts'
 
-export type SoundsUpdatedListener = (sounds: readonly Sound[]) => void
+export type SoundLibraryUpdatedListener = () => void
 
 const PERSIST_DIRTY_INTERVAL = Duration.fromObject({ seconds: 1 })
 
@@ -20,9 +20,9 @@ export class SoundLibrary implements SoundActions {
   private readonly dirtySoundIds: SoundId[] = []
   private readonly undoStack: UndoRedoRecord[] = []
   private readonly redoStack: UndoRedoRecord[] = []
-  private isLoading = true
+  private _isLoading = true
   private isPersisting = false
-  private readonly listeners: SoundsUpdatedListener[] = []
+  private readonly listeners: SoundLibraryUpdatedListener[] = []
 
   constructor(private readonly soundStore: SoundStore) {
     setInterval(this.tryPersistDirtySounds, PERSIST_DIRTY_INTERVAL.toMillis())
@@ -31,7 +31,7 @@ export class SoundLibrary implements SoundActions {
 
   private loadSounds = async (): Promise<void> => {
     this._sounds = await this.soundStore.getAllSounds()
-    this.isLoading = false
+    this._isLoading = false
     this.notifyListeners()
   }
 
@@ -39,6 +39,10 @@ export class SoundLibrary implements SoundActions {
     return this._sounds
   }
 
+  get isLoading(): boolean {
+    return this._isLoading
+  }
+  
   get canUndo(): boolean {
     return this.undoStack.length > 0
   }
@@ -47,22 +51,22 @@ export class SoundLibrary implements SoundActions {
     return this.redoStack.length > 0
   }
 
-  addListener = (listener: SoundsUpdatedListener): void => {
+  addListener = (listener: SoundLibraryUpdatedListener): void => {
     this.listeners.push(listener)
   }
 
-  removeListener = (listener: SoundsUpdatedListener): void => {
+  removeListener = (listener: SoundLibraryUpdatedListener): void => {
     _.remove(this.listeners, (l) => l === listener)
   }
 
   private notifyListeners = (): void => {
-    this.listeners.forEach((listener) => listener(this._sounds))
+    this.listeners.forEach((listener) => listener())
   }
 
   findSound = (id: SoundId): Option<Sound> => this._sounds.find((sound) => sound.id === id)
 
   private checkNotLoading = (): void => {
-    if (this.isLoading) {
+    if (this._isLoading) {
       throw new Error('Sounds are still loading')
     }
   }

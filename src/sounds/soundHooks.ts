@@ -1,5 +1,5 @@
 import { Sound, SoundId } from '../types/Sound.ts'
-import { useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { SoundLibraryContext } from './SoundLibraryContext.ts'
 import { Option } from '../utils/types/Option.ts'
 import { SoundLibrary } from './SoundLibrary.ts'
@@ -14,12 +14,14 @@ const useSoundLibrary = (): SoundLibrary => {
 
 interface SoundLibraryState {
   sounds: readonly Sound[]
+  isLoading: boolean
   canUndo: boolean
   canRedo: boolean
 }
 
 const getSoundLibraryState = (soundLibrary: SoundLibrary): SoundLibraryState => ({
   sounds: soundLibrary.sounds,
+  isLoading: soundLibrary.isLoading,
   canUndo: soundLibrary.canUndo,
   canRedo: soundLibrary.canRedo,
 })
@@ -27,10 +29,11 @@ const getSoundLibraryState = (soundLibrary: SoundLibrary): SoundLibraryState => 
 export const useSoundLibraryState = (): SoundLibraryState => {
   const soundLibrary = useSoundLibrary()
   const [state, setState] = useState(getSoundLibraryState(soundLibrary))
+  const handleUpdate = useCallback(() => setState(getSoundLibraryState(soundLibrary)), [soundLibrary, setState])
   useEffect(() => {
-    soundLibrary.addListener(() => setState(getSoundLibraryState(soundLibrary)))
-    return () => soundLibrary.removeListener(() => setState(getSoundLibraryState(soundLibrary)))
-  }, [soundLibrary, setState])
+    soundLibrary.addListener(handleUpdate)
+    return () => soundLibrary.removeListener(handleUpdate)
+  }, [soundLibrary, handleUpdate])
   return state
 }
 
@@ -48,6 +51,8 @@ export const useSound = (id: SoundId): Sound => {
   }
   return sound
 }
+
+export const useIsLoading = (): boolean => useSoundLibraryState().isLoading
 
 export const useCanUndo = (): boolean => useSoundLibraryState().canUndo
 

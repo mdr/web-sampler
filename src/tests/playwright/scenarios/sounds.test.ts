@@ -68,3 +68,17 @@ test('undo/redo should handle sound creation and name editing', async ({ mount }
   await soundsEditorPage.pressRedo()
   await soundsEditorPage.sidebar.expectSoundNamesToBe(['A'])
 })
+
+test('undo/redo should handle sound deletion', async ({ mount }) => {
+  const soundsEditorPage = await launchApp(mount)
+  await soundsEditorPage.sidebar.pressNewSound()
+  await soundsEditorPage.enterSoundName('A')
+  await soundsEditorPage.pressDelete()
+  await soundsEditorPage.sidebar.expectSoundNamesToBe([])
+
+  await soundsEditorPage.pressUndo()
+  await soundsEditorPage.sidebar.expectSoundNamesToBe(['A'])
+
+  await soundsEditorPage.pressRedo()
+  await soundsEditorPage.sidebar.expectSoundNamesToBe([])
+})
