@@ -1,6 +1,5 @@
-import { Sound, SoundId } from '../types/Sound.ts'
+import { newSound, Sound, SoundId } from '../types/Sound.ts'
 import { Option } from '../utils/types/Option.ts'
-import * as uuid from 'uuid'
 import _ from 'lodash'
 import { SoundActions } from './soundHooks.ts'
 import { fireAndForget } from '../utils/utils.ts'
@@ -11,9 +10,16 @@ export type SoundsUpdatedListener = (sounds: readonly Sound[]) => void
 
 const PERSIST_DIRTY_INTERVAL = Duration.fromObject({ seconds: 1 })
 
+interface UndoRedoRecord {
+  sounds: readonly Sound[]
+  affectedSoundIds: readonly SoundId[]
+}
+
 export class SoundLibrary implements SoundActions {
   private _sounds: readonly Sound[] = []
   private readonly dirtySoundIds: SoundId[] = []
+  private readonly undoStack: UndoRedoRecord[] = []
+  private readonly redoStack: UndoRedoRecord[] = []
   private isLoading = true
   private isPersisting = false
   private readonly listeners: SoundsUpdatedListener[] = []
@@ -31,6 +37,14 @@ export class SoundLibrary implements SoundActions {
 
   get sounds(): readonly Sound[] {
     return this._sounds
+  }
+
+  get canUndo(): boolean {
+    return this.undoStack.length > 0
+  }
+
+  get canRedo(): boolean {
+    return this.redoStack.length > 0
   }
 
   addListener = (listener: SoundsUpdatedListener): void => {
@@ -55,20 +69,19 @@ export class SoundLibrary implements SoundActions {
 
   newSound = (): Sound => {
     this.checkNotLoading()
-    const id = SoundId(uuid.v4())
-    const sound: Sound = { id, name: '' }
-    this._sounds = [...this._sounds, sound]
-    this.markAsDirty(id)
-    this.notifyListeners()
+    const sound: Sound = newSound()
+    const updatedSounds = [...this._sounds, sound]
+    this.setSounds(updatedSounds, [sound.id])
     return sound
   }
 
-  private markAsDirty = (id: SoundId): void => {
-    if (!this.dirtySoundIds.includes(id)) {
-      this.dirtySoundIds.push(id)
-      // Try an immediate persist to save as soon as possible
-      this.tryPersistDirtySounds()
-    }
+  private setSounds = (sounds: readonly Sound[], affectedSoundIds: readonly SoundId[]): void => {
+    this.undoStack.push({ sounds: this._sounds, affectedSoundIds })
+    this.redoStack.length = 0
+    this._sounds = sounds
+    this.dirtySoundIds.push(...affectedSoundIds)
+    this.notifyListeners()
+    this.tryPersistDirtySounds()
   }
 
   setName = (id: SoundId, name: string): void => this.updateSound(id, (sound) => ({ ...sound, name }))
@@ -81,18 +94,41 @@ export class SoundLibrary implements SoundActions {
     if (sound === undefined) {
       throw new Error(`No sound found with id ${id}`)
     }
-    const newSound = update(sound)
-    if (!_.isEqual(sound, newSound)) {
-      this._sounds = this._sounds.map((s) => (s.id === id ? newSound : s))
-      this.markAsDirty(id)
-      this.notifyListeners()
+    const updatedSound = update(sound)
+    if (!_.isEqual(sound, updatedSound)) {
+      const updatedSounds = this._sounds.map((s) => (s.id === id ? updatedSound : s))
+      this.setSounds(updatedSounds, [id])
     }
   }
+
   deleteSound = (id: SoundId): void => {
     this.checkNotLoading()
-    this._sounds = this._sounds.filter((sound) => sound.id !== id)
-    this.dirtySoundIds.push(id)
+    const updatedSounds = this._sounds.filter((sound) => sound.id !== id)
+    this.setSounds(updatedSounds, [id])
+  }
+
+  undo = (): void => {
+    const record = this.undoStack.pop()
+    if (record === undefined) {
+      return
+    }
+    this.redoStack.push({ sounds: this._sounds, affectedSoundIds: record.affectedSoundIds })
+    this._sounds = record.sounds
+    this.dirtySoundIds.push(...record.affectedSoundIds)
     this.notifyListeners()
+    this.tryPersistDirtySounds()
+  }
+
+  redo = (): void => {
+    const record = this.redoStack.pop()
+    if (record === undefined) {
+      return
+    }
+    this.undoStack.push({ sounds: this._sounds, affectedSoundIds: record.affectedSoundIds })
+    this._sounds = record.sounds
+    this.dirtySoundIds.push(...record.affectedSoundIds)
+    this.notifyListeners()
+    this.tryPersistDirtySounds()
   }
 
   private tryPersistDirtySounds = () =>
@@ -116,7 +152,8 @@ export class SoundLibrary implements SoundActions {
       .map((id) => this.findSound(id))
       .filter((sound): sound is Sound => sound !== undefined)
     const soundIdsToDelete = this.dirtySoundIds.filter((id) => this.findSound(id) === undefined)
-    await this.soundStore.bulkUpdate(soundsToPersist, soundIdsToDelete)
     this.dirtySoundIds.length = 0
+
+    await this.soundStore.bulkUpdate(soundsToPersist, soundIdsToDelete)
   }
 }
