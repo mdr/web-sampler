@@ -49,3 +49,22 @@ test('sounds can be deleted', async ({ mount }) => {
   await soundsEditorPage.sidebar.expectSoundNamesToBe(['Sound AAA'])
   await soundsEditorPage.expectToastToBeShown('Deleted sound Sound BBB')
 })
+
+test('undo/redo should handle sound creation and name editing', async ({ mount }) => {
+  const soundsEditorPage = await launchApp(mount)
+  await soundsEditorPage.sidebar.pressNewSound()
+  await soundsEditorPage.enterSoundName('A')
+  await soundsEditorPage.sidebar.expectSoundNamesToBe(['A'])
+
+  await soundsEditorPage.pressUndo()
+  await soundsEditorPage.sidebar.expectSoundNamesToBe(['Untitled Sound'])
+
+  await soundsEditorPage.pressUndo()
+  await soundsEditorPage.sidebar.expectSoundNamesToBe([])
+
+  await soundsEditorPage.pressRedo()
+  await soundsEditorPage.sidebar.expectSoundNamesToBe(['Untitled Sound'])
+
+  await soundsEditorPage.pressRedo()
+  await soundsEditorPage.sidebar.expectSoundNamesToBe(['A'])
+})

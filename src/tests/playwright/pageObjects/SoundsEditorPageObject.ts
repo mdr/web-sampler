@@ -46,6 +46,10 @@ export class SoundsEditorPageObject extends PageObject {
 
   pressHomeLink = (): Promise<void> => this.step('pressHomeLink', () => this.press(NavbarTestIds.homeLink))
 
+  pressUndo = (): Promise<void> => this.step('pressUndo', () => this.press(NavbarTestIds.undoButton))
+
+  pressRedo = (): Promise<void> => this.step('pressRedo', () => this.press(NavbarTestIds.redoButton))
+
   simulateVolume = (volume: number): Promise<void> =>
     this.step(`simulateVolume ${volume}`, async () => {
       await this.page.evaluate((volume) => window.testHooks.simulateVolume(volume), volume)
