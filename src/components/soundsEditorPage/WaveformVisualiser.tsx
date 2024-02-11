@@ -114,6 +114,7 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
       ctx.lineTo(x, height)
       ctx.stroke()
     }
+    // eslint-disable-next-line
   }, [pcm, startTime, audioDuration, finishTime, isHoveringStart, isHoveringFinish, currentPosition, canvasDimensions])
 
   useEffect(() => {
