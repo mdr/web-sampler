@@ -35,6 +35,7 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
   const [isDraggingFinish, setIsDraggingFinish] = useState(false)
   const [isHoveringStart, setIsHoveringStart] = useState(false)
   const [isHoveringFinish, setIsHoveringFinish] = useState(false)
+  const [canvasDimensions, setCanvasDimensions] = useState([0, 0])
 
   const drawWaveform = useCallback(() => {
     const canvas = canvasRef.current ?? undefined
@@ -113,7 +114,20 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
       ctx.lineTo(x, height)
       ctx.stroke()
     }
-  }, [pcm, startTime, audioDuration, finishTime, isHoveringStart, isHoveringFinish, currentPosition])
+  }, [pcm, startTime, audioDuration, finishTime, isHoveringStart, isHoveringFinish, currentPosition, canvasDimensions])
+
+  useEffect(() => {
+    const resizeCanvas = () => {
+      const canvas = canvasRef.current ?? undefined
+      if (canvas !== undefined) {
+        canvas.width = canvas.offsetWidth
+        setCanvasDimensions([canvas.offsetWidth, canvas.offsetHeight])
+      }
+    }
+    resizeCanvas()
+    window.addEventListener('resize', resizeCanvas)
+    return () => window.removeEventListener('resize', resizeCanvas)
+  }, [])
 
   const handleCanvasClick = useCallback(
     (event: React.MouseEvent<HTMLCanvasElement>) => {
@@ -178,7 +192,7 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
         setIsHoveringFinish(Math.abs(x - xFinish) < TOLERANCE)
       }
     },
-    [isDraggingStart, isDraggingFinish, drawWaveform, audioDuration, startTime, finishTime],
+    [isDraggingStart, isDraggingFinish, audioDuration, startTime, finishTime],
   )
 
   const handleMouseUp = useCallback(() => {
@@ -193,10 +207,9 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
   return (
     <canvas
       data-testid={EditSoundPaneTestIds.waveformCanvas}
-      className="border-2 border-gray-200"
+      className="w-full border-2 border-gray-200"
       ref={canvasRef}
-      width="600"
-      height="200"
+      height="400"
       onClick={handleCanvasClick}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
