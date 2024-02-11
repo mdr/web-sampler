@@ -7,7 +7,7 @@ export interface SoundNameTextFieldProps {
 }
 
 export const SoundNameTextField = ({ soundName, setSoundName }: SoundNameTextFieldProps) => (
-  <TextField className="flex flex-col space-y-2 p-4">
+  <TextField className="flex flex-col space-y-2">
     <Label className="font-medium text-gray-700">Sound Name</Label>
     <Input
       data-testid={EditSoundPaneTestIds.soundNameInput}

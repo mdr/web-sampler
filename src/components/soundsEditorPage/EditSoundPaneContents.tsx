@@ -84,25 +84,26 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPageProps) => {
   }
 
   return (
-    <>
+    <div className="flex flex-col space-y-4 px-4 pt-4">
       <SoundNameTextField soundName={sound.name} setSoundName={setSoundName} />
-      <div className="flex items-center space-x-4 p-4">
-        {audioRecorderState === AudioRecorderState.IDLE && (
-          <>
-            <CaptureButton onPress={handleCaptureButtonPressed} />
-            {sound.audio !== undefined && <AudioSection audio={sound.audio} />}
-          </>
-        )}
-        {audioRecorderState === AudioRecorderState.RECORDING && (
-          <>
-            <StopButton testId={EditSoundPaneTestIds.stopButton} onPress={handleStopButtonPressed}>
-              Stop
-            </StopButton>
-            <VolumeMeter />
-          </>
-        )}
+      <div>
         <DeleteButton onPress={handleDeleteButtonPressed} />
       </div>
-    </>
+      <h2 className="text-2xl">Audio</h2>
+      {audioRecorderState === AudioRecorderState.IDLE && (
+        <>
+          <div>
+            <CaptureButton onPress={handleCaptureButtonPressed} />
+          </div>
+          {sound.audio !== undefined && <AudioSection audio={sound.audio} />}
+        </>
+      )}
+      {audioRecorderState === AudioRecorderState.RECORDING && (
+        <div className="flex items-center space-x-4">
+          <StopButton testId={EditSoundPaneTestIds.stopButton} onPress={handleStopButtonPressed} />
+          <VolumeMeter />
+        </div>
+      )}
+    </div>
   )
 }
