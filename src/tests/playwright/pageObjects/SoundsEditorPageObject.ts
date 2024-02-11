@@ -75,7 +75,7 @@ export class SoundsEditorPageObject extends PageObject {
   getAudioRecorderState = (): Promise<AudioRecorderState> =>
     this.page.evaluate(() => window.testHooks.getAudioRecorderState())
 
-  expectAudioRecorderStateToBe = async (state: AudioRecorderState): Promise<void> =>
+  expectAudioRecorderStateToBe = (state: AudioRecorderState): Promise<void> =>
     this.step(`expectAudioRecorderStateToBe ${state}`, async () => {
       expect(await this.getAudioRecorderState()).toBe(state)
     })
