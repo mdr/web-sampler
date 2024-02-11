@@ -5,7 +5,7 @@ export class AppDb extends Dexie {
   sounds!: Table<Sound>
 
   constructor() {
-    super('web-sampler-b4cdc329-1b5e-44b9-868e-5e99e47b08e4')
+    super('web-sampler-78ca3c7c-70ad-42ae-81f9-bca7e9f676a7')
     this.version(1).stores({ sounds: '++id' })
   }
 }

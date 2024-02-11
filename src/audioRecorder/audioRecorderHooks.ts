@@ -22,7 +22,7 @@ export const useAudioRecorderState = (): AudioRecorderState => {
   return state
 }
 
-export const useAudioRecorderVolume = (): number => {
+export const useAudioRecorderVolumeRaf = (): number => {
   const audioRecorder = useAudioRecorder()
   const [volume, setVolume] = useState<number>(audioRecorder.volume)
   const handleAnimationFrame = useCallback(() => setVolume(audioRecorder.volume), [setVolume, audioRecorder])

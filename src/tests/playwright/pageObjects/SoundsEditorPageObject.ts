@@ -12,7 +12,7 @@ export class SoundsEditorPageObject extends PageObject {
   protected readonly name = 'SoundsEditorPage'
 
   static verifyIsShown = async (mountResult: MountResult): Promise<SoundsEditorPageObject> => {
-    await expect(mountResult.getByTestId(SoundSidebarTestIds.newSoundButton)).toBeVisible()
+    await expect(mountResult.getByTestId(SoundSidebarTestIds.sidebar)).toBeVisible()
     return new SoundsEditorPageObject(mountResult)
   }
 

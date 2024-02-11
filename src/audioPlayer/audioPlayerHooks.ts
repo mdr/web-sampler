@@ -33,7 +33,7 @@ export const useAudioPlayerIsPlaying = (): boolean => {
   return isPlaying
 }
 
-export const useAudioPlayerCurrentTimeAndDuration = (): [Seconds, Seconds] => {
+export const useAudioPlayerCurrentTimeAndDurationRaf = (): [Seconds, Seconds] => {
   const audioPlayer = useAudioPlayer()
   const [currentTime, setCurrentTime] = useState<Seconds>(audioPlayer.currentTime)
   const [duration, setDuration] = useState<Seconds>(audioPlayer.duration)

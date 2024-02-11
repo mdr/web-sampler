@@ -10,7 +10,7 @@ import { Button } from 'react-aria-components'
 import { unawaited } from '../../utils/utils.ts'
 import {
   useAudioPlayerActions,
-  useAudioPlayerCurrentTimeAndDuration,
+  useAudioPlayerCurrentTimeAndDurationRaf,
   useAudioPlayerIsPlaying,
 } from '../../audioPlayer/audioPlayerHooks.ts'
 import { SoundAudio } from '../../types/Sound.ts'
@@ -20,7 +20,7 @@ export interface AudioSectionProps {
 }
 
 export const AudioSection = ({ audio }: AudioSectionProps) => {
-  const [currentPosition, audioDuration] = useAudioPlayerCurrentTimeAndDuration()
+  const [currentPosition, audioDuration] = useAudioPlayerCurrentTimeAndDurationRaf()
   const audioPlayerActions = useAudioPlayerActions()
   const isPlaying = useAudioPlayerIsPlaying()
 

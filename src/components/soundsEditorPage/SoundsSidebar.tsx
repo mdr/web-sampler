@@ -1,19 +1,18 @@
 import { useSounds } from '../../sounds/soundHooks.ts'
 import { Link, useParams } from 'react-router-dom'
 import { NewSoundButton } from './NewSoundButton.tsx'
-import { getDisplayName } from '../../types/Sound.ts'
-import _ from 'lodash'
+import { getDisplayName, sortSoundsByDisplayName } from '../../types/Sound.ts'
 import { SoundSidebarTestIds } from './EditSoundPaneTestIds.ts'
 
 export const SoundsSidebar = () => {
-  const sounds = useSounds()
-  const sortedSounds = _.sortBy(sounds, (sound) => getDisplayName(sound).toLowerCase())
+  const sounds = sortSoundsByDisplayName(useSounds())
+
   const { soundId: selectedSoundId } = useParams()
   return (
     <div data-testid={SoundSidebarTestIds.sidebar} className="flex flex-col h-full">
       <div className="flex-grow overflow-auto">
         <ul>
-          {sortedSounds.map((sound) => (
+          {sounds.map((sound) => (
             <li key={sound.id} className={`hover:bg-blue-100 ${sound.id === selectedSoundId ? 'bg-blue-200' : ''}`}>
               <Link
                 to={`/sound/${sound.id}`}

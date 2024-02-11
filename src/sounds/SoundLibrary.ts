@@ -5,7 +5,7 @@ import { SoundActions } from './soundHooks.ts'
 import { fireAndForget } from '../utils/utils.ts'
 import { Duration } from 'luxon'
 import { SoundStore } from './SoundStore.ts'
-import { Pcm } from '../utils/types/brandedTypes.ts'
+import { Pcm, Seconds } from '../utils/types/brandedTypes.ts'
 
 export type SoundLibraryUpdatedListener = () => void
 
@@ -91,7 +91,11 @@ export class SoundLibrary implements SoundActions {
 
   setName = (id: SoundId, name: string): void => this.updateSound(id, (sound) => ({ ...sound, name }))
 
-  setAudioPcm = (id: SoundId, pcm: Pcm) => this.updateSound(id, (sound) => ({ ...sound, audio: { pcm } }))
+  setAudioPcm = (id: SoundId, pcm: Pcm) =>
+    this.updateSound(id, (sound) => ({
+      ...sound,
+      audio: { pcm, startTime: Seconds(0), finishTime: pcmDurationInSeconds(pcm) },
+    }))
 
   private updateSound = (id: SoundId, update: (sound: Sound) => Sound): void => {
     this.checkNotLoading()
@@ -162,3 +166,5 @@ export class SoundLibrary implements SoundActions {
     await this.soundStore.bulkUpdate(soundsToPersist, soundIdsToDelete)
   }
 }
+
+const pcmDurationInSeconds = (pcm: Pcm): Seconds => Seconds(pcm.length / 48000)
