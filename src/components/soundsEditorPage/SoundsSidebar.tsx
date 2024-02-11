@@ -42,7 +42,7 @@ export const SoundsSidebar = () => {
                   aria-label="Delete"
                   onPress={() => handleDeleteSound(sound.id)}
                 >
-                  <Icon path={mdiTrashCan} size={1} />
+                  <Icon path={mdiTrashCan} size={1} title="Delete" />
                 </Button>
               </div>
             </li>

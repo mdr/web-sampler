@@ -1,5 +1,5 @@
 import { useCallback, useRef } from 'react'
-import { RecordButton } from './RecordButton.tsx'
+import { CaptureButton } from './CaptureButton.tsx'
 import { VolumeMeter } from './VolumeMeter.tsx'
 import { StopButton } from './StopButton.tsx'
 import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
@@ -58,7 +58,7 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPageProps) => {
     }
   })
 
-  const handleRecordButtonPressed = () =>
+  const handleCaptureButtonPressed = () =>
     fireAndForget(async () => {
       const outcome = await audioRecorderActions.startRecording()
       switch (outcome) {
@@ -89,7 +89,7 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPageProps) => {
       <div className="flex items-center space-x-4 p-4">
         {audioRecorderState === AudioRecorderState.IDLE && (
           <>
-            <RecordButton onPress={handleRecordButtonPressed} />
+            <CaptureButton onPress={handleCaptureButtonPressed} />
             {sound.audio !== undefined && <AudioSection audio={sound.audio} />}
           </>
         )}

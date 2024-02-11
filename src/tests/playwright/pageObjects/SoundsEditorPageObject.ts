@@ -23,12 +23,12 @@ export class SoundsEditorPageObject extends PageObject {
   enterSoundName = (name: string): Promise<void> =>
     this.step(`enterName ${name}`, () => this.get(EditSoundPaneTestIds.soundNameInput).fill(name))
 
-  pressRecord = ({
+  pressCaptureAudio = ({
     primedOutcome = StartRecordingOutcome.SUCCESS,
   }: Partial<{ primedOutcome: StartRecordingOutcome }> = {}): Promise<void> =>
-    this.step(`pressRecord primedOutcome=${primedOutcome}`, async () => {
+    this.step(`pressCaptureAudio primedOutcome=${primedOutcome}`, async () => {
       await this.page.evaluate((outcome) => window.testHooks.primeStartRecordingOutcome(outcome), primedOutcome)
-      await this.press(EditSoundPaneTestIds.recordButton)
+      await this.press(EditSoundPaneTestIds.captureButton)
     })
 
   primeNoAudioOnStopRecording = (): Promise<void> =>
@@ -85,8 +85,8 @@ export class SoundsEditorPageObject extends PageObject {
       await expect(this.get(EditSoundPaneTestIds.volumeMeter)).toHaveAttribute('data-volume', `${volume}`)
     })
 
-  expectRecordButtonToBeShown = (): Promise<void> =>
-    this.step('expectRecordButtonToBeShown', () => this.expectToBeVisible(EditSoundPaneTestIds.recordButton))
+  expectCaptureButtonToBeShown = (): Promise<void> =>
+    this.step('expectCaptureButtonToBeShown', () => this.expectToBeVisible(EditSoundPaneTestIds.captureButton))
 
   expectStopButtonToBeShown = (): Promise<void> =>
     this.step('expectStopButtonToBeShown', () => this.expectToBeVisible(EditSoundPaneTestIds.stopButton))
@@ -101,15 +101,15 @@ export class SoundsEditorPageObject extends PageObject {
     this.step('expectPlayButtonToBeShown', () => this.expectToBeVisible(EditSoundPaneTestIds.playButton))
 }
 
-export const launchAndStartRecording = async (mount: MountFunction): Promise<SoundsEditorPageObject> => {
+export const launchAndStartAudioCapture = async (mount: MountFunction): Promise<SoundsEditorPageObject> => {
   const soundsEditorPage = await launchApp(mount)
   await soundsEditorPage.sidebar.pressNewSound()
-  await soundsEditorPage.pressRecord()
+  await soundsEditorPage.pressCaptureAudio()
   return soundsEditorPage
 }
 
 export const launchAndRecordNewSound = async (mount: MountFunction): Promise<SoundsEditorPageObject> => {
-  const soundsEditorPage = await launchAndStartRecording(mount)
+  const soundsEditorPage = await launchAndStartAudioCapture(mount)
   await soundsEditorPage.pressStop()
   return soundsEditorPage
 }

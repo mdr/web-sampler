@@ -35,7 +35,6 @@ export const Navbar = () => {
         <li className="flex">
           <Button
             data-testid={NavbarTestIds.redoButton}
-            aria-label="Redo"
             className={`hover:text-gray-300 ${!canRedo ? 'opacity-50 cursor-not-allowed' : ''}`}
             onPress={soundActions.redo}
           >

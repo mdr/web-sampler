@@ -2,7 +2,7 @@ import { TestId } from '../../utils/types/brandedTypes.ts'
 
 export const EditSoundPaneTestIds = {
   soundNameInput: TestId('SoundsEditorPage.soundNameInput'),
-  recordButton: TestId('SoundsEditorPage.recordButton'),
+  captureButton: TestId('SoundsEditorPage.captureButton'),
   stopButton: TestId('SoundsEditorPage.stopButton'),
   deleteButton: TestId('SoundsEditorPage.deleteButton'),
   volumeMeter: TestId('SoundsEditorPage.volumeMeter'),
