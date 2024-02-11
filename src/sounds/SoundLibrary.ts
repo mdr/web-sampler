@@ -3,9 +3,9 @@ import { Option } from '../utils/types/Option.ts'
 import * as uuid from 'uuid'
 import _ from 'lodash'
 import { SoundActions } from './soundHooks.ts'
-import { db } from './soundDb.ts'
 import { fireAndForget } from '../utils/utils.ts'
 import { Duration } from 'luxon'
+import { SoundStore } from './SoundStore.ts'
 
 export type SoundsUpdatedListener = (sounds: readonly Sound[]) => void
 
@@ -18,13 +18,13 @@ export class SoundLibrary implements SoundActions {
   private isPersisting = false
   private readonly listeners: SoundsUpdatedListener[] = []
 
-  constructor() {
+  constructor(private readonly soundStore: SoundStore) {
     setInterval(this.tryPersistDirtySounds, PERSIST_DIRTY_INTERVAL.toMillis())
     fireAndForget(() => this.loadSounds())
   }
 
   private loadSounds = async (): Promise<void> => {
-    this._sounds = await db.sounds.toArray()
+    this._sounds = await this.soundStore.getAllSounds()
     this.isLoading = false
     this.notifyListeners()
   }
@@ -116,10 +116,7 @@ export class SoundLibrary implements SoundActions {
       .map((id) => this.findSound(id))
       .filter((sound): sound is Sound => sound !== undefined)
     const soundIdsToDelete = this.dirtySoundIds.filter((id) => this.findSound(id) === undefined)
-    await db.transaction('rw', db.sounds, async () => {
-      await db.sounds.bulkPut(soundsToPersist)
-      await db.sounds.bulkDelete(soundIdsToDelete)
-    })
+    await this.soundStore.bulkUpdate(soundsToPersist, soundIdsToDelete)
     this.dirtySoundIds.length = 0
   }
 }

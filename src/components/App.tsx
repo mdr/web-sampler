@@ -11,6 +11,8 @@ import { router } from './router.tsx'
 import { AudioContextProvider, AudioContextProviderContext } from '../audioRecorder/AudioContextProvider.ts'
 import { AudioPlayerContext } from '../audioPlayer/AudioPlayerContext.ts'
 import { AudioPlayer } from '../audioPlayer/AudioPlayer.ts'
+import { SoundStore } from '../sounds/SoundStore.ts'
+import { AppDb } from '../sounds/AppDb.ts'
 
 export interface AppProps {
   audioContextProvider: AudioContextProvider
@@ -25,7 +27,7 @@ export const App = ({ audioRecorder, audioContextProvider, audioPlayer }: AppPro
       <AudioContextProviderContext.Provider value={audioContextProvider}>
         <AudioRecorderContext.Provider value={audioRecorder}>
           <AudioPlayerContext.Provider value={audioPlayer}>
-            <SoundLibraryContext.Provider value={new SoundLibrary()}>
+            <SoundLibraryContext.Provider value={new SoundLibrary(new SoundStore(new AppDb()))}>
               <RouterProvider router={router} />
             </SoundLibraryContext.Provider>
           </AudioPlayerContext.Provider>

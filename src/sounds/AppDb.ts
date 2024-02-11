@@ -9,5 +9,3 @@ export class AppDb extends Dexie {
     this.version(1).stores({ sounds: '++id' })
   }
 }
-
-export const db = new AppDb()
