@@ -20,7 +20,7 @@ export const SoundsSidebar = () => {
     soundActions.deleteSound(soundId)
   }
   return (
-    <div data-testid={SoundSidebarTestIds.sidebar} className="flex flex-col h-full">
+    <div data-testid={SoundSidebarTestIds.sidebar} className="flex h-full flex-col">
       <div className="flex-grow overflow-auto">
         <ul>
           {sounds.map((sound) => (
@@ -28,7 +28,7 @@ export const SoundsSidebar = () => {
               key={sound.id}
               className={`group relative hover:bg-blue-100 ${sound.id === currentSoundId ? 'bg-blue-200' : ''}`}
             >
-              <div className="flex justify-between items-center">
+              <div className="flex items-center justify-between">
                 <Link
                   to={`/sound/${sound.id}`}
                   className="block w-full p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
@@ -38,7 +38,7 @@ export const SoundsSidebar = () => {
                   {getDisplayName(sound)}
                 </Link>
                 <Button
-                  className="opacity-0 group-hover:opacity-100 focus:opacity-100 absolute right-2 top-1/2 transform -translate-y-1/2 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 transform opacity-0 hover:text-blue-500 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-blue-300 group-hover:opacity-100"
                   aria-label="Delete"
                   onPress={() => handleDeleteSound(sound.id)}
                 >
@@ -49,7 +49,7 @@ export const SoundsSidebar = () => {
           ))}
         </ul>
       </div>
-      <div className="mt-auto py-4 flex justify-center">
+      <div className="mt-auto flex justify-center py-4">
         <NewSoundButton testId={SoundSidebarTestIds.newSoundButton} />
       </div>
     </div>

@@ -22,10 +22,10 @@ export const NewSoundButton = ({ testId }: NewSoundButtonProps) => {
   return (
     <Button
       data-testid={testId}
-      className="bg-blue-500 text-white rounded hover:bg-blue-700 active:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:ring-opacity-50 py-2 px-4 flex items-center justify-center"
+      className="flex items-center justify-center rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:ring-opacity-50 active:bg-blue-800"
       onPress={handlePress}
     >
-      <Icon className="w-4 h-4 mr-2" path={mdiPlus} size={1} />
+      <Icon className="mr-2 h-4 w-4" path={mdiPlus} size={1} />
       New Sound
     </Button>
   )

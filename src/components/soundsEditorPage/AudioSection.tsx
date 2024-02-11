@@ -58,7 +58,7 @@ export const AudioSection = ({ audio }: AudioSectionProps) => {
       />
       <Button
         onPress={togglePlayPause}
-        className="mt-4 flex items-center justify-center p-2 rounded-md bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        className="mt-4 flex items-center justify-center rounded-md bg-blue-500 p-2 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         data-testid={isPlaying ? EditSoundPaneTestIds.pauseButton : EditSoundPaneTestIds.playButton}
       >
         <Icon path={isPlaying ? mdiPause : mdiPlay} size={1} />

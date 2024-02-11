@@ -5,6 +5,7 @@ import { Button } from 'react-aria-components'
 import { useCanRedo, useCanUndo, useSoundActions } from '../../sounds/soundHooks.ts'
 import { NavbarTestIds } from './NavbarTestIds.ts'
 import { useHotkeys } from 'react-hotkeys-hook'
+import clsx from 'clsx'
 
 export const Navbar = () => {
   const soundActions = useSoundActions()
@@ -15,7 +16,7 @@ export const Navbar = () => {
   useHotkeys('ctrl+y', () => soundActions.redo(), [soundActions])
 
   return (
-    <nav className="bg-gray-800 text-white p-4">
+    <nav className="bg-gray-800 p-4 text-white">
       <ul className="flex space-x-4">
         <li className="text-xl hover:text-gray-300">
           <NavLink data-testid={NavbarTestIds.homeLink} to="/">
@@ -26,7 +27,7 @@ export const Navbar = () => {
           <Button
             data-testid={NavbarTestIds.undoButton}
             aria-label="Undo"
-            className={`hover:text-gray-300 ${!canUndo ? 'opacity-50 cursor-not-allowed' : ''}`}
+            className={clsx('hover:text-gray-300', { 'cursor-not-allowed opacity-50': !canUndo })}
             onPress={soundActions.undo}
           >
             <Icon path={mdiUndo} size={1} title="Undo" />
@@ -35,7 +36,7 @@ export const Navbar = () => {
         <li className="flex">
           <Button
             data-testid={NavbarTestIds.redoButton}
-            className={`hover:text-gray-300 ${!canRedo ? 'opacity-50 cursor-not-allowed' : ''}`}
+            className={clsx('hover:text-gray-300', { 'cursor-not-allowed opacity-50': !canRedo })}
             onPress={soundActions.redo}
           >
             <Icon path={mdiRedo} size={1} title="Redo" />

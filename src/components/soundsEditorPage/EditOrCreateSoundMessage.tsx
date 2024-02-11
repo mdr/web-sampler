@@ -1,5 +1,5 @@
 export const EditOrCreateSoundMessage = () => (
-  <div className="flex items-center justify-center h-full">
-    <p className="text-lg py-2">No sound selected</p>
+  <div className="flex h-full items-center justify-center">
+    <p className="py-2 text-lg">No sound selected</p>
   </div>
 )

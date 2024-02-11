@@ -15,7 +15,7 @@ export const EditSoundPane = ({ soundId }: EditSoundPaneProps) => {
   }
   if (sound === undefined) {
     return (
-      <div className="flex justify-center items-center h-full">
+      <div className="flex h-full items-center justify-center">
         <SoundNotFound />
       </div>
     )

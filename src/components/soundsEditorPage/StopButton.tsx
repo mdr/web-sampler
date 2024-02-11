@@ -15,10 +15,10 @@ interface StopButtonProps {
 export const StopButton: React.FC<StopButtonProps> = ({ onPress = doNothing, children, testId }) => (
   <Button
     data-testid={testId}
-    className="bg-blue-500 hover:bg-blue-700 active:bg-blue-800 focus:outline-none focus:ring focus:ring-blue-300 text-white font-bold py-2 px-4 rounded disabled:bg-blue-300 disabled:text-gray-500 disabled:cursor-not-allowed flex items-center justify-center"
+    className="flex items-center justify-center rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300 active:bg-blue-800 disabled:cursor-not-allowed disabled:bg-blue-300 disabled:text-gray-500"
     onPress={onPress}
   >
-    <Icon className="w-4 h-4 mr-2" path={mdiStop} size={1} />
+    <Icon className="mr-2 h-4 w-4" path={mdiStop} size={1} />
     {children}
   </Button>
 )
