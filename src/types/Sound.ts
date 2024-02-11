@@ -5,10 +5,14 @@ export type SoundId = string & Brand.Brand<'SoundId'>
 
 export const SoundId = Brand.nominal<SoundId>()
 
+export interface SoundAudio {
+  readonly pcm: Float32Array
+}
+
 export interface Sound {
   readonly id: SoundId
   readonly name: string
-  readonly audio?: Float32Array
+  readonly audio?: SoundAudio
 }
 
 export const newSound = (): Sound => {

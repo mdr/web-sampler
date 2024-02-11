@@ -13,9 +13,10 @@ import {
   useAudioPlayerCurrentTimeAndDuration,
   useAudioPlayerIsPlaying,
 } from '../../audioPlayer/audioPlayerHooks.ts'
+import { SoundAudio } from '../../types/Sound.ts'
 
 export interface AudioSectionProps {
-  audio: Float32Array
+  audio: SoundAudio
 }
 
 export const AudioSection = ({ audio }: AudioSectionProps) => {
@@ -26,7 +27,7 @@ export const AudioSection = ({ audio }: AudioSectionProps) => {
   const audioContext = useAudioContext()
   useEffect(() => {
     const audioBufferUtils = new AudioBufferUtils(audioContext)
-    const blob = audioBufferUtils.float32ArrayToWavBlob(audio)
+    const blob = audioBufferUtils.float32ArrayToWavBlob(audio.pcm)
     const objectUrl = Url(URL.createObjectURL(blob))
     audioPlayerActions.setUrl(objectUrl)
     return () => {

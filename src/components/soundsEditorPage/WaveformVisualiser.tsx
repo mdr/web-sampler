@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useRef } from 'react'
 import { Seconds } from '../../utils/types/brandedTypes.ts'
 import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
+import { SoundAudio } from '../../types/Sound.ts'
 
 interface WaveformVisualiserProps {
-  audio: Float32Array
+  audio: SoundAudio
   currentPosition: Seconds
   audioDuration: Seconds
   onPositionChange: (position: Seconds) => void
@@ -24,7 +25,7 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
   onPositionChange,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-
+  const pcm = audio.pcm
   const drawWaveform = useCallback(() => {
     const canvas = canvasRef.current ?? undefined
     if (canvas === undefined) {
@@ -34,7 +35,7 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
 
     const width = canvas.width
     const height = canvas.height
-    const step = Math.ceil(audio.length / width)
+    const step = Math.ceil(pcm.length / width)
     const amp = height / 2
 
     // Clear canvas
@@ -59,7 +60,7 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
       let min = 1.0
       let max = -1.0
       for (let j = 0; j < step; j++) {
-        const datum = audio[i * step + j]
+        const datum = pcm[i * step + j]
         if (datum < min) min = datum
         if (datum > max) max = datum
       }

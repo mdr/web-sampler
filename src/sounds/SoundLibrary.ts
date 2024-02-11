@@ -42,7 +42,7 @@ export class SoundLibrary implements SoundActions {
   get isLoading(): boolean {
     return this._isLoading
   }
-  
+
   get canUndo(): boolean {
     return this.undoStack.length > 0
   }
@@ -90,7 +90,7 @@ export class SoundLibrary implements SoundActions {
 
   setName = (id: SoundId, name: string): void => this.updateSound(id, (sound) => ({ ...sound, name }))
 
-  setAudio = (id: SoundId, audio: Float32Array) => this.updateSound(id, (sound) => ({ ...sound, audio }))
+  setAudioPcm = (id: SoundId, pcm: Float32Array) => this.updateSound(id, (sound) => ({ ...sound, audio: { pcm } }))
 
   private updateSound = (id: SoundId, update: (sound: Sound) => Sound): void => {
     this.checkNotLoading()
