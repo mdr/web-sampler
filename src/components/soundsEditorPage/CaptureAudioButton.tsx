@@ -3,13 +3,13 @@ import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
 import { mdiMonitorSpeaker } from '@mdi/js'
 import { Button } from 'react-aria-components'
 
-interface CaptureButtonProps {
+interface CaptureAudioButtonProps {
   onPress(): void
 }
 
-export const CaptureButton = ({ onPress }: CaptureButtonProps) => (
+export const CaptureAudioButton = ({ onPress }: CaptureAudioButtonProps) => (
   <Button
-    data-testid={EditSoundPaneTestIds.captureButton}
+    data-testid={EditSoundPaneTestIds.captureAudioButton}
     className="flex items-center justify-center rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700 focus:outline-none focus:ring focus:ring-red-300 active:bg-red-800 disabled:cursor-not-allowed disabled:bg-pink-300 disabled:text-gray-500"
     onPress={onPress}
   >

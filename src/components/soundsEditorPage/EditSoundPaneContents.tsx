@@ -1,5 +1,5 @@
 import { useCallback, useRef } from 'react'
-import { CaptureButton } from './CaptureButton.tsx'
+import { CaptureAudioButton } from './CaptureAudioButton.tsx'
 import { VolumeMeter } from './VolumeMeter.tsx'
 import { StopButton } from './StopButton.tsx'
 import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
@@ -22,6 +22,7 @@ import { AudioSection } from './AudioSection.tsx'
 import { DeleteButton } from './DeleteButton.tsx'
 import { useNavigate } from 'react-router-dom'
 import { Pcm } from '../../utils/types/brandedTypes.ts'
+import { DownloadWavButton } from './DownloadWavButton.tsx'
 
 export interface EditSoundPageProps {
   soundId: SoundId
@@ -58,7 +59,7 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPageProps) => {
     }
   })
 
-  const handleCaptureButtonPressed = () =>
+  const handleCaptureAudioButtonPressed = () =>
     fireAndForget(async () => {
       const outcome = await audioRecorderActions.startRecording()
       switch (outcome) {
@@ -92,8 +93,9 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPageProps) => {
       <h2 className="text-2xl">Audio</h2>
       {audioRecorderState === AudioRecorderState.IDLE && (
         <>
-          <div>
-            <CaptureButton onPress={handleCaptureButtonPressed} />
+          <div className="flex space-x-2">
+            <CaptureAudioButton onPress={handleCaptureAudioButtonPressed} />
+            {sound.audio !== undefined && <DownloadWavButton sound={sound} audio={sound.audio} />}
           </div>
           {sound.audio !== undefined && <AudioSection soundId={sound.id} audio={sound.audio} />}
         </>

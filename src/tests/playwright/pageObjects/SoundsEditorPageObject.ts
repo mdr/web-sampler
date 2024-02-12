@@ -28,7 +28,7 @@ export class SoundsEditorPageObject extends PageObject {
   }: Partial<{ primedOutcome: StartRecordingOutcome }> = {}): Promise<void> =>
     this.step(`pressCaptureAudio primedOutcome=${primedOutcome}`, async () => {
       await this.page.evaluate((outcome) => window.testHooks.primeStartRecordingOutcome(outcome), primedOutcome)
-      await this.press(EditSoundPaneTestIds.captureButton)
+      await this.press(EditSoundPaneTestIds.captureAudioButton)
     })
 
   primeNoAudioOnStopRecording = (): Promise<void> =>
@@ -86,7 +86,7 @@ export class SoundsEditorPageObject extends PageObject {
     })
 
   expectCaptureButtonToBeShown = (): Promise<void> =>
-    this.step('expectCaptureButtonToBeShown', () => this.expectToBeVisible(EditSoundPaneTestIds.captureButton))
+    this.step('expectCaptureButtonToBeShown', () => this.expectToBeVisible(EditSoundPaneTestIds.captureAudioButton))
 
   expectStopButtonToBeShown = (): Promise<void> =>
     this.step('expectStopButtonToBeShown', () => this.expectToBeVisible(EditSoundPaneTestIds.stopButton))

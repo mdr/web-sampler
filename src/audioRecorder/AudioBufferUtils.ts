@@ -11,9 +11,13 @@ export class AudioBufferUtils {
     return audioBuffer
   }
 
-  pcmToWavBlob = (pcm: Pcm): Blob => {
+  pcmToWavArrayBuffer = (pcm: Pcm): ArrayBuffer => {
     const audioBuffer = this.pcmToAudioBuffer(pcm)
-    const wavBuffer = audioBufferToWav(audioBuffer)
+    return audioBufferToWav(audioBuffer)
+  }
+
+  pcmToWavBlob = (pcm: Pcm): Blob => {
+    const wavBuffer = this.pcmToWavArrayBuffer(pcm)
     return new Blob([wavBuffer], { type: 'audio/wav' })
   }
 }
