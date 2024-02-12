@@ -95,7 +95,7 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPageProps) => {
           <div>
             <CaptureButton onPress={handleCaptureButtonPressed} />
           </div>
-          {sound.audio !== undefined && <AudioSection audio={sound.audio} />}
+          {sound.audio !== undefined && <AudioSection soundId={sound.id} audio={sound.audio} />}
         </>
       )}
       {audioRecorderState === AudioRecorderState.RECORDING && (

@@ -6,6 +6,7 @@ import { fireAndForget } from '../utils/utils.ts'
 import { Duration } from 'luxon'
 import { SoundStore } from './SoundStore.ts'
 import { Pcm, Seconds } from '../utils/types/brandedTypes.ts'
+import { Draft, produce } from 'immer'
 
 export type SoundLibraryUpdatedListener = () => void
 
@@ -97,6 +98,20 @@ export class SoundLibrary implements SoundActions {
       audio: { pcm, startTime: Seconds(0), finishTime: pcmDurationInSeconds(pcm) },
     }))
 
+  setStartTime = (id: SoundId, startTime: Seconds) =>
+    this.updateSoundImmer(id, (sound) => {
+      if (sound.audio !== undefined) {
+        sound.audio.startTime = startTime
+      }
+    })
+
+  setFinishTime = (id: SoundId, finishTime: Seconds) =>
+    this.updateSoundImmer(id, (sound) => {
+      if (sound.audio !== undefined) {
+        sound.audio.finishTime = finishTime
+      }
+    })
+
   private updateSound = (id: SoundId, update: (sound: Sound) => Sound): void => {
     this.checkNotLoading()
     const sound = this.findSound(id)
@@ -109,6 +124,9 @@ export class SoundLibrary implements SoundActions {
       this.setSounds(updatedSounds, [id])
     }
   }
+
+  private updateSoundImmer = (id: SoundId, update: (sound: Draft<Sound>) => void): void =>
+    this.updateSound(id, (sound) => produce(sound, update))
 
   deleteSound = (id: SoundId): void => {
     this.checkNotLoading()

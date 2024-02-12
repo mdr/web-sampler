@@ -8,6 +8,8 @@ interface WaveformVisualiserProps {
   currentPosition: Seconds
   audioDuration: Seconds
   onPositionChange: (position: Seconds) => void
+  onStartTimeChange: (startTime: Seconds) => void
+  onFinishTimeChange: (finishTime: Seconds) => void
 }
 
 const getCanvasRenderingContext2D = (canvas: HTMLCanvasElement): CanvasRenderingContext2D => {
@@ -18,16 +20,17 @@ const getCanvasRenderingContext2D = (canvas: HTMLCanvasElement): CanvasRendering
   return ctx
 }
 
-const TOLERANCE = 5
+const START_FINISH_TIME_INTERACTION_TOLERANCE_PIXELS = 5
 
 export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
   audio,
   currentPosition,
   audioDuration,
   onPositionChange,
+  onStartTimeChange,
+  onFinishTimeChange,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  // const { pcm, startTime, finishTime } = audio
   const { pcm } = audio
   const [startTime, setStartTime] = useState(audio.startTime)
   const [finishTime, setFinishTime] = useState(audio.finishTime)
@@ -90,7 +93,7 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
 
     // Draw start line
     ctx.strokeStyle = '#00ff00'
-    ctx.lineWidth = isHoveringStart ? 3 : 2
+    ctx.lineWidth = isHoveringStart && !isDraggingStart ? 3 : 2
     ctx.beginPath()
     ctx.moveTo(xStart, 0)
     ctx.lineTo(xStart, height)
@@ -98,7 +101,7 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
 
     // Draw finish line
     ctx.strokeStyle = '#0000ff'
-    ctx.lineWidth = isHoveringFinish ? 3 : 2
+    ctx.lineWidth = isHoveringFinish && !isDraggingFinish ? 3 : 2
     ctx.beginPath()
     ctx.moveTo(xFinish, 0)
     ctx.lineTo(xFinish, height)
@@ -129,22 +132,21 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
     window.addEventListener('resize', resizeCanvas)
     return () => window.removeEventListener('resize', resizeCanvas)
   }, [])
-
-  const handleCanvasClick = useCallback(
-    (event: React.MouseEvent<HTMLCanvasElement>) => {
-      const canvas = canvasRef.current ?? undefined
-      if (canvas === undefined) {
-        return
-      }
-
-      const rect = canvas.getBoundingClientRect()
-      const x = event.clientX - rect.left
-      const position = Seconds((x / canvas.width) * audioDuration)
-
-      onPositionChange(position)
-    },
-    [audioDuration, onPositionChange],
-  )
+  //
+  // const handleCanvasClick = useCallback(
+  //   (event: React.MouseEvent<HTMLCanvasElement>) => {
+  //     const canvas = canvasRef.current ?? undefined
+  //     if (canvas === undefined) {
+  //       return
+  //     }
+  //     const rect = canvas.getBoundingClientRect()
+  //     const x = event.clientX - rect.left
+  //     const position = Seconds((x / canvas.width) * audioDuration)
+  //
+  //     onPositionChange(position)
+  //   },
+  //   [audioDuration, isDraggingFinish, isDraggingStart, onPositionChange],
+  // )
 
   const handleMouseDown = useCallback(
     (event: React.MouseEvent<HTMLCanvasElement>) => {
@@ -159,9 +161,9 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
       const xStart = (startTime / audioDuration) * canvas.width
       const xFinish = (finishTime / audioDuration) * canvas.width
 
-      if (Math.abs(x - xStart) < TOLERANCE) {
+      if (Math.abs(x - xStart) < START_FINISH_TIME_INTERACTION_TOLERANCE_PIXELS) {
         setIsDraggingStart(true)
-      } else if (Math.abs(x - xFinish) < TOLERANCE) {
+      } else if (Math.abs(x - xFinish) < START_FINISH_TIME_INTERACTION_TOLERANCE_PIXELS) {
         setIsDraggingFinish(true)
       }
     },
@@ -189,17 +191,44 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
       } else {
         const xStart = (startTime / audioDuration) * canvas.width
         const xFinish = (finishTime / audioDuration) * canvas.width
-        setIsHoveringStart(Math.abs(x - xStart) < TOLERANCE)
-        setIsHoveringFinish(Math.abs(x - xFinish) < TOLERANCE)
+        setIsHoveringStart(Math.abs(x - xStart) < START_FINISH_TIME_INTERACTION_TOLERANCE_PIXELS)
+        setIsHoveringFinish(Math.abs(x - xFinish) < START_FINISH_TIME_INTERACTION_TOLERANCE_PIXELS)
       }
     },
     [isDraggingStart, isDraggingFinish, audioDuration, startTime, finishTime],
   )
 
-  const handleMouseUp = useCallback(() => {
-    if (isDraggingStart) setIsDraggingStart(false)
-    if (isDraggingFinish) setIsDraggingFinish(false)
-  }, [isDraggingStart, isDraggingFinish])
+  const handleMouseUp = useCallback(
+    (event: React.MouseEvent<HTMLCanvasElement>) => {
+      if (isDraggingStart) {
+        setIsDraggingStart(false)
+        onStartTimeChange(startTime)
+      } else if (isDraggingFinish) {
+        setIsDraggingFinish(false)
+        onFinishTimeChange(finishTime)
+      } else {
+        const canvas = canvasRef.current ?? undefined
+        if (canvas === undefined) {
+          return
+        }
+        const rect = canvas.getBoundingClientRect()
+        const x = event.clientX - rect.left
+        const position = Seconds((x / canvas.width) * audioDuration)
+
+        onPositionChange(position)
+      }
+    },
+    [
+      isDraggingStart,
+      isDraggingFinish,
+      onStartTimeChange,
+      startTime,
+      onFinishTimeChange,
+      finishTime,
+      audioDuration,
+      onPositionChange,
+    ],
+  )
 
   useEffect(() => {
     drawWaveform()
@@ -211,7 +240,6 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
       className="w-full border-2 border-gray-200"
       ref={canvasRef}
       height="400"
-      onClick={handleCanvasClick}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}

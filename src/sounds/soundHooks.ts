@@ -3,7 +3,7 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 import { SoundLibraryContext } from './SoundLibraryContext.ts'
 import { Option } from '../utils/types/Option.ts'
 import { SoundLibrary } from './SoundLibrary.ts'
-import { Pcm } from '../utils/types/brandedTypes.ts'
+import { Pcm, Seconds } from '../utils/types/brandedTypes.ts'
 
 const useSoundLibrary = (): SoundLibrary => {
   const soundLibrary = useContext(SoundLibraryContext)
@@ -67,6 +67,10 @@ export interface SoundActions {
   setAudioPcm(id: SoundId, pcm: Pcm): void
 
   deleteSound(id: SoundId): void
+
+  setStartTime(id: SoundId, startTime: Seconds): void
+
+  setFinishTime(id: SoundId, finishTime: Seconds): void
 
   undo(): void
 

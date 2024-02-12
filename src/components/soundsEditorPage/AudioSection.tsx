@@ -13,16 +13,19 @@ import {
   useAudioPlayerCurrentTimeAndDurationRaf,
   useAudioPlayerIsPlaying,
 } from '../../audioPlayer/audioPlayerHooks.ts'
-import { SoundAudio } from '../../types/Sound.ts'
+import { SoundAudio, SoundId } from '../../types/Sound.ts'
+import { useSoundActions } from '../../sounds/soundHooks.ts'
 
 export interface AudioSectionProps {
+  soundId: SoundId
   audio: SoundAudio
 }
 
-export const AudioSection = ({ audio }: AudioSectionProps) => {
+export const AudioSection = ({ soundId, audio }: AudioSectionProps) => {
   const [currentPosition, audioDuration] = useAudioPlayerCurrentTimeAndDurationRaf()
   const audioPlayerActions = useAudioPlayerActions()
   const isPlaying = useAudioPlayerIsPlaying()
+  const soundActions = useSoundActions()
 
   const audioContext = useAudioContext()
   useEffect(() => {
@@ -40,6 +43,14 @@ export const AudioSection = ({ audio }: AudioSectionProps) => {
     audioPlayerActions.seek(position)
   }
 
+  const handleStartTimeChange = (startTime: Seconds) => {
+    soundActions.setStartTime(soundId, startTime)
+  }
+
+  const handleFinishTimeChange = (finishTime: Seconds) => {
+    soundActions.setFinishTime(soundId, finishTime)
+  }
+
   const togglePlayPause = () => {
     if (isPlaying) {
       audioPlayerActions.pause()
@@ -51,10 +62,13 @@ export const AudioSection = ({ audio }: AudioSectionProps) => {
   return (
     <div className="flex flex-col items-center">
       <WaveformVisualiser
+        key={soundId}
         audio={audio}
         currentPosition={currentPosition}
         audioDuration={audioDuration}
         onPositionChange={handlePositionChange}
+        onStartTimeChange={handleStartTimeChange}
+        onFinishTimeChange={handleFinishTimeChange}
       />
       <Button
         onPress={togglePlayPause}
