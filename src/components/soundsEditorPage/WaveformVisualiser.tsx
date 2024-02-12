@@ -53,16 +53,15 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
     const step = Math.ceil(pcm.length / width)
     const amp = height / 2
 
-    // Clear canvas
+    // Default grey background
     ctx.clearRect(0, 0, width, height)
-    ctx.fillStyle = '#f0f0f0' // Light grey background for entire canvas
+    ctx.fillStyle = '#f0f0f0'
     ctx.fillRect(0, 0, width, height)
 
-    // Calculate positions for startTime and finishTime
     const xStart = (startTime / audioDuration) * width
     const xFinish = (finishTime / audioDuration) * width
 
-    // Draw background color between startTime and finishTime
+    // Active background color between startTime and finishTime
     ctx.fillStyle = '#fff'
     ctx.fillRect(xStart, 0, xFinish - xStart, height)
 
@@ -105,35 +104,43 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
 
     const HANDLE_RADIUS = 5
 
-    // Draw start line
+    // Start line
     ctx.strokeStyle = '#000000'
     ctx.lineWidth = 2
     ctx.fillStyle = '#000000'
+
+    // Top handle
     ctx.beginPath()
-    ctx.arc(xStart, HANDLE_RADIUS, HANDLE_RADIUS, 0, 2 * Math.PI) // Top handle
+    ctx.arc(xStart, HANDLE_RADIUS, HANDLE_RADIUS, 0, 2 * Math.PI)
     ctx.fill()
 
+    // Bottom handle
     ctx.beginPath()
-    ctx.arc(xStart, height - HANDLE_RADIUS, HANDLE_RADIUS, 0, 2 * Math.PI) // Bottom handle
+    ctx.arc(xStart, height - HANDLE_RADIUS, HANDLE_RADIUS, 0, 2 * Math.PI)
     ctx.fill()
 
+    // Vertical line
     ctx.beginPath()
     ctx.moveTo(xStart, 0)
     ctx.lineTo(xStart, height)
     ctx.stroke()
 
-    // Draw finish line
+    // Finish line
     ctx.strokeStyle = '#000000'
     ctx.lineWidth = 2
     ctx.fillStyle = '#000000'
+
+    // Top handle
     ctx.beginPath()
-    ctx.arc(xFinish, HANDLE_RADIUS, HANDLE_RADIUS, 0, 2 * Math.PI) // Top handle
+    ctx.arc(xFinish, HANDLE_RADIUS, HANDLE_RADIUS, 0, 2 * Math.PI)
     ctx.fill()
 
+    // Bottom handle
     ctx.beginPath()
-    ctx.arc(xFinish, height - HANDLE_RADIUS, HANDLE_RADIUS, 0, 2 * Math.PI) // Bottom handle
+    ctx.arc(xFinish, height - HANDLE_RADIUS, HANDLE_RADIUS, 0, 2 * Math.PI)
     ctx.fill()
 
+    // Vertical line
     ctx.beginPath()
     ctx.moveTo(xFinish, 0)
     ctx.lineTo(xFinish, height)
@@ -191,9 +198,9 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
         const newTime = Seconds((x / canvas.width) * audioDuration)
 
         if (isDraggingStart) {
-          setStartTime(newTime)
+          setStartTime(Seconds(Math.min(newTime, finishTime)))
         } else if (isDraggingFinish) {
-          setFinishTime(newTime)
+          setFinishTime(Seconds(Math.max(newTime, startTime)))
         }
       } else {
         const xStart = (startTime / audioDuration) * canvas.width
