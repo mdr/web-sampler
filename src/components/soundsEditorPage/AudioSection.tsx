@@ -26,18 +26,19 @@ export const AudioSection = ({ soundId, audio }: AudioSectionProps) => {
   const audioPlayerActions = useAudioPlayerActions()
   const isPlaying = useAudioPlayerIsPlaying()
   const soundActions = useSoundActions()
+  const pcm = audio.pcm
 
   const audioContext = useAudioContext()
   useEffect(() => {
     const audioBufferUtils = new AudioBufferUtils(audioContext)
-    const blob = audioBufferUtils.pcmToWavBlob(audio.pcm)
+    const blob = audioBufferUtils.pcmToWavBlob(pcm)
     const objectUrl = Url(URL.createObjectURL(blob))
     audioPlayerActions.setUrl(objectUrl)
     return () => {
       audioPlayerActions.pause()
       audioPlayerActions.setUrl(undefined)
     }
-  }, [audio, audioContext, audioPlayerActions])
+  }, [audioContext, audioPlayerActions, pcm])
 
   const handlePositionChange = (position: Seconds) => {
     audioPlayerActions.seek(position)
