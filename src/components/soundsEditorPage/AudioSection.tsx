@@ -28,6 +28,15 @@ export const AudioSection = ({ soundId, audio }: AudioSectionProps) => {
   const soundActions = useSoundActions()
   const pcm = audio.pcm
 
+  const { startTime, finishTime } = audio
+
+  useEffect(() => {
+    if (currentPosition >= finishTime) {
+      audioPlayerActions.pause()
+      audioPlayerActions.seek(finishTime)
+    }
+  })
+
   const audioContext = useAudioContext()
   useEffect(() => {
     const audioBufferUtils = new AudioBufferUtils(audioContext)
@@ -39,6 +48,10 @@ export const AudioSection = ({ soundId, audio }: AudioSectionProps) => {
       audioPlayerActions.setUrl(undefined)
     }
   }, [audioContext, audioPlayerActions, pcm])
+
+  useEffect(() => {
+    audioPlayerActions.setPlayWindow({ start: startTime, finish: finishTime })
+  }, [audioPlayerActions, startTime, finishTime])
 
   const handlePositionChange = (position: Seconds) => {
     audioPlayerActions.seek(position)

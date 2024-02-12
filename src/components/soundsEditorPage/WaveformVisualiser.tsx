@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Seconds } from '../../utils/types/brandedTypes.ts'
 import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
 import { SoundAudio } from '../../types/Sound.ts'
+import clsx from 'clsx'
 
 interface WaveformVisualiserProps {
   audio: SoundAudio
@@ -54,7 +55,7 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
 
     // Clear canvas
     ctx.clearRect(0, 0, width, height)
-    ctx.fillStyle = '#fff'
+    ctx.fillStyle = '#f0f0f0' // Light grey background for entire canvas
     ctx.fillRect(0, 0, width, height)
 
     // Calculate positions for startTime and finishTime
@@ -62,7 +63,7 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
     const xFinish = (finishTime / audioDuration) * width
 
     // Draw background color between startTime and finishTime
-    ctx.fillStyle = '#f0f0f0' // Light grey background
+    ctx.fillStyle = '#fff'
     ctx.fillRect(xStart, 0, xFinish - xStart, height)
 
     // Draw horizontal line at 0 amplitude
@@ -91,22 +92,6 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
     }
     ctx.stroke()
 
-    // Draw start line
-    ctx.strokeStyle = '#00ff00'
-    ctx.lineWidth = isHoveringStart && !isDraggingStart ? 3 : 2
-    ctx.beginPath()
-    ctx.moveTo(xStart, 0)
-    ctx.lineTo(xStart, height)
-    ctx.stroke()
-
-    // Draw finish line
-    ctx.strokeStyle = '#0000ff'
-    ctx.lineWidth = isHoveringFinish && !isDraggingFinish ? 3 : 2
-    ctx.beginPath()
-    ctx.moveTo(xFinish, 0)
-    ctx.lineTo(xFinish, height)
-    ctx.stroke()
-
     // Draw current position line
     if (audioDuration > 0) {
       const x = (currentPosition / audioDuration) * width
@@ -117,6 +102,43 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
       ctx.lineTo(x, height)
       ctx.stroke()
     }
+
+    const HANDLE_RADIUS = 5
+
+    // Draw start line
+    ctx.strokeStyle = '#000000'
+    ctx.lineWidth = 2
+    ctx.fillStyle = '#000000'
+    ctx.beginPath()
+    ctx.arc(xStart, HANDLE_RADIUS, HANDLE_RADIUS, 0, 2 * Math.PI) // Top handle
+    ctx.fill()
+
+    ctx.beginPath()
+    ctx.arc(xStart, height - HANDLE_RADIUS, HANDLE_RADIUS, 0, 2 * Math.PI) // Bottom handle
+    ctx.fill()
+
+    ctx.beginPath()
+    ctx.moveTo(xStart, 0)
+    ctx.lineTo(xStart, height)
+    ctx.stroke()
+
+    // Draw finish line
+    ctx.strokeStyle = '#000000'
+    ctx.lineWidth = 2
+    ctx.fillStyle = '#000000'
+    ctx.beginPath()
+    ctx.arc(xFinish, HANDLE_RADIUS, HANDLE_RADIUS, 0, 2 * Math.PI) // Top handle
+    ctx.fill()
+
+    ctx.beginPath()
+    ctx.arc(xFinish, height - HANDLE_RADIUS, HANDLE_RADIUS, 0, 2 * Math.PI) // Bottom handle
+    ctx.fill()
+
+    ctx.beginPath()
+    ctx.moveTo(xFinish, 0)
+    ctx.lineTo(xFinish, height)
+    ctx.stroke()
+
     // eslint-disable-next-line
   }, [pcm, startTime, audioDuration, finishTime, isHoveringStart, isHoveringFinish, currentPosition, canvasDimensions])
 
@@ -132,21 +154,6 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
     window.addEventListener('resize', resizeCanvas)
     return () => window.removeEventListener('resize', resizeCanvas)
   }, [])
-  //
-  // const handleCanvasClick = useCallback(
-  //   (event: React.MouseEvent<HTMLCanvasElement>) => {
-  //     const canvas = canvasRef.current ?? undefined
-  //     if (canvas === undefined) {
-  //       return
-  //     }
-  //     const rect = canvas.getBoundingClientRect()
-  //     const x = event.clientX - rect.left
-  //     const position = Seconds((x / canvas.width) * audioDuration)
-  //
-  //     onPositionChange(position)
-  //   },
-  //   [audioDuration, isDraggingFinish, isDraggingStart, onPositionChange],
-  // )
 
   const handleMouseDown = useCallback(
     (event: React.MouseEvent<HTMLCanvasElement>) => {
@@ -237,7 +244,7 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
   return (
     <canvas
       data-testid={EditSoundPaneTestIds.waveformCanvas}
-      className="w-full border-2 border-gray-200"
+      className={clsx('w-full border-2 border-gray-200', { 'cursor-grab': isHoveringStart || isHoveringFinish })}
       ref={canvasRef}
       height="400"
       onMouseDown={handleMouseDown}

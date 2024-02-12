@@ -1,10 +1,16 @@
 import { Seconds, Url } from '../utils/types/brandedTypes.ts'
 import { Option } from '../utils/types/Option.ts'
 
+export interface PlayWindow {
+  readonly start: Seconds
+  readonly finish: Seconds
+}
+
 export interface AudioPlayer {
   play: () => Promise<void>
   pause: () => void
   setUrl: (url: Option<Url>) => void
+  setPlayWindow: (playWindow: PlayWindow) => void
   seek: (time: Seconds) => void
   readonly isPlaying: boolean
 

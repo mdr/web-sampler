@@ -1,12 +1,14 @@
-import { AudioPlayer } from '../../../audioPlayer/AudioPlayer.ts'
+import { AudioPlayer, PlayWindow } from '../../../audioPlayer/AudioPlayer.ts'
 import { Seconds } from '../../../utils/types/brandedTypes.ts'
 import _ from 'lodash'
 import { SOUND_DURATION } from '../testConstants.ts'
+import { Option } from '../../../utils/types/Option.ts'
 
 export class MockAudioPlayer implements AudioPlayer {
   isPlaying: boolean = false
   currentTime: Seconds = Seconds(0)
   duration: Seconds = Seconds(SOUND_DURATION.toMillis() / 1000)
+  playWindow: Option<PlayWindow> = undefined
 
   play = async (): Promise<void> => {
     this.isPlaying = true
@@ -25,6 +27,13 @@ export class MockAudioPlayer implements AudioPlayer {
     this.isPlaying = false
     this.currentTime = Seconds(0)
     this.fireLoadStartListeners()
+  }
+
+  setPlayWindow = (playWindow: PlayWindow) => {
+    this.playWindow = playWindow
+    if (this.currentTime < playWindow.start || this.currentTime > playWindow.finish) {
+      this.seek(playWindow.start)
+    }
   }
 
   seek = (time: Seconds) => {

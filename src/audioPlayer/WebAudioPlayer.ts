@@ -1,9 +1,12 @@
 import { Seconds, Url } from '../utils/types/brandedTypes'
-import { AudioPlayer } from './AudioPlayer'
+import { AudioPlayer, PlayWindow } from './AudioPlayer'
 import { Option } from '../utils/types/Option.ts'
+
+const END_TOLERANCE: Seconds = Seconds(0.1)
 
 export class WebAudioPlayer implements AudioPlayer {
   private readonly audioElement: HTMLAudioElement = new Audio()
+  private playWindow: Option<PlayWindow> = undefined
 
   get isPlaying(): boolean {
     return !this.audioElement.paused && this.audioElement.currentTime > 0
@@ -13,12 +16,33 @@ export class WebAudioPlayer implements AudioPlayer {
     this.audioElement.src = url ?? ''
   }
 
-  play = (): Promise<void> => this.audioElement.play()
+  setPlayWindow = (playWindow: PlayWindow) => {
+    this.playWindow = playWindow
+    if (this.audioElement.currentTime < playWindow.start || this.audioElement.currentTime > playWindow.finish) {
+      this.seek(playWindow.start)
+    }
+  }
+
+  play = (): Promise<void> => {
+    if (this.playWindow !== undefined) {
+      const currentTime = this.audioElement.currentTime
+      const { start, finish } = this.playWindow
+      if (currentTime < start || currentTime > finish - END_TOLERANCE) {
+        this.seek(this.playWindow.start)
+      }
+    }
+    return this.audioElement.play()
+  }
 
   pause = () => this.audioElement.pause()
 
   seek = (time: Seconds) => {
-    this.audioElement.currentTime = time
+    let actualTime = time
+    if (this.playWindow !== undefined) {
+      const { start, finish } = this.playWindow
+      actualTime = Seconds(Math.max(start, Math.min(finish, time)))
+    }
+    this.audioElement.currentTime = actualTime
   }
 
   get currentTime(): Seconds {

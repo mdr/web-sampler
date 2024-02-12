@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
-import { AudioPlayer } from './AudioPlayer.ts'
+import { AudioPlayer, PlayWindow } from './AudioPlayer.ts'
 import { AudioPlayerContext } from './AudioPlayerContext.ts'
 import { Seconds, Url } from '../utils/types/brandedTypes.ts'
 import { useRequestAnimationFrame } from '../utils/hooks/useRequestAnimationFrame.ts'
@@ -47,6 +47,7 @@ export const useAudioPlayerCurrentTimeAndDurationRaf = (): [Seconds, Seconds] =>
 
 export interface AudioPlayerActions {
   setUrl: (url: Option<Url>) => void
+  setPlayWindow: (playWindow: PlayWindow) => void
   play: () => Promise<void>
   pause: () => void
   seek: (time: Seconds) => void
