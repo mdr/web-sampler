@@ -52,8 +52,6 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
 
     const width = canvas.width
     const height = canvas.height
-    const step = Math.ceil(pcm.length / width)
-    const amp = height / 2
 
     // Inactive grey background
     ctx.clearRect(0, 0, width, height)
@@ -68,17 +66,21 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
     ctx.fillRect(xStart, 0, xFinish - xStart, height)
 
     // Draw horizontal line at 0 amplitude
+    const middleY = height / 2
     ctx.strokeStyle = '#000'
     ctx.lineWidth = 1
     ctx.beginPath()
-    ctx.moveTo(0, amp)
-    ctx.lineTo(width, amp)
+    ctx.moveTo(0, middleY)
+    ctx.lineTo(width, middleY)
     ctx.stroke()
+
     // Draw waveform
     ctx.lineWidth = 1
     ctx.strokeStyle = '#3b82f6'
     ctx.beginPath()
 
+    const step = Math.ceil(pcm.length / width)
+    const amp = height / 2
     for (let i = 0; i < width; i++) {
       let min = 1.0
       let max = -1.0
