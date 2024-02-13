@@ -3699,10 +3699,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"effect@npm:^2.3.3":
-  version: 2.3.3
-  resolution: "effect@npm:2.3.3"
-  checksum: bc25d9f723d4fab3234c3448e9b2c785101012949a7934f69ad39b6856abe70654d07a5cadeec84a8e7f2edea968cd2b671405c6a075a6734b49cdf3f63ca39b
+"effect@npm:^2.3.5":
+  version: 2.3.5
+  resolution: "effect@npm:2.3.5"
+  checksum: 42d456bccf53eb24914d9768feb2fba15ddc2f1c90271d4f84a03c8bb733e94d02d82c8f995e68d6e628dc888b86ed084a4beacf6f6c9364908dcd19bc040977
   languageName: node
   linkType: hard
 
@@ -7447,7 +7447,7 @@ __metadata:
     beautiful-react-hooks: "npm:^5.0.1"
     clsx: "npm:^2.1.0"
     dexie: "npm:^3.2.5"
-    effect: "npm:^2.3.3"
+    effect: "npm:^2.3.5"
     eslint: "npm:^8.56.0"
     eslint-plugin-react-hooks: "npm:^4.6.0"
     eslint-plugin-react-refresh: "npm:^0.4.5"
