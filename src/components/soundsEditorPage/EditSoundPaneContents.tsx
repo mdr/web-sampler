@@ -17,7 +17,7 @@ import {
 import { useSound, useSoundActions } from '../../sounds/soundHooks.ts'
 import { getDisplayName, SoundId } from '../../types/Sound.ts'
 import { fireAndForget } from '../../utils/utils.ts'
-import { AudioSection } from './AudioSection.tsx'
+import { AudioSection } from './audioSection/AudioSection.tsx'
 import { DeleteButton } from './DeleteButton.tsx'
 import { useNavigate } from 'react-router-dom'
 import { Pcm } from '../../utils/types/brandedTypes.ts'

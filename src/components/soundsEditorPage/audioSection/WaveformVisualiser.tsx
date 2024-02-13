@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { Pixels, Seconds } from '../../utils/types/brandedTypes.ts'
-import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
-import { SoundAudio } from '../../types/Sound.ts'
+import { Pixels, Seconds } from '../../../utils/types/brandedTypes.ts'
+import { EditSoundPaneTestIds } from '../EditSoundPaneTestIds.ts'
+import { SoundAudio } from '../../../types/Sound.ts'
 import clsx from 'clsx'
-import { Option } from '../../utils/types/Option.ts'
+import { Option } from '../../../utils/types/Option.ts'
 
 interface WaveformVisualiserProps {
   audio: SoundAudio

@@ -1,19 +1,19 @@
-import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
+import { EditSoundPaneTestIds } from '../EditSoundPaneTestIds.ts'
 import { WaveformVisualiser } from './WaveformVisualiser.tsx'
 import { useEffect } from 'react'
-import { AudioBufferUtils } from '../../audioRecorder/AudioBufferUtils.ts'
-import { useAudioContext } from '../../audioRecorder/AudioContextProvider.ts'
-import { Seconds, Url } from '../../utils/types/brandedTypes.ts'
+import { AudioBufferUtils } from '../../../audioRecorder/AudioBufferUtils.ts'
+import { useAudioContext } from '../../../audioRecorder/AudioContextProvider.ts'
+import { Seconds, Url } from '../../../utils/types/brandedTypes.ts'
 import { mdiPause, mdiPlay } from '@mdi/js'
-import { unawaited } from '../../utils/utils.ts'
+import { unawaited } from '../../../utils/utils.ts'
 import {
   useAudioPlayerActions,
   useAudioPlayerCurrentTimeAndDurationRaf,
   useAudioPlayerIsPlaying,
-} from '../../audioPlayer/audioPlayerHooks.ts'
-import { SoundAudio, SoundId } from '../../types/Sound.ts'
-import { useSoundActions } from '../../sounds/soundHooks.ts'
-import { Button } from '../shared/Button.tsx'
+} from '../../../audioPlayer/audioPlayerHooks.ts'
+import { SoundAudio, SoundId } from '../../../types/Sound.ts'
+import { useSoundActions } from '../../../sounds/soundHooks.ts'
+import { Button } from '../../shared/Button.tsx'
 
 export interface AudioSectionProps {
   soundId: SoundId
