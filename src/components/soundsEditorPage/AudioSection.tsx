@@ -4,9 +4,7 @@ import { useEffect } from 'react'
 import { AudioBufferUtils } from '../../audioRecorder/AudioBufferUtils.ts'
 import { useAudioContext } from '../../audioRecorder/AudioContextProvider.ts'
 import { Seconds, Url } from '../../utils/types/brandedTypes.ts'
-import Icon from '@mdi/react'
 import { mdiPause, mdiPlay } from '@mdi/js'
-import { Button } from 'react-aria-components'
 import { unawaited } from '../../utils/utils.ts'
 import {
   useAudioPlayerActions,
@@ -15,6 +13,7 @@ import {
 } from '../../audioPlayer/audioPlayerHooks.ts'
 import { SoundAudio, SoundId } from '../../types/Sound.ts'
 import { useSoundActions } from '../../sounds/soundHooks.ts'
+import { Button } from '../shared/Button.tsx'
 
 export interface AudioSectionProps {
   soundId: SoundId
@@ -84,13 +83,14 @@ export const AudioSection = ({ soundId, audio }: AudioSectionProps) => {
         onStartTimeChange={handleStartTimeChange}
         onFinishTimeChange={handleFinishTimeChange}
       />
-      <Button
-        onPress={togglePlayPause}
-        className="mt-4 flex items-center justify-center rounded-md bg-blue-500 p-2 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-        data-testid={isPlaying ? EditSoundPaneTestIds.pauseButton : EditSoundPaneTestIds.playButton}
-      >
-        <Icon path={isPlaying ? mdiPause : mdiPlay} size={1} />
-      </Button>
+      <div className="mt-4">
+        <Button
+          testId={isPlaying ? EditSoundPaneTestIds.pauseButton : EditSoundPaneTestIds.playButton}
+          icon={isPlaying ? mdiPause : mdiPlay}
+          iconOnlyAccessibilityLabel={isPlaying ? 'Pause' : 'Play'}
+          onPress={togglePlayPause}
+        />
+      </div>
     </div>
   )
 }

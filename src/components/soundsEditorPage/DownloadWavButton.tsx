@@ -1,13 +1,12 @@
-import Icon from '@mdi/react'
 import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
 import { mdiDownload } from '@mdi/js'
-import { Button } from 'react-aria-components'
 import { getDisplayName, Sound, SoundAudio } from '../../types/Sound.ts'
 import { AudioBufferUtils } from '../../audioRecorder/AudioBufferUtils.ts'
 import { useAudioContext } from '../../audioRecorder/AudioContextProvider.ts'
 import { useDownloadFile } from 'react-downloadfile-hook'
 import { useMemo } from 'react'
 import { Pcm, Seconds } from '../../utils/types/brandedTypes.ts'
+import { Button } from '../shared/Button.tsx'
 
 interface DownloadWavButtonProps {
   sound: Sound
@@ -36,12 +35,10 @@ export const DownloadWavButton = ({ sound, audio }: DownloadWavButtonProps) => {
   })
   return (
     <Button
-      data-testid={EditSoundPaneTestIds.downloadWavButton}
-      className="flex items-center justify-center rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:ring-opacity-50 active:bg-blue-800"
+      testId={EditSoundPaneTestIds.downloadWavButton}
+      icon={mdiDownload}
+      label="Download WAV"
       onPress={downloadFile}
-    >
-      <Icon className="mr-2 h-4 w-4" path={mdiDownload} size={1} />
-      Download WAV
-    </Button>
+    />
   )
 }
