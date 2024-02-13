@@ -87,7 +87,8 @@ export const AudioSection = ({ soundId, audio }: AudioSectionProps) => {
         <Button
           testId={isPlaying ? EditSoundPaneTestIds.pauseButton : EditSoundPaneTestIds.playButton}
           icon={isPlaying ? mdiPause : mdiPlay}
-          iconOnlyAccessibilityLabel={isPlaying ? 'Pause' : 'Play'}
+          iconOnly
+          label={isPlaying ? 'Pause' : 'Play'}
           onPress={togglePlayPause}
         />
       </div>
