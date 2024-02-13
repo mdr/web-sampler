@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { Seconds } from '../../utils/types/brandedTypes.ts'
+import { Pixels, Seconds } from '../../utils/types/brandedTypes.ts'
 import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
 import { SoundAudio } from '../../types/Sound.ts'
 import clsx from 'clsx'
@@ -22,7 +22,9 @@ const getCanvasRenderingContext2D = (canvas: HTMLCanvasElement): CanvasRendering
   return ctx
 }
 
-const START_FINISH_TIME_INTERACTION_TOLERANCE_PIXELS = 5
+const START_FINISH_TIME_INTERACTION_TOLERANCE = Pixels(5)
+
+const HANDLE_RADIUS = Pixels(5)
 
 export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
   audio,
@@ -53,7 +55,7 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
     const step = Math.ceil(pcm.length / width)
     const amp = height / 2
 
-    // Default grey background
+    // Inactive grey background
     ctx.clearRect(0, 0, width, height)
     ctx.fillStyle = '#f0f0f0'
     ctx.fillRect(0, 0, width, height)
@@ -72,7 +74,6 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
     ctx.moveTo(0, amp)
     ctx.lineTo(width, amp)
     ctx.stroke()
-
     // Draw waveform
     ctx.lineWidth = 1
     ctx.strokeStyle = '#3b82f6'
@@ -101,8 +102,6 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
       ctx.lineTo(x, height)
       ctx.stroke()
     }
-
-    const HANDLE_RADIUS = 5
 
     // Start line
     ctx.strokeStyle = '#000000'
@@ -184,9 +183,9 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
       const xStart = (displayStartTime / audioDuration) * canvas.width
       const xFinish = (displayFinishTime / audioDuration) * canvas.width
 
-      if (Math.abs(x - xStart) < START_FINISH_TIME_INTERACTION_TOLERANCE_PIXELS) {
+      if (Math.abs(x - xStart) < START_FINISH_TIME_INTERACTION_TOLERANCE) {
         setDraggingStartTime(displayStartTime)
-      } else if (Math.abs(x - xFinish) < START_FINISH_TIME_INTERACTION_TOLERANCE_PIXELS) {
+      } else if (Math.abs(x - xFinish) < START_FINISH_TIME_INTERACTION_TOLERANCE) {
         setDraggingFinishTime(displayFinishTime)
       }
     },
@@ -214,8 +213,8 @@ export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
       } else {
         const xStart = (displayStartTime / audioDuration) * canvas.width
         const xFinish = (displayFinishTime / audioDuration) * canvas.width
-        setIsHoveringStart(Math.abs(x - xStart) < START_FINISH_TIME_INTERACTION_TOLERANCE_PIXELS)
-        setIsHoveringFinish(Math.abs(x - xFinish) < START_FINISH_TIME_INTERACTION_TOLERANCE_PIXELS)
+        setIsHoveringStart(Math.abs(x - xStart) < START_FINISH_TIME_INTERACTION_TOLERANCE)
+        setIsHoveringFinish(Math.abs(x - xFinish) < START_FINISH_TIME_INTERACTION_TOLERANCE)
       }
     },
     [draggingStartTime, draggingFinishTime, audioDuration, displayFinishTime, displayStartTime],
