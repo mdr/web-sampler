@@ -2581,13 +2581,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/async-lock@npm:^1.4.2":
-  version: 1.4.2
-  resolution: "@types/async-lock@npm:1.4.2"
-  checksum: c40b68b746a6f0272539546c6765c08a1cb6f9df9141e6180eacde9310859db3f55d24fc90dd6cba7a6187d88b922c7d59b4734fe14cf31850d5dcf957069007
-  languageName: node
-  linkType: hard
-
 "@types/audiobuffer-to-wav@npm:^1.0.4":
   version: 1.0.4
   resolution: "@types/audiobuffer-to-wav@npm:1.0.4"
@@ -3135,13 +3128,6 @@ __metadata:
   version: 1.1.0
   resolution: "assertion-error@npm:1.1.0"
   checksum: 25456b2aa333250f01143968e02e4884a34588a8538fbbf65c91a637f1dbfb8069249133cd2f4e530f10f624d206a664e7df30207830b659e9f5298b00a4099b
-  languageName: node
-  linkType: hard
-
-"async-lock@npm:^1.4.1":
-  version: 1.4.1
-  resolution: "async-lock@npm:1.4.1"
-  checksum: f696991c7d894af1dc91abc81cc4f14b3785190a35afb1646d8ab91138238d55cabd83bfdd56c42663a008d72b3dc39493ff83797e550effc577d1ccbde254af
   languageName: node
   linkType: hard
 
@@ -7397,7 +7383,6 @@ __metadata:
     "@testing-library/react": "npm:^14.2.1"
     "@testing-library/react-hooks": "npm:^8.0.1"
     "@testing-library/user-event": "npm:^14.5.2"
-    "@types/async-lock": "npm:^1.4.2"
     "@types/audiobuffer-to-wav": "npm:^1.0.4"
     "@types/lodash": "npm:^4.14.202"
     "@types/luxon": "npm:^3.4.2"
@@ -7409,7 +7394,6 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^6.21.0"
     "@typescript-eslint/parser": "npm:^6.21.0"
     "@vitejs/plugin-react": "npm:^4.2.1"
-    async-lock: "npm:^1.4.1"
     audiobuffer-to-wav: "npm:^1.0.0"
     autoprefixer: "npm:^10.4.17"
     beautiful-react-hooks: "npm:^5.0.1"
