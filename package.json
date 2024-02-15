@@ -20,7 +20,7 @@
     "beautiful-react-hooks": "^5.0.1",
     "clsx": "^2.1.0",
     "dexie": "^3.2.5",
-    "effect": "^2.3.3",
+    "effect": "^2.3.6",
     "immer": "^10.0.3",
     "lodash": "^4.17.21",
     "luxon": "^3.4.4",
