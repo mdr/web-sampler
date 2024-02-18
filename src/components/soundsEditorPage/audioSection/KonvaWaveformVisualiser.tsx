@@ -23,7 +23,7 @@ export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
 }) => {
   const [ref, { width }] = useMeasure<HTMLDivElement>()
 
-  const height = 300
+  const height = Pixels(300)
   const xStart = (startTime / audioDuration) * width
   const xFinish = (finishTime / audioDuration) * width
   const middleY = height / 2

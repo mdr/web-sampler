@@ -80,9 +80,9 @@ export const AudioSection = ({ soundId, audio }: AudioSectionProps) => {
       {useNew && (
         <KonvaWaveformVisualiser
           startTime={Seconds(1)}
-          currentPosition={Seconds(2.6)}
+          currentPosition={currentPosition}
           finishTime={Seconds(3)}
-          audioDuration={Seconds(5)}
+          audioDuration={audioDuration}
           pcm={audio.pcm}
         />
       )}
