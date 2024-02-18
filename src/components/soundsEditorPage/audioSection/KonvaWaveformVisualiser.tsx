@@ -22,20 +22,6 @@ export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
   pcm,
 }) => {
   const [ref, { width }] = useMeasure<HTMLDivElement>()
-  // console.log({ width })
-  // const ref = useRef<HTMLDivElement>(null)
-  // const [width, setWidth] = useState(0)
-  // useEffect(() => {
-  //   const onResize = () => {
-  //     const div = ref.current ?? undefined
-  //     if (div !== undefined) {
-  //       setWidth(div.clientWidth)
-  //     }
-  //   }
-  //   onResize()
-  //   window.addEventListener('resize', onResize)
-  //   return () => window.removeEventListener('resize', onResize)
-  // }, [])
 
   const height = 300
   const xStart = (startTime / audioDuration) * width

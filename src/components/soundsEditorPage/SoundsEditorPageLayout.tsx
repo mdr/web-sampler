@@ -13,7 +13,7 @@ export const SoundsEditorPageLayout = ({ children }: SoundSidebarPageLayoutProps
       <div className="w-96 flex-none">
         <SoundsSidebar />
       </div>
-      <div className="flex-grow border-l border-gray-200">{children}</div>
+      <div className="flex-grow overflow-x-auto border-l border-gray-200">{children}</div>
     </div>
   </div>
 )
