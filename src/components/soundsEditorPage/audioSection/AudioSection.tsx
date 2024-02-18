@@ -79,11 +79,12 @@ export const AudioSection = ({ soundId, audio }: AudioSectionProps) => {
     <div className="flex flex-col items-center">
       {useNew && (
         <KonvaWaveformVisualiser
-          startTime={Seconds(1)}
+          startTime={startTime}
           currentPosition={currentPosition}
-          finishTime={Seconds(3)}
+          finishTime={finishTime}
           audioDuration={audioDuration}
           pcm={audio.pcm}
+          onStartTimeChanged={handleStartTimeChange}
         />
       )}
       {!useNew && (
