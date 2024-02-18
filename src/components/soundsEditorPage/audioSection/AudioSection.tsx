@@ -14,6 +14,9 @@ import {
 import { SoundAudio, SoundId } from '../../../types/Sound.ts'
 import { useSoundActions } from '../../../sounds/soundHooks.ts'
 import { Button } from '../../shared/Button.tsx'
+import { KonvaWaveformVisualiser } from './KonvaWaveformVisualiser.tsx'
+
+const useNew = true
 
 export interface AudioSectionProps {
   soundId: SoundId
@@ -74,15 +77,26 @@ export const AudioSection = ({ soundId, audio }: AudioSectionProps) => {
 
   return (
     <div className="flex flex-col items-center">
-      <WaveformVisualiser
-        key={soundId}
-        audio={audio}
-        currentPosition={currentPosition}
-        audioDuration={audioDuration}
-        onPositionChange={handlePositionChange}
-        onStartTimeChange={handleStartTimeChange}
-        onFinishTimeChange={handleFinishTimeChange}
-      />
+      {useNew && (
+        <KonvaWaveformVisualiser
+          startTime={Seconds(1)}
+          currentPosition={Seconds(2.6)}
+          finishTime={Seconds(3)}
+          audioDuration={Seconds(5)}
+          pcm={audio.pcm}
+        />
+      )}
+      {!useNew && (
+        <WaveformVisualiser
+          key={soundId}
+          audio={audio}
+          currentPosition={currentPosition}
+          audioDuration={audioDuration}
+          onPositionChange={handlePositionChange}
+          onStartTimeChange={handleStartTimeChange}
+          onFinishTimeChange={handleFinishTimeChange}
+        />
+      )}
       <div className="mt-4">
         <Button
           testId={isPlaying ? EditSoundPaneTestIds.pauseButton : EditSoundPaneTestIds.playButton}
