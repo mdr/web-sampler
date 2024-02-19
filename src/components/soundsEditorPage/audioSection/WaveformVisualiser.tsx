@@ -1,4 +1,4 @@
-import { Layer, Line, Rect, Shape, Stage } from 'react-konva'
+import { Layer, Line, Rect, Stage } from 'react-konva'
 import { Pcm, Pixels, Seconds } from '../../../utils/types/brandedTypes.ts'
 import { FC, useState } from 'react'
 import { useMeasure } from 'react-use'
@@ -7,7 +7,13 @@ import { CANVAS_HEIGHT } from './waveformConstants.ts'
 import Konva from 'konva'
 import { Option } from '../../../utils/types/Option.ts'
 import { EditSoundPaneTestIds } from '../EditSoundPaneTestIds.ts'
+import { Waveform } from './Waveform.tsx'
 import KonvaEventObject = Konva.KonvaEventObject
+
+export interface WaveformProps {
+  pcm: Pcm
+  width: Pixels
+}
 
 export interface WaveformVisualiserProps {
   readonly pcm: Pcm
@@ -57,37 +63,14 @@ export const WaveformVisualiser: FC<WaveformVisualiserProps> = ({
       <Stage width={width} height={CANVAS_HEIGHT} onClick={handleClick}>
         {audioDuration > 0 && width > 0 && (
           <Layer>
-            {/* Inactive background */}
+            {/* Active / inactive background */}
             <Rect width={width} height={CANVAS_HEIGHT} fill="#f0f0f0" />
-
-            {/* Active region */}
             <Rect x={activeXStart} y={0} width={activeWidth} height={CANVAS_HEIGHT} fill="#fff" />
 
             {/* Horizontal line at 0 amplitude */}
             <Line points={[0, middleY, width, middleY]} stroke="#000" strokeWidth={1} />
 
-            {/* Waveform */}
-            <Shape
-              sceneFunc={(context) => {
-                const step = Math.ceil(pcm.length / width)
-                const amp = CANVAS_HEIGHT / 2
-                context.beginPath()
-                context.lineWidth = 1
-                context.strokeStyle = '#3b82f6'
-                for (let i = 0; i < width; i++) {
-                  let min = 1.0
-                  let max = -1.0
-                  for (let j = 0; j < step; j++) {
-                    const datum = pcm[i * step + j]
-                    if (datum < min) min = datum
-                    if (datum > max) max = datum
-                  }
-                  context.moveTo(i, (1 + min) * amp)
-                  context.lineTo(i, (1 + max) * amp)
-                }
-                context.stroke()
-              }}
-            />
+            <Waveform pcm={pcm} width={width} />
 
             {/* Current position line */}
             <Line
