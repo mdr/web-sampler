@@ -1,15 +1,15 @@
 import { TestId } from '../../utils/types/brandedTypes.ts'
 
 export const EditSoundPaneTestIds = {
-  soundNameInput: TestId('SoundsEditorPage.soundNameInput'),
-  captureAudioButton: TestId('SoundsEditorPage.captureAudioButton'),
-  downloadWavButton: TestId('SoundsEditorPage.downloadWavButton'),
-  stopButton: TestId('SoundsEditorPage.stopButton'),
-  deleteButton: TestId('SoundsEditorPage.deleteButton'),
-  volumeMeter: TestId('SoundsEditorPage.volumeMeter'),
-  playButton: TestId('SoundsEditorPage.playButton'),
-  pauseButton: TestId('SoundsEditorPage.pauseButton'),
-  waveformCanvas: TestId('SoundsEditorPage.waveformCanvas'),
+  soundNameInput: TestId('EditSoundPane.soundNameInput'),
+  captureAudioButton: TestId('EditSoundPane.captureAudioButton'),
+  downloadWavButton: TestId('EditSoundPane.downloadWavButton'),
+  stopButton: TestId('EditSoundPane.stopButton'),
+  deleteButton: TestId('EditSoundPane.deleteButton'),
+  volumeMeter: TestId('EditSoundPane.volumeMeter'),
+  playButton: TestId('EditSoundPane.playButton'),
+  pauseButton: TestId('EditSoundPane.pauseButton'),
+  waveformCanvas: TestId('EditSoundPane.waveformCanvas'),
 }
 
 export const NoSoundsMessageTestIds = {

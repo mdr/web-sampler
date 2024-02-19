@@ -6,9 +6,10 @@ import { DraggableTimeBoundary } from './DraggableTimeBoundary.tsx'
 import { CANVAS_HEIGHT } from './waveformConstants.ts'
 import Konva from 'konva'
 import { Option } from '../../../utils/types/Option.ts'
+import { EditSoundPaneTestIds } from '../EditSoundPaneTestIds.ts'
 import KonvaEventObject = Konva.KonvaEventObject
 
-export interface KonvaWaveformVisualiserProps {
+export interface WaveformVisualiserProps {
   readonly pcm: Pcm
   startTime: Seconds
   finishTime: Seconds
@@ -22,7 +23,7 @@ export interface KonvaWaveformVisualiserProps {
   onFinishTimeChanged(finishTime: Seconds): void
 }
 
-export const WaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
+export const WaveformVisualiser: FC<WaveformVisualiserProps> = ({
   startTime,
   finishTime,
   currentPosition,
@@ -52,7 +53,7 @@ export const WaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
   const activeWidth = activeXFinish - activeXStart
   const middleY = CANVAS_HEIGHT / 2
   return (
-    <div ref={ref} className="w-full border-2 border-gray-200">
+    <div ref={ref} className="w-full border-2 border-gray-200" data-testid={EditSoundPaneTestIds.waveformCanvas}>
       <Stage width={width} height={CANVAS_HEIGHT} onClick={handleClick}>
         {audioDuration > 0 && width > 0 && (
           <Layer>
