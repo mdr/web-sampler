@@ -39,7 +39,7 @@ export const Button = ({
       data-testid={testId}
       aria-label={iconOnly ? label : undefined}
       className={clsx(
-        'flex rounded py-2 text-white focus:outline-none focus:ring-2',
+        'flex whitespace-nowrap rounded py-2 text-white focus:outline-none focus:ring-2',
         variant === ButtonVariant.PRIMARY
           ? 'bg-blue-500 hover:bg-blue-700 focus:ring-blue-300 active:bg-blue-800'
           : 'bg-red-500 hover:bg-red-700 focus:ring-red-300 active:bg-red-800',

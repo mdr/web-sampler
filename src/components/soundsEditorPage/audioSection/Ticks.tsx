@@ -8,11 +8,13 @@ const MINOR_TICK_HEIGHT = Pixels(5)
 
 export interface TickProps {
   audioDuration: Seconds
+  includeSecondLabels: boolean
+  includeMillisecondTicks: boolean
 
   toPixels(seconds: Seconds): number
 }
 
-export const Ticks = ({ audioDuration, toPixels }: TickProps) => {
+export const Ticks = ({ audioDuration, includeSecondLabels, includeMillisecondTicks, toPixels }: TickProps) => {
   const majorTicks = []
   const minorTicks = []
 
@@ -28,30 +30,36 @@ export const Ticks = ({ audioDuration, toPixels }: TickProps) => {
         stroke="#000"
         strokeWidth={1}
       />,
-      <Text
-        key={`major-label-${i}`}
-        x={x - (i >= 10 ? 7 : 3.2)}
-        y={tickStartY - MAJOR_TICK_HEIGHT - TICK_LABEL_TEXT_OFFSET}
-        text={`${i}`}
-        fontSize={12}
-        fill="#000"
-      />,
     )
-  }
-
-  // Minor ticks every 0.1 seconds
-  for (let i = 0; i <= audioDuration * 10; i++) {
-    const x = toPixels(Seconds(i / 10))
-    // Avoid placing a minor tick where a major tick exists
-    if (i % 10 !== 0) {
-      minorTicks.push(
-        <Line
-          key={`minor-${i}`}
-          points={[x, tickStartY - MINOR_TICK_HEIGHT, x, tickStartY]}
-          stroke="#000"
-          strokeWidth={1}
+    if (includeSecondLabels) {
+      majorTicks.push(
+        <Text
+          key={`major-label-${i}`}
+          x={x - (i >= 10 ? 7 : 3.2)}
+          y={tickStartY - MAJOR_TICK_HEIGHT - TICK_LABEL_TEXT_OFFSET}
+          text={`${i}`}
+          fontSize={12}
+          fill="#000"
         />,
       )
+    }
+  }
+
+  if (includeMillisecondTicks) {
+    // Minor ticks every 0.1 seconds
+    for (let i = 0; i <= audioDuration * 10; i++) {
+      const x = toPixels(Seconds(i / 10))
+      // Avoid placing a minor tick where a major tick exists
+      if (i % 10 !== 0) {
+        minorTicks.push(
+          <Line
+            key={`minor-${i}`}
+            points={[x, tickStartY - MINOR_TICK_HEIGHT, x, tickStartY]}
+            stroke="#000"
+            strokeWidth={1}
+          />,
+        )
+      }
     }
   }
 

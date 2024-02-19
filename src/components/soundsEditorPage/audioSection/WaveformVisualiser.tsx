@@ -78,7 +78,12 @@ export const WaveformVisualiser: FC<WaveformVisualiserProps> = ({
             {/* Horizontal line at 0 amplitude */}
             <Line points={[0, middleY, width, middleY]} stroke="#000" strokeWidth={1} />
 
-            <Ticks audioDuration={audioDuration} toPixels={toPixels} />
+            <Ticks
+              audioDuration={audioDuration}
+              includeMillisecondTicks={width > 600}
+              includeSecondLabels={width > 300}
+              toPixels={toPixels}
+            />
 
             <Waveform pcm={pcm} width={width} />
 
