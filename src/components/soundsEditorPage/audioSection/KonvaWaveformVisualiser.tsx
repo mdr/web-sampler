@@ -31,15 +31,6 @@ export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
   const [tempStartTime, setTempStartTime] = useState(startTime)
   const [tempFinishTime, setTempFinishTime] = useState(finishTime)
 
-  // Render dummy waveform if audioDuration or width is 0
-  if (audioDuration === 0 || width === 0) {
-    return (
-      <div ref={ref} className="w-full border-2 border-gray-200">
-        <Stage width={width} height={CANVAS_HEIGHT}></Stage>
-      </div>
-    )
-  }
-
   const activeXStart = (tempStartTime / audioDuration) * width
   const activeXFinish = (tempFinishTime / audioDuration) * width
   const activeWidth = activeXFinish - activeXStart
@@ -49,67 +40,69 @@ export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
   return (
     <div ref={ref} className="w-full border-2 border-gray-200">
       <Stage width={width} height={CANVAS_HEIGHT}>
-        <Layer>
-          {/* Inactive background */}
-          <Rect width={width} height={CANVAS_HEIGHT} fill="#f0f0f0" />
+        {audioDuration > 0 && width > 0 && (
+          <Layer>
+            {/* Inactive background */}
+            <Rect width={width} height={CANVAS_HEIGHT} fill="#f0f0f0" />
 
-          {/* Active region */}
-          <Rect x={activeXStart} y={0} width={activeWidth} height={CANVAS_HEIGHT} fill="#fff" />
+            {/* Active region */}
+            <Rect x={activeXStart} y={0} width={activeWidth} height={CANVAS_HEIGHT} fill="#fff" />
 
-          {/* Horizontal line at 0 amplitude */}
-          <Line points={[0, middleY, width, middleY]} stroke="#000" strokeWidth={1} />
+            {/* Horizontal line at 0 amplitude */}
+            <Line points={[0, middleY, width, middleY]} stroke="#000" strokeWidth={1} />
 
-          {/* Waveform */}
-          <Shape
-            sceneFunc={(context) => {
-              context.beginPath()
-              context.lineWidth = 1
-              context.strokeStyle = '#3b82f6'
-              for (let i = 0; i < width; i++) {
-                let min = 1.0
-                let max = -1.0
-                for (let j = 0; j < step; j++) {
-                  const datum = pcm[i * step + j]
-                  if (datum < min) min = datum
-                  if (datum > max) max = datum
+            {/* Waveform */}
+            <Shape
+              sceneFunc={(context) => {
+                context.beginPath()
+                context.lineWidth = 1
+                context.strokeStyle = '#3b82f6'
+                for (let i = 0; i < width; i++) {
+                  let min = 1.0
+                  let max = -1.0
+                  for (let j = 0; j < step; j++) {
+                    const datum = pcm[i * step + j]
+                    if (datum < min) min = datum
+                    if (datum > max) max = datum
+                  }
+                  context.moveTo(i, (1 + min) * amp)
+                  context.lineTo(i, (1 + max) * amp)
                 }
-                context.moveTo(i, (1 + min) * amp)
-                context.lineTo(i, (1 + max) * amp)
-              }
-              context.stroke()
-            }}
-          />
+                context.stroke()
+              }}
+            />
 
-          {/* Current position line */}
-          <Line
-            points={[
-              (currentPosition / audioDuration) * width,
-              0,
-              (currentPosition / audioDuration) * width,
-              CANVAS_HEIGHT,
-            ]}
-            stroke="#ff0000"
-            strokeWidth={2}
-          />
+            {/* Current position line */}
+            <Line
+              points={[
+                (currentPosition / audioDuration) * width,
+                0,
+                (currentPosition / audioDuration) * width,
+                CANVAS_HEIGHT,
+              ]}
+              stroke="#ff0000"
+              strokeWidth={2}
+            />
 
-          {/* Start line */}
-          <DraggableTimeBoundary
-            onTimeChanged={onStartTimeChanged}
-            onTimeChangedTemporarily={setTempStartTime}
-            time={startTime}
-            audioDuration={audioDuration}
-            width={width}
-          />
+            {/* Start line */}
+            <DraggableTimeBoundary
+              onTimeChanged={onStartTimeChanged}
+              onTimeChangedTemporarily={setTempStartTime}
+              time={startTime}
+              audioDuration={audioDuration}
+              width={width}
+            />
 
-          {/* Finish line */}
-          <DraggableTimeBoundary
-            onTimeChanged={onFinishTimeChanged}
-            onTimeChangedTemporarily={setTempFinishTime}
-            time={finishTime}
-            audioDuration={audioDuration}
-            width={width}
-          />
-        </Layer>
+            {/* Finish line */}
+            <DraggableTimeBoundary
+              onTimeChanged={onFinishTimeChanged}
+              onTimeChangedTemporarily={setTempFinishTime}
+              time={finishTime}
+              audioDuration={audioDuration}
+              width={width}
+            />
+          </Layer>
+        )}
       </Stage>
     </div>
   )
