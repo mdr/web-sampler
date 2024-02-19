@@ -1,59 +1,49 @@
-import { Pixels, Seconds } from '../../../utils/types/brandedTypes.ts'
+import { Pixels } from '../../../utils/types/brandedTypes.ts'
 import { useCallback } from 'react'
 import Konva from 'konva'
 import { Group, Line, Rect, RegularPolygon } from 'react-konva'
 import { CANVAS_HEIGHT } from './waveformConstants.ts'
-import { Option } from '../../../utils/types/Option.ts'
 import { Vector2d } from 'konva/lib/types'
+import { Option } from '../../../utils/types/Option.ts'
 
 const HANDLE_RADIUS = Pixels(10)
 const DRAG_TARGET_WIDTH = Pixels(16)
 
 export interface DraggableTimeBoundaryProps {
-  time: Seconds
-  audioDuration: Seconds
-  width: Pixels
+  x: Pixels
   dragMin: Pixels
   dragMax: Pixels
 
-  onTimeChanged(time: Seconds): void
+  onPositionChanged(x: Pixels): void
 
-  onTimeChangedTemporarily(time: Option<Seconds>): void
+  onPositionChangedTemporarily(x: Option<Pixels>): void
 }
 
 export const DraggableTimeBoundary = ({
-  time,
-  audioDuration,
-  width,
+  x,
   dragMin,
   dragMax,
-  onTimeChanged,
-  onTimeChangedTemporarily,
+  onPositionChanged,
+  onPositionChangedTemporarily,
 }: DraggableTimeBoundaryProps) => {
-  const toSeconds = useCallback((x: Pixels): Seconds => Seconds((x / width) * audioDuration), [audioDuration, width])
-  const toPixels = useCallback(
-    (seconds: Seconds): Pixels => Pixels((seconds / audioDuration) * width),
-    [audioDuration, width],
-  )
   const handleDragMove = useCallback(
     (e: Konva.KonvaEventObject<DragEvent>) => {
       const xOffset = Pixels(e.target.x())
-      const secondsOffset = toSeconds(xOffset)
-      onTimeChangedTemporarily(Seconds(time + secondsOffset))
+      const temporaryX = Pixels(x + xOffset)
+      onPositionChangedTemporarily(temporaryX)
     },
-    [onTimeChangedTemporarily, time, toSeconds],
+    [onPositionChangedTemporarily, x],
   )
 
   const handleDragEnd = useCallback(
     (e: Konva.KonvaEventObject<DragEvent>) => {
       const xOffset = Pixels(e.target.x())
-      const secondsOffset = toSeconds(xOffset)
-      const newStartTime = Seconds(time + secondsOffset)
+      const newX = Pixels(x + xOffset)
       e.target.position({ x: 0, y: 0 }) // Resets the drag translation
-      onTimeChangedTemporarily(undefined)
-      onTimeChanged(newStartTime)
+      onPositionChangedTemporarily(undefined)
+      onPositionChanged(newX)
     },
-    [onTimeChanged, onTimeChangedTemporarily, time, toSeconds],
+    [onPositionChanged, onPositionChangedTemporarily, x],
   )
   const changeCursor = (cursorType: 'grab' | 'default') => (e: Konva.KonvaEventObject<MouseEvent>) => {
     const stage = e.target.getStage() ?? undefined
@@ -69,7 +59,6 @@ export const DraggableTimeBoundary = ({
     return { x: constrainedXOffset, y: 0 }
   }
 
-  const x = toPixels(time)
   return (
     <Group
       draggable

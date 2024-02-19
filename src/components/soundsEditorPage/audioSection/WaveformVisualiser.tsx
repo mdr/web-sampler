@@ -42,8 +42,8 @@ export const WaveformVisualiser: FC<WaveformVisualiserProps> = ({
   const [ref, rect] = useMeasure<HTMLDivElement>()
   const width = Pixels(rect.width)
   // Used while dragging:
-  const [tempStartTime, setTempStartTime] = useState<Option<Seconds>>(undefined)
-  const [tempFinishTime, setTempFinishTime] = useState<Option<Seconds>>(undefined)
+  const [tempStartX, setTempStartX] = useState<Option<Pixels>>(undefined)
+  const [tempFinishX, setTempFinishX] = useState<Option<Pixels>>(undefined)
 
   const toSeconds = useCallback((x: Pixels): Seconds => Seconds((x / width) * audioDuration), [audioDuration, width])
   const toPixels = useCallback(
@@ -60,8 +60,13 @@ export const WaveformVisualiser: FC<WaveformVisualiserProps> = ({
     onPositionChange(newPosition)
   }
 
-  const activeXStart = toPixels(tempStartTime ?? startTime)
-  const activeXFinish = toPixels(tempFinishTime ?? finishTime)
+  const handleStartPositionChanged = (x: Pixels) => onStartTimeChanged(toSeconds(x))
+  const handleStartPositionChangedTemporarily = (x: Option<Pixels>) => setTempStartX(x)
+  const handleFinishTimeChanged = (x: Pixels) => onFinishTimeChanged(toSeconds(x))
+  const handleFinishTimeChangedTemporarily = (x: Option<Pixels>) => setTempFinishX(x)
+
+  const activeXStart = tempStartX ?? toPixels(startTime)
+  const activeXFinish = tempFinishX ?? toPixels(finishTime)
   const activeWidth = activeXFinish - activeXStart
   const middleY = CANVAS_HEIGHT / 2
   return (
@@ -87,22 +92,18 @@ export const WaveformVisualiser: FC<WaveformVisualiserProps> = ({
 
             {/* Start line */}
             <DraggableTimeBoundary
-              onTimeChanged={onStartTimeChanged}
-              onTimeChangedTemporarily={setTempStartTime}
-              time={startTime}
-              audioDuration={audioDuration}
-              width={width}
+              onPositionChanged={handleStartPositionChanged}
+              onPositionChangedTemporarily={handleStartPositionChangedTemporarily}
+              x={toPixels(startTime)}
               dragMin={Pixels(0)}
               dragMax={toPixels(finishTime)}
             />
 
             {/* Finish line */}
             <DraggableTimeBoundary
-              onTimeChanged={onFinishTimeChanged}
-              onTimeChangedTemporarily={setTempFinishTime}
-              time={finishTime}
-              audioDuration={audioDuration}
-              width={width}
+              onPositionChanged={handleFinishTimeChanged}
+              onPositionChangedTemporarily={handleFinishTimeChangedTemporarily}
+              x={toPixels(finishTime)}
               dragMin={toPixels(startTime)}
               dragMax={width}
             />
