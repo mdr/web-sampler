@@ -29,7 +29,6 @@ export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
   onStartTimeChanged,
   onFinishTimeChanged,
 }) => {
-  console.log({ startTime, finishTime, currentPosition, audioDuration })
   const [ref, { width }] = useMeasure<HTMLDivElement>()
   const handleStartDragEnd = useCallback(
     (e: Konva.KonvaEventObject<DragEvent>) => {
@@ -37,7 +36,6 @@ export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
       const secondsOffset = (xOffset / width) * audioDuration
       const newStartTime = Seconds(startTime + secondsOffset)
       e.target.position({ x: 0, y: 0 }) // Resets the drag translation
-      console.log({ newStartTime, secondsOffset, audioDuration, xOffset, width })
       onStartTimeChanged(newStartTime)
     },
     [audioDuration, onStartTimeChanged, startTime, width],
@@ -56,7 +54,7 @@ export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
     [audioDuration, finishTime, onFinishTimeChanged, width],
   )
 
-  //Render dummy waveform if audioDuration or width is 0
+  // Render dummy waveform if audioDuration or width is 0
   if (audioDuration === 0 || width === 0) {
     return (
       <div ref={ref} className="w-full border-2 border-gray-200">
@@ -117,14 +115,42 @@ export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
           />
 
           {/* Start line and handles */}
-          <Group draggable onDragEnd={handleStartDragEnd} dragBoundFunc={({ x }) => ({ x, y: 0 })}>
+          <Group
+            draggable
+            onMouseEnter={(e) => {
+              const stage = e.target.getStage() ?? undefined
+              if (stage === undefined) return
+              stage.container().style.cursor = 'grab'
+            }}
+            onMouseLeave={(e) => {
+              const stage = e.target.getStage() ?? undefined
+              if (stage === undefined) return
+              stage.container().style.cursor = 'default'
+            }}
+            onDragEnd={handleStartDragEnd}
+            dragBoundFunc={({ x }) => ({ x, y: 0 })}
+          >
             <Circle x={xStart} y={HANDLE_RADIUS} radius={HANDLE_RADIUS} fill="#000000" />
             <Circle x={xStart} y={CANVAS_HEIGHT - HANDLE_RADIUS} radius={HANDLE_RADIUS} fill="#000000" />
             <Line points={[xStart, 0, xStart, CANVAS_HEIGHT]} stroke="#000000" strokeWidth={2} />
           </Group>
 
           {/* Finish line and handles */}
-          <Group draggable onDragEnd={handleFinishDragEnd} dragBoundFunc={({ x }) => ({ x, y: 0 })}>
+          <Group
+            draggable
+            onMouseEnter={(e) => {
+              const stage = e.target.getStage() ?? undefined
+              if (stage === undefined) return
+              stage.container().style.cursor = 'grab'
+            }}
+            onMouseLeave={(e) => {
+              const stage = e.target.getStage() ?? undefined
+              if (stage === undefined) return
+              stage.container().style.cursor = 'default'
+            }}
+            onDragEnd={handleFinishDragEnd}
+            dragBoundFunc={({ x }) => ({ x, y: 0 })}
+          >
             <Circle x={xFinish} y={HANDLE_RADIUS} radius={HANDLE_RADIUS} fill="#000000" />
             <Circle x={xFinish} y={CANVAS_HEIGHT - HANDLE_RADIUS} radius={HANDLE_RADIUS} fill="#000000" />
             <Line points={[xFinish, 0, xFinish, CANVAS_HEIGHT]} stroke="#000000" strokeWidth={2} />
