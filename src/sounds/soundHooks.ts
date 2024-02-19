@@ -72,6 +72,8 @@ export interface SoundActions {
 
   setFinishTime(id: SoundId, finishTime: Seconds): void
 
+  cropAudio(id: SoundId): void
+
   undo(): void
 
   redo(): void

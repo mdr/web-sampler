@@ -22,6 +22,7 @@ import { DeleteButton } from './DeleteButton.tsx'
 import { useNavigate } from 'react-router-dom'
 import { Pcm } from '../../utils/types/brandedTypes.ts'
 import { DownloadWavButton } from './DownloadWavButton.tsx'
+import { CropButton } from './CropButton.tsx'
 
 export interface EditSoundPageProps {
   soundId: SoundId
@@ -95,6 +96,7 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPageProps) => {
           <div className="flex space-x-2">
             <CaptureAudioButton onPress={handleCaptureAudioButtonPressed} />
             {sound.audio !== undefined && <DownloadWavButton sound={sound} audio={sound.audio} />}
+            {sound.audio !== undefined && <CropButton soundId={sound.id} />}
           </div>
           {sound.audio !== undefined && <AudioSection soundId={sound.id} audio={sound.audio} />}
         </>

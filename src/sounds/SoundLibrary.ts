@@ -112,6 +112,16 @@ export class SoundLibrary implements SoundActions {
       }
     })
 
+  cropAudio = (id: SoundId) =>
+    this.updateSoundImmer(id, (sound) => {
+      const audio = sound.audio
+      if (audio !== undefined) {
+        audio.pcm = Pcm(audio.pcm.slice(audio.startTime * 48000, audio.finishTime * 48000))
+        audio.startTime = Seconds(0)
+        audio.finishTime = pcmDurationInSeconds(audio.pcm)
+      }
+    })
+
   private updateSound = (id: SoundId, update: (sound: Sound) => Sound): void => {
     this.checkNotLoading()
     const sound = this.findSound(id)
