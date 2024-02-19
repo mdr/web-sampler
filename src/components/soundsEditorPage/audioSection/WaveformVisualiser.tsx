@@ -1,4 +1,4 @@
-import { Layer, Line, Rect, Stage } from 'react-konva'
+import { Layer, Line, Rect, Stage, Text } from 'react-konva'
 import { Pcm, Pixels, Seconds } from '../../../utils/types/brandedTypes.ts'
 import { FC, useCallback, useState } from 'react'
 import { useMeasure } from 'react-use'
@@ -69,6 +69,57 @@ export const WaveformVisualiser: FC<WaveformVisualiserProps> = ({
   const activeXFinish = tempFinishX ?? toPixels(finishTime)
   const activeWidth = activeXFinish - activeXStart
   const middleY = CANVAS_HEIGHT / 2
+
+  const ticks = () => {
+    const majorTicks = []
+    const minorTicks = []
+
+    const tickStartY = CANVAS_HEIGHT
+    const textOffset = 15 // Offset above the major tick to place the text
+
+    // Adjust the heights if you want different sizes for major/minor ticks
+    const majorTickHeight = 10 // Height of major ticks
+    const minorTickHeight = 5 // Height of minor ticks
+
+    // Generate major ticks (every second)
+    for (let i = 0; i <= audioDuration; i++) {
+      const x = toPixels(Seconds(i))
+      majorTicks.push(
+        <Line
+          key={`major-${i}`}
+          points={[x, tickStartY - majorTickHeight, x, tickStartY]}
+          stroke="#000"
+          strokeWidth={1}
+        />,
+        <Text
+          key={`major-label-${i}`}
+          x={x - 3.8} // Adjust x as needed to center the text above the tick
+          y={tickStartY - majorTickHeight - textOffset}
+          text={`${i}`} // The text is the number of seconds
+          fontSize={12} // Adjust font size as needed
+          fill="#000"
+        />,
+      )
+    }
+
+    // Generate minor ticks (every 100ms)
+    for (let i = 0; i <= audioDuration * 10; i++) {
+      const x = toPixels(Seconds(i / 10))
+      // Avoid placing a minor tick where a major tick exists
+      if (i % 10 !== 0) {
+        minorTicks.push(
+          <Line
+            key={`minor-${i}`}
+            points={[x, tickStartY - minorTickHeight, x, tickStartY]}
+            stroke="#000"
+            strokeWidth={1}
+          />,
+        )
+      }
+    }
+
+    return [...majorTicks, ...minorTicks]
+  }
   return (
     <div ref={ref} className="w-full border-2 border-gray-200" data-testid={EditSoundPaneTestIds.waveformCanvas}>
       <Stage width={width} height={CANVAS_HEIGHT} onClick={handleClick}>
@@ -80,6 +131,8 @@ export const WaveformVisualiser: FC<WaveformVisualiserProps> = ({
 
             {/* Horizontal line at 0 amplitude */}
             <Line points={[0, middleY, width, middleY]} stroke="#000" strokeWidth={1} />
+
+            {ticks()}
 
             <Waveform pcm={pcm} width={width} />
 
