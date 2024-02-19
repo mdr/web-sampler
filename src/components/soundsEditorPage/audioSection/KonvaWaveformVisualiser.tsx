@@ -1,6 +1,6 @@
 import { Circle, Group, Layer, Line, Rect, Shape, Stage } from 'react-konva'
 import { Pcm, Pixels, Seconds } from '../../../utils/types/brandedTypes.ts'
-import { FC, useCallback } from 'react'
+import { FC, useCallback, useState } from 'react'
 import { useMeasure } from 'react-use'
 import Konva from 'konva'
 
@@ -30,6 +30,18 @@ export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
   onFinishTimeChanged,
 }) => {
   const [ref, { width }] = useMeasure<HTMLDivElement>()
+  const [tempStartTime, setTempStartTime] = useState(startTime)
+  const [tempFinishTime, setTempFinishTime] = useState(finishTime)
+
+  const handleStartDragMove = useCallback(
+    (e: Konva.KonvaEventObject<DragEvent>) => {
+      const xOffset = e.target.x()
+      const secondsOffset = (xOffset / width) * audioDuration
+      setTempStartTime(Seconds(startTime + secondsOffset))
+    },
+    [audioDuration, startTime, width],
+  )
+
   const handleStartDragEnd = useCallback(
     (e: Konva.KonvaEventObject<DragEvent>) => {
       const xOffset = e.target.x()
@@ -41,14 +53,21 @@ export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
     [audioDuration, onStartTimeChanged, startTime, width],
   )
 
+  const handleFinishDragMove = useCallback(
+    (e: Konva.KonvaEventObject<DragEvent>) => {
+      const xOffset = e.target.x()
+      const secondsOffset = (xOffset / width) * audioDuration
+      setTempFinishTime(Seconds(finishTime + secondsOffset))
+    },
+    [audioDuration, finishTime, width],
+  )
+
   const handleFinishDragEnd = useCallback(
     (e: Konva.KonvaEventObject<DragEvent>) => {
       const xOffset = e.target.x()
       const secondsOffset = (xOffset / width) * audioDuration
       const newFinishTime = Seconds(finishTime + secondsOffset)
       e.target.position({ x: 0, y: 0 }) // Resets the drag translation
-
-      console.log({ newFinishTime, secondsOffset, audioDuration, xOffset, width })
       onFinishTimeChanged(newFinishTime)
     },
     [audioDuration, finishTime, onFinishTimeChanged, width],
@@ -65,6 +84,10 @@ export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
 
   const xStart = (startTime / audioDuration) * width
   const xFinish = (finishTime / audioDuration) * width
+
+  const txStart = (tempStartTime / audioDuration) * width
+  const txFinish = (tempFinishTime / audioDuration) * width
+
   const middleY = CANVAS_HEIGHT / 2
   const step = Math.ceil(pcm.length / width)
   const amp = CANVAS_HEIGHT / 2
@@ -76,7 +99,7 @@ export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
           <Rect width={width} height={CANVAS_HEIGHT} fill="#f0f0f0" />
 
           {/* Active background color between startTime and finishTime */}
-          <Rect x={xStart} y={0} width={xFinish - xStart} height={CANVAS_HEIGHT} fill="#fff" />
+          <Rect x={txStart} y={0} width={txFinish - txStart} height={CANVAS_HEIGHT} fill="#fff" />
 
           {/* Draw horizontal line at 0 amplitude */}
           <Line points={[0, middleY, width, middleY]} stroke="#000" strokeWidth={1} />
@@ -127,6 +150,7 @@ export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
               if (stage === undefined) return
               stage.container().style.cursor = 'default'
             }}
+            onDragMove={handleStartDragMove}
             onDragEnd={handleStartDragEnd}
             dragBoundFunc={({ x }) => ({ x, y: 0 })}
           >
@@ -148,6 +172,7 @@ export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
               if (stage === undefined) return
               stage.container().style.cursor = 'default'
             }}
+            onDragMove={handleFinishDragMove}
             onDragEnd={handleFinishDragEnd}
             dragBoundFunc={({ x }) => ({ x, y: 0 })}
           >
