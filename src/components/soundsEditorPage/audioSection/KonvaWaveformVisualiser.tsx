@@ -3,9 +3,10 @@ import { Pcm, Pixels, Seconds } from '../../../utils/types/brandedTypes.ts'
 import { FC, useCallback } from 'react'
 import { useMeasure } from 'react-use'
 import Konva from 'konva'
-// import { useMeasure } from 'react-use'
 
 const HANDLE_RADIUS = Pixels(5)
+
+const CANVAS_HEIGHT = Pixels(300)
 
 export interface KonvaWaveformVisualiserProps {
   readonly pcm: Pcm
@@ -15,9 +16,9 @@ export interface KonvaWaveformVisualiserProps {
   audioDuration: Seconds
 
   onStartTimeChanged(startTime: Seconds): void
-}
 
-const HEIGHT = Pixels(300)
+  onFinishTimeChanged(finishTime: Seconds): void
+}
 
 export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
   startTime,
@@ -26,41 +27,58 @@ export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
   audioDuration,
   pcm,
   onStartTimeChanged,
+  onFinishTimeChanged,
 }) => {
+  console.log({ startTime, finishTime, currentPosition, audioDuration })
   const [ref, { width }] = useMeasure<HTMLDivElement>()
-
-  const handleDragEnd = useCallback(
+  const handleStartDragEnd = useCallback(
     (e: Konva.KonvaEventObject<DragEvent>) => {
-      const newX = e.target.x()
-      const newDisplayStartTime = Seconds((newX / width) * audioDuration)
-      onStartTimeChanged(newDisplayStartTime)
+      const xOffset = e.target.x()
+      const secondsOffset = (xOffset / width) * audioDuration
+      const newStartTime = Seconds(startTime + secondsOffset)
+      e.target.position({ x: 0, y: 0 }) // Resets the drag translation
+      console.log({ newStartTime, secondsOffset, audioDuration, xOffset, width })
+      onStartTimeChanged(newStartTime)
     },
-    [audioDuration, onStartTimeChanged, width],
+    [audioDuration, onStartTimeChanged, startTime, width],
+  )
+
+  const handleFinishDragEnd = useCallback(
+    (e: Konva.KonvaEventObject<DragEvent>) => {
+      const xOffset = e.target.x()
+      const secondsOffset = (xOffset / width) * audioDuration
+      const newFinishTime = Seconds(finishTime + secondsOffset)
+      e.target.position({ x: 0, y: 0 }) // Resets the drag translation
+
+      console.log({ newFinishTime, secondsOffset, audioDuration, xOffset, width })
+      onFinishTimeChanged(newFinishTime)
+    },
+    [audioDuration, finishTime, onFinishTimeChanged, width],
   )
 
   //Render dummy waveform if audioDuration or width is 0
   if (audioDuration === 0 || width === 0) {
     return (
       <div ref={ref} className="w-full border-2 border-gray-200">
-        <Stage width={width} height={HEIGHT}></Stage>
+        <Stage width={width} height={CANVAS_HEIGHT}></Stage>
       </div>
     )
   }
 
   const xStart = (startTime / audioDuration) * width
   const xFinish = (finishTime / audioDuration) * width
-  const middleY = HEIGHT / 2
+  const middleY = CANVAS_HEIGHT / 2
   const step = Math.ceil(pcm.length / width)
-  const amp = HEIGHT / 2
+  const amp = CANVAS_HEIGHT / 2
   return (
     <div ref={ref} className="w-full border-2 border-gray-200">
-      <Stage width={width} height={HEIGHT}>
+      <Stage width={width} height={CANVAS_HEIGHT}>
         <Layer>
           {/* Inactive grey background */}
-          <Rect width={width} height={HEIGHT} fill="#f0f0f0" />
+          <Rect width={width} height={CANVAS_HEIGHT} fill="#f0f0f0" />
 
           {/* Active background color between startTime and finishTime */}
-          <Rect x={xStart} y={0} width={xFinish - xStart} height={HEIGHT} fill="#fff" />
+          <Rect x={xStart} y={0} width={xFinish - xStart} height={CANVAS_HEIGHT} fill="#fff" />
 
           {/* Draw horizontal line at 0 amplitude */}
           <Line points={[0, middleY, width, middleY]} stroke="#000" strokeWidth={1} />
@@ -88,27 +106,29 @@ export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
 
           {/* Current position line */}
           <Line
-            points={[(currentPosition / audioDuration) * width, 0, (currentPosition / audioDuration) * width, HEIGHT]}
+            points={[
+              (currentPosition / audioDuration) * width,
+              0,
+              (currentPosition / audioDuration) * width,
+              CANVAS_HEIGHT,
+            ]}
             stroke="#ff0000"
             strokeWidth={2}
           />
 
           {/* Start line and handles */}
-          <Group
-            draggable
-            onDragEnd={handleDragEnd}
-            // Optional: Restrict dragging to horizontal movement
-            dragBoundFunc={(pos) => ({ x: pos.x, y: 0 })}
-          >
+          <Group draggable onDragEnd={handleStartDragEnd} dragBoundFunc={({ x }) => ({ x, y: 0 })}>
             <Circle x={xStart} y={HANDLE_RADIUS} radius={HANDLE_RADIUS} fill="#000000" />
-            <Circle x={xStart} y={HEIGHT - HANDLE_RADIUS} radius={HANDLE_RADIUS} fill="#000000" />
-            <Line points={[xStart, 0, xStart, HEIGHT]} stroke="#000000" strokeWidth={2} />
+            <Circle x={xStart} y={CANVAS_HEIGHT - HANDLE_RADIUS} radius={HANDLE_RADIUS} fill="#000000" />
+            <Line points={[xStart, 0, xStart, CANVAS_HEIGHT]} stroke="#000000" strokeWidth={2} />
           </Group>
 
           {/* Finish line and handles */}
-          <Circle x={xFinish} y={HANDLE_RADIUS} radius={HANDLE_RADIUS} fill="#000000" />
-          <Circle x={xFinish} y={HEIGHT - HANDLE_RADIUS} radius={HANDLE_RADIUS} fill="#000000" />
-          <Line points={[xFinish, 0, xFinish, HEIGHT]} stroke="#000000" strokeWidth={2} />
+          <Group draggable onDragEnd={handleFinishDragEnd} dragBoundFunc={({ x }) => ({ x, y: 0 })}>
+            <Circle x={xFinish} y={HANDLE_RADIUS} radius={HANDLE_RADIUS} fill="#000000" />
+            <Circle x={xFinish} y={CANVAS_HEIGHT - HANDLE_RADIUS} radius={HANDLE_RADIUS} fill="#000000" />
+            <Line points={[xFinish, 0, xFinish, CANVAS_HEIGHT]} stroke="#000000" strokeWidth={2} />
+          </Group>
         </Layer>
       </Stage>
     </div>

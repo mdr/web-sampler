@@ -85,6 +85,7 @@ export const AudioSection = ({ soundId, audio }: AudioSectionProps) => {
           audioDuration={audioDuration}
           pcm={audio.pcm}
           onStartTimeChanged={handleStartTimeChange}
+          onFinishTimeChanged={handleFinishTimeChange}
         />
       )}
       {!useNew && (
