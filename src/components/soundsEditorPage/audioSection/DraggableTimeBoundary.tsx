@@ -3,6 +3,7 @@ import { useCallback } from 'react'
 import Konva from 'konva'
 import { Circle, Group, Line } from 'react-konva'
 import { CANVAS_HEIGHT } from './waveformConstants.ts'
+import { Option } from '../../../utils/types/Option.ts'
 
 const HANDLE_RADIUS = Pixels(5)
 
@@ -13,7 +14,7 @@ export interface DraggableTimeBoundaryProps {
 
   onTimeChanged(time: Seconds): void
 
-  onTimeChangedTemporarily(time: Seconds): void
+  onTimeChangedTemporarily(time: Option<Seconds>): void
 }
 
 export const DraggableTimeBoundary = ({
@@ -38,6 +39,7 @@ export const DraggableTimeBoundary = ({
       const secondsOffset = (xOffset / width) * audioDuration
       const newStartTime = Seconds(time + secondsOffset)
       e.target.position({ x: 0, y: 0 }) // Resets the drag translation
+      onTimeChangedTemporarily(undefined)
       onTimeChanged(newStartTime)
     },
     [audioDuration, onTimeChanged, time, width],

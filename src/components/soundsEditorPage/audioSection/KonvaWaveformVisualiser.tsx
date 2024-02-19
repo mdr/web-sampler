@@ -5,6 +5,7 @@ import { useMeasure } from 'react-use'
 import { DraggableTimeBoundary } from './DraggableTimeBoundary.tsx'
 import { CANVAS_HEIGHT } from './waveformConstants.ts'
 import Konva from 'konva'
+import { Option } from '../../../utils/types/Option.ts'
 import KonvaEventObject = Konva.KonvaEventObject
 
 export interface KonvaWaveformVisualiserProps {
@@ -33,22 +34,21 @@ export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
 }) => {
   const [ref, rect] = useMeasure<HTMLDivElement>()
   const width = Pixels(rect.width)
-  const [tempStartTime, setTempStartTime] = useState(startTime)
-  const [tempFinishTime, setTempFinishTime] = useState(finishTime)
+  // Used while dragging:
+  const [tempStartTime, setTempStartTime] = useState<Option<Seconds>>(undefined)
+  const [tempFinishTime, setTempFinishTime] = useState<Option<Seconds>>(undefined)
 
   const handleClick = (e: KonvaEventObject<MouseEvent>) => {
     const stage = e.target.getStage() ?? undefined
     const pointerPosition = stage?.getPointerPosition() ?? undefined
     if (!pointerPosition) return
-    const newPosition = Seconds((pointerPosition.x / width) * audioDuration)
-
-    // const mouseX = e.evt.x
-    // const newPosition = Seconds((mouseX / width) * audioDuration)
-    onPositionChange(newPosition) // Update the position
+    const x = pointerPosition.x
+    const newPosition = Seconds((x / width) * audioDuration)
+    onPositionChange(newPosition)
   }
 
-  const activeXStart = (tempStartTime / audioDuration) * width
-  const activeXFinish = (tempFinishTime / audioDuration) * width
+  const activeXStart = ((tempStartTime ?? startTime) / audioDuration) * width
+  const activeXFinish = ((tempFinishTime ?? finishTime) / audioDuration) * width
   const activeWidth = activeXFinish - activeXStart
   const middleY = CANVAS_HEIGHT / 2
   const step = Math.ceil(pcm.length / width)
