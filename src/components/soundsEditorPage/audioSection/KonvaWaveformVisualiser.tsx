@@ -1,12 +1,9 @@
-import { Circle, Group, Layer, Line, Rect, Shape, Stage } from 'react-konva'
+import { Layer, Line, Rect, Shape, Stage } from 'react-konva'
 import { Pcm, Pixels, Seconds } from '../../../utils/types/brandedTypes.ts'
-import { FC, useCallback, useState } from 'react'
+import { FC, useState } from 'react'
 import { useMeasure } from 'react-use'
-import Konva from 'konva'
-
-const HANDLE_RADIUS = Pixels(5)
-
-const CANVAS_HEIGHT = Pixels(300)
+import { DraggableTimeBoundary } from './DraggableTimeBoundary.tsx'
+import { CANVAS_HEIGHT } from './waveformConstants.ts'
 
 export interface KonvaWaveformVisualiserProps {
   readonly pcm: Pcm
@@ -20,67 +17,6 @@ export interface KonvaWaveformVisualiserProps {
   onFinishTimeChanged(finishTime: Seconds): void
 }
 
-interface DraggableTimeBoundaryProps {
-  time: Seconds
-  audioDuration: Seconds
-  width: Pixels
-
-  onTimeChanged(time: Seconds): void
-
-  onTimeChangedTemporarily(time: Seconds): void
-}
-
-const DraggableTimeBoundary = ({
-  time,
-  audioDuration,
-  width,
-  onTimeChanged,
-  onTimeChangedTemporarily,
-}: DraggableTimeBoundaryProps) => {
-  const handleDragMove = useCallback(
-    (e: Konva.KonvaEventObject<DragEvent>) => {
-      const xOffset = e.target.x()
-      const secondsOffset = (xOffset / width) * audioDuration
-      onTimeChangedTemporarily(Seconds(time + secondsOffset))
-    },
-    [audioDuration, onTimeChangedTemporarily, time, width],
-  )
-
-  const handleDragEnd = useCallback(
-    (e: Konva.KonvaEventObject<DragEvent>) => {
-      const xOffset = e.target.x()
-      const secondsOffset = (xOffset / width) * audioDuration
-      const newStartTime = Seconds(time + secondsOffset)
-      e.target.position({ x: 0, y: 0 }) // Resets the drag translation
-      onTimeChanged(newStartTime)
-    },
-    [audioDuration, onTimeChanged, time, width],
-  )
-  const x = (time / audioDuration) * width
-  return (
-    <Group
-      draggable
-      onMouseEnter={(e) => {
-        const stage = e.target.getStage() ?? undefined
-        if (stage === undefined) return
-        stage.container().style.cursor = 'grab'
-      }}
-      onMouseLeave={(e) => {
-        const stage = e.target.getStage() ?? undefined
-        if (stage === undefined) return
-        stage.container().style.cursor = 'default'
-      }}
-      onDragMove={handleDragMove}
-      onDragEnd={handleDragEnd}
-      dragBoundFunc={({ x }) => ({ x, y: 0 })}
-    >
-      <Circle x={x} y={HANDLE_RADIUS} radius={HANDLE_RADIUS} fill="#000000" />
-      <Circle x={x} y={CANVAS_HEIGHT - HANDLE_RADIUS} radius={HANDLE_RADIUS} fill="#000000" />
-      <Line points={[x, 0, x, CANVAS_HEIGHT]} stroke="#000000" strokeWidth={2} />
-    </Group>
-  )
-}
-
 export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
   startTime,
   finishTime,
@@ -90,7 +26,8 @@ export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
   onStartTimeChanged,
   onFinishTimeChanged,
 }) => {
-  const [ref, { width }] = useMeasure<HTMLDivElement>()
+  const [ref, rect] = useMeasure<HTMLDivElement>()
+  const width = Pixels(rect.width)
   const [tempStartTime, setTempStartTime] = useState(startTime)
   const [tempFinishTime, setTempFinishTime] = useState(finishTime)
 
@@ -103,9 +40,9 @@ export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
     )
   }
 
-  const txStart = (tempStartTime / audioDuration) * width
-  const txFinish = (tempFinishTime / audioDuration) * width
-
+  const activeXStart = (tempStartTime / audioDuration) * width
+  const activeXFinish = (tempFinishTime / audioDuration) * width
+  const activeWidth = activeXFinish - activeXStart
   const middleY = CANVAS_HEIGHT / 2
   const step = Math.ceil(pcm.length / width)
   const amp = CANVAS_HEIGHT / 2
@@ -113,16 +50,16 @@ export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
     <div ref={ref} className="w-full border-2 border-gray-200">
       <Stage width={width} height={CANVAS_HEIGHT}>
         <Layer>
-          {/* Inactive grey background */}
+          {/* Inactive background */}
           <Rect width={width} height={CANVAS_HEIGHT} fill="#f0f0f0" />
 
-          {/* Active background color between startTime and finishTime */}
-          <Rect x={txStart} y={0} width={txFinish - txStart} height={CANVAS_HEIGHT} fill="#fff" />
+          {/* Active region */}
+          <Rect x={activeXStart} y={0} width={activeWidth} height={CANVAS_HEIGHT} fill="#fff" />
 
-          {/* Draw horizontal line at 0 amplitude */}
+          {/* Horizontal line at 0 amplitude */}
           <Line points={[0, middleY, width, middleY]} stroke="#000" strokeWidth={1} />
 
-          {/* Draw waveform */}
+          {/* Waveform */}
           <Shape
             sceneFunc={(context) => {
               context.beginPath()
@@ -155,22 +92,22 @@ export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
             strokeWidth={2}
           />
 
-          {/* Start line and handles */}
+          {/* Start line */}
           <DraggableTimeBoundary
             onTimeChanged={onStartTimeChanged}
             onTimeChangedTemporarily={setTempStartTime}
             time={startTime}
             audioDuration={audioDuration}
-            width={Pixels(width)}
+            width={width}
           />
 
-          {/* Finish line and handles */}
+          {/* Finish line */}
           <DraggableTimeBoundary
             onTimeChanged={onFinishTimeChanged}
             onTimeChangedTemporarily={setTempFinishTime}
             time={finishTime}
             audioDuration={audioDuration}
-            width={Pixels(width)}
+            width={width}
           />
         </Layer>
       </Stage>
