@@ -4,6 +4,8 @@ import { FC, useState } from 'react'
 import { useMeasure } from 'react-use'
 import { DraggableTimeBoundary } from './DraggableTimeBoundary.tsx'
 import { CANVAS_HEIGHT } from './waveformConstants.ts'
+import Konva from 'konva'
+import KonvaEventObject = Konva.KonvaEventObject
 
 export interface KonvaWaveformVisualiserProps {
   readonly pcm: Pcm
@@ -11,6 +13,8 @@ export interface KonvaWaveformVisualiserProps {
   finishTime: Seconds
   currentPosition: Seconds
   audioDuration: Seconds
+
+  onPositionChange: (position: Seconds) => void
 
   onStartTimeChanged(startTime: Seconds): void
 
@@ -23,6 +27,7 @@ export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
   currentPosition,
   audioDuration,
   pcm,
+  onPositionChange,
   onStartTimeChanged,
   onFinishTimeChanged,
 }) => {
@@ -30,6 +35,17 @@ export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
   const width = Pixels(rect.width)
   const [tempStartTime, setTempStartTime] = useState(startTime)
   const [tempFinishTime, setTempFinishTime] = useState(finishTime)
+
+  const handleClick = (e: KonvaEventObject<MouseEvent>) => {
+    const stage = e.target.getStage() ?? undefined
+    const pointerPosition = stage?.getPointerPosition() ?? undefined
+    if (!pointerPosition) return
+    const newPosition = Seconds((pointerPosition.x / width) * audioDuration)
+
+    // const mouseX = e.evt.x
+    // const newPosition = Seconds((mouseX / width) * audioDuration)
+    onPositionChange(newPosition) // Update the position
+  }
 
   const activeXStart = (tempStartTime / audioDuration) * width
   const activeXFinish = (tempFinishTime / audioDuration) * width
@@ -39,7 +55,7 @@ export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
   const amp = CANVAS_HEIGHT / 2
   return (
     <div ref={ref} className="w-full border-2 border-gray-200">
-      <Stage width={width} height={CANVAS_HEIGHT}>
+      <Stage width={width} height={CANVAS_HEIGHT} onClick={handleClick}>
         {audioDuration > 0 && width > 0 && (
           <Layer>
             {/* Inactive background */}
