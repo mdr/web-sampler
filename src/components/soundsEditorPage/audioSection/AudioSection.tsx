@@ -16,7 +16,8 @@ import { Button } from '../../shared/Button.tsx'
 import { WaveformVisualiser } from './WaveformVisualiser.tsx'
 import { useHotkeys } from 'react-hotkeys-hook'
 
-const SEEK_JUMP = Seconds(0.5)
+const BIG_SEEK_JUMP = Seconds(0.5)
+const SMALL_SEEK_JUMP = Seconds(0.1)
 
 export interface AudioSectionProps {
   soundId: SoundId
@@ -65,15 +66,17 @@ export const AudioSection = ({ soundId, audio }: AudioSectionProps) => {
   }
   useHotkeys('space', togglePlayPause, [togglePlayPause])
 
-  const seekBack = () => {
-    audioPlayerActions.seek(Seconds(currentPosition - SEEK_JUMP))
+  const seekBack = (amount: Seconds) => () => {
+    audioPlayerActions.seek(Seconds(currentPosition - amount))
   }
-  useHotkeys('left', seekBack, [seekBack])
+  useHotkeys('left', seekBack(BIG_SEEK_JUMP), [seekBack])
+  useHotkeys('shift+left', seekBack(SMALL_SEEK_JUMP), [seekBack])
 
-  const seekForward = () => {
-    audioPlayerActions.seek(Seconds(currentPosition + SEEK_JUMP))
+  const seekForward = (amount: Seconds) => () => {
+    audioPlayerActions.seek(Seconds(currentPosition + amount))
   }
-  useHotkeys('right', seekForward, [seekForward])
+  useHotkeys('right', seekForward(BIG_SEEK_JUMP), [seekForward])
+  useHotkeys('shift+right', seekForward(SMALL_SEEK_JUMP), [seekForward])
 
   const markStart = () => {
     soundActions.setStartTime(soundId, currentPosition)
