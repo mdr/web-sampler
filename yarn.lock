@@ -6385,6 +6385,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-resizable-panels@npm:^2.0.9":
+  version: 2.0.9
+  resolution: "react-resizable-panels@npm:2.0.9"
+  peerDependencies:
+    react: ^16.14.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.14.0 || ^17.0.0 || ^18.0.0
+  checksum: 0302ab32d3aa7d2887a2ad58882e447a8e22cef3c5c728cde7436442fcd7475969a86bb45d1a6e285b1b4e2a9ac49d13a0e2df4b29bc63542dc99044309e211c
+  languageName: node
+  linkType: hard
+
 "react-resize-detector@npm:^10.0.1":
   version: 10.0.1
   resolution: "react-resize-detector@npm:10.0.1"
@@ -7794,6 +7804,7 @@ __metadata:
     react-error-boundary: "npm:^4.0.12"
     react-hotkeys-hook: "npm:^4.5.0"
     react-konva: "npm:^18.2.10"
+    react-resizable-panels: "npm:^2.0.9"
     react-resize-detector: "npm:^10.0.1"
     react-router-dom: "npm:^6.22.1"
     react-toastify: "npm:^10.0.4"
