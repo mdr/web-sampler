@@ -1,12 +1,13 @@
 import { Pixels, Seconds } from '../../../utils/types/brandedTypes.ts'
 import { useCallback } from 'react'
 import Konva from 'konva'
-import { Circle, Group, Line } from 'react-konva'
+import { Group, Line, Rect, RegularPolygon } from 'react-konva'
 import { CANVAS_HEIGHT } from './waveformConstants.ts'
 import { Option } from '../../../utils/types/Option.ts'
 import { Vector2d } from 'konva/lib/types'
 
-const HANDLE_RADIUS = Pixels(5)
+const HANDLE_RADIUS = Pixels(10)
+const DRAG_TARGET_WIDTH = Pixels(12)
 
 export interface DraggableTimeBoundaryProps {
   time: Seconds
@@ -78,8 +79,31 @@ export const DraggableTimeBoundary = ({
       onDragEnd={handleDragEnd}
       dragBoundFunc={constrainDrag}
     >
-      <Circle x={x} y={HANDLE_RADIUS} radius={HANDLE_RADIUS} fill="#000000" />
-      <Circle x={x} y={CANVAS_HEIGHT - HANDLE_RADIUS} radius={HANDLE_RADIUS} fill="#000000" />
+      {/* Invisible drag target rectangle */}
+      <Rect
+        x={x - DRAG_TARGET_WIDTH / 2}
+        y={0}
+        width={DRAG_TARGET_WIDTH}
+        height={CANVAS_HEIGHT}
+        fill="transparent"
+        stroke="transparent"
+      />
+      <RegularPolygon
+        x={x}
+        y={HANDLE_RADIUS / 2}
+        sides={3}
+        radius={HANDLE_RADIUS}
+        rotation={180} // Rotate to point downwards
+        fill="#000000"
+      />
+      <RegularPolygon
+        x={x}
+        y={CANVAS_HEIGHT - HANDLE_RADIUS / 2} // Positioned at the bottom
+        sides={3}
+        radius={HANDLE_RADIUS} // Size of the triangle
+        rotation={0} // No rotation needed to point upwards
+        fill="#000000"
+      />
       <Line points={[x, 0, x, CANVAS_HEIGHT]} stroke="#000000" strokeWidth={2} />
     </Group>
   )
