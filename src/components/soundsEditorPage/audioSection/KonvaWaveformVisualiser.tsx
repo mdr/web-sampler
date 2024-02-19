@@ -51,8 +51,6 @@ export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
   const activeXFinish = ((tempFinishTime ?? finishTime) / audioDuration) * width
   const activeWidth = activeXFinish - activeXStart
   const middleY = CANVAS_HEIGHT / 2
-  const step = Math.ceil(pcm.length / width)
-  const amp = CANVAS_HEIGHT / 2
   return (
     <div ref={ref} className="w-full border-2 border-gray-200">
       <Stage width={width} height={CANVAS_HEIGHT} onClick={handleClick}>
@@ -70,6 +68,8 @@ export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
             {/* Waveform */}
             <Shape
               sceneFunc={(context) => {
+                const step = Math.ceil(pcm.length / width)
+                const amp = CANVAS_HEIGHT / 2
                 context.beginPath()
                 context.lineWidth = 1
                 context.strokeStyle = '#3b82f6'
