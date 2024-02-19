@@ -14,6 +14,9 @@ import { SoundAudio, SoundId } from '../../../types/Sound.ts'
 import { useSoundActions } from '../../../sounds/soundHooks.ts'
 import { Button } from '../../shared/Button.tsx'
 import { WaveformVisualiser } from './WaveformVisualiser.tsx'
+import { useHotkeys } from 'react-hotkeys-hook'
+
+const SEEK_JUMP = Seconds(0.5)
 
 export interface AudioSectionProps {
   soundId: SoundId
@@ -25,6 +28,7 @@ export const AudioSection = ({ soundId, audio }: AudioSectionProps) => {
   const audioPlayerActions = useAudioPlayerActions()
   const isPlaying = useAudioPlayerIsPlaying()
   const soundActions = useSoundActions()
+
   const pcm = audio.pcm
 
   const { startTime, finishTime } = audio
@@ -52,6 +56,35 @@ export const AudioSection = ({ soundId, audio }: AudioSectionProps) => {
     audioPlayerActions.setPlayWindow({ start: startTime, finish: finishTime })
   }, [audioPlayerActions, startTime, finishTime])
 
+  const togglePlayPause = () => {
+    if (isPlaying) {
+      audioPlayerActions.pause()
+    } else {
+      unawaited(audioPlayerActions.play())
+    }
+  }
+  useHotkeys('space', togglePlayPause, [togglePlayPause])
+
+  const seekBack = () => {
+    audioPlayerActions.seek(Seconds(currentPosition - SEEK_JUMP))
+  }
+  useHotkeys('left', seekBack, [seekBack])
+
+  const seekForward = () => {
+    audioPlayerActions.seek(Seconds(currentPosition + SEEK_JUMP))
+  }
+  useHotkeys('right', seekForward, [seekForward])
+
+  const markStart = () => {
+    soundActions.setStartTime(soundId, currentPosition)
+  }
+  useHotkeys('s', markStart, [markStart])
+
+  const markFinish = () => {
+    soundActions.setFinishTime(soundId, currentPosition)
+  }
+  useHotkeys('f', markFinish, [markFinish])
+
   const handlePositionChange = (position: Seconds) => {
     audioPlayerActions.seek(position)
   }
@@ -62,14 +95,6 @@ export const AudioSection = ({ soundId, audio }: AudioSectionProps) => {
 
   const handleFinishTimeChange = (finishTime: Seconds) => {
     soundActions.setFinishTime(soundId, finishTime)
-  }
-
-  const togglePlayPause = () => {
-    if (isPlaying) {
-      audioPlayerActions.pause()
-    } else {
-      unawaited(audioPlayerActions.play())
-    }
   }
 
   return (
