@@ -7,7 +7,7 @@ import { Option } from '../../../utils/types/Option.ts'
 import { Vector2d } from 'konva/lib/types'
 
 const HANDLE_RADIUS = Pixels(10)
-const DRAG_TARGET_WIDTH = Pixels(12)
+const DRAG_TARGET_WIDTH = Pixels(16)
 
 export interface DraggableTimeBoundaryProps {
   time: Seconds
@@ -88,20 +88,13 @@ export const DraggableTimeBoundary = ({
         fill="transparent"
         stroke="transparent"
       />
+      <RegularPolygon x={x} y={HANDLE_RADIUS / 2} sides={3} radius={HANDLE_RADIUS} rotation={180} fill="#000000" />
       <RegularPolygon
         x={x}
-        y={HANDLE_RADIUS / 2}
+        y={CANVAS_HEIGHT - HANDLE_RADIUS / 2}
         sides={3}
         radius={HANDLE_RADIUS}
-        rotation={180} // Rotate to point downwards
-        fill="#000000"
-      />
-      <RegularPolygon
-        x={x}
-        y={CANVAS_HEIGHT - HANDLE_RADIUS / 2} // Positioned at the bottom
-        sides={3}
-        radius={HANDLE_RADIUS} // Size of the triangle
-        rotation={0} // No rotation needed to point upwards
+        rotation={0}
         fill="#000000"
       />
       <Line points={[x, 0, x, CANVAS_HEIGHT]} stroke="#000000" strokeWidth={2} />
