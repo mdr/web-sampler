@@ -1,12 +1,18 @@
 import { Seconds, Url } from '../utils/types/brandedTypes'
 import { AudioPlayer, PlayWindow } from './AudioPlayer'
 import { Option } from '../utils/types/Option.ts'
+import AsyncLock from 'async-lock'
+import { unawaited } from '../utils/utils.ts'
 
-const END_TOLERANCE: Seconds = Seconds(0.1)
+// How close to the end you can be before we auto seek to the start before playing
+const END_TOLERANCE: Seconds = Seconds(0.2)
 
 export class WebAudioPlayer implements AudioPlayer {
   private readonly audioElement: HTMLAudioElement = new Audio()
   private playWindow: Option<PlayWindow> = undefined
+
+  // Lock to force play/pause operations to be sequential
+  private lock: AsyncLock = new AsyncLock()
 
   get isPlaying(): boolean {
     return !this.audioElement.paused && this.audioElement.currentTime > 0
@@ -23,18 +29,19 @@ export class WebAudioPlayer implements AudioPlayer {
     }
   }
 
-  play = (): Promise<void> => {
-    if (this.playWindow !== undefined) {
-      const currentTime = this.audioElement.currentTime
-      const { start, finish } = this.playWindow
-      if (currentTime < start || currentTime > finish - END_TOLERANCE) {
-        this.seek(this.playWindow.start)
+  play = (): Promise<void> =>
+    this.lock.acquire('lock', async () => {
+      if (this.playWindow !== undefined) {
+        const currentTime = this.audioElement.currentTime
+        const { start, finish } = this.playWindow
+        if (currentTime < start || currentTime > finish - END_TOLERANCE) {
+          this.seek(this.playWindow.start)
+        }
       }
-    }
-    return this.audioElement.play()
-  }
+      return this.audioElement.play()
+    })
 
-  pause = () => this.audioElement.pause()
+  pause = () => unawaited(this.lock.acquire('lock', async () => this.audioElement.pause()))
 
   seek = (time: Seconds) => {
     let actualTime = time

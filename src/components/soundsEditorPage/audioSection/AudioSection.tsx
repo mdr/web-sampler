@@ -34,7 +34,7 @@ export const AudioSection = ({ soundId, audio }: AudioSectionProps) => {
       audioPlayerActions.pause()
       audioPlayerActions.seek(finishTime)
     }
-  })
+  }, [currentPosition, finishTime, audioPlayerActions])
 
   const audioContext = useAudioContext()
   useEffect(() => {
