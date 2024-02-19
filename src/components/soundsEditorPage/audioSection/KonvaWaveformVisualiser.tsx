@@ -20,6 +20,67 @@ export interface KonvaWaveformVisualiserProps {
   onFinishTimeChanged(finishTime: Seconds): void
 }
 
+interface DraggableTimeBoundaryProps {
+  time: Seconds
+  audioDuration: Seconds
+  width: Pixels
+
+  onTimeChanged(time: Seconds): void
+
+  onTimeChangedTemporarily(time: Seconds): void
+}
+
+const DraggableTimeBoundary = ({
+  time,
+  audioDuration,
+  width,
+  onTimeChanged,
+  onTimeChangedTemporarily,
+}: DraggableTimeBoundaryProps) => {
+  const handleDragMove = useCallback(
+    (e: Konva.KonvaEventObject<DragEvent>) => {
+      const xOffset = e.target.x()
+      const secondsOffset = (xOffset / width) * audioDuration
+      onTimeChangedTemporarily(Seconds(time + secondsOffset))
+    },
+    [audioDuration, onTimeChangedTemporarily, time, width],
+  )
+
+  const handleDragEnd = useCallback(
+    (e: Konva.KonvaEventObject<DragEvent>) => {
+      const xOffset = e.target.x()
+      const secondsOffset = (xOffset / width) * audioDuration
+      const newStartTime = Seconds(time + secondsOffset)
+      e.target.position({ x: 0, y: 0 }) // Resets the drag translation
+      onTimeChanged(newStartTime)
+    },
+    [audioDuration, onTimeChanged, time, width],
+  )
+  const x = (time / audioDuration) * width
+  return (
+    <Group
+      draggable
+      onMouseEnter={(e) => {
+        const stage = e.target.getStage() ?? undefined
+        if (stage === undefined) return
+        stage.container().style.cursor = 'grab'
+      }}
+      onMouseLeave={(e) => {
+        const stage = e.target.getStage() ?? undefined
+        if (stage === undefined) return
+        stage.container().style.cursor = 'default'
+      }}
+      onDragMove={handleDragMove}
+      onDragEnd={handleDragEnd}
+      dragBoundFunc={({ x }) => ({ x, y: 0 })}
+    >
+      <Circle x={x} y={HANDLE_RADIUS} radius={HANDLE_RADIUS} fill="#000000" />
+      <Circle x={x} y={CANVAS_HEIGHT - HANDLE_RADIUS} radius={HANDLE_RADIUS} fill="#000000" />
+      <Line points={[x, 0, x, CANVAS_HEIGHT]} stroke="#000000" strokeWidth={2} />
+    </Group>
+  )
+}
+
 export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
   startTime,
   finishTime,
@@ -33,46 +94,6 @@ export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
   const [tempStartTime, setTempStartTime] = useState(startTime)
   const [tempFinishTime, setTempFinishTime] = useState(finishTime)
 
-  const handleStartDragMove = useCallback(
-    (e: Konva.KonvaEventObject<DragEvent>) => {
-      const xOffset = e.target.x()
-      const secondsOffset = (xOffset / width) * audioDuration
-      setTempStartTime(Seconds(startTime + secondsOffset))
-    },
-    [audioDuration, startTime, width],
-  )
-
-  const handleStartDragEnd = useCallback(
-    (e: Konva.KonvaEventObject<DragEvent>) => {
-      const xOffset = e.target.x()
-      const secondsOffset = (xOffset / width) * audioDuration
-      const newStartTime = Seconds(startTime + secondsOffset)
-      e.target.position({ x: 0, y: 0 }) // Resets the drag translation
-      onStartTimeChanged(newStartTime)
-    },
-    [audioDuration, onStartTimeChanged, startTime, width],
-  )
-
-  const handleFinishDragMove = useCallback(
-    (e: Konva.KonvaEventObject<DragEvent>) => {
-      const xOffset = e.target.x()
-      const secondsOffset = (xOffset / width) * audioDuration
-      setTempFinishTime(Seconds(finishTime + secondsOffset))
-    },
-    [audioDuration, finishTime, width],
-  )
-
-  const handleFinishDragEnd = useCallback(
-    (e: Konva.KonvaEventObject<DragEvent>) => {
-      const xOffset = e.target.x()
-      const secondsOffset = (xOffset / width) * audioDuration
-      const newFinishTime = Seconds(finishTime + secondsOffset)
-      e.target.position({ x: 0, y: 0 }) // Resets the drag translation
-      onFinishTimeChanged(newFinishTime)
-    },
-    [audioDuration, finishTime, onFinishTimeChanged, width],
-  )
-
   // Render dummy waveform if audioDuration or width is 0
   if (audioDuration === 0 || width === 0) {
     return (
@@ -81,9 +102,6 @@ export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
       </div>
     )
   }
-
-  const xStart = (startTime / audioDuration) * width
-  const xFinish = (finishTime / audioDuration) * width
 
   const txStart = (tempStartTime / audioDuration) * width
   const txFinish = (tempFinishTime / audioDuration) * width
@@ -138,48 +156,22 @@ export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
           />
 
           {/* Start line and handles */}
-          <Group
-            draggable
-            onMouseEnter={(e) => {
-              const stage = e.target.getStage() ?? undefined
-              if (stage === undefined) return
-              stage.container().style.cursor = 'grab'
-            }}
-            onMouseLeave={(e) => {
-              const stage = e.target.getStage() ?? undefined
-              if (stage === undefined) return
-              stage.container().style.cursor = 'default'
-            }}
-            onDragMove={handleStartDragMove}
-            onDragEnd={handleStartDragEnd}
-            dragBoundFunc={({ x }) => ({ x, y: 0 })}
-          >
-            <Circle x={xStart} y={HANDLE_RADIUS} radius={HANDLE_RADIUS} fill="#000000" />
-            <Circle x={xStart} y={CANVAS_HEIGHT - HANDLE_RADIUS} radius={HANDLE_RADIUS} fill="#000000" />
-            <Line points={[xStart, 0, xStart, CANVAS_HEIGHT]} stroke="#000000" strokeWidth={2} />
-          </Group>
+          <DraggableTimeBoundary
+            onTimeChanged={onStartTimeChanged}
+            onTimeChangedTemporarily={setTempStartTime}
+            time={startTime}
+            audioDuration={audioDuration}
+            width={Pixels(width)}
+          />
 
           {/* Finish line and handles */}
-          <Group
-            draggable
-            onMouseEnter={(e) => {
-              const stage = e.target.getStage() ?? undefined
-              if (stage === undefined) return
-              stage.container().style.cursor = 'grab'
-            }}
-            onMouseLeave={(e) => {
-              const stage = e.target.getStage() ?? undefined
-              if (stage === undefined) return
-              stage.container().style.cursor = 'default'
-            }}
-            onDragMove={handleFinishDragMove}
-            onDragEnd={handleFinishDragEnd}
-            dragBoundFunc={({ x }) => ({ x, y: 0 })}
-          >
-            <Circle x={xFinish} y={HANDLE_RADIUS} radius={HANDLE_RADIUS} fill="#000000" />
-            <Circle x={xFinish} y={CANVAS_HEIGHT - HANDLE_RADIUS} radius={HANDLE_RADIUS} fill="#000000" />
-            <Line points={[xFinish, 0, xFinish, CANVAS_HEIGHT]} stroke="#000000" strokeWidth={2} />
-          </Group>
+          <DraggableTimeBoundary
+            onTimeChanged={onFinishTimeChanged}
+            onTimeChangedTemporarily={setTempFinishTime}
+            time={finishTime}
+            audioDuration={audioDuration}
+            width={Pixels(width)}
+          />
         </Layer>
       </Stage>
     </div>
