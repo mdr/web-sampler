@@ -1,5 +1,5 @@
 import { createHashRouter, useParams } from 'react-router-dom'
-import { ErrorFallback } from './ErrorFallback.tsx'
+import { ErrorFallback } from './misc/ErrorFallback.tsx'
 import { SoundsEditorPage } from './soundsEditorPage/SoundsEditorPage.tsx'
 import { SoundId } from '../types/Sound.ts'
 import { Option } from '../utils/types/Option.ts'

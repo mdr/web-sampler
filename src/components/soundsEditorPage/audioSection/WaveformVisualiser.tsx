@@ -1,6 +1,6 @@
 import { Layer, Line, Rect, Stage } from 'react-konva'
 import { Pcm, Pixels, Seconds } from '../../../utils/types/brandedTypes.ts'
-import { FC, useState } from 'react'
+import { FC, useCallback, useState } from 'react'
 import { useMeasure } from 'react-use'
 import { DraggableTimeBoundary } from './DraggableTimeBoundary.tsx'
 import { CANVAS_HEIGHT } from './waveformConstants.ts'
@@ -45,17 +45,23 @@ export const WaveformVisualiser: FC<WaveformVisualiserProps> = ({
   const [tempStartTime, setTempStartTime] = useState<Option<Seconds>>(undefined)
   const [tempFinishTime, setTempFinishTime] = useState<Option<Seconds>>(undefined)
 
+  const toSeconds = useCallback((x: Pixels): Seconds => Seconds((x / width) * audioDuration), [audioDuration, width])
+  const toPixels = useCallback(
+    (seconds: Seconds): Pixels => Pixels((seconds / audioDuration) * width),
+    [audioDuration, width],
+  )
+
   const handleClick = (e: KonvaEventObject<MouseEvent>) => {
     const stage = e.target.getStage() ?? undefined
     const pointerPosition = stage?.getPointerPosition() ?? undefined
     if (!pointerPosition) return
-    const x = pointerPosition.x
-    const newPosition = Seconds((x / width) * audioDuration)
+    const x = Pixels(pointerPosition.x)
+    const newPosition = toSeconds(x)
     onPositionChange(newPosition)
   }
 
-  const activeXStart = ((tempStartTime ?? startTime) / audioDuration) * width
-  const activeXFinish = ((tempFinishTime ?? finishTime) / audioDuration) * width
+  const activeXStart = toPixels(tempStartTime ?? startTime)
+  const activeXFinish = toPixels(tempFinishTime ?? finishTime)
   const activeWidth = activeXFinish - activeXStart
   const middleY = CANVAS_HEIGHT / 2
   return (
@@ -74,12 +80,7 @@ export const WaveformVisualiser: FC<WaveformVisualiserProps> = ({
 
             {/* Current position line */}
             <Line
-              points={[
-                (currentPosition / audioDuration) * width,
-                0,
-                (currentPosition / audioDuration) * width,
-                CANVAS_HEIGHT,
-              ]}
+              points={[toPixels(currentPosition), 0, toPixels(currentPosition), CANVAS_HEIGHT]}
               stroke="#ff0000"
               strokeWidth={2}
             />
@@ -92,7 +93,7 @@ export const WaveformVisualiser: FC<WaveformVisualiserProps> = ({
               audioDuration={audioDuration}
               width={width}
               dragMin={Pixels(0)}
-              dragMax={Pixels((finishTime / audioDuration) * width)}
+              dragMax={toPixels(finishTime)}
             />
 
             {/* Finish line */}
@@ -102,7 +103,7 @@ export const WaveformVisualiser: FC<WaveformVisualiserProps> = ({
               time={finishTime}
               audioDuration={audioDuration}
               width={width}
-              dragMin={Pixels((startTime / audioDuration) * width)}
+              dragMin={toPixels(startTime)}
               dragMax={width}
             />
           </Layer>

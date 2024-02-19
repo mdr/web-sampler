@@ -6,13 +6,14 @@ import { ToastContainer } from 'react-toastify'
 import { SoundLibraryContext } from '../sounds/SoundLibraryContext.ts'
 import { SoundLibrary } from '../sounds/SoundLibrary.ts'
 import { ErrorBoundary } from 'react-error-boundary'
-import { ErrorFallback } from './ErrorFallback.tsx'
+import { ErrorFallback } from './misc/ErrorFallback.tsx'
 import { router } from './router.tsx'
 import { AudioContextProvider, AudioContextProviderContext } from '../audioRecorder/AudioContextProvider.ts'
 import { AudioPlayerContext } from '../audioPlayer/AudioPlayerContext.ts'
 import { AudioPlayer } from '../audioPlayer/AudioPlayer.ts'
 import { SoundStore } from '../sounds/SoundStore.ts'
 import { AppDb } from '../sounds/AppDb.ts'
+import { MakeStoragePersistent } from './misc/MakeStoragePersistent.tsx'
 
 export interface AppProps {
   audioContextProvider: AudioContextProvider
@@ -24,6 +25,7 @@ export const App = ({ audioRecorder, audioContextProvider, audioPlayer }: AppPro
   <React.StrictMode>
     <ErrorBoundary fallback={<ErrorFallback />}>
       <ToastContainer position="top-center" hideProgressBar closeOnClick closeButton={false} />
+      <MakeStoragePersistent />
       <AudioContextProviderContext.Provider value={audioContextProvider}>
         <AudioRecorderContext.Provider value={audioRecorder}>
           <AudioPlayerContext.Provider value={audioPlayer}>

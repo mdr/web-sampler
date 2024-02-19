@@ -41,6 +41,8 @@ export class WebAudioRecorder extends AbstractAudioRecorder implements AudioReco
       throw new Error('Already recording')
     }
 
+    await this.audioContext.resume()
+
     let mediaStream: MediaStream
     try {
       mediaStream = await navigator.mediaDevices.getDisplayMedia({
