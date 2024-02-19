@@ -1,272 +1,129 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { Pixels, Seconds } from '../../../utils/types/brandedTypes.ts'
-import { EditSoundPaneTestIds } from '../EditSoundPaneTestIds.ts'
-import { SoundAudio } from '../../../types/Sound.ts'
-import clsx from 'clsx'
+import { Layer, Line, Rect, Shape, Stage } from 'react-konva'
+import { Pcm, Pixels, Seconds } from '../../../utils/types/brandedTypes.ts'
+import { FC, useState } from 'react'
+import { useMeasure } from 'react-use'
+import { DraggableTimeBoundary } from './DraggableTimeBoundary.tsx'
+import { CANVAS_HEIGHT } from './waveformConstants.ts'
+import Konva from 'konva'
 import { Option } from '../../../utils/types/Option.ts'
+import KonvaEventObject = Konva.KonvaEventObject
 
-interface WaveformVisualiserProps {
-  audio: SoundAudio
+export interface KonvaWaveformVisualiserProps {
+  readonly pcm: Pcm
+  startTime: Seconds
+  finishTime: Seconds
   currentPosition: Seconds
   audioDuration: Seconds
+
   onPositionChange: (position: Seconds) => void
-  onStartTimeChange: (startTime: Seconds) => void
-  onFinishTimeChange: (finishTime: Seconds) => void
+
+  onStartTimeChanged(startTime: Seconds): void
+
+  onFinishTimeChanged(finishTime: Seconds): void
 }
 
-const getCanvasRenderingContext2D = (canvas: HTMLCanvasElement): CanvasRenderingContext2D => {
-  const ctx = canvas.getContext('2d') ?? undefined
-  if (ctx === undefined) {
-    throw new Error('Canvas rendering context is null')
-  }
-  return ctx
-}
-
-const START_FINISH_TIME_INTERACTION_TOLERANCE = Pixels(5)
-
-const HANDLE_RADIUS = Pixels(5)
-
-export const WaveformVisualiser: React.FC<WaveformVisualiserProps> = ({
-  audio,
+export const WaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
+  startTime,
+  finishTime,
   currentPosition,
   audioDuration,
+  pcm,
   onPositionChange,
-  onStartTimeChange,
-  onFinishTimeChange,
+  onStartTimeChanged,
+  onFinishTimeChanged,
 }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const { pcm } = audio
-  const [draggingStartTime, setDraggingStartTime] = useState<Option<Seconds>>()
-  const [draggingFinishTime, setDraggingFinishTime] = useState<Option<Seconds>>()
-  const [isHoveringStart, setIsHoveringStart] = useState(false)
-  const [isHoveringFinish, setIsHoveringFinish] = useState(false)
-  const [canvasDimensions, setCanvasDimensions] = useState([0, 0])
-  const displayStartTime = draggingStartTime ?? audio.startTime
-  const displayFinishTime = draggingFinishTime ?? audio.finishTime
-  const drawWaveform = useCallback(() => {
-    const canvas = canvasRef.current ?? undefined
-    if (canvas === undefined) {
-      return
-    }
-    const ctx = getCanvasRenderingContext2D(canvas)
+  const [ref, rect] = useMeasure<HTMLDivElement>()
+  const width = Pixels(rect.width)
+  // Used while dragging:
+  const [tempStartTime, setTempStartTime] = useState<Option<Seconds>>(undefined)
+  const [tempFinishTime, setTempFinishTime] = useState<Option<Seconds>>(undefined)
 
-    const width = canvas.width
-    const height = canvas.height
+  const handleClick = (e: KonvaEventObject<MouseEvent>) => {
+    const stage = e.target.getStage() ?? undefined
+    const pointerPosition = stage?.getPointerPosition() ?? undefined
+    if (!pointerPosition) return
+    const x = pointerPosition.x
+    const newPosition = Seconds((x / width) * audioDuration)
+    onPositionChange(newPosition)
+  }
 
-    // Inactive grey background
-    ctx.clearRect(0, 0, width, height)
-    ctx.fillStyle = '#f0f0f0'
-    ctx.fillRect(0, 0, width, height)
-
-    const xStart = (displayStartTime / audioDuration) * width
-    const xFinish = (displayFinishTime / audioDuration) * width
-
-    // Active background color between startTime and finishTime
-    ctx.fillStyle = '#fff'
-    ctx.fillRect(xStart, 0, xFinish - xStart, height)
-
-    // Draw horizontal line at 0 amplitude
-    const middleY = height / 2
-    ctx.strokeStyle = '#000'
-    ctx.lineWidth = 1
-    ctx.beginPath()
-    ctx.moveTo(0, middleY)
-    ctx.lineTo(width, middleY)
-    ctx.stroke()
-
-    // Draw waveform
-    ctx.lineWidth = 1
-    ctx.strokeStyle = '#3b82f6'
-    ctx.beginPath()
-
-    const step = Math.ceil(pcm.length / width)
-    const amp = height / 2
-    for (let i = 0; i < width; i++) {
-      let min = 1.0
-      let max = -1.0
-      for (let j = 0; j < step; j++) {
-        const datum = pcm[i * step + j]
-        if (datum < min) min = datum
-        if (datum > max) max = datum
-      }
-      ctx.moveTo(i, (1 + min) * amp)
-      ctx.lineTo(i, (1 + max) * amp)
-    }
-    ctx.stroke()
-
-    // Draw current position line
-    if (audioDuration > 0) {
-      const x = (currentPosition / audioDuration) * width
-      ctx.strokeStyle = '#ff0000'
-      ctx.lineWidth = 2
-      ctx.beginPath()
-      ctx.moveTo(x, 0)
-      ctx.lineTo(x, height)
-      ctx.stroke()
-    }
-
-    // Start line
-    ctx.strokeStyle = '#000000'
-    ctx.lineWidth = 2
-    ctx.fillStyle = '#000000'
-
-    // Top handle
-    ctx.beginPath()
-    ctx.arc(xStart, HANDLE_RADIUS, HANDLE_RADIUS, 0, 2 * Math.PI)
-    ctx.fill()
-
-    // Bottom handle
-    ctx.beginPath()
-    ctx.arc(xStart, height - HANDLE_RADIUS, HANDLE_RADIUS, 0, 2 * Math.PI)
-    ctx.fill()
-
-    // Vertical line
-    ctx.beginPath()
-    ctx.moveTo(xStart, 0)
-    ctx.lineTo(xStart, height)
-    ctx.stroke()
-
-    // Finish line
-    ctx.strokeStyle = '#000000'
-    ctx.lineWidth = 2
-    ctx.fillStyle = '#000000'
-
-    // Top handle
-    ctx.beginPath()
-    ctx.arc(xFinish, HANDLE_RADIUS, HANDLE_RADIUS, 0, 2 * Math.PI)
-    ctx.fill()
-
-    // Bottom handle
-    ctx.beginPath()
-    ctx.arc(xFinish, height - HANDLE_RADIUS, HANDLE_RADIUS, 0, 2 * Math.PI)
-    ctx.fill()
-
-    // Vertical line
-    ctx.beginPath()
-    ctx.moveTo(xFinish, 0)
-    ctx.lineTo(xFinish, height)
-    ctx.stroke()
-
-    // eslint-disable-next-line
-  }, [
-    pcm,
-    displayStartTime,
-    audioDuration,
-    displayFinishTime,
-    isHoveringStart,
-    isHoveringFinish,
-    currentPosition,
-    canvasDimensions,
-  ])
-
-  useEffect(() => {
-    const resizeCanvas = () => {
-      const canvas = canvasRef.current ?? undefined
-      if (canvas !== undefined) {
-        canvas.width = canvas.offsetWidth
-        setCanvasDimensions([canvas.offsetWidth, canvas.offsetHeight])
-      }
-    }
-    resizeCanvas()
-    window.addEventListener('resize', resizeCanvas)
-    return () => window.removeEventListener('resize', resizeCanvas)
-  }, [])
-
-  const handleMouseDown = useCallback(
-    (event: React.MouseEvent<HTMLCanvasElement>) => {
-      const canvas = canvasRef.current ?? undefined
-      if (canvas === undefined) {
-        return
-      }
-
-      const rect = canvas.getBoundingClientRect()
-      const x = event.clientX - rect.left
-
-      const xStart = (displayStartTime / audioDuration) * canvas.width
-      const xFinish = (displayFinishTime / audioDuration) * canvas.width
-
-      if (Math.abs(x - xStart) < START_FINISH_TIME_INTERACTION_TOLERANCE) {
-        setDraggingStartTime(displayStartTime)
-      } else if (Math.abs(x - xFinish) < START_FINISH_TIME_INTERACTION_TOLERANCE) {
-        setDraggingFinishTime(displayFinishTime)
-      }
-    },
-    [displayStartTime, displayFinishTime, audioDuration],
-  )
-
-  const handleMouseMove = useCallback(
-    (event: React.MouseEvent<HTMLCanvasElement>) => {
-      const canvas = canvasRef.current ?? undefined
-      if (canvas === undefined) {
-        return
-      }
-
-      const rect = canvas.getBoundingClientRect()
-      const x = event.clientX - rect.left
-
-      if (draggingStartTime !== undefined || draggingFinishTime !== undefined) {
-        const newTime = Seconds((x / canvas.width) * audioDuration)
-
-        if (draggingStartTime !== undefined) {
-          setDraggingStartTime(Seconds(Math.min(newTime, displayFinishTime)))
-        } else if (draggingFinishTime !== undefined) {
-          setDraggingFinishTime(Seconds(Math.max(newTime, displayStartTime)))
-        }
-      } else {
-        const xStart = (displayStartTime / audioDuration) * canvas.width
-        const xFinish = (displayFinishTime / audioDuration) * canvas.width
-        setIsHoveringStart(Math.abs(x - xStart) < START_FINISH_TIME_INTERACTION_TOLERANCE)
-        setIsHoveringFinish(Math.abs(x - xFinish) < START_FINISH_TIME_INTERACTION_TOLERANCE)
-      }
-    },
-    [draggingStartTime, draggingFinishTime, audioDuration, displayFinishTime, displayStartTime],
-  )
-
-  const handleMouseUp = useCallback(
-    (event: React.MouseEvent<HTMLCanvasElement>) => {
-      if (draggingStartTime !== undefined) {
-        setDraggingStartTime(undefined)
-        onStartTimeChange(displayStartTime)
-      } else if (draggingFinishTime !== undefined) {
-        setDraggingFinishTime(undefined)
-        onFinishTimeChange(displayFinishTime)
-      } else {
-        const canvas = canvasRef.current ?? undefined
-        if (canvas === undefined) {
-          return
-        }
-        const rect = canvas.getBoundingClientRect()
-        const x = event.clientX - rect.left
-        const position = Seconds((x / canvas.width) * audioDuration)
-
-        onPositionChange(position)
-      }
-    },
-    [
-      draggingStartTime,
-      draggingFinishTime,
-      onStartTimeChange,
-      displayStartTime,
-      onFinishTimeChange,
-      displayFinishTime,
-      audioDuration,
-      onPositionChange,
-    ],
-  )
-
-  useEffect(() => {
-    drawWaveform()
-  }, [drawWaveform])
-
+  const activeXStart = ((tempStartTime ?? startTime) / audioDuration) * width
+  const activeXFinish = ((tempFinishTime ?? finishTime) / audioDuration) * width
+  const activeWidth = activeXFinish - activeXStart
+  const middleY = CANVAS_HEIGHT / 2
   return (
-    <canvas
-      data-testid={EditSoundPaneTestIds.waveformCanvas}
-      className={clsx('w-full border-2 border-gray-200', { 'cursor-grab': isHoveringStart || isHoveringFinish })}
-      ref={canvasRef}
-      height="400"
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-    />
+    <div ref={ref} className="w-full border-2 border-gray-200">
+      <Stage width={width} height={CANVAS_HEIGHT} onClick={handleClick}>
+        {audioDuration > 0 && width > 0 && (
+          <Layer>
+            {/* Inactive background */}
+            <Rect width={width} height={CANVAS_HEIGHT} fill="#f0f0f0" />
+
+            {/* Active region */}
+            <Rect x={activeXStart} y={0} width={activeWidth} height={CANVAS_HEIGHT} fill="#fff" />
+
+            {/* Horizontal line at 0 amplitude */}
+            <Line points={[0, middleY, width, middleY]} stroke="#000" strokeWidth={1} />
+
+            {/* Waveform */}
+            <Shape
+              sceneFunc={(context) => {
+                const step = Math.ceil(pcm.length / width)
+                const amp = CANVAS_HEIGHT / 2
+                context.beginPath()
+                context.lineWidth = 1
+                context.strokeStyle = '#3b82f6'
+                for (let i = 0; i < width; i++) {
+                  let min = 1.0
+                  let max = -1.0
+                  for (let j = 0; j < step; j++) {
+                    const datum = pcm[i * step + j]
+                    if (datum < min) min = datum
+                    if (datum > max) max = datum
+                  }
+                  context.moveTo(i, (1 + min) * amp)
+                  context.lineTo(i, (1 + max) * amp)
+                }
+                context.stroke()
+              }}
+            />
+
+            {/* Current position line */}
+            <Line
+              points={[
+                (currentPosition / audioDuration) * width,
+                0,
+                (currentPosition / audioDuration) * width,
+                CANVAS_HEIGHT,
+              ]}
+              stroke="#ff0000"
+              strokeWidth={2}
+            />
+
+            {/* Start line */}
+            <DraggableTimeBoundary
+              onTimeChanged={onStartTimeChanged}
+              onTimeChangedTemporarily={setTempStartTime}
+              time={startTime}
+              audioDuration={audioDuration}
+              width={width}
+              dragMin={Pixels(0)}
+              dragMax={Pixels((finishTime / audioDuration) * width)}
+            />
+
+            {/* Finish line */}
+            <DraggableTimeBoundary
+              onTimeChanged={onFinishTimeChanged}
+              onTimeChangedTemporarily={setTempFinishTime}
+              time={finishTime}
+              audioDuration={audioDuration}
+              width={width}
+              dragMin={Pixels((startTime / audioDuration) * width)}
+              dragMax={width}
+            />
+          </Layer>
+        )}
+      </Stage>
+    </div>
   )
 }

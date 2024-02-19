@@ -50,7 +50,8 @@ export class WebAudioPlayer implements AudioPlayer {
   }
 
   get duration(): Seconds {
-    return Seconds(this.audioElement.duration)
+    const duration = this.audioElement.duration
+    return Seconds(Number.isNaN(duration) ? 0 : duration)
   }
 
   addPlayListener = (listener: () => void) => this.audioElement.addEventListener('play', listener)

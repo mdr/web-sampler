@@ -26,6 +26,7 @@ export const DownloadWavButton = ({ sound, audio }: DownloadWavButtonProps) => {
   const arrayBuffer = useMemo(() => {
     const audioBufferUtils = new AudioBufferUtils(audioContext)
     const croppedPcm = cropPcm(audio.pcm, audio.startTime, audio.finishTime)
+    if (croppedPcm.length === 0) return new ArrayBuffer(0)
     return audioBufferUtils.pcmToWavArrayBuffer(croppedPcm)
   }, [audio.finishTime, audio.pcm, audio.startTime, audioContext])
   const { downloadFile } = useDownloadFile({

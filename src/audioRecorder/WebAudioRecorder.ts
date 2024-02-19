@@ -75,7 +75,7 @@ export class WebAudioRecorder extends AbstractAudioRecorder implements AudioReco
     const dataArray = new Uint8Array(analyser.frequencyBinCount)
     this.getVolume = (): number => {
       analyser.getByteFrequencyData(dataArray)
-      return average(dataArray)
+      return average(dataArray) ?? 0
     }
 
     const captureAudioWorkletNode = new AudioWorkletNode(this.audioContext, CAPTURING_AUDIO_WORKLET_NAME)
@@ -111,9 +111,9 @@ export class WebAudioRecorder extends AbstractAudioRecorder implements AudioReco
   }
 }
 
-const average = (array: Uint8Array): number => {
+const average = (array: Uint8Array): Option<number> => {
   if (array.length === 0) {
-    return 0
+    return undefined
   }
   return _.sum(array) / array.length
 }

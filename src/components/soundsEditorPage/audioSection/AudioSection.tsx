@@ -1,5 +1,4 @@
 import { EditSoundPaneTestIds } from '../EditSoundPaneTestIds.ts'
-import { WaveformVisualiser } from './WaveformVisualiser.tsx'
 import { useEffect } from 'react'
 import { AudioBufferUtils } from '../../../audioRecorder/AudioBufferUtils.ts'
 import { useAudioContext } from '../../../audioRecorder/AudioContextProvider.ts'
@@ -14,6 +13,7 @@ import {
 import { SoundAudio, SoundId } from '../../../types/Sound.ts'
 import { useSoundActions } from '../../../sounds/soundHooks.ts'
 import { Button } from '../../shared/Button.tsx'
+import { WaveformVisualiser } from './WaveformVisualiser.tsx'
 
 export interface AudioSectionProps {
   soundId: SoundId
@@ -75,13 +75,14 @@ export const AudioSection = ({ soundId, audio }: AudioSectionProps) => {
   return (
     <div className="flex flex-col items-center">
       <WaveformVisualiser
-        key={soundId}
-        audio={audio}
+        startTime={startTime}
         currentPosition={currentPosition}
+        finishTime={finishTime}
         audioDuration={audioDuration}
+        pcm={audio.pcm}
         onPositionChange={handlePositionChange}
-        onStartTimeChange={handleStartTimeChange}
-        onFinishTimeChange={handleFinishTimeChange}
+        onStartTimeChanged={handleStartTimeChange}
+        onFinishTimeChanged={handleFinishTimeChange}
       />
       <div className="mt-4">
         <Button
