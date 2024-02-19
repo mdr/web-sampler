@@ -107,6 +107,8 @@ export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
               time={startTime}
               audioDuration={audioDuration}
               width={width}
+              dragMin={Pixels(0)}
+              dragMax={Pixels((finishTime / audioDuration) * width)}
             />
 
             {/* Finish line */}
@@ -116,6 +118,8 @@ export const KonvaWaveformVisualiser: FC<KonvaWaveformVisualiserProps> = ({
               time={finishTime}
               audioDuration={audioDuration}
               width={width}
+              dragMin={Pixels((startTime / audioDuration) * width)}
+              dragMax={width}
             />
           </Layer>
         )}

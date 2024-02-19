@@ -12,6 +12,8 @@ export interface DraggableTimeBoundaryProps {
   time: Seconds
   audioDuration: Seconds
   width: Pixels
+  dragMin: Pixels
+  dragMax: Pixels
 
   onTimeChanged(time: Seconds): void
 
@@ -22,6 +24,8 @@ export const DraggableTimeBoundary = ({
   time,
   audioDuration,
   width,
+  dragMin,
+  dragMax,
   onTimeChanged,
   onTimeChangedTemporarily,
 }: DraggableTimeBoundaryProps) => {
@@ -59,7 +63,7 @@ export const DraggableTimeBoundary = ({
   const constrainDrag = (vector: Vector2d): Vector2d => {
     const xOffset = vector.x
     const xAbsolute = xOffset + x
-    const constrainedXAbsolute = Math.max(0, Math.min(xAbsolute, width))
+    const constrainedXAbsolute = Math.max(dragMin, Math.min(xAbsolute, dragMax))
     const constrainedXOffset = constrainedXAbsolute - x
     return { x: constrainedXOffset, y: 0 }
   }
