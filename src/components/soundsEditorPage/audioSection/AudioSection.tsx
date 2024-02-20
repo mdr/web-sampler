@@ -1,5 +1,5 @@
 import { EditSoundPaneTestIds } from '../EditSoundPaneTestIds.ts'
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { AudioBufferUtils } from '../../../audioRecorder/AudioBufferUtils.ts'
 import { useAudioContext } from '../../../audioRecorder/AudioContextProvider.ts'
 import { Seconds, Url } from '../../../utils/types/brandedTypes.ts'
@@ -88,17 +88,20 @@ export const AudioSection = ({ soundId, audio }: AudioSectionProps) => {
   }
   useHotkeys('f', markFinish, [markFinish])
 
-  const handlePositionChange = (position: Seconds) => {
-    audioPlayerActions.seek(position)
-  }
+  const handlePositionChange = useCallback(
+    (position: Seconds) => audioPlayerActions.seek(position),
+    [audioPlayerActions],
+  )
 
-  const handleStartTimeChange = (startTime: Seconds) => {
-    soundActions.setStartTime(soundId, startTime)
-  }
+  const handleStartTimeChange = useCallback(
+    (startTime: Seconds) => soundActions.setStartTime(soundId, startTime),
+    [soundActions, soundId],
+  )
 
-  const handleFinishTimeChange = (finishTime: Seconds) => {
-    soundActions.setFinishTime(soundId, finishTime)
-  }
+  const handleFinishTimeChange = useCallback(
+    (finishTime: Seconds) => soundActions.setFinishTime(soundId, finishTime),
+    [soundActions, soundId],
+  )
 
   return (
     <div className="flex flex-col items-center">

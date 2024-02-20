@@ -14,6 +14,7 @@ export const Navbar = () => {
   const canUndo = useCanUndo()
   const canRedo = useCanRedo()
   const { isStoragePersistent } = useStorageManagerState()
+
   useHotkeys('mod+z', () => soundActions.undo(), [soundActions])
   useHotkeys('mod+shift+z', () => soundActions.redo(), [soundActions])
   useHotkeys('ctrl+y', () => soundActions.redo(), [soundActions])
@@ -48,7 +49,7 @@ export const Navbar = () => {
         </li>
         <div className="flex-grow" />
         {!isStoragePersistent && (
-          <li>
+          <li className="flex justify-center">
             <StorageWarningButton />
           </li>
         )}
