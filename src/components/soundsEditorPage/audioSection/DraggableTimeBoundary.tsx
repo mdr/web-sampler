@@ -78,14 +78,6 @@ export const DraggableTimeBoundary = ({
         stroke="transparent"
       />
       <RegularPolygon x={x} y={HANDLE_RADIUS / 2} sides={3} radius={HANDLE_RADIUS} rotation={180} fill="#000000" />
-      <RegularPolygon
-        x={x}
-        y={CANVAS_HEIGHT - HANDLE_RADIUS / 2}
-        sides={3}
-        radius={HANDLE_RADIUS}
-        rotation={0}
-        fill="#000000"
-      />
       <Line points={[x, 0, x, CANVAS_HEIGHT]} stroke="#000000" strokeWidth={2} />
     </Group>
   )

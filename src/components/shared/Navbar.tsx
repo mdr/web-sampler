@@ -1,11 +1,14 @@
 import { NavLink } from 'react-router-dom'
 import { mdiRedo, mdiUndo } from '@mdi/js'
 import Icon from '@mdi/react'
-import { Button } from 'react-aria-components'
+import { Button as RacButton } from 'react-aria-components'
 import { useCanRedo, useCanUndo, useSoundActions } from '../../sounds/soundHooks.ts'
 import { NavbarTestIds } from './NavbarTestIds.ts'
 import { useHotkeys } from 'react-hotkeys-hook'
 import clsx from 'clsx'
+import { StorageWarningButton } from './StorageWarningButton.tsx'
+
+const showWarning = true
 
 export const Navbar = () => {
   const soundActions = useSoundActions()
@@ -24,25 +27,31 @@ export const Navbar = () => {
           </NavLink>
         </li>
         <li className="flex">
-          <Button
+          <RacButton
             data-testid={NavbarTestIds.undoButton}
             aria-label="Undo"
             className={clsx('hover:text-gray-300', { 'cursor-not-allowed opacity-50': !canUndo })}
             onPress={soundActions.undo}
           >
             <Icon path={mdiUndo} size={1} title="Undo" />
-          </Button>
+          </RacButton>
         </li>
         <li className="flex">
-          <Button
+          <RacButton
             data-testid={NavbarTestIds.redoButton}
             aria-label="Redo"
             className={clsx('hover:text-gray-300', { 'cursor-not-allowed opacity-50': !canRedo })}
             onPress={soundActions.redo}
           >
             <Icon path={mdiRedo} size={1} title="Redo" />
-          </Button>
+          </RacButton>
         </li>
+        <div className="flex-grow" />
+        {showWarning && (
+          <li>
+            <StorageWarningButton />
+          </li>
+        )}
       </ul>
     </nav>
   )
