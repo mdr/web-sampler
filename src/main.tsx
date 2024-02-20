@@ -20,6 +20,7 @@ const getDocumentRoot = (): HTMLElement => {
   return root
 }
 
+// Set to try the TestApp (used in component tests) when running with yarn dev
 const USE_TEST_APP = false
 
 ReactDOM.createRoot(getDocumentRoot()).render(

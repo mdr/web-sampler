@@ -13,7 +13,8 @@ import { AudioPlayerContext } from '../audioPlayer/AudioPlayerContext.ts'
 import { AudioPlayer } from '../audioPlayer/AudioPlayer.ts'
 import { SoundStore } from '../sounds/SoundStore.ts'
 import { AppDb } from '../sounds/AppDb.ts'
-import { MakeStoragePersistent } from './misc/MakeStoragePersistent.tsx'
+import { StorageManagerContext } from '../storage/StorageManagerContext.ts'
+import { WebStorageManager } from '../storage/StorageManager.tsx'
 
 export interface AppProps {
   audioContextProvider: AudioContextProvider
@@ -25,12 +26,13 @@ export const App = ({ audioRecorder, audioContextProvider, audioPlayer }: AppPro
   <React.StrictMode>
     <ErrorBoundary fallback={<ErrorFallback />}>
       <ToastContainer position="top-center" hideProgressBar closeOnClick closeButton={false} />
-      <MakeStoragePersistent />
       <AudioContextProviderContext.Provider value={audioContextProvider}>
         <AudioRecorderContext.Provider value={audioRecorder}>
           <AudioPlayerContext.Provider value={audioPlayer}>
             <SoundLibraryContext.Provider value={new SoundLibrary(new SoundStore(new AppDb()))}>
-              <RouterProvider router={router} />
+              <StorageManagerContext.Provider value={new WebStorageManager()}>
+                <RouterProvider router={router} />
+              </StorageManagerContext.Provider>
             </SoundLibraryContext.Provider>
           </AudioPlayerContext.Provider>
         </AudioRecorderContext.Provider>

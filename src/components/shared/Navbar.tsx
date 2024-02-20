@@ -7,13 +7,13 @@ import { NavbarTestIds } from './NavbarTestIds.ts'
 import { useHotkeys } from 'react-hotkeys-hook'
 import clsx from 'clsx'
 import { StorageWarningButton } from './StorageWarningButton.tsx'
-
-const showWarning = true
+import { useStorageManagerState } from '../../storage/storageManagerHooks.ts'
 
 export const Navbar = () => {
   const soundActions = useSoundActions()
   const canUndo = useCanUndo()
   const canRedo = useCanRedo()
+  const { isStoragePersistent } = useStorageManagerState()
   useHotkeys('mod+z', () => soundActions.undo(), [soundActions])
   useHotkeys('mod+shift+z', () => soundActions.redo(), [soundActions])
   useHotkeys('ctrl+y', () => soundActions.redo(), [soundActions])
@@ -47,7 +47,7 @@ export const Navbar = () => {
           </RacButton>
         </li>
         <div className="flex-grow" />
-        {showWarning && (
+        {!isStoragePersistent && (
           <li>
             <StorageWarningButton />
           </li>

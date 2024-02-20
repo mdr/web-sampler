@@ -15,8 +15,7 @@ export const TestApp: FC<TestAppProps> = () => {
   const audioPlayer = new MockAudioPlayer()
   useDidMount(() => {
     const clock = FakeTimers.install()
-    const windowTestHooks = new DefaultWindowTestHooks(audioRecorder, audioPlayer, clock)
-    window.testHooks = windowTestHooks
+    window.testHooks = new DefaultWindowTestHooks(audioRecorder, audioPlayer, clock)
     return () => clock.uninstall()
   })
   return <App audioRecorder={audioRecorder} audioContextProvider={audioContextProvider} audioPlayer={audioPlayer} />
