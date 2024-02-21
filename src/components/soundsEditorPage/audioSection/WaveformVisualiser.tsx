@@ -62,10 +62,12 @@ export const WaveformVisualiser: FC<WaveformVisualiserProps> = memo(
     const handleFinishTimeChanged = (x: Pixels) => onFinishTimeChanged(toSeconds(x))
     const handleFinishTimeChangedTemporarily = (x: Option<Pixels>) => setTempFinishX(x)
 
-    const activeXStart = tempStartX ?? toPixels(startTime)
-    const activeXFinish = tempFinishX ?? toPixels(finishTime)
+    const xStart = toPixels(startTime)
+    const xFinish = toPixels(finishTime)
+
+    const activeXStart = tempStartX ?? xStart
+    const activeXFinish = tempFinishX ?? xFinish
     const activeWidth = activeXFinish - activeXStart
-    const middleY = CANVAS_HEIGHT / 2
 
     return (
       <div ref={ref} className="w-full border-2 border-gray-200" data-testid={EditSoundPaneTestIds.waveformCanvas}>
@@ -77,7 +79,7 @@ export const WaveformVisualiser: FC<WaveformVisualiserProps> = memo(
               <Rect x={activeXStart} y={0} width={activeWidth} height={CANVAS_HEIGHT} fill="#fff" />
 
               {/* Horizontal line at 0 amplitude */}
-              <Line points={[0, middleY, width, middleY]} stroke="#000" strokeWidth={1} />
+              <Line points={[0, CANVAS_HEIGHT / 2, width, CANVAS_HEIGHT / 2]} stroke="#000" strokeWidth={1} />
 
               <Ticks
                 audioDuration={audioDuration}
@@ -99,21 +101,23 @@ export const WaveformVisualiser: FC<WaveformVisualiserProps> = memo(
               <DraggableTimeBoundary
                 onPositionChanged={handleStartPositionChanged}
                 onPositionChangedTemporarily={handleStartPositionChangedTemporarily}
-                x={toPixels(startTime)}
+                x={xStart}
                 xMax={width}
                 dragMin={Pixels(0)}
-                dragMax={toPixels(finishTime)}
+                dragMax={xFinish}
               />
 
               {/* Finish line */}
-              <DraggableTimeBoundary
-                onPositionChanged={handleFinishTimeChanged}
-                onPositionChangedTemporarily={handleFinishTimeChangedTemporarily}
-                x={toPixels(finishTime)}
-                xMax={width}
-                dragMin={toPixels(startTime)}
-                dragMax={width}
-              />
+              {xStart !== width && ( // Don't show finish line if start line is at the end to allow the start line to still be dragged
+                <DraggableTimeBoundary
+                  onPositionChanged={handleFinishTimeChanged}
+                  onPositionChangedTemporarily={handleFinishTimeChangedTemporarily}
+                  x={xFinish}
+                  xMax={width}
+                  dragMin={xStart}
+                  dragMax={width}
+                />
+              )}
             </Layer>
           )}
         </Stage>

@@ -10,6 +10,10 @@ import { Case, Default, Switch } from '../../misc/Switch.tsx'
 const HANDLE_RADIUS = Pixels(10)
 const DRAG_TARGET_WIDTH = Pixels(16)
 
+const Triangle = ({ x, y, rotation }: { x: Pixels; y: Pixels; rotation: number }) => (
+  <RegularPolygon x={x} y={y} sides={3} radius={HANDLE_RADIUS} rotation={rotation} fill="#000000" />
+)
+
 export interface DraggableTimeBoundaryProps {
   x: Pixels
   xMax: Pixels
@@ -54,13 +58,16 @@ export const DraggableTimeBoundary = ({
     stage.container().style.cursor = cursorType
   }
 
-  const constrainDrag = (vector: Vector2d): Vector2d => {
-    const xOffset = vector.x
-    const xAbsolute = xOffset + x
-    const constrainedXAbsolute = Math.max(dragMin, Math.min(xAbsolute, dragMax))
-    const constrainedXOffset = constrainedXAbsolute - x
-    return { x: constrainedXOffset, y: 0 }
-  }
+  const constrainDrag = useCallback(
+    (vector: Vector2d): Vector2d => {
+      const xOffset = vector.x
+      const xAbsolute = xOffset + x
+      const constrainedXAbsolute = Math.max(dragMin, Math.min(xAbsolute, dragMax))
+      const constrainedXOffset = constrainedXAbsolute - x
+      return { x: constrainedXOffset, y: 0 }
+    },
+    [dragMin, x, dragMax],
+  )
 
   return (
     <Group
@@ -84,27 +91,21 @@ export const DraggableTimeBoundary = ({
       {/* Marker/flag */}
       <Switch>
         <Case condition={x <= HANDLE_RADIUS}>
-          <RegularPolygon
-            x={x + HANDLE_RADIUS / 2 + 1}
-            y={(HANDLE_RADIUS * Math.sqrt(3)) / 2}
-            sides={3}
-            radius={HANDLE_RADIUS}
+          <Triangle
+            x={Pixels(x + HANDLE_RADIUS / 2 + 1)}
+            y={Pixels((HANDLE_RADIUS * Math.sqrt(3)) / 2)}
             rotation={90}
-            fill="#000000"
           />
         </Case>
         <Case condition={x >= xMax - HANDLE_RADIUS}>
-          <RegularPolygon
-            x={x - HANDLE_RADIUS / 2 - 1}
-            y={(HANDLE_RADIUS * Math.sqrt(3)) / 2}
-            sides={3}
-            radius={HANDLE_RADIUS}
+          <Triangle
+            x={Pixels(x - HANDLE_RADIUS / 2 - 1)}
+            y={Pixels((HANDLE_RADIUS * Math.sqrt(3)) / 2)}
             rotation={-90}
-            fill="#000000"
           />
         </Case>
         <Default>
-          <RegularPolygon x={x} y={HANDLE_RADIUS / 2} sides={3} radius={HANDLE_RADIUS} rotation={180} fill="#000000" />
+          <Triangle x={x} y={Pixels(HANDLE_RADIUS / 2)} rotation={180} />
         </Default>
       </Switch>
 
