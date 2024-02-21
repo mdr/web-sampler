@@ -3,6 +3,7 @@ import { AbstractAudioRecorder } from '../../../audioRecorder/AbstractAudioRecor
 import { Duration } from 'luxon'
 import { SOUND_DURATION } from '../testConstants.ts'
 import { Pcm } from '../../../utils/types/brandedTypes.ts'
+import { DEFAULT_SAMPLE_RATE } from '../../../types/Sound.ts'
 
 export class MockAudioRecorder extends AbstractAudioRecorder implements AudioRecorder {
   volume: number = 0
@@ -24,8 +25,6 @@ export class MockAudioRecorder extends AbstractAudioRecorder implements AudioRec
     this.fireRecordingCompleteListeners(this.noAudioOnStopRecording ? undefined : createSampleAudio(SOUND_DURATION))
   }
 }
-
-const DEFAULT_SAMPLE_RATE = 48000
 
 const createSampleAudio = (duration: Duration): Pcm => {
   const durationInSeconds = duration.as('seconds')

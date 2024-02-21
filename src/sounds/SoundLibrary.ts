@@ -1,4 +1,4 @@
-import { newSound, Sound, SoundId } from '../types/Sound.ts'
+import { newSound, Sound, SoundId, validateSound } from '../types/Sound.ts'
 import { Option } from '../utils/types/Option.ts'
 import _ from 'lodash'
 import { SoundActions } from './soundHooks.ts'
@@ -32,7 +32,9 @@ export class SoundLibrary implements SoundActions {
   }
 
   private loadSounds = async (): Promise<void> => {
-    this._sounds = await this.soundStore.getAllSounds()
+    const sounds = await this.soundStore.getAllSounds()
+    sounds.forEach(validateSound)
+    this._sounds = sounds
     this._isLoading = false
     this.notifyListeners()
   }
@@ -76,6 +78,7 @@ export class SoundLibrary implements SoundActions {
   newSound = (): Sound => {
     this.checkNotLoading()
     const sound: Sound = newSound()
+    validateSound(sound)
     const updatedSounds = [...this._sounds, sound]
     this.setSounds(updatedSounds, [sound.id])
     return sound
@@ -130,6 +133,7 @@ export class SoundLibrary implements SoundActions {
     }
     const updatedSound = update(sound)
     if (!_.isEqual(sound, updatedSound)) {
+      validateSound(updatedSound)
       const updatedSounds = this._sounds.map((s) => (s.id === id ? updatedSound : s))
       this.setSounds(updatedSounds, [id])
     }

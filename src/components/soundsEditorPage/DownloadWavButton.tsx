@@ -1,6 +1,6 @@
 import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
 import { mdiDownload } from '@mdi/js'
-import { getDisplayName, Sound, SoundAudio } from '../../types/Sound.ts'
+import { DEFAULT_SAMPLE_RATE, getDisplayName, Sound, SoundAudio } from '../../types/Sound.ts'
 import { AudioBufferUtils } from '../../audioRecorder/AudioBufferUtils.ts'
 import { useAudioContext } from '../../audioRecorder/AudioContextProvider.ts'
 import { useDownloadFile } from 'react-downloadfile-hook'
@@ -12,8 +12,6 @@ interface DownloadWavButtonProps {
   sound: Sound
   audio: SoundAudio
 }
-
-const DEFAULT_SAMPLE_RATE = 48000
 
 const cropPcm = (pcm: Pcm, start: Seconds, finish: Seconds): Pcm => {
   const startSample = Math.floor(start * DEFAULT_SAMPLE_RATE)
