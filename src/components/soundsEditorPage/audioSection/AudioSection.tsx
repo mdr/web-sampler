@@ -10,11 +10,12 @@ import {
   useAudioPlayerCurrentTimeAndDurationRaf,
   useAudioPlayerIsPlaying,
 } from '../../../audioPlayer/audioPlayerHooks.ts'
-import { SoundAudio, SoundId } from '../../../types/Sound.ts'
+import { SoundId } from '../../../types/Sound.ts'
 import { useSoundActions } from '../../../sounds/soundHooks.ts'
 import { Button } from '../../shared/Button.tsx'
 import { WaveformVisualiser } from './WaveformVisualiser.tsx'
 import { useHotkeys } from 'react-hotkeys-hook'
+import { SoundAudio } from '../../../types/SoundAudio.ts'
 
 const BIG_SEEK_JUMP = Seconds(0.5)
 const SMALL_SEEK_JUMP = Seconds(0.1)

@@ -2653,6 +2653,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/humanize-duration@npm:^3":
+  version: 3.27.4
+  resolution: "@types/humanize-duration@npm:3.27.4"
+  checksum: 0d92b036ac284c4ae248dca6efa826f9d397e7369f2d5e11de1813e05b32fd44e3d696f999acdc5a7eb412efc33668b8a68f6ad671392c0bbcf797a6329d674f
+  languageName: node
+  linkType: hard
+
 "@types/js-cookie@npm:^2.2.6":
   version: 2.2.7
   resolution: "@types/js-cookie@npm:2.2.7"
@@ -4663,6 +4670,13 @@ __metadata:
   version: 5.0.0
   resolution: "human-signals@npm:5.0.0"
   checksum: 5a9359073fe17a8b58e5a085e9a39a950366d9f00217c4ff5878bd312e09d80f460536ea6a3f260b5943a01fe55c158d1cea3fc7bee3d0520aeef04f6d915c82
+  languageName: node
+  linkType: hard
+
+"humanize-duration@npm:^3.31.0":
+  version: 3.31.0
+  resolution: "humanize-duration@npm:3.31.0"
+  checksum: a78612f6920bd1348401632f4d707da877878473d0b92b6df4c8eff65700365715daae3238324a2c49e25dbddd5d033d5acbb85edc1551eb5f6120a61eb3fd2b
   languageName: node
   linkType: hard
 
@@ -7769,6 +7783,7 @@ __metadata:
     "@testing-library/user-event": "npm:^14.5.2"
     "@types/async-lock": "npm:^1"
     "@types/audiobuffer-to-wav": "npm:^1.0.4"
+    "@types/humanize-duration": "npm:^3"
     "@types/lodash": "npm:^4.14.202"
     "@types/luxon": "npm:^3.4.2"
     "@types/node": "npm:^20.11.19"
@@ -7789,6 +7804,7 @@ __metadata:
     eslint: "npm:^8.56.0"
     eslint-plugin-react-hooks: "npm:^4.6.0"
     eslint-plugin-react-refresh: "npm:^0.4.5"
+    humanize-duration: "npm:^3.31.0"
     immer: "npm:^10.0.3"
     jsdom: "npm:^24.0.0"
     konva: "npm:^9.3.3"

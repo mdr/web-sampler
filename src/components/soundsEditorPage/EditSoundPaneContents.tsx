@@ -23,6 +23,13 @@ import { useNavigate } from 'react-router-dom'
 import { Pcm } from '../../utils/types/brandedTypes.ts'
 import { DownloadWavButton } from './DownloadWavButton.tsx'
 import { CropButton } from './CropButton.tsx'
+import { getPlayableAudioDuration } from '../../types/SoundAudio.ts'
+import humanizeDuration from 'humanize-duration'
+
+const durationHumanizer = humanizeDuration.humanizer({
+  units: ['s'],
+  maxDecimalPoints: 1,
+})
 
 export interface EditSoundPageProps {
   soundId: SoundId
@@ -90,7 +97,10 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPageProps) => {
       <div>
         <DeleteButton onPress={handleDeleteButtonPressed} />
       </div>
-      <h2 className="text-2xl">Audio</h2>
+      <h2 className="text-2xl">
+        Audio
+        {sound.audio && <> ({durationHumanizer(getPlayableAudioDuration(sound.audio) * 1000)})</>}
+      </h2>
       {audioRecorderState === AudioRecorderState.IDLE && (
         <>
           <div className="flex space-x-2">

@@ -1,12 +1,13 @@
 import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
 import { mdiDownload } from '@mdi/js'
-import { DEFAULT_SAMPLE_RATE, getDisplayName, Sound, SoundAudio } from '../../types/Sound.ts'
+import { DEFAULT_SAMPLE_RATE, getDisplayName, Sound } from '../../types/Sound.ts'
 import { AudioBufferUtils } from '../../audioRecorder/AudioBufferUtils.ts'
 import { useAudioContext } from '../../audioRecorder/AudioContextProvider.ts'
 import { useDownloadFile } from 'react-downloadfile-hook'
 import { useMemo } from 'react'
 import { Pcm, Seconds } from '../../utils/types/brandedTypes.ts'
 import { Button } from '../shared/Button.tsx'
+import { SoundAudio } from '../../types/SoundAudio.ts'
 
 interface DownloadWavButtonProps {
   sound: Sound

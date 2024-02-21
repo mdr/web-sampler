@@ -5,6 +5,7 @@ import { Group, Line, Rect, RegularPolygon } from 'react-konva'
 import { CANVAS_HEIGHT } from './waveformConstants.ts'
 import { Vector2d } from 'konva/lib/types'
 import { Option } from '../../../utils/types/Option.ts'
+import { Case, Default, Switch } from '../../misc/Switch.tsx'
 
 const HANDLE_RADIUS = Pixels(10)
 const DRAG_TARGET_WIDTH = Pixels(16)
@@ -80,29 +81,40 @@ export const DraggableTimeBoundary = ({
         stroke="transparent"
       />
 
-      {/* Visible handle */}
-      {x <= HANDLE_RADIUS ? (
-        <RegularPolygon
-          x={x + HANDLE_RADIUS / 2}
-          y={(HANDLE_RADIUS * Math.sqrt(3)) / 2}
-          sides={3}
-          radius={HANDLE_RADIUS}
-          rotation={90}
-          fill="#000000"
-        />
-      ) : x >= xMax - HANDLE_RADIUS ? (
-        <RegularPolygon
-          x={x - HANDLE_RADIUS / 2}
-          y={(HANDLE_RADIUS * Math.sqrt(3)) / 2}
-          sides={3}
-          radius={HANDLE_RADIUS}
-          rotation={-90} // Rotate the other way for the right side
-          fill="#000000"
-        />
-      ) : (
-        <RegularPolygon x={x} y={HANDLE_RADIUS / 2} sides={3} radius={HANDLE_RADIUS} rotation={180} fill="#000000" />
-      )}
-      <Line points={[x, 0, x, CANVAS_HEIGHT]} stroke="#000000" strokeWidth={1} />
+      {/* Marker/flag */}
+      <Switch>
+        <Case condition={x <= HANDLE_RADIUS}>
+          <RegularPolygon
+            x={x + HANDLE_RADIUS / 2 + 1}
+            y={(HANDLE_RADIUS * Math.sqrt(3)) / 2}
+            sides={3}
+            radius={HANDLE_RADIUS}
+            rotation={90}
+            fill="#000000"
+          />
+        </Case>
+        <Case condition={x >= xMax - HANDLE_RADIUS}>
+          <RegularPolygon
+            x={x - HANDLE_RADIUS / 2 - 1}
+            y={(HANDLE_RADIUS * Math.sqrt(3)) / 2}
+            sides={3}
+            radius={HANDLE_RADIUS}
+            rotation={-90}
+            fill="#000000"
+          />
+        </Case>
+        <Default>
+          <RegularPolygon x={x} y={HANDLE_RADIUS / 2} sides={3} radius={HANDLE_RADIUS} rotation={180} fill="#000000" />
+        </Default>
+      </Switch>
+
+      {/* Line showing position */}
+      <Line
+        // tweak by 1 pixel at the extreme right to ensure the line is visible
+        points={[Math.min(x, xMax - 1), 0, Math.min(x, xMax - 1), CANVAS_HEIGHT]}
+        stroke="#000000"
+        strokeWidth={1}
+      />
     </Group>
   )
 }
