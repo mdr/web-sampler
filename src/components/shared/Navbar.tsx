@@ -1,13 +1,11 @@
 import { NavLink } from 'react-router-dom'
 import { mdiRedo, mdiUndo } from '@mdi/js'
-import Icon from '@mdi/react'
-import { Button as RacButton } from 'react-aria-components'
 import { useCanRedo, useCanUndo, useSoundActions } from '../../sounds/soundHooks.ts'
 import { NavbarTestIds } from './NavbarTestIds.ts'
 import { useHotkeys } from 'react-hotkeys-hook'
-import clsx from 'clsx'
 import { StorageWarningButton } from './StorageWarningButton.tsx'
 import { useStorageManagerState } from '../../storage/storageManagerHooks.ts'
+import { NavbarIconButton } from './NavbarIconButton.tsx'
 
 export const Navbar = () => {
   const soundActions = useSoundActions()
@@ -28,24 +26,22 @@ export const Navbar = () => {
           </NavLink>
         </li>
         <li className="flex">
-          <RacButton
-            data-testid={NavbarTestIds.undoButton}
-            aria-label="Undo"
-            className={clsx('hover:text-gray-300', { 'cursor-not-allowed opacity-50': !canUndo })}
+          <NavbarIconButton
+            label="Undo"
+            icon={mdiUndo}
+            testId={NavbarTestIds.undoButton}
+            disabled={!canUndo}
             onPress={soundActions.undo}
-          >
-            <Icon path={mdiUndo} size={1} title="Undo" />
-          </RacButton>
+          />
         </li>
         <li className="flex">
-          <RacButton
-            data-testid={NavbarTestIds.redoButton}
-            aria-label="Redo"
-            className={clsx('hover:text-gray-300', { 'cursor-not-allowed opacity-50': !canRedo })}
+          <NavbarIconButton
+            label="Redo"
+            icon={mdiRedo}
+            testId={NavbarTestIds.redoButton}
+            disabled={!canRedo}
             onPress={soundActions.redo}
-          >
-            <Icon path={mdiRedo} size={1} title="Redo" />
-          </RacButton>
+          />
         </li>
         <div className="flex-grow" />
         {!isStoragePersistent && (

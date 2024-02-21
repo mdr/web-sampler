@@ -1,13 +1,12 @@
-import { Button as RacButton, DialogTrigger, Modal, ModalOverlay } from 'react-aria-components'
-import Icon from '@mdi/react'
+import { DialogTrigger, Modal, ModalOverlay } from 'react-aria-components'
 import { mdiAlert } from '@mdi/js'
 import { StorageWarningDialog } from './StorageWarningDialog.tsx'
+import { NavbarTestIds } from './NavbarTestIds.ts'
+import { NavbarIconButton } from './NavbarIconButton.tsx'
 
 export const StorageWarningButton = () => (
   <DialogTrigger>
-    <RacButton>
-      <Icon path={mdiAlert} size={1} title="Warning" className="hover:text-gray-300" />
-    </RacButton>
+    <NavbarIconButton label="Storage Warning" icon={mdiAlert} testId={NavbarTestIds.storageWarningButton} />
     <ModalOverlay
       className={({ isEntering, isExiting }) => `
             fixed inset-0 z-10 flex min-h-full items-center justify-center overflow-y-auto bg-black/25 p-4 text-center backdrop-blur
