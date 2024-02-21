@@ -34,7 +34,7 @@ export class WebAudioPlayer implements AudioPlayer {
       if (this.playWindow !== undefined) {
         const currentTime = this.audioElement.currentTime
         const { start, finish } = this.playWindow
-        if (currentTime < start || currentTime > finish - END_TOLERANCE) {
+        if (this.audioElement.ended || currentTime < start || currentTime > finish - END_TOLERANCE) {
           this.seek(this.playWindow.start)
         }
       }
