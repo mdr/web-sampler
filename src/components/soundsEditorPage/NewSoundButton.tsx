@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { editSoundRoute } from '../router.tsx'
 
 import { TestId } from '../../utils/types/brandedTypes.ts'
-import { Button } from '../shared/Button.tsx'
+import { Button, ButtonVariant } from '../shared/Button.tsx'
 
 export interface NewSoundButtonProps {
   testId: TestId
@@ -17,5 +17,7 @@ export const NewSoundButton = ({ testId }: NewSoundButtonProps) => {
     const sound = soundActions.newSound()
     navigate(editSoundRoute(sound.id))
   }
-  return <Button testId={testId} icon={mdiPlus} label="New Sound" onPress={handlePress} />
+  return (
+    <Button variant={ButtonVariant.PRIMARY} testId={testId} icon={mdiPlus} label="New Sound" onPress={handlePress} />
+  )
 }

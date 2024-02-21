@@ -6,7 +6,7 @@ export interface StorageManagerState {
 }
 
 export interface StorageManagerActions {
-  attemptToMakeStoragePersistent(): Promise<void>
+  attemptToMakeStoragePersistent(): Promise<boolean>
 }
 
 export interface StorageManager extends StorageManagerState, StorageManagerActions {
@@ -48,7 +48,9 @@ export class WebStorageManager implements StorageManager {
     return this._isStoragePersistent
   }
 
-  attemptToMakeStoragePersistent = async (): Promise<void> => {
-    this.setIsStoragePersistent(await navigator.storage.persist())
+  attemptToMakeStoragePersistent = async (): Promise<boolean> => {
+    const isStoragePersistent = await navigator.storage.persist()
+    this.setIsStoragePersistent(isStoragePersistent)
+    return isStoragePersistent
   }
 }

@@ -5,6 +5,7 @@ import { TestId } from '../../utils/types/brandedTypes.ts'
 import clsx from 'clsx'
 
 export enum ButtonVariant {
+  ORDINARY = 'ORDINARY',
   PRIMARY = 'PRIMARY',
   DANGEROUS = 'DANGEROUS',
 }
@@ -29,7 +30,7 @@ export const Button = ({
   iconOnly = false,
   label,
   onPress,
-  variant = ButtonVariant.PRIMARY,
+  variant = ButtonVariant.ORDINARY,
 }: ButtonProps) => {
   if (label === undefined && icon === undefined) {
     throw new Error('Button must have either a label or an icon')
@@ -42,7 +43,9 @@ export const Button = ({
         'flex whitespace-nowrap rounded py-2 text-white focus:outline-none focus:ring-2',
         variant === ButtonVariant.PRIMARY
           ? 'bg-blue-500 hover:bg-blue-700 focus:ring-blue-300 active:bg-blue-800'
-          : 'bg-red-500 hover:bg-red-700 focus:ring-red-300 active:bg-red-800',
+          : variant === ButtonVariant.DANGEROUS
+            ? 'bg-red-500 hover:bg-red-700 focus:ring-red-300 active:bg-red-800'
+            : 'bg-gray-500 hover:bg-gray-700 focus:ring-gray-300 active:bg-gray-800',
         iconOnly ? 'px-2' : 'px-4',
       )}
       onPress={onPress}
