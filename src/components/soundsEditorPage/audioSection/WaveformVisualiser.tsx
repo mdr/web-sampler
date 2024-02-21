@@ -100,6 +100,7 @@ export const WaveformVisualiser: FC<WaveformVisualiserProps> = memo(
                 onPositionChanged={handleStartPositionChanged}
                 onPositionChangedTemporarily={handleStartPositionChangedTemporarily}
                 x={toPixels(startTime)}
+                xMax={width}
                 dragMin={Pixels(0)}
                 dragMax={toPixels(finishTime)}
               />
@@ -109,6 +110,7 @@ export const WaveformVisualiser: FC<WaveformVisualiserProps> = memo(
                 onPositionChanged={handleFinishTimeChanged}
                 onPositionChangedTemporarily={handleFinishTimeChangedTemporarily}
                 x={toPixels(finishTime)}
+                xMax={width}
                 dragMin={toPixels(startTime)}
                 dragMax={width}
               />

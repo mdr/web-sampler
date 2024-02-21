@@ -11,6 +11,7 @@ const DRAG_TARGET_WIDTH = Pixels(16)
 
 export interface DraggableTimeBoundaryProps {
   x: Pixels
+  xMax: Pixels
   dragMin: Pixels
   dragMax: Pixels
 
@@ -21,6 +22,7 @@ export interface DraggableTimeBoundaryProps {
 
 export const DraggableTimeBoundary = ({
   x,
+  xMax,
   dragMin,
   dragMax,
   onPositionChanged,
@@ -77,6 +79,8 @@ export const DraggableTimeBoundary = ({
         fill="transparent"
         stroke="transparent"
       />
+
+      {/* Visible handle */}
       {x <= HANDLE_RADIUS ? (
         <RegularPolygon
           x={x + HANDLE_RADIUS / 2}
@@ -84,6 +88,15 @@ export const DraggableTimeBoundary = ({
           sides={3}
           radius={HANDLE_RADIUS}
           rotation={90}
+          fill="#000000"
+        />
+      ) : x >= xMax - HANDLE_RADIUS ? (
+        <RegularPolygon
+          x={x - HANDLE_RADIUS / 2}
+          y={(HANDLE_RADIUS * Math.sqrt(3)) / 2}
+          sides={3}
+          radius={HANDLE_RADIUS}
+          rotation={-90} // Rotate the other way for the right side
           fill="#000000"
         />
       ) : (
