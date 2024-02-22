@@ -38,7 +38,7 @@ export const StorageWarningDialog = () => {
               not be 100% safe in local storage.
             </p>
             <div className="mt-6 flex justify-center">
-              <Button label="Attempt to make persistent" onPress={handleAttemptToMakePersistent} />
+              <Button label="Attempt To Make Persistent" onPress={handleAttemptToMakePersistent} />
             </div>
             <div className="mt-6 flex justify-end">
               <Button variant={ButtonVariant.PRIMARY} label="Close" onPress={close} />

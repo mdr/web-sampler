@@ -1,5 +1,6 @@
 import { test } from '@playwright/experimental-ct-react'
 import { launchApp } from '../pageObjects/launchApp.tsx'
+import { launchAndStartAudioCapture } from '../pageObjects/SoundsEditorPageObject.ts'
 
 test('sounds can be created and named', async ({ mount }) => {
   const soundsEditorPage = await launchApp(mount)
@@ -88,9 +89,26 @@ test('keyboard shortcuts should work for undo/redo', async ({ mount }) => {
   await soundsEditorPage.sidebar.pressNewSound()
   await soundsEditorPage.enterSoundName('A')
 
-  await soundsEditorPage.undoWithKeyboardShortcut()
+  await soundsEditorPage.shortcuts.undo()
   await soundsEditorPage.sidebar.expectSoundNamesToBe(['Untitled Sound'])
 
-  await soundsEditorPage.redoWithKeyboardShortcut()
+  await soundsEditorPage.shortcuts.redo()
   await soundsEditorPage.sidebar.expectSoundNamesToBe(['A'])
+})
+
+test('adjusting the start and finish times of a sound via keyboard shortcuts', async ({ mount }) => {
+  const soundsEditorPage = await launchAndStartAudioCapture(mount)
+  await soundsEditorPage.pressStop()
+  await soundsEditorPage.expectAudioWaveformToBeShown()
+  await soundsEditorPage.expectAudioHeadingToContainText('10 seconds')
+
+  await soundsEditorPage.shortcuts.advancePositionInAudio()
+  await soundsEditorPage.shortcuts.setStartPosition()
+  await soundsEditorPage.expectAudioHeadingToContainText('9.5 seconds')
+
+  await soundsEditorPage.shortcuts.advancePositionInAudio()
+  await soundsEditorPage.shortcuts.setFinishPosition()
+  await soundsEditorPage.expectAudioHeadingToContainText('0.5 seconds')
+
+  await soundsEditorPage.checkScreenshot('constrained audio')
 })

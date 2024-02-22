@@ -8,6 +8,26 @@ import { launchApp } from './launchApp.tsx'
 import { SoundSidebarPageObject } from './SoundSidebarPageObject.ts'
 import { platform } from 'node:os'
 
+class SoundsEditorKeyboardShortcutsPageObject extends PageObject {
+  protected readonly name = 'SoundsEditorPage.shortcuts'
+
+  undo = (): Promise<void> =>
+    this.step('undo', () => this.page.keyboard.press(platform() === 'darwin' ? 'Meta+KeyZ' : 'Control+KeyZ'))
+
+  redo = (): Promise<void> =>
+    this.step('redo', () => this.page.keyboard.press(platform() === 'darwin' ? 'Meta+Shift+KeyZ' : 'Control+KeyY'))
+
+  advancePositionInAudio = (): Promise<void> =>
+    this.step('advancePositionInAudio', async () => {
+      await this.page.keyboard.press('ArrowRight')
+      await this.page.evaluate(() => window.testHooks.clockNext())
+    })
+
+  setStartPosition = (): Promise<void> => this.step('setStartPositionInAudio', () => this.page.keyboard.press('s'))
+
+  setFinishPosition = (): Promise<void> => this.step('setFinishPosition', () => this.page.keyboard.press('f'))
+}
+
 export class SoundsEditorPageObject extends PageObject {
   protected readonly name = 'SoundsEditorPage'
 
@@ -18,6 +38,10 @@ export class SoundsEditorPageObject extends PageObject {
 
   get sidebar() {
     return new SoundSidebarPageObject(this.mountResult)
+  }
+
+  get shortcuts() {
+    return new SoundsEditorKeyboardShortcutsPageObject(this.mountResult)
   }
 
   enterSoundName = (name: string): Promise<void> =>
@@ -48,16 +72,6 @@ export class SoundsEditorPageObject extends PageObject {
   pressHomeLink = (): Promise<void> => this.step('pressHomeLink', () => this.press(NavbarTestIds.homeLink))
 
   pressUndo = (): Promise<void> => this.step('pressUndo', () => this.press(NavbarTestIds.undoButton))
-
-  undoWithKeyboardShortcut = (): Promise<void> =>
-    this.step('undoWithKeyboardShortcut', () =>
-      this.page.keyboard.press(platform() === 'darwin' ? 'Meta+KeyZ' : 'Control+KeyZ'),
-    )
-
-  redoWithKeyboardShortcut = (): Promise<void> =>
-    this.step('redoWithKeyboardShortcut', () =>
-      this.page.keyboard.press(platform() === 'darwin' ? 'Meta+Shift+KeyZ' : 'Control+KeyY'),
-    )
 
   pressRedo = (): Promise<void> => this.step('pressRedo', () => this.press(NavbarTestIds.redoButton))
 
@@ -90,6 +104,11 @@ export class SoundsEditorPageObject extends PageObject {
 
   expectStopButtonToBeShown = (): Promise<void> =>
     this.step('expectStopButtonToBeShown', () => this.expectToBeVisible(EditSoundPaneTestIds.stopButton))
+
+  expectAudioHeadingToContainText = (text: string): Promise<void> =>
+    this.step(`expectAudioHeadingToContainText ${text}`, () =>
+      expect(this.get(EditSoundPaneTestIds.audioHeading).getByText(text)).toBeVisible(),
+    )
 
   expectAudioWaveformToBeShown = (): Promise<void> =>
     this.step('expectAudioWaveformToBeShown', () => this.expectToBeVisible(EditSoundPaneTestIds.waveformCanvas))

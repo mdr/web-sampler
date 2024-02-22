@@ -12,8 +12,11 @@ export class MockAudioPlayer implements AudioPlayer {
 
   play = async (): Promise<void> => {
     this.isPlaying = true
-    if (this.currentTime === this.duration) {
-      this.currentTime = Seconds(0)
+    if (this.playWindow !== undefined) {
+      const { start, finish } = this.playWindow
+      if (this.currentTime < start || this.currentTime >= finish) {
+        this.currentTime = this.playWindow.start
+      }
     }
     this.firePlayListeners()
   }
@@ -37,6 +40,7 @@ export class MockAudioPlayer implements AudioPlayer {
   }
 
   seek = (time: Seconds) => {
+    console.log('seeking to', time)
     this.currentTime = time
   }
 
