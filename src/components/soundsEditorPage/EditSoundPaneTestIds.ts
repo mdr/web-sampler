@@ -7,6 +7,7 @@ export const EditSoundPaneTestIds = {
   cropButton: TestId('EditSoundPane.cropButton'),
   stopButton: TestId('EditSoundPane.stopButton'),
   deleteButton: TestId('EditSoundPane.deleteButton'),
+  duplicateButton: TestId('EditSoundPane.duplicateButton'),
   volumeMeter: TestId('EditSoundPane.volumeMeter'),
   playButton: TestId('EditSoundPane.playButton'),
   pauseButton: TestId('EditSoundPane.pauseButton'),

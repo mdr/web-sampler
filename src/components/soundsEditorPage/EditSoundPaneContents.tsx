@@ -27,6 +27,7 @@ import { getPlayableAudioDuration } from '../../types/SoundAudio.ts'
 import humanizeDuration from 'humanize-duration'
 import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
 import Bowser from 'bowser'
+import { DuplicateSoundButton } from './DuplicateSoundButton.tsx'
 
 const durationHumanizer = humanizeDuration.humanizer({
   units: ['s'],
@@ -37,19 +38,15 @@ export interface EditSoundPageProps {
   soundId: SoundId
 }
 
-const canCaptureAudioFromDisplayMedia = (): boolean => {
-  const browser = Bowser.getParser(window.navigator.userAgent)
-  // https://caniuse.com/mdn-api_mediadevices_getdisplaymedia_audio_capture_support
-  return (
-    browser.satisfies({
-      desktop: {
-        chrome: '>=74',
-        edge: '>=79',
-        opera: '>=62',
-      },
-    }) ?? false
-  )
-}
+// https://caniuse.com/mdn-api_mediadevices_getdisplaymedia_audio_capture_support
+const canCaptureAudioFromDisplayMedia = (): boolean =>
+  Bowser.getParser(window.navigator.userAgent).satisfies({
+    desktop: {
+      chrome: '>=74',
+      edge: '>=79',
+      opera: '>=62',
+    },
+  }) ?? false
 
 export const EditSoundPaneContents = ({ soundId }: EditSoundPageProps) => {
   const sound = useSound(soundId)
@@ -107,24 +104,27 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPageProps) => {
     toast.info(`Deleted sound ${getDisplayName(sound)}`)
   }
 
+  const audio = sound.audio
+
   return (
     <div className="flex flex-col space-y-4 px-4 pt-4">
       <SoundNameTextField soundName={sound.name} setSoundName={setSoundName} />
-      <div>
+      <div className="flex space-x-2">
         <DeleteButton onPress={handleDeleteButtonPressed} />
+        <DuplicateSoundButton soundId={sound.id} />
       </div>
       <h2 className="text-2xl" data-testid={EditSoundPaneTestIds.audioHeading}>
         Audio
-        {sound.audio && <> ({durationHumanizer(getPlayableAudioDuration(sound.audio) * 1000)})</>}
+        {audio !== undefined && <> ({durationHumanizer(getPlayableAudioDuration(audio) * 1000)})</>}
       </h2>
       {audioRecorderState === AudioRecorderState.IDLE && (
         <>
           <div className="flex space-x-2">
             {canCaptureAudioFromDisplayMedia() && <CaptureAudioButton onPress={handleCaptureAudioButtonPressed} />}
-            {sound.audio !== undefined && <DownloadWavButton sound={sound} audio={sound.audio} />}
-            {sound.audio !== undefined && <CropButton soundId={sound.id} />}
+            {audio !== undefined && <DownloadWavButton sound={sound} audio={audio} />}
+            {audio !== undefined && <CropButton soundId={sound.id} />}
           </div>
-          {sound.audio !== undefined && <AudioSection soundId={sound.id} audio={sound.audio} />}
+          {audio !== undefined && <AudioSection soundId={sound.id} audio={audio} />}
         </>
       )}
       {audioRecorderState === AudioRecorderState.RECORDING && (

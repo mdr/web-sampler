@@ -12,10 +12,9 @@ export interface Sound {
   readonly audio?: SoundAudio
 }
 
-export const newSound = (): Sound => {
-  const id = SoundId(uuid.v4())
-  return { id, name: '' }
-}
+export const newSoundId = (): SoundId => SoundId(uuid.v4())
+
+export const newSound = (): Sound => ({ id: newSoundId(), name: '' })
 
 export const getDisplayName = (sound: Sound): string => (sound.name.trim() === '' ? 'Untitled Sound' : sound.name)
 

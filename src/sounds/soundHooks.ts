@@ -68,6 +68,8 @@ export interface SoundActions {
 
   deleteSound(id: SoundId): void
 
+  duplicateSound(id: SoundId): void
+
   setStartTime(id: SoundId, startTime: Seconds): void
 
   setFinishTime(id: SoundId, finishTime: Seconds): void

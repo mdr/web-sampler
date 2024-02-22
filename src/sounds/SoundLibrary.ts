@@ -1,4 +1,4 @@
-import { newSound, Sound, SoundId, validateSound } from '../types/Sound.ts'
+import { newSound, newSoundId, Sound, SoundId, validateSound } from '../types/Sound.ts'
 import { Option } from '../utils/types/Option.ts'
 import _ from 'lodash'
 import { SoundActions } from './soundHooks.ts'
@@ -146,6 +146,18 @@ export class SoundLibrary implements SoundActions {
     this.checkNotLoading()
     const updatedSounds = this._sounds.filter((sound) => sound.id !== id)
     this.setSounds(updatedSounds, [id])
+  }
+
+  duplicateSound = (id: SoundId): void => {
+    this.checkNotLoading()
+    const sound = this.findSound(id)
+    if (sound === undefined) {
+      throw new Error(`No sound found with id ${id}`)
+    }
+    const newSound = { ...sound, id: newSoundId() }
+    validateSound(newSound)
+    const updatedSounds = [...this._sounds, newSound]
+    this.setSounds(updatedSounds, [newSound.id])
   }
 
   undo = (): void => {
