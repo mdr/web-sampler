@@ -62,12 +62,18 @@ export class SoundsEditorPageObject extends PageObject {
 
   pressStop = (): Promise<void> => this.step('pressStop', () => this.press(EditSoundPaneTestIds.stopButton))
 
+  pressCropAudio = (): Promise<void> =>
+    this.step('pressCropAudio', () => this.press(EditSoundPaneTestIds.cropAudioButton))
+
   pressPlayButton = (): Promise<void> => this.step('pressPlayButton', () => this.press(EditSoundPaneTestIds.playButton))
 
   pressPauseButton = (): Promise<void> =>
     this.step('pressPauseButton', () => this.press(EditSoundPaneTestIds.pauseButton))
 
   pressDelete = (): Promise<void> => this.step('pressDelete', () => this.press(EditSoundPaneTestIds.deleteButton))
+
+  pressDuplicateSound = (): Promise<void> =>
+    this.step('pressDuplicateSound', () => this.press(EditSoundPaneTestIds.duplicateButton))
 
   pressHomeLink = (): Promise<void> => this.step('pressHomeLink', () => this.press(NavbarTestIds.homeLink))
 

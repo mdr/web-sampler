@@ -51,6 +51,17 @@ test('sounds can be deleted', async ({ mount }) => {
   await soundsEditorPage.expectToastToBeShown('Deleted sound Sound BBB')
 })
 
+test('duplicating sounds', async ({ mount }) => {
+  const soundsEditorPage = await launchApp(mount)
+  await soundsEditorPage.sidebar.pressNewSound()
+  await soundsEditorPage.enterSoundName('Sound AAA')
+
+  await soundsEditorPage.pressDuplicateSound()
+  await soundsEditorPage.pressDuplicateSound()
+
+  await soundsEditorPage.sidebar.expectSoundNamesToBe(['Sound AAA', 'Sound AAA', 'Sound AAA'])
+})
+
 test('undo/redo should handle sound creation and name editing', async ({ mount }) => {
   const soundsEditorPage = await launchApp(mount)
   await soundsEditorPage.sidebar.pressNewSound()
@@ -111,4 +122,15 @@ test('adjusting the start and finish times of a sound via keyboard shortcuts', a
   await soundsEditorPage.expectAudioHeadingToContainText('0.5 seconds')
 
   await soundsEditorPage.checkScreenshot('constrained audio')
+})
+
+test('cropping a sound', async ({ mount }) => {
+  const soundsEditorPage = await launchAndStartAudioCapture(mount)
+  await soundsEditorPage.pressStop()
+  await soundsEditorPage.shortcuts.advancePositionInAudio()
+  await soundsEditorPage.shortcuts.setStartPosition()
+  await soundsEditorPage.shortcuts.advancePositionInAudio()
+  await soundsEditorPage.shortcuts.setFinishPosition()
+
+  await soundsEditorPage.pressCropAudio()
 })

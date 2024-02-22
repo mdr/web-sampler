@@ -13,7 +13,7 @@ export const CropButton = ({ soundId }: CropButtonProps) => {
   const handlePress = () => soundActions.cropAudio(soundId)
   return (
     <Button
-      testId={EditSoundPaneTestIds.cropButton}
+      testId={EditSoundPaneTestIds.cropAudioButton}
       icon={mdiArrowCollapseHorizontal}
       label="Crop Audio"
       onPress={handlePress}
