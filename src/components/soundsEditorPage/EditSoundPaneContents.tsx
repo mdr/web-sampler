@@ -26,6 +26,7 @@ import { CropButton } from './CropButton.tsx'
 import { getPlayableAudioDuration } from '../../types/SoundAudio.ts'
 import humanizeDuration from 'humanize-duration'
 import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
+import Bowser from 'bowser'
 
 const durationHumanizer = humanizeDuration.humanizer({
   units: ['s'],
@@ -34,6 +35,20 @@ const durationHumanizer = humanizeDuration.humanizer({
 
 export interface EditSoundPageProps {
   soundId: SoundId
+}
+
+const canCaptureAudioFromDisplayMedia = (): boolean => {
+  const browser = Bowser.getParser(window.navigator.userAgent)
+  // https://caniuse.com/mdn-api_mediadevices_getdisplaymedia_audio_capture_support
+  return (
+    browser.satisfies({
+      desktop: {
+        chrome: '>=74',
+        edge: '>=79',
+        opera: '>=62',
+      },
+    }) ?? false
+  )
 }
 
 export const EditSoundPaneContents = ({ soundId }: EditSoundPageProps) => {
@@ -105,7 +120,7 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPageProps) => {
       {audioRecorderState === AudioRecorderState.IDLE && (
         <>
           <div className="flex space-x-2">
-            <CaptureAudioButton onPress={handleCaptureAudioButtonPressed} />
+            {canCaptureAudioFromDisplayMedia() && <CaptureAudioButton onPress={handleCaptureAudioButtonPressed} />}
             {sound.audio !== undefined && <DownloadWavButton sound={sound} audio={sound.audio} />}
             {sound.audio !== undefined && <CropButton soundId={sound.id} />}
           </div>

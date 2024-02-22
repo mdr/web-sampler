@@ -19,6 +19,7 @@
     "async-lock": "^1.4.1",
     "audiobuffer-to-wav": "^1.0.0",
     "beautiful-react-hooks": "^5.0.1",
+    "bowser": "^2.11.0",
     "clsx": "^2.1.0",
     "dexie": "^3.2.6",
     "effect": "^2.4.0",

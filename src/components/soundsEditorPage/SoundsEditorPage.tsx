@@ -8,7 +8,6 @@ import { useSoundIdParam } from '../router.tsx'
 export const SoundsEditorPage = () => {
   const soundId = useSoundIdParam()
   const sounds = useSounds()
-
   return (
     <SoundsEditorPageLayout>
       {soundId === undefined ? (
