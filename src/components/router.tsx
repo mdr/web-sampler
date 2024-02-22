@@ -3,11 +3,17 @@ import { ErrorFallback } from './misc/ErrorFallback.tsx'
 import { SoundsEditorPage } from './soundsEditorPage/SoundsEditorPage.tsx'
 import { SoundId } from '../types/Sound.ts'
 import { Option } from '../utils/types/Option.ts'
+import { SoundboardPage } from './soundboard/SoundboardPage.tsx'
 
 export const router = createHashRouter([
   {
     path: '/',
     element: <SoundsEditorPage />,
+    errorElement: <ErrorFallback />,
+  },
+  {
+    path: '/soundboard',
+    element: <SoundboardPage />,
     errorElement: <ErrorFallback />,
   },
   {

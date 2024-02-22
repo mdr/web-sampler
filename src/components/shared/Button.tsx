@@ -1,5 +1,5 @@
-import Icon from '@mdi/react'
 import * as ReactAriaComponents from 'react-aria-components'
+import Icon from '@mdi/react'
 
 import { TestId } from '../../utils/types/brandedTypes.ts'
 import clsx from 'clsx'

@@ -51,6 +51,7 @@ export const AudioSection = ({ soundId, audio }: AudioSectionProps) => {
     return () => {
       audioPlayerActions.pause()
       audioPlayerActions.setUrl(undefined)
+      URL.revokeObjectURL(objectUrl)
     }
   }, [audioContext, audioPlayerActions, pcm])
 
