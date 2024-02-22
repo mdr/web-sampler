@@ -3,18 +3,24 @@ import Icon from '@mdi/react'
 import { mdiPlay } from '@mdi/js'
 import { Sound } from '../../types/Sound.ts'
 import { useAudioContext } from '../../audioRecorder/AudioContextProvider.ts'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { AudioBufferUtils } from '../../audioRecorder/AudioBufferUtils.ts'
 import { unawaited } from '../../utils/utils.ts'
+import { Option } from '../../utils/types/Option.ts'
+import { useRequestAnimationFrame } from '../../utils/hooks/useRequestAnimationFrame.ts'
+import { useHotkeys } from 'react-hotkeys-hook'
 
 export interface SoundButtonProps {
   sound: Sound
+  hotkey: string
 }
 
-export const SoundButton = ({ sound }: SoundButtonProps) => {
+export const SoundButton = ({ sound, hotkey }: SoundButtonProps) => {
   const { audio } = sound
-  const [url, setUrl] = useState<string | undefined>(undefined)
+  const [url, setUrl] = useState<Option<string>>(undefined)
+  const [isPlaying, setIsPlaying] = useState(false)
   const audioContext = useAudioContext()
+
   const audioRef = useRef<HTMLAudioElement>(null)
 
   useEffect(() => {
@@ -29,22 +35,43 @@ export const SoundButton = ({ sound }: SoundButtonProps) => {
     }
   }, [audioContext, audio])
 
-  const handlePress = () => {
-    if (audioRef.current && audio !== undefined) {
-      audioRef.current.currentTime = audio.startTime
-      unawaited(audioRef.current.play())
+  const handleAudioEnded = useCallback(() => {
+    setIsPlaying(false)
+  }, [setIsPlaying])
 
-      const handleTimeUpdate = () => {
-        if (audioRef.current && audioRef.current.currentTime >= audio.finishTime) {
-          audioRef.current.pause()
-          audioRef.current.currentTime = audio.startTime
-          audioRef.current.removeEventListener('timeupdate', handleTimeUpdate)
-        }
+  const handleRaf = useCallback(() => {
+    const audioElement = audioRef.current ?? undefined
+    if (audioElement && audio !== undefined) {
+      if (audioElement.currentTime >= audio.finishTime) {
+        audioElement.pause()
+        setIsPlaying(false)
+        audioElement.currentTime = audio.startTime
       }
+    }
+  }, [audio])
 
-      audioRef.current.addEventListener('timeupdate', handleTimeUpdate)
+  useRequestAnimationFrame(handleRaf)
+
+  useEffect(() => {
+    const audioElement = audioRef.current ?? undefined
+    if (audioElement) {
+      audioElement.addEventListener('ended', handleAudioEnded)
+      return () => {
+        audioElement.removeEventListener('ended', handleAudioEnded)
+      }
+    }
+  }, [audioRef, handleAudioEnded])
+
+  const handlePress = () => {
+    const audioElement = audioRef.current ?? undefined
+    if (audioElement && audio !== undefined) {
+      audioElement.currentTime = audio.startTime
+      setIsPlaying(true)
+      unawaited(audioElement.play())
     }
   }
+
+  useHotkeys(hotkey, handlePress, [handlePress])
 
   return (
     <>
@@ -55,9 +82,9 @@ export const SoundButton = ({ sound }: SoundButtonProps) => {
         onPress={handlePress}
       >
         <span className="z-10 text-sm">{sound.name}</span>
-        <div className="mt-2 flex items-center justify-center opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100">
-          <div className="rounded-full bg-gray-200 p-2">
-            <Icon path={mdiPlay} size={1} color="gray" />
+        <div className="mt-2 flex items-center justify-center transition-opacity duration-300 ease-in-out">
+          <div className={`rounded-full bg-gray-200 p-2 ${isPlaying ? 'animate-ping' : ''}`}>
+            <Icon path={isPlaying ? mdiPlay : mdiPlay} size={1} color="gray" />
           </div>
         </div>
       </Button>
