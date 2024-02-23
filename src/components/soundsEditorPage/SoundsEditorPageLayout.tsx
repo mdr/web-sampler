@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navbar } from '../shared/Navbar.tsx'
-import { SoundsSidebar } from './SoundsSidebar.tsx'
+import { SoundsSidebar } from './sidebar/SoundsSidebar.tsx'
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels'
 
 interface SoundSidebarPageLayoutProps {

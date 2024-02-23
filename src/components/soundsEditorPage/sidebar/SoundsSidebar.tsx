@@ -1,12 +1,13 @@
-import { useSoundActions, useSounds } from '../../sounds/soundHooks.ts'
+import { useSoundActions, useSounds } from '../../../sounds/soundHooks.ts'
 import { Link, useNavigate } from 'react-router-dom'
-import { NewSoundButton } from './NewSoundButton.tsx'
-import { getDisplayName, sortSoundsByDisplayName, SoundId } from '../../types/Sound.ts'
-import { SoundSidebarTestIds } from './EditSoundPaneTestIds.ts'
-import { Button } from 'react-aria-components'
+import { NewSoundButton } from '../NewSoundButton.tsx'
+import { getDisplayName, sortSoundsByDisplayName, SoundId } from '../../../types/Sound.ts'
+import { SoundSidebarTestIds } from '../EditSoundPaneTestIds.ts'
+import * as ReactAriaComponents from 'react-aria-components'
 import Icon from '@mdi/react'
 import { mdiTrashCan } from '@mdi/js'
-import { useSoundIdParam } from '../router.tsx'
+import { useSoundIdParam } from '../../router.tsx'
+import { ExportSoundsButton } from './ExportSoundsButton.tsx'
 
 export const SoundsSidebar = () => {
   const currentSoundId = useSoundIdParam()
@@ -37,19 +38,20 @@ export const SoundsSidebar = () => {
                 >
                   {getDisplayName(sound)}
                 </Link>
-                <Button
+                <ReactAriaComponents.Button
                   className="absolute right-2 top-1/2 -translate-y-1/2 transform opacity-0 hover:text-blue-500 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-blue-300 group-hover:opacity-100"
                   aria-label="Delete"
                   onPress={() => handleDeleteSound(sound.id)}
                 >
                   <Icon path={mdiTrashCan} size={1} title="Delete" />
-                </Button>
+                </ReactAriaComponents.Button>
               </div>
             </li>
           ))}
         </ul>
       </div>
-      <div className="mt-auto flex justify-center py-4">
+      <div className="flex justify-center space-x-4 px-4 py-4">
+        <ExportSoundsButton />
         <NewSoundButton testId={SoundSidebarTestIds.newSoundButton} />
       </div>
     </div>
