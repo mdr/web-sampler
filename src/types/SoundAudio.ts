@@ -11,6 +11,14 @@ export const getPcmAudioDuration = (audio: SoundAudio): Seconds => Seconds(audio
 
 export const getPlayableAudioDuration = (audio: SoundAudio): Seconds => Seconds(audio.finishTime - audio.startTime)
 
+const cropPcm = (pcm: Pcm, start: Seconds, finish: Seconds): Pcm => {
+  const startSample = Math.floor(start * DEFAULT_SAMPLE_RATE)
+  const finishSample = Math.floor(finish * DEFAULT_SAMPLE_RATE)
+  return Pcm(pcm.slice(startSample, finishSample))
+}
+
+export const getCroppedPcm = (audio: SoundAudio): Pcm => cropPcm(audio.pcm, audio.startTime, audio.finishTime)
+
 export const validateSoundAudio = (soundId: SoundId, audio: SoundAudio): void => {
   const pcmDuration = getPcmAudioDuration(audio)
   if (audio.startTime < 0) {

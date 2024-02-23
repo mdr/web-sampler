@@ -15,7 +15,7 @@ import {
   useAudioRecordingComplete,
 } from '../../audioRecorder/audioRecorderHooks.ts'
 import { useSound, useSoundActions } from '../../sounds/soundHooks.ts'
-import { getDisplayName, SoundId } from '../../types/Sound.ts'
+import { getDisplayName, soundHasAudio, SoundId } from '../../types/Sound.ts'
 import { fireAndForget } from '../../utils/utils.ts'
 import { AudioSection } from './audioSection/AudioSection.tsx'
 import { DeleteButton } from './DeleteButton.tsx'
@@ -121,10 +121,10 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPageProps) => {
         <>
           <div className="flex space-x-2">
             {canCaptureAudioFromDisplayMedia() && <CaptureAudioButton onPress={handleCaptureAudioButtonPressed} />}
-            {audio !== undefined && <DownloadWavButton sound={sound} audio={audio} />}
+            {soundHasAudio(sound) && getPlayableAudioDuration(sound.audio) > 0 && <DownloadWavButton sound={sound} />}
             {audio !== undefined && <CropButton soundId={sound.id} />}
           </div>
-          {audio !== undefined && <AudioSection soundId={sound.id} audio={audio} />}
+          {soundHasAudio(sound) && <AudioSection sound={sound} />}
         </>
       )}
       {audioRecorderState === AudioRecorderState.RECORDING && (

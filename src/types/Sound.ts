@@ -12,6 +12,10 @@ export interface Sound {
   readonly audio?: SoundAudio
 }
 
+export type SoundWithDefiniteAudio = Sound & { readonly audio: SoundAudio }
+
+export const soundHasAudio = (sound: Sound): sound is SoundWithDefiniteAudio => sound.audio !== undefined
+
 export const newSoundId = (): SoundId => SoundId(uuid.v4())
 
 export const newSound = (): Sound => ({ id: newSoundId(), name: '' })

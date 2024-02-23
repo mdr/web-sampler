@@ -17,6 +17,9 @@ export class AudioBufferUtils {
   }
 
   pcmToWavBlob = (pcm: Pcm): Blob => {
+    if (pcm.length === 0) {
+      throw new Error('Cannot convert empty PCM to Wav')
+    }
     const wavBuffer = this.pcmToWavArrayBuffer(pcm)
     return new Blob([wavBuffer], { type: 'audio/wav' })
   }

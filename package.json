@@ -16,6 +16,7 @@
     "@mdi/js": "^7.4.47",
     "@mdi/react": "^1.6.1",
     "@sinonjs/fake-timers": "^11.2.2",
+    "@zip.js/zip.js": "^2.7.34",
     "async-lock": "^1.4.1",
     "audiobuffer-to-wav": "^1.0.0",
     "beautiful-react-hooks": "^5.0.1",

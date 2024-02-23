@@ -10,30 +10,26 @@ import {
   useAudioPlayerCurrentTimeAndDurationRaf,
   useAudioPlayerIsPlaying,
 } from '../../../audioPlayer/audioPlayerHooks.ts'
-import { SoundId } from '../../../types/Sound.ts'
+import { SoundWithDefiniteAudio } from '../../../types/Sound.ts'
 import { useSoundActions } from '../../../sounds/soundHooks.ts'
 import { Button } from '../../shared/Button.tsx'
 import { WaveformVisualiser } from './WaveformVisualiser.tsx'
 import { useHotkeys } from 'react-hotkeys-hook'
-import { SoundAudio } from '../../../types/SoundAudio.ts'
 
 const BIG_SEEK_JUMP = Seconds(0.5)
 const SMALL_SEEK_JUMP = Seconds(0.1)
 
 export interface AudioSectionProps {
-  soundId: SoundId
-  audio: SoundAudio
+  sound: SoundWithDefiniteAudio
 }
 
-export const AudioSection = ({ soundId, audio }: AudioSectionProps) => {
+export const AudioSection = ({ sound }: AudioSectionProps) => {
   const [currentPosition, audioDuration] = useAudioPlayerCurrentTimeAndDurationRaf()
   const audioPlayerActions = useAudioPlayerActions()
   const isPlaying = useAudioPlayerIsPlaying()
   const soundActions = useSoundActions()
 
-  const pcm = audio.pcm
-
-  const { startTime, finishTime } = audio
+  const { startTime, finishTime, pcm } = sound.audio
 
   useEffect(() => {
     if (currentPosition >= finishTime) {
@@ -44,6 +40,9 @@ export const AudioSection = ({ soundId, audio }: AudioSectionProps) => {
 
   const audioContext = useAudioContext()
   useEffect(() => {
+    if (pcm.length === 0) {
+      return
+    }
     const audioBufferUtils = new AudioBufferUtils(audioContext)
     const blob = audioBufferUtils.pcmToWavBlob(pcm)
     const objectUrl = Url(URL.createObjectURL(blob))
@@ -81,12 +80,12 @@ export const AudioSection = ({ soundId, audio }: AudioSectionProps) => {
   useHotkeys('shift+right', seekForward(SMALL_SEEK_JUMP), [seekForward])
 
   const markStart = () => {
-    soundActions.setStartTime(soundId, currentPosition)
+    soundActions.setStartTime(sound.id, currentPosition)
   }
   useHotkeys('s', markStart, [markStart])
 
   const markFinish = () => {
-    soundActions.setFinishTime(soundId, currentPosition)
+    soundActions.setFinishTime(sound.id, currentPosition)
   }
   useHotkeys('f', markFinish, [markFinish])
 
@@ -96,13 +95,13 @@ export const AudioSection = ({ soundId, audio }: AudioSectionProps) => {
   )
 
   const handleStartTimeChange = useCallback(
-    (startTime: Seconds) => soundActions.setStartTime(soundId, startTime),
-    [soundActions, soundId],
+    (startTime: Seconds) => soundActions.setStartTime(sound.id, startTime),
+    [soundActions, sound.id],
   )
 
   const handleFinishTimeChange = useCallback(
-    (finishTime: Seconds) => soundActions.setFinishTime(soundId, finishTime),
-    [soundActions, soundId],
+    (finishTime: Seconds) => soundActions.setFinishTime(sound.id, finishTime),
+    [soundActions, sound.id],
   )
 
   return (
@@ -112,7 +111,7 @@ export const AudioSection = ({ soundId, audio }: AudioSectionProps) => {
         currentPosition={currentPosition}
         finishTime={finishTime}
         audioDuration={audioDuration}
-        pcm={audio.pcm}
+        pcm={pcm}
         onPositionChange={handlePositionChange}
         onStartTimeChanged={handleStartTimeChange}
         onFinishTimeChanged={handleFinishTimeChange}

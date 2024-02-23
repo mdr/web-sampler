@@ -2987,6 +2987,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@zip.js/zip.js@npm:^2.7.34":
+  version: 2.7.34
+  resolution: "@zip.js/zip.js@npm:2.7.34"
+  checksum: caa4329632a155fd88e99f03d9fb75b9777c3973134acaf0a6b3eb1fdb60b2b787df54b30c9aa1c70077af06caad5fea99917943bf2d79a4b57510f029061b7e
+  languageName: node
+  linkType: hard
+
 "abbrev@npm:^2.0.0":
   version: 2.0.0
   resolution: "abbrev@npm:2.0.0"
@@ -7801,6 +7808,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^7.0.2"
     "@typescript-eslint/parser": "npm:^7.0.2"
     "@vitejs/plugin-react": "npm:^4.2.1"
+    "@zip.js/zip.js": "npm:^2.7.34"
     async-lock: "npm:^1.4.1"
     audiobuffer-to-wav: "npm:^1.0.0"
     autoprefixer: "npm:^10.4.17"
