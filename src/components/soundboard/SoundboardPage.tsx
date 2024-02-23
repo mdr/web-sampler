@@ -1,9 +1,9 @@
 import { useSounds } from '../../sounds/soundHooks.ts'
 import { SoundButton } from './SoundButton.tsx'
-import { sortSoundsByDisplayName } from '../../types/Sound.ts'
+import { sortSoundsByDisplayName, soundHasAudio } from '../../types/Sound.ts'
 
 export const SoundboardPage = () => {
-  const sounds = sortSoundsByDisplayName(useSounds()).filter((sound) => sound.audio !== undefined)
+  const sounds = sortSoundsByDisplayName(useSounds()).filter(soundHasAudio)
   return (
     <div className="grid grid-cols-[repeat(auto-fill,_minmax(150px,_1fr))] gap-4 p-4">
       {sounds.map((sound, i) => (

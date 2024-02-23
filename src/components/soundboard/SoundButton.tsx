@@ -1,7 +1,7 @@
 import { Button } from 'react-aria-components'
 import Icon from '@mdi/react'
 import { mdiPlay } from '@mdi/js'
-import { Sound } from '../../types/Sound.ts'
+import { SoundWithDefiniteAudio } from '../../types/Sound.ts'
 import { useAudioContext } from '../../audioRecorder/AudioContextProvider.ts'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { AudioBufferUtils } from '../../audioRecorder/AudioBufferUtils.ts'
@@ -11,15 +11,12 @@ import { useRequestAnimationFrame } from '../../utils/hooks/useRequestAnimationF
 import { useHotkeys } from 'react-hotkeys-hook'
 
 export interface SoundButtonProps {
-  sound: Sound
+  sound: SoundWithDefiniteAudio
   hotkey: string
 }
 
 export const SoundButton = ({ sound, hotkey }: SoundButtonProps) => {
   const { audio } = sound
-  if (audio === undefined) {
-    throw new Error(`Sound ${sound.id} has no audio`)
-  }
   const [url, setUrl] = useState<Option<string>>(undefined)
   const [isPlaying, setIsPlaying] = useState(false)
   const audioContext = useAudioContext()
