@@ -7,8 +7,8 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { AudioBufferUtils } from '../../audioRecorder/AudioBufferUtils.ts'
 import { unawaited } from '../../utils/utils.ts'
 import { Option } from '../../utils/types/Option.ts'
-import { useRequestAnimationFrame } from '../../utils/hooks/useRequestAnimationFrame.ts'
 import { useHotkeys } from 'react-hotkeys-hook'
+import { getCroppedPcm } from '../../types/SoundAudio.ts'
 
 export interface SoundButtonProps {
   sound: SoundWithDefiniteAudio
@@ -25,30 +25,17 @@ export const SoundButton = ({ sound, hotkey }: SoundButtonProps) => {
 
   useEffect(() => {
     const audioBufferUtils = new AudioBufferUtils(audioContext)
-    const blob = audioBufferUtils.pcmToWavBlob(audio.pcm)
+    const blob = audioBufferUtils.pcmToWavBlob(getCroppedPcm(audio))
     const objectUrl = URL.createObjectURL(blob)
     setUrl(objectUrl)
     return () => {
       URL.revokeObjectURL(objectUrl)
     }
-  }, [audio.pcm, audioContext])
+  }, [audio, audioContext])
 
   const handleAudioEnded = useCallback(() => {
     setIsPlaying(false)
   }, [setIsPlaying])
-
-  const handleRaf = useCallback(() => {
-    const audioElement = audioRef.current ?? undefined
-    if (audioElement !== undefined) {
-      if (audioElement.currentTime >= audio.finishTime) {
-        audioElement.pause()
-        setIsPlaying(false)
-        audioElement.currentTime = audio.startTime
-      }
-    }
-  }, [audio])
-
-  useRequestAnimationFrame(handleRaf)
 
   useEffect(() => {
     const audioElement = audioRef.current ?? undefined
@@ -63,7 +50,7 @@ export const SoundButton = ({ sound, hotkey }: SoundButtonProps) => {
   const handlePress = () => {
     const audioElement = audioRef.current ?? undefined
     if (audioElement !== undefined) {
-      audioElement.currentTime = audio.startTime
+      audioElement.currentTime = 0
       setIsPlaying(true)
       unawaited(audioElement.play())
     }
