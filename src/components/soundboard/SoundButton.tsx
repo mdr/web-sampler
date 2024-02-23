@@ -17,6 +17,9 @@ export interface SoundButtonProps {
 
 export const SoundButton = ({ sound, hotkey }: SoundButtonProps) => {
   const { audio } = sound
+  if (audio === undefined) {
+    throw new Error(`Sound ${sound.id} has no audio`)
+  }
   const [url, setUrl] = useState<Option<string>>(undefined)
   const [isPlaying, setIsPlaying] = useState(false)
   const audioContext = useAudioContext()
@@ -24,16 +27,14 @@ export const SoundButton = ({ sound, hotkey }: SoundButtonProps) => {
   const audioRef = useRef<HTMLAudioElement>(null)
 
   useEffect(() => {
-    if (audio !== undefined) {
-      const audioBufferUtils = new AudioBufferUtils(audioContext)
-      const blob = audioBufferUtils.pcmToWavBlob(audio.pcm)
-      const objectUrl = URL.createObjectURL(blob)
-      setUrl(objectUrl)
-      return () => {
-        URL.revokeObjectURL(objectUrl)
-      }
+    const audioBufferUtils = new AudioBufferUtils(audioContext)
+    const blob = audioBufferUtils.pcmToWavBlob(audio.pcm)
+    const objectUrl = URL.createObjectURL(blob)
+    setUrl(objectUrl)
+    return () => {
+      URL.revokeObjectURL(objectUrl)
     }
-  }, [audioContext, audio])
+  }, [audioContext])
 
   const handleAudioEnded = useCallback(() => {
     setIsPlaying(false)
@@ -41,7 +42,7 @@ export const SoundButton = ({ sound, hotkey }: SoundButtonProps) => {
 
   const handleRaf = useCallback(() => {
     const audioElement = audioRef.current ?? undefined
-    if (audioElement && audio !== undefined) {
+    if (audioElement !== undefined) {
       if (audioElement.currentTime >= audio.finishTime) {
         audioElement.pause()
         setIsPlaying(false)
@@ -64,7 +65,7 @@ export const SoundButton = ({ sound, hotkey }: SoundButtonProps) => {
 
   const handlePress = () => {
     const audioElement = audioRef.current ?? undefined
-    if (audioElement && audio !== undefined) {
+    if (audioElement !== undefined) {
       audioElement.currentTime = audio.startTime
       setIsPlaying(true)
       unawaited(audioElement.play())
@@ -75,7 +76,7 @@ export const SoundButton = ({ sound, hotkey }: SoundButtonProps) => {
 
   return (
     <>
-      <audio ref={audioRef} src={url} style={{ display: 'none' }}></audio>
+      <audio ref={audioRef} src={url} hidden></audio>
       <Button
         key={sound.id}
         className="group relative flex aspect-square w-full flex-col items-center justify-center overflow-hidden rounded-md border border-gray-200 bg-gray-50 p-2 shadow-md hover:bg-gray-100"
