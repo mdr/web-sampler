@@ -34,7 +34,7 @@ export const SoundButton = ({ sound, hotkey }: SoundButtonProps) => {
     return () => {
       URL.revokeObjectURL(objectUrl)
     }
-  }, [audioContext])
+  }, [audio.pcm, audioContext])
 
   const handleAudioEnded = useCallback(() => {
     setIsPlaying(false)
