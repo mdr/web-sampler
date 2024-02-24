@@ -42,7 +42,8 @@
     "react-toastify": "^10.0.4",
     "react-use": "^17.5.0",
     "typeface-roboto": "^1.1.13",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@playwright/experimental-ct-react": "^1.41.2",

@@ -1,18 +1,31 @@
+import { z } from 'zod'
 import { Seconds } from '../../../utils/types/brandedTypes.ts'
 import { SoundId } from '../../../types/Sound.ts'
 
-export interface ExportedSound {
-  readonly id: SoundId
-  readonly name: string
-  readonly audio?: ExportedSoundAudio
-}
+export const ExportedSoundAudio = z
+  .object({
+    startTime: z.number().transform(Seconds),
+    finishTime: z.number().transform(Seconds),
+  })
+  .readonly()
 
-export interface ExportedSoundAudio {
-  readonly startTime: Seconds
-  readonly finishTime: Seconds
-}
+export type ExportedSoundAudio = z.infer<typeof ExportedSoundAudio>
 
-export interface ExportedSoundLibrary {
-  readonly version: number
-  readonly sounds: ExportedSound[]
-}
+export const ExportedSound = z
+  .object({
+    id: z.string().transform(SoundId),
+    name: z.string(),
+    audio: ExportedSoundAudio.optional(),
+  })
+  .readonly()
+
+export type ExportedSound = z.infer<typeof ExportedSound>
+
+export const ExportedSoundLibrary = z
+  .object({
+    version: z.number(),
+    sounds: z.array(ExportedSound),
+  })
+  .readonly()
+
+export type ExportedSoundLibrary = z.infer<typeof ExportedSoundLibrary>

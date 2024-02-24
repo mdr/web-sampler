@@ -64,13 +64,21 @@ const reconstructSound =
     return { id: soundId, name: exportedSound.name, audio }
   }
 
-const reconstructSounds = async (entries: Entry[]): Promise<Sound[]> => {
+const getExportedSoundsLibrary = async (entries: Entry[]): Promise<ExportedSoundLibrary> => {
   const soundsEntry = entries.find((entry) => entry.filename === SOUNDS_JSON_FILE_NAME)
   if (soundsEntry === undefined) {
     throw new Error(`${SOUNDS_JSON_FILE_NAME} not found in zip file`)
   }
   const jsonString = await getData(soundsEntry, new TextWriter())
-  const exportedSoundsLibrary: ExportedSoundLibrary = JSON.parse(jsonString)
+  const json = JSON.parse(jsonString)
+  if (json.version !== 1) {
+    throw new Error(`Unexpected version: ${json.version}`)
+  }
+  return ExportedSoundLibrary.parse(json)
+}
+
+const reconstructSounds = async (entries: Entry[]): Promise<Sound[]> => {
+  const exportedSoundsLibrary = await getExportedSoundsLibrary(entries)
 
   const soundIdToPcmMap = await buildSoundIdToPcmMap(entries)
 
