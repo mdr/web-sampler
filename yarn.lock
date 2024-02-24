@@ -3267,6 +3267,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"blob-polyfill@npm:^7.0.20220408":
+  version: 7.0.20220408
+  resolution: "blob-polyfill@npm:7.0.20220408"
+  checksum: f45c5c66574d69a7701006e2522d813479ce475847ecf9347edeefe11455a5dfbe8fcc7975491b9676ab87c4e8ad64666db37d6d09d6160f7ef2a2067dab0f00
+  languageName: node
+  linkType: hard
+
 "bowser@npm:^2.11.0":
   version: 2.11.0
   resolution: "bowser@npm:2.11.0"
@@ -7819,6 +7826,7 @@ __metadata:
     audiobuffer-to-wav: "npm:^1.0.0"
     autoprefixer: "npm:^10.4.17"
     beautiful-react-hooks: "npm:^5.0.1"
+    blob-polyfill: "npm:^7.0.20220408"
     bowser: "npm:^2.11.0"
     clsx: "npm:^2.1.0"
     dexie: "npm:^3.2.6"

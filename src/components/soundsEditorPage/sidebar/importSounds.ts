@@ -1,8 +1,10 @@
 import { BlobReader, BlobWriter, Entry, TextWriter, WritableWriter, Writer, ZipReader } from '@zip.js/zip.js'
 import { SoundAudio } from '../../../types/SoundAudio.ts'
 import { Sound, SoundId } from '../../../types/Sound.ts'
-import { ExportedSoundAudio, ExportedSoundLibrary } from './ExportedSoundLibrary.tsx'
+import { ExportedSound, ExportedSoundAudio, ExportedSoundLibrary } from './ExportedSoundLibrary.tsx'
 import { Pcm } from '../../../utils/types/brandedTypes.ts'
+import { SOUNDS_JSON_FILE_NAME } from './importExportConstants.ts'
+import { Option } from '../../../utils/types/Option.ts'
 
 const pcmFromBlob = async (blob: Blob): Promise<Pcm> => {
   const arrayBuffer = await blob.arrayBuffer()
@@ -15,7 +17,7 @@ const pcmFromBlob = async (blob: Blob): Promise<Pcm> => {
   return Pcm(pcm)
 }
 
-const importSoundAudio = (exportedSoundAudio: ExportedSoundAudio, pcm: Pcm): SoundAudio => ({
+const asSoundAudio = (exportedSoundAudio: ExportedSoundAudio, pcm: Pcm): SoundAudio => ({
   startTime: exportedSoundAudio.startTime,
   finishTime: exportedSoundAudio.finishTime,
   pcm,
@@ -29,39 +31,58 @@ const getData = async <Type>(entry: Entry, writer: Writer<Type> | WritableWriter
   return getData(writer)
 }
 
-export const unzipSounds = async (blob: Blob): Promise<Sound[]> => {
-  const zipReader = new ZipReader(new BlobReader(blob))
-  const entries = await zipReader.getEntries()
-  const sounds: Sound[] = []
-
-  const soundsEntry = entries.find((entry) => entry.filename === 'sounds.json')
-  if (soundsEntry === undefined) {
-    throw new Error('sounds.json not found in zip file')
-  }
-  const textWriter = new TextWriter()
-  const content = await getData(soundsEntry, textWriter)
-  const exportedSoundsLibrary: ExportedSoundLibrary = JSON.parse(content as string)
+const buildSoundIdToPcmMap = async (entries: Entry[]): Promise<Map<SoundId, Pcm>> => {
+  const soundIdToPcmMap = new Map<SoundId, Pcm>()
   for (const entry of entries) {
-    if (entry.filename === 'sounds.json') {
+    if (entry.filename === SOUNDS_JSON_FILE_NAME) {
       continue
     }
     if (!entry.filename.endsWith('.pcm')) {
       throw new Error(`Unexpected file in zip: ${entry.filename}`)
     }
     const soundId = SoundId(entry.filename.replace('.pcm', ''))
-    const exportedSound = exportedSoundsLibrary.sounds.find((s) => s.id === soundId)
-    if (exportedSound === undefined) {
-      throw new Error(`Sound ${soundId} not found in sounds.json`)
-    }
-    const blobWriter = new BlobWriter()
-    const content = await getData(entry, blobWriter)
-    const pcm = await pcmFromBlob(content)
-    sounds.push({
-      id: exportedSound.id,
-      name: exportedSound.name,
-      audio: exportedSound.audio ? importSoundAudio(exportedSound.audio, pcm) : undefined,
-    })
+
+    const pcmBlob = await getData(entry, new BlobWriter())
+    const pcm = await pcmFromBlob(pcmBlob)
+    soundIdToPcmMap.set(soundId, pcm)
   }
-  await zipReader.close()
-  return sounds
+  return soundIdToPcmMap
+}
+
+const reconstructSound =
+  (soundIdToPcmMap: Map<SoundId, Pcm>) =>
+  (exportedSound: ExportedSound): Sound => {
+    const soundId = exportedSound.id
+    const pcm = soundIdToPcmMap.get(soundId)
+    let audio: Option<SoundAudio>
+    if (exportedSound.audio !== undefined) {
+      if (pcm === undefined) {
+        throw new Error(`No PCM found for sound ${soundId}`)
+      }
+      audio = asSoundAudio(exportedSound.audio, pcm)
+    }
+    return { id: soundId, name: exportedSound.name, audio }
+  }
+
+const reconstructSounds = async (entries: Entry[]): Promise<Sound[]> => {
+  const soundsEntry = entries.find((entry) => entry.filename === SOUNDS_JSON_FILE_NAME)
+  if (soundsEntry === undefined) {
+    throw new Error(`${SOUNDS_JSON_FILE_NAME} not found in zip file`)
+  }
+  const jsonString = await getData(soundsEntry, new TextWriter())
+  const exportedSoundsLibrary: ExportedSoundLibrary = JSON.parse(jsonString)
+
+  const soundIdToPcmMap = await buildSoundIdToPcmMap(entries)
+
+  return exportedSoundsLibrary.sounds.map(reconstructSound(soundIdToPcmMap))
+}
+
+export const unzipSounds = async (blob: Blob): Promise<Sound[]> => {
+  const zipReader = new ZipReader(new BlobReader(blob))
+  try {
+    const entries = await zipReader.getEntries()
+    return await reconstructSounds(entries)
+  } finally {
+    await zipReader.close()
+  }
 }
