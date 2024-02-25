@@ -6,7 +6,8 @@ import { useHotkeys } from 'react-hotkeys-hook'
 import { StorageWarningButton } from './StorageWarningButton.tsx'
 import { useStorageManagerState } from '../../../storage/storageManagerHooks.ts'
 import { NavbarIconButton } from './NavbarIconButton.tsx'
-import { Menu, MenuItem, MenuTrigger, Popover } from 'react-aria-components'
+import { MenuTrigger, Popover } from 'react-aria-components'
+import { NavbarMenu } from './NavbarMenu.tsx'
 
 export const Navbar = () => {
   const soundActions = useSoundActions()
@@ -54,14 +55,7 @@ export const Navbar = () => {
           <MenuTrigger>
             <NavbarIconButton label="Storage Warning" icon={mdiMenu} testId={NavbarTestIds.storageWarningButton} />
             <Popover className="overflow-hidden rounded-lg bg-white shadow-lg">
-              <Menu onAction={alert} className="p-2">
-                <MenuItem id="exportSounds" className="px-4 py-2 text-gray-700 hover:bg-gray-100">
-                  Export Sounds
-                </MenuItem>
-                <MenuItem id="importSounds" className="px-4 py-2 text-gray-700 hover:bg-gray-100">
-                  Import Sounds…
-                </MenuItem>
-              </Menu>
+              <NavbarMenu />
             </Popover>
           </MenuTrigger>
         </li>

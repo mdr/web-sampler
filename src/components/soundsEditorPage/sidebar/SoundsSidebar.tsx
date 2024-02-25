@@ -7,7 +7,6 @@ import * as ReactAriaComponents from 'react-aria-components'
 import Icon from '@mdi/react'
 import { mdiTrashCan } from '@mdi/js'
 import { useSoundIdParam } from '../../router.tsx'
-import { ExportSoundsButton } from './ExportSoundsButton.tsx'
 
 export const SoundsSidebar = () => {
   const currentSoundId = useSoundIdParam()
@@ -50,8 +49,7 @@ export const SoundsSidebar = () => {
           ))}
         </ul>
       </div>
-      <div className="flex justify-center space-x-4 px-4 py-4">
-        <ExportSoundsButton />
+      <div className="flex justify-center px-4 py-4">
         <NewSoundButton testId={SoundSidebarTestIds.newSoundButton} />
       </div>
     </div>
