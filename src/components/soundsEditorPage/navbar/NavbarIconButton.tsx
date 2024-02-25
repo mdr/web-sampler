@@ -1,7 +1,7 @@
 import { Button as RacButton } from 'react-aria-components'
 import clsx from 'clsx'
 import Icon from '@mdi/react'
-import { TestId } from '../../utils/types/brandedTypes.ts'
+import { TestId } from '../../../utils/types/brandedTypes.ts'
 
 export interface NavbarIconButtonProps {
   label: string

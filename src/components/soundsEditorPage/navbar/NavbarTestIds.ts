@@ -1,4 +1,4 @@
-import { TestId } from '../../utils/types/brandedTypes.ts'
+import { TestId } from '../../../utils/types/brandedTypes.ts'
 
 export const NavbarTestIds = {
   homeLink: TestId('Navbar.homeLink'),

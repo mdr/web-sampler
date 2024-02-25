@@ -2994,10 +2994,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zip.js/zip.js@npm:^2.7.34":
-  version: 2.7.34
-  resolution: "@zip.js/zip.js@npm:2.7.34"
-  checksum: caa4329632a155fd88e99f03d9fb75b9777c3973134acaf0a6b3eb1fdb60b2b787df54b30c9aa1c70077af06caad5fea99917943bf2d79a4b57510f029061b7e
+"@zip.js/zip.js@npm:^2.7.35":
+  version: 2.7.35
+  resolution: "@zip.js/zip.js@npm:2.7.35"
+  checksum: f44c30ed0a195de243615398dd018e107401fed7229e4f99c4bbbb7f5c21f06d55eff942e0154e706414489b8e827e478d1338e5fae58b93233ec20163bf5927
   languageName: node
   linkType: hard
 
@@ -6425,13 +6425,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-resizable-panels@npm:^2.0.9":
-  version: 2.0.9
-  resolution: "react-resizable-panels@npm:2.0.9"
+"react-resizable-panels@npm:^2.0.11":
+  version: 2.0.11
+  resolution: "react-resizable-panels@npm:2.0.11"
   peerDependencies:
     react: ^16.14.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.14.0 || ^17.0.0 || ^18.0.0
-  checksum: 0302ab32d3aa7d2887a2ad58882e447a8e22cef3c5c728cde7436442fcd7475969a86bb45d1a6e285b1b4e2a9ac49d13a0e2df4b29bc63542dc99044309e211c
+  checksum: c421348b7c39f7b67b4967b4ae935f7e50c60f5855e48fc2db94e54c396c925c3eb6c14cfbb2f98bfa0be49821268bb4903ef396c187953f9fc8cc8142e851ae
   languageName: node
   linkType: hard
 
@@ -7821,7 +7821,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^7.0.2"
     "@typescript-eslint/parser": "npm:^7.0.2"
     "@vitejs/plugin-react": "npm:^4.2.1"
-    "@zip.js/zip.js": "npm:^2.7.34"
+    "@zip.js/zip.js": "npm:^2.7.35"
     async-lock: "npm:^1.4.1"
     audiobuffer-to-wav: "npm:^1.0.0"
     autoprefixer: "npm:^10.4.17"
@@ -7850,7 +7850,7 @@ __metadata:
     react-error-boundary: "npm:^4.0.12"
     react-hotkeys-hook: "npm:^4.5.0"
     react-konva: "npm:^18.2.10"
-    react-resizable-panels: "npm:^2.0.9"
+    react-resizable-panels: "npm:^2.0.11"
     react-resize-detector: "npm:^10.0.1"
     react-router-dom: "npm:^6.22.1"
     react-toastify: "npm:^10.0.4"

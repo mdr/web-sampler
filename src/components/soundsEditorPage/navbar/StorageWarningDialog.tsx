@@ -1,10 +1,10 @@
-import { fireAndForget } from '../../utils/utils.ts'
+import { fireAndForget } from '../../../utils/utils.ts'
 import { toast } from 'react-toastify'
 import { Dialog, Heading } from 'react-aria-components'
 import Icon from '@mdi/react'
 import { mdiAlert } from '@mdi/js'
-import { Button, ButtonVariant } from './Button.tsx'
-import { useStorageManagerActions } from '../../storage/storageManagerHooks.ts'
+import { Button, ButtonVariant } from '../../shared/Button.tsx'
+import { useStorageManagerActions } from '../../../storage/storageManagerHooks.ts'
 
 export const StorageWarningDialog = () => {
   const storageManagerActions = useStorageManagerActions()

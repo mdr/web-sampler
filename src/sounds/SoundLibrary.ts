@@ -211,4 +211,4 @@ export class SoundLibrary implements SoundActions {
   }
 }
 
-const pcmDurationInSeconds = (pcm: Pcm): Seconds => Seconds(pcm.length / 48000)
+const pcmDurationInSeconds = (pcm: Pcm): Seconds => Seconds(pcm.length / DEFAULT_SAMPLE_RATE)
