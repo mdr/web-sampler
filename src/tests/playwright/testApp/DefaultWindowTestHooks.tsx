@@ -5,6 +5,7 @@ import { AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorde
 import { MockAudioElement } from '../mocks/MockAudioElement.ts'
 import { SoundLibrary } from '../../../sounds/SoundLibrary.ts'
 import { serialiseSounds } from './soundsSerialisation.ts'
+import { Seconds } from '../../../utils/types/brandedTypes.ts'
 
 export class DefaultWindowTestHooks implements WindowTestHooks {
   constructor(
@@ -34,6 +35,10 @@ export class DefaultWindowTestHooks implements WindowTestHooks {
 
   get isAudioPlaying(): boolean {
     return !this.audioElement.paused
+  }
+
+  get audioPosition(): Seconds {
+    return Seconds(this.audioElement.currentTime)
   }
 
   clockNext = () => this.clock.next()

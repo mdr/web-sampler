@@ -25,6 +25,24 @@ class SoundsEditorKeyboardShortcutsPageObject extends PageObject {
       await this.clockNext()
     })
 
+  seekRightFine = (): Promise<void> =>
+    this.step('seekRightFine', async () => {
+      await this.page.keyboard.press('Shift+ArrowRight')
+      await this.clockNext()
+    })
+
+  seekLeftFine = (): Promise<void> =>
+    this.step('seekLeftFine', async () => {
+      await this.page.keyboard.press('Shift+ArrowLeft')
+      await this.clockNext()
+    })
+
+  seekLeft = (): Promise<void> =>
+    this.step('seekLeft', async () => {
+      await this.page.keyboard.press('ArrowLeft')
+      await this.clockNext()
+    })
+
   setStartPosition = (): Promise<void> =>
     this.step('setStartPosition', async () => {
       await this.page.keyboard.press('s')

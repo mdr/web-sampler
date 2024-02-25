@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/experimental-ct-react'
 import { MountResult } from '../types.ts'
 import { Duration } from 'luxon'
-import { TestId } from '../../../utils/types/brandedTypes.ts'
+import { Seconds, TestId } from '../../../utils/types/brandedTypes.ts'
 import { platform } from 'node:os'
 import { Option } from '../../../utils/types/Option.ts'
 import { Sound } from '../../../types/Sound.ts'
@@ -32,7 +32,14 @@ export abstract class PageObject {
       expect(await this.isAudioPlaying()).toBe(playing)
     })
 
-  isAudioPlaying = (): Promise<boolean> => this.page.evaluate(() => window.testHooks.isAudioPlaying)
+  private isAudioPlaying = (): Promise<boolean> => this.page.evaluate(() => window.testHooks.isAudioPlaying)
+
+  expectAudioPositionToBe = async (position: Seconds): Promise<void> =>
+    this.step(`expectAudioPositionToBe ${position}s`, async () => {
+      expect(await this.getAudioPosition()).toBe(position)
+    })
+
+  private getAudioPosition = (): Promise<Seconds> => this.page.evaluate(() => window.testHooks.audioPosition)
 
   getSounds = (): Promise<Sound[]> =>
     this.step('getSounds', async () => {

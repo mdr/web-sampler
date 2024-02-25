@@ -1,5 +1,6 @@
 import { test } from '@playwright/experimental-ct-react'
 import { launchAndRecordNewSound } from '../pageObjects/SoundsEditorPageObject.ts'
+import { Seconds } from '../../../utils/types/brandedTypes.ts'
 
 test('start, pause and resume playback can be controlled via the play/pause button', async ({ mount }) => {
   const soundsEditorPage = await launchAndRecordNewSound(mount)
@@ -45,4 +46,27 @@ test('playback should be stopped when navigating away from the sounds editor', a
   await soundsEditorPage.pressHomeLink()
 
   await soundsEditorPage.expectAudioToBePlaying(false)
+})
+
+test('audio position can be controlled with shortcuts', async ({ mount }) => {
+  const soundsEditorPage = await launchAndRecordNewSound(mount)
+  await soundsEditorPage.expectAudioPositionToBe(Seconds(0))
+
+  await soundsEditorPage.shortcuts.seekRight()
+  await soundsEditorPage.expectAudioPositionToBe(Seconds(0.5))
+
+  await soundsEditorPage.shortcuts.seekRight()
+  await soundsEditorPage.expectAudioPositionToBe(Seconds(1.0))
+
+  await soundsEditorPage.shortcuts.seekLeft()
+  await soundsEditorPage.expectAudioPositionToBe(Seconds(0.5))
+
+  await soundsEditorPage.shortcuts.seekRightFine()
+  await soundsEditorPage.expectAudioPositionToBe(Seconds(0.6))
+
+  await soundsEditorPage.shortcuts.seekLeftFine()
+  await soundsEditorPage.expectAudioPositionToBe(Seconds(0.5))
+
+  await soundsEditorPage.shortcuts.seekLeft()
+  await soundsEditorPage.expectAudioPositionToBe(Seconds(0.0))
 })
