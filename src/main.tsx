@@ -21,10 +21,10 @@ const getDocumentRoot = (): HTMLElement => {
 }
 
 // Set to try the TestApp (used in component tests) when running with yarn dev
-const USE_TEST_APP = false
+const VITE_USE_TEST_APP: boolean = import.meta.env.VITE_USE_TEST_APP === 'true'
 
 ReactDOM.createRoot(getDocumentRoot()).render(
-  USE_TEST_APP ? (
+  VITE_USE_TEST_APP ? (
     <TestApp />
   ) : (
     <App audioRecorder={audioRecorder} audioContextProvider={audioContextProvider} audioPlayer={audioPlayer} />
