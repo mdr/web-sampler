@@ -30,11 +30,17 @@ export const NavbarMenu = () => {
     }
   }
   return (
-    <Menu onAction={handleAction} className="p-4">
-      <MenuItem id={NavbarMenuIds.exportSounds} className="mb-4 flex p-2 text-gray-700 hover:bg-gray-100">
+    <Menu onAction={handleAction} className="outline-none">
+      <MenuItem
+        id={NavbarMenuIds.exportSounds}
+        className="group box-border flex w-full cursor-default items-center rounded-md px-3 py-2 text-gray-900 outline-none focus:bg-gray-500 focus:text-white"
+      >
         <Icon path={mdiExport} size={1} className="mr-2" /> Export All Sounds
       </MenuItem>
-      <MenuItem id={NavbarMenuIds.importSounds} className="flex p-2 text-gray-700 hover:bg-gray-100">
+      <MenuItem
+        id={NavbarMenuIds.importSounds}
+        className="group box-border flex w-full cursor-default items-center rounded-md px-3 py-2 text-gray-900 outline-none focus:bg-gray-500 focus:text-white"
+      >
         <Icon path={mdiImport} size={1} className="mr-2" /> Import Sounds…
       </MenuItem>
     </Menu>

@@ -59,8 +59,8 @@ export const Navbar = () => {
         )}
         <li className="flex justify-end">
           <MenuTrigger>
-            <NavbarIconButton label="Storage Warning" icon={mdiMenu} testId={NavbarTestIds.storageWarningButton} />
-            <Popover className="overflow-hidden rounded-lg bg-white shadow-lg">
+            <NavbarIconButton label="Menu" icon={mdiMenu} />
+            <Popover className="entering:animate-in entering:fade-in entering:zoom-in-95 exiting:animate-out exiting:fade-out exiting:zoom-out-95 fill-mode-forwards w-56 origin-top-left overflow-auto rounded-md bg-white p-1 shadow-lg ring-1 ring-black ring-opacity-5">
               <NavbarMenu />
             </Popover>
           </MenuTrigger>
