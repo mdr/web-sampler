@@ -1,7 +1,7 @@
 import { Button } from 'react-aria-components'
 import Icon from '@mdi/react'
 import { mdiPlay } from '@mdi/js'
-import { SoundWithDefiniteAudio } from '../../types/Sound.ts'
+import { getDisplayName, SoundWithDefiniteAudio } from '../../types/Sound.ts'
 import { useAudioContext } from '../../audioRecorder/AudioContextProvider.ts'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { AudioBufferUtils } from '../../audioRecorder/AudioBufferUtils.ts'
@@ -66,7 +66,7 @@ export const SoundButton = ({ sound, hotkey }: SoundButtonProps) => {
         className="group relative flex aspect-square w-full flex-col items-center justify-center overflow-hidden rounded-md border border-gray-200 bg-gray-50 p-2 shadow-md hover:bg-gray-100"
         onPress={handlePress}
       >
-        <span className="z-10 text-sm">{sound.name}</span>
+        <span className="z-10 text-sm">{getDisplayName(sound)}</span>
         <div className="mt-2 flex items-center justify-center transition-opacity duration-300 ease-in-out">
           <div className={`rounded-full bg-gray-200 p-2 ${isPlaying ? 'animate-ping' : ''}`}>
             <Icon path={isPlaying ? mdiPlay : mdiPlay} size={1} color="gray" />
