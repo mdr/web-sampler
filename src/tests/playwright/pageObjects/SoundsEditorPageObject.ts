@@ -7,6 +7,7 @@ import { NavbarTestIds } from '../../../components/soundsEditorPage/navbar/Navba
 import { launchApp } from './launchApp.tsx'
 import { SoundSidebarPageObject } from './SoundSidebarPageObject.ts'
 import { platform } from 'node:os'
+import tmp from 'tmp'
 
 class SoundsEditorKeyboardShortcutsPageObject extends PageObject {
   protected readonly name = 'SoundsEditorPage.shortcuts'
@@ -92,6 +93,17 @@ export class SoundsEditorPageObject extends PageObject {
 
   pressCropAudio = (): Promise<void> =>
     this.step('pressCropAudio', () => this.press(EditSoundPaneTestIds.cropAudioButton))
+
+  pressDownloadWav = (): Promise<string> =>
+    this.step('pressDownloadWav', async () => {
+      const downloadPromise = this.page.waitForEvent('download')
+      await this.press(EditSoundPaneTestIds.downloadWavButton)
+      await this.clockNext() // Needed for the download to kick off
+      const download = await downloadPromise
+      const file = tmp.fileSync({ prefix: 'download', postfix: '.wav' }).name
+      await download.saveAs(file)
+      return file
+    })
 
   pressPlayButton = (): Promise<void> => this.step('pressPlayButton', () => this.press(EditSoundPaneTestIds.playButton))
 

@@ -2781,6 +2781,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/tmp@npm:^0":
+  version: 0.2.6
+  resolution: "@types/tmp@npm:0.2.6"
+  checksum: a11bfa2cd8eaa6c5d62f62a3569192d7a2c28efdc5c17af0b0551db85816b2afc8156f3ca15ac76f0b142ae1403f04f44279871424233a1f3390b2e5fc828cd0
+  languageName: node
+  linkType: hard
+
 "@types/ungap__structured-clone@npm:^1":
   version: 1.2.0
   resolution: "@types/ungap__structured-clone@npm:1.2.0"
@@ -6674,7 +6681,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rimraf@npm:^3.0.2":
+"rimraf@npm:^3.0.0, rimraf@npm:^3.0.2":
   version: 3.0.2
   resolution: "rimraf@npm:3.0.2"
   dependencies:
@@ -7263,6 +7270,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tmp@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "tmp@npm:0.2.1"
+  dependencies:
+    rimraf: "npm:^3.0.0"
+  checksum: 67607aa012059c9ce697bee820ee51bc0f39b29a8766def4f92d3f764d67c7cf9205d537d24e0cb1ce9685c40d4c628ead010910118ea18348666b5c46ed9123
+  languageName: node
+  linkType: hard
+
 "to-fast-properties@npm:^2.0.0":
   version: 2.0.0
   resolution: "to-fast-properties@npm:2.0.0"
@@ -7824,6 +7840,7 @@ __metadata:
     "@types/react": "npm:^18.2.58"
     "@types/react-dom": "npm:^18.2.19"
     "@types/sinonjs__fake-timers": "npm:^8.1.5"
+    "@types/tmp": "npm:^0"
     "@types/ungap__structured-clone": "npm:^1"
     "@types/uuid": "npm:^9.0.8"
     "@typescript-eslint/eslint-plugin": "npm:^7.0.2"
@@ -7865,6 +7882,7 @@ __metadata:
     react-toastify: "npm:^10.0.4"
     react-use: "npm:^17.5.0"
     tailwindcss: "npm:^3.4.1"
+    tmp: "npm:^0.2.1"
     typeface-roboto: "npm:^1.1.13"
     typescript: "npm:^5.3.3"
     uuid: "npm:^9.0.1"

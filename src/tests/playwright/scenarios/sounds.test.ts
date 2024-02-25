@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/experimental-ct-react'
 import { launchApp } from '../pageObjects/launchApp.tsx'
 import { launchAndRecordNewSound, launchAndStartAudioCapture } from '../pageObjects/SoundsEditorPageObject.ts'
 import { getTotalAudioDuration } from '../../../types/SoundAudio.ts'
-import { Sound, soundHasAudio, SoundWithDefiniteAudio } from '../../../types/Sound.ts'
+import { assertSoundHasAudio } from '../testUtils.ts'
 
 test('sounds can be created and named', async ({ mount }) => {
   const soundsEditorPage = await launchApp(mount)
@@ -147,6 +147,10 @@ test('cropping a sound should modify the audio', async ({ mount }) => {
   expect(croppedSound.audio.finishTime).toBe(0.5)
 })
 
-function assertSoundHasAudio(sound: Sound): asserts sound is SoundWithDefiniteAudio {
-  expect(soundHasAudio(sound)).toBe(true)
-}
+test('can download a sound as a Wav file', async ({ mount }) => {
+  const soundsEditorPage = await launchAndRecordNewSound(mount)
+
+  const downloadedWavFile = await soundsEditorPage.pressDownloadWav()
+
+  console.log(downloadedWavFile)
+})
