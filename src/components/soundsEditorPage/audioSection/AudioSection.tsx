@@ -31,7 +31,7 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
   const isPlaying = useAudioPlayerIsPlaying()
   const soundActions = useSoundActions()
 
-  // Keep track of position and playback state when audio boundaries are changed
+  // Keep track of position and playback state when audio boundaries are changed:
   const stashedTimeRef = useRef<Option<Seconds>>(undefined)
   const stashedIsPlayingRef = useRef<Option<boolean>>(undefined)
 
