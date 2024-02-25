@@ -20,19 +20,19 @@ class SoundsEditorKeyboardShortcutsPageObject extends PageObject {
   seekRight = (): Promise<void> =>
     this.step('seekRight', async () => {
       await this.page.keyboard.press('ArrowRight')
-      await this.page.evaluate(() => window.testHooks.clockNext())
+      await this.clockNext()
     })
 
   setStartPosition = (): Promise<void> =>
     this.step('setStartPosition', async () => {
       await this.page.keyboard.press('s')
-      await this.page.evaluate(() => window.testHooks.clockNext())
+      await this.clockNext()
     })
 
   setFinishPosition = (): Promise<void> =>
     this.step('setFinishPosition', async () => {
       await this.page.keyboard.press('f')
-      await this.page.evaluate(() => window.testHooks.clockNext())
+      await this.clockNext()
     })
 }
 
@@ -92,7 +92,7 @@ export class SoundsEditorPageObject extends PageObject {
   simulateVolume = (volume: number): Promise<void> =>
     this.step(`simulateVolume ${volume}`, async () => {
       await this.page.evaluate((volume) => window.testHooks.simulateVolume(volume), volume)
-      await this.page.evaluate(() => window.testHooks.clockNext())
+      await this.clockNext()
     })
 
   simulateAudioPlaybackComplete = (): Promise<void> =>
@@ -125,7 +125,10 @@ export class SoundsEditorPageObject extends PageObject {
     )
 
   expectAudioWaveformToBeShown = (): Promise<void> =>
-    this.step('expectAudioWaveformToBeShown', () => this.expectToBeVisible(EditSoundPaneTestIds.waveformCanvas))
+    this.step('expectAudioWaveformToBeShown', async () => {
+      await this.clockNext()
+      await this.expectToBeVisible(EditSoundPaneTestIds.waveformCanvas)
+    })
 
   expectPauseButtonToBeShown = (): Promise<void> =>
     this.step('expectPauseButtonToBeShown', () => this.expectToBeVisible(EditSoundPaneTestIds.pauseButton))

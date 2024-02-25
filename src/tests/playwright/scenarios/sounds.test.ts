@@ -121,7 +121,7 @@ test('adjusting the start and finish times of a sound via keyboard shortcuts', a
   await soundsEditorPage.shortcuts.setFinishPosition()
   await soundsEditorPage.expectAudioHeadingToContainText('0.5 seconds')
 
-  await soundsEditorPage.checkScreenshot('constrained audio')
+  await soundsEditorPage.checkScreenshot('constrained-audio')
 })
 
 test('cropping a sound', async ({ mount }) => {

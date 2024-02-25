@@ -47,4 +47,6 @@ export abstract class PageObject {
       await expect(this.mountResult).toHaveScreenshot(`${name}.png`)
     }
   }
+
+  protected clockNext = (): Promise<void> => this.page.evaluate(() => window.testHooks.clockNext())
 }
