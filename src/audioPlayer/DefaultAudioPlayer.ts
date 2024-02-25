@@ -34,9 +34,6 @@ export class DefaultAudioPlayer implements AudioPlayer {
     if (time < 0) {
       throw new Error(`Cannot seek to negative time: ${time} seconds`)
     }
-    if (time > this.duration) {
-      throw new Error(`Cannot seek past the end of the audio: ${time} seconds > ${this.duration} seconds`)
-    }
     return (this.audioElement.currentTime = time)
   }
 

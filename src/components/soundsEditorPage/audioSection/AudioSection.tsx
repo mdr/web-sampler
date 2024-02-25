@@ -1,5 +1,5 @@
 import { EditSoundPaneTestIds } from '../EditSoundPaneTestIds.ts'
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { AudioBufferUtils } from '../../../audioRecorder/AudioBufferUtils.ts'
 import { useAudioContext } from '../../../audioRecorder/AudioContextProvider.ts'
 import { Seconds, Url } from '../../../utils/types/brandedTypes.ts'
@@ -16,6 +16,7 @@ import { Button } from '../../shared/Button.tsx'
 import { WaveformVisualiser } from './WaveformVisualiser.tsx'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { getPlayRegionPcm, getTotalAudioDuration } from '../../../types/SoundAudio.ts'
+import { Option } from '../../../utils/types/Option.ts'
 
 const BIG_SEEK_JUMP = Seconds(0.5)
 const SMALL_SEEK_JUMP = Seconds(0.1)
@@ -30,6 +31,10 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
   const isPlaying = useAudioPlayerIsPlaying()
   const soundActions = useSoundActions()
 
+  // Keep track of position and playback state when audio boundaries are changed
+  const stashedTimeRef = useRef<Option<Seconds>>(undefined)
+  const stashedIsPlayingRef = useRef<Option<boolean>>(undefined)
+
   const { startTime, finishTime, pcm } = sound.audio
   const currentPosition = Seconds(currentAudioPlayerPosition + startTime)
   const totalAudioDuration = getTotalAudioDuration(sound.audio)
@@ -37,6 +42,10 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
   const audioContext = useAudioContext()
   useEffect(() => {
     const pcm = getPlayRegionPcm(sound.audio)
+    const stashedTime = stashedTimeRef.current
+    stashedTimeRef.current = undefined
+    const wasPlaying = stashedIsPlayingRef.current
+    stashedIsPlayingRef.current = undefined
     if (pcm.length === 0) {
       audioPlayerActions.setUrl(undefined)
       return
@@ -45,6 +54,12 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
     const blob = audioBufferUtils.pcmToWavBlob(pcm)
     const objectUrl = Url(URL.createObjectURL(blob))
     audioPlayerActions.setUrl(objectUrl)
+    if (stashedTime !== undefined && stashedTime > sound.audio.startTime) {
+      audioPlayerActions.seek(Seconds(stashedTime - sound.audio.startTime))
+    }
+    if (wasPlaying) {
+      unawaited(audioPlayerActions.play())
+    }
     return () => {
       audioPlayerActions.setUrl(undefined)
       URL.revokeObjectURL(objectUrl)
@@ -78,25 +93,29 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
   useHotkeys('right', seekForward(BIG_SEEK_JUMP), [seekForward])
   useHotkeys('shift+right', seekForward(SMALL_SEEK_JUMP), [seekForward])
 
-  const markStart = () => {
-    soundActions.setStartTime(sound.id, currentPosition)
-  }
+  const setStartTime = useCallback(
+    (startTime: Seconds) => {
+      stashedTimeRef.current = currentPosition
+      stashedIsPlayingRef.current = isPlaying
+      soundActions.setStartTime(sound.id, startTime)
+    },
+    [currentPosition, isPlaying, soundActions, sound.id],
+  )
+
+  const setFinishTime = useCallback(
+    (finishTime: Seconds) => {
+      stashedTimeRef.current = currentPosition
+      stashedIsPlayingRef.current = isPlaying
+      soundActions.setFinishTime(sound.id, finishTime)
+    },
+    [currentPosition, isPlaying, soundActions, sound.id],
+  )
+
+  const markStart = () => setStartTime(currentPosition)
   useHotkeys('s', markStart, [markStart])
 
-  const markFinish = () => {
-    soundActions.setFinishTime(sound.id, currentPosition)
-  }
+  const markFinish = () => setFinishTime(currentPosition)
   useHotkeys('f', markFinish, [markFinish])
-
-  const handleStartTimeChange = useCallback(
-    (startTime: Seconds) => soundActions.setStartTime(sound.id, startTime),
-    [soundActions, sound.id],
-  )
-
-  const handleFinishTimeChange = useCallback(
-    (finishTime: Seconds) => soundActions.setFinishTime(sound.id, finishTime),
-    [soundActions, sound.id],
-  )
 
   return (
     <div className="flex flex-col items-center">
@@ -107,8 +126,8 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
         audioDuration={totalAudioDuration}
         pcm={pcm}
         onPositionChange={seek}
-        onStartTimeChanged={handleStartTimeChange}
-        onFinishTimeChanged={handleFinishTimeChange}
+        onStartTimeChanged={setStartTime}
+        onFinishTimeChanged={setFinishTime}
       />
       <div className="mt-4">
         <Button
