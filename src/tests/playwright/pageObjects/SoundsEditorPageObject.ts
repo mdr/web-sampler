@@ -17,15 +17,23 @@ class SoundsEditorKeyboardShortcutsPageObject extends PageObject {
   redo = (): Promise<void> =>
     this.step('redo', () => this.page.keyboard.press(platform() === 'darwin' ? 'Meta+Shift+KeyZ' : 'Control+KeyY'))
 
-  advancePositionInAudio = (): Promise<void> =>
-    this.step('advancePositionInAudio', async () => {
+  seekRight = (): Promise<void> =>
+    this.step('seekRight', async () => {
       await this.page.keyboard.press('ArrowRight')
       await this.page.evaluate(() => window.testHooks.clockNext())
     })
 
-  setStartPosition = (): Promise<void> => this.step('setStartPositionInAudio', () => this.page.keyboard.press('s'))
+  setStartPosition = (): Promise<void> =>
+    this.step('setStartPosition', async () => {
+      await this.page.keyboard.press('s')
+      await this.page.evaluate(() => window.testHooks.clockNext())
+    })
 
-  setFinishPosition = (): Promise<void> => this.step('setFinishPosition', () => this.page.keyboard.press('f'))
+  setFinishPosition = (): Promise<void> =>
+    this.step('setFinishPosition', async () => {
+      await this.page.keyboard.press('f')
+      await this.page.evaluate(() => window.testHooks.clockNext())
+    })
 }
 
 export class SoundsEditorPageObject extends PageObject {

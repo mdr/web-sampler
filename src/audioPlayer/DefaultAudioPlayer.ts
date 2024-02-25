@@ -1,16 +1,13 @@
 import { Seconds, Url } from '../utils/types/brandedTypes'
-import { AudioPlayer, PlayWindow } from './AudioPlayer'
+import { AudioPlayer } from './AudioPlayer'
 import { Option } from '../utils/types/Option.ts'
 import AsyncLock from 'async-lock'
 import { unawaited } from '../utils/utils.ts'
 
-// How close to the end you can be before we auto seek to the start before playing
-const END_TOLERANCE: Seconds = Seconds(0.2)
-
 export class DefaultAudioPlayer implements AudioPlayer {
-  constructor(readonly audioElement: HTMLAudioElement) {}
+  private url: Option<Url> = undefined
 
-  private playWindow: Option<PlayWindow> = undefined
+  constructor(readonly audioElement: HTMLAudioElement) {}
 
   // Lock to force play/pause operations to be sequential
   private lock: AsyncLock = new AsyncLock()
@@ -20,37 +17,27 @@ export class DefaultAudioPlayer implements AudioPlayer {
   }
 
   setUrl = (url: Option<Url>) => {
+    this.url = url
     this.audioElement.src = url ?? ''
-  }
-
-  setPlayWindow = (playWindow: PlayWindow) => {
-    this.playWindow = playWindow
-    if (this.audioElement.currentTime < playWindow.start || this.audioElement.currentTime > playWindow.finish) {
-      this.seek(playWindow.start)
-    }
   }
 
   play = (): Promise<void> =>
     this.lock.acquire('lock', async () => {
-      if (this.playWindow !== undefined) {
-        const currentTime = this.audioElement.currentTime
-        const { start, finish } = this.playWindow
-        if (this.audioElement.ended || currentTime < start || currentTime > finish - END_TOLERANCE) {
-          this.seek(this.playWindow.start)
-        }
+      if (this.url !== undefined) {
+        return this.audioElement.play()
       }
-      return this.audioElement.play()
     })
 
   pause = () => unawaited(this.lock.acquire('lock', async () => this.audioElement.pause()))
 
   seek = (time: Seconds) => {
-    let actualTime = time
-    if (this.playWindow !== undefined) {
-      const { start, finish } = this.playWindow
-      actualTime = Seconds(Math.max(start, Math.min(finish, time)))
+    if (time < 0) {
+      throw new Error(`Cannot seek to negative time: ${time} seconds`)
     }
-    this.audioElement.currentTime = actualTime
+    if (time > this.duration) {
+      throw new Error(`Cannot seek past the end of the audio: ${time} seconds > ${this.duration} seconds`)
+    }
+    return (this.audioElement.currentTime = time)
   }
 
   get currentTime(): Seconds {

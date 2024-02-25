@@ -117,7 +117,6 @@ export class MockAudioElement implements PartialAudioElement {
   }
 
   removeEventListener<K extends keyof HTMLMediaElementEventMap>(type: K, listener: AudioElementListener<K>): void {
-    console.log(listener)
     switch (type) {
       case 'play':
         _.remove<AudioElementListener<'play'>>(this.playListeners, listener)

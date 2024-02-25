@@ -1,4 +1,4 @@
-import { newSound, newSoundId, Sound, SoundId, validateSound } from '../types/Sound.ts'
+import { DEFAULT_SAMPLE_RATE, newSound, newSoundId, Sound, SoundId, validateSound } from '../types/Sound.ts'
 import { Option } from '../utils/types/Option.ts'
 import _ from 'lodash'
 import { SoundActions } from './soundHooks.ts'
@@ -119,7 +119,7 @@ export class SoundLibrary implements SoundActions {
     this.updateSoundImmer(id, (sound) => {
       const audio = sound.audio
       if (audio !== undefined) {
-        audio.pcm = Pcm(audio.pcm.slice(audio.startTime * 48000, audio.finishTime * 48000))
+        audio.pcm = Pcm(audio.pcm.slice(audio.startTime * DEFAULT_SAMPLE_RATE, audio.finishTime * DEFAULT_SAMPLE_RATE))
         audio.startTime = Seconds(0)
         audio.finishTime = pcmDurationInSeconds(audio.pcm)
       }

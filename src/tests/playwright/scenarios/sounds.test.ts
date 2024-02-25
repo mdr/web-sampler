@@ -113,11 +113,11 @@ test('adjusting the start and finish times of a sound via keyboard shortcuts', a
   await soundsEditorPage.expectAudioWaveformToBeShown()
   await soundsEditorPage.expectAudioHeadingToContainText('10 seconds')
 
-  await soundsEditorPage.shortcuts.advancePositionInAudio()
+  await soundsEditorPage.shortcuts.seekRight()
   await soundsEditorPage.shortcuts.setStartPosition()
   await soundsEditorPage.expectAudioHeadingToContainText('9.5 seconds')
 
-  await soundsEditorPage.shortcuts.advancePositionInAudio()
+  await soundsEditorPage.shortcuts.seekRight()
   await soundsEditorPage.shortcuts.setFinishPosition()
   await soundsEditorPage.expectAudioHeadingToContainText('0.5 seconds')
 
@@ -127,9 +127,9 @@ test('adjusting the start and finish times of a sound via keyboard shortcuts', a
 test('cropping a sound', async ({ mount }) => {
   const soundsEditorPage = await launchAndStartAudioCapture(mount)
   await soundsEditorPage.pressStop()
-  await soundsEditorPage.shortcuts.advancePositionInAudio()
+  await soundsEditorPage.shortcuts.seekRight()
   await soundsEditorPage.shortcuts.setStartPosition()
-  await soundsEditorPage.shortcuts.advancePositionInAudio()
+  await soundsEditorPage.shortcuts.seekRight()
   await soundsEditorPage.shortcuts.setFinishPosition()
 
   await soundsEditorPage.pressCropAudio()
