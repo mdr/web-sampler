@@ -2,8 +2,9 @@ import { expect, test } from '@playwright/experimental-ct-react'
 import { launchApp } from '../pageObjects/launchApp.tsx'
 import { launchAndRecordNewSound, launchAndStartAudioCapture } from '../pageObjects/SoundsEditorPageObject.ts'
 import { getTotalAudioDuration } from '../../../types/SoundAudio.ts'
-import { assertSoundHasAudio } from '../testUtils.ts'
+import { assertSoundHasAudio, filesAreEqual } from '../testUtils.ts'
 
+export const EXPECTED_DOWNLOAD_PATH = 'src/tests/playwright/data/expected-download.wav'
 test('sounds can be created and named', async ({ mount }) => {
   const soundsEditorPage = await launchApp(mount)
 
@@ -53,7 +54,7 @@ test('sounds can be deleted', async ({ mount }) => {
   await soundsEditorPage.expectToastToBeShown('Deleted sound Sound BBB')
 })
 
-test('duplicating sounds', async ({ mount }) => {
+test('sounds can be duplicated', async ({ mount }) => {
   const soundsEditorPage = await launchApp(mount)
   await soundsEditorPage.sidebar.pressNewSound()
   await soundsEditorPage.enterSoundName('Sound AAA')
@@ -150,7 +151,10 @@ test('cropping a sound should modify the audio', async ({ mount }) => {
 test('can download a sound as a Wav file', async ({ mount }) => {
   const soundsEditorPage = await launchAndRecordNewSound(mount)
 
-  const downloadedWavFile = await soundsEditorPage.pressDownloadWav()
+  const downloadedWavPath = await soundsEditorPage.pressDownloadWav()
 
-  console.log(downloadedWavFile)
+  expect(
+    await filesAreEqual(downloadedWavPath, EXPECTED_DOWNLOAD_PATH),
+    'downloaded Wav file should have the correct contents',
+  ).toBe(true)
 })
