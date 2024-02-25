@@ -4,7 +4,7 @@ import { getDisplayName, SoundWithDefiniteAudio } from '../../../types/Sound.ts'
 import { Button } from '../../shared/Button.tsx'
 import { useAudioContext } from '../../../audioRecorder/AudioContextProvider.ts'
 import { AudioBufferUtils } from '../../../audioRecorder/AudioBufferUtils.ts'
-import { getCroppedPcm } from '../../../types/SoundAudio.ts'
+import { getPlayRegionPcm } from '../../../types/SoundAudio.ts'
 import FileSaver from 'file-saver'
 
 interface DownloadWavButtonProps {
@@ -16,7 +16,7 @@ export const DownloadWavButton = ({ sound }: DownloadWavButtonProps) => {
 
   const doDownload = () => {
     const audioBufferUtils = new AudioBufferUtils(audioContext)
-    const arrayBuffer = audioBufferUtils.pcmToWavArrayBuffer(getCroppedPcm(sound.audio))
+    const arrayBuffer = audioBufferUtils.pcmToWavArrayBuffer(getPlayRegionPcm(sound.audio))
     const blob = new Blob([arrayBuffer], { type: 'audio/wav' })
     FileSaver.saveAs(blob, `${getDisplayName(sound)}.wav`)
   }

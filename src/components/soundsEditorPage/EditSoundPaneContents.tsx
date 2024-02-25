@@ -23,7 +23,7 @@ import { useNavigate } from 'react-router-dom'
 import { Pcm } from '../../utils/types/brandedTypes.ts'
 import { DownloadWavButton } from './audioSection/DownloadWavButton.tsx'
 import { CropButton } from './audioSection/CropButton.tsx'
-import { getPlayableAudioDuration } from '../../types/SoundAudio.ts'
+import { getPlayRegionDuration } from '../../types/SoundAudio.ts'
 import humanizeDuration from 'humanize-duration'
 import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
 import Bowser from 'bowser'
@@ -115,13 +115,13 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPageProps) => {
       </div>
       <h2 className="text-2xl" data-testid={EditSoundPaneTestIds.audioHeading}>
         Audio
-        {audio !== undefined && <> ({durationHumanizer(getPlayableAudioDuration(audio) * 1000)})</>}
+        {audio !== undefined && <> ({durationHumanizer(getPlayRegionDuration(audio) * 1000)})</>}
       </h2>
       {audioRecorderState === AudioRecorderState.IDLE && (
         <>
           <div className="flex space-x-2">
             {canCaptureAudioFromDisplayMedia() && <CaptureAudioButton onPress={handleCaptureAudioButtonPressed} />}
-            {soundHasAudio(sound) && getPlayableAudioDuration(sound.audio) > 0 && <DownloadWavButton sound={sound} />}
+            {soundHasAudio(sound) && getPlayRegionDuration(sound.audio) > 0 && <DownloadWavButton sound={sound} />}
             {audio !== undefined && <CropButton soundId={sound.id} />}
           </div>
           {soundHasAudio(sound) && <AudioSection sound={sound} />}

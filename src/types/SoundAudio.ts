@@ -7,9 +7,15 @@ export interface SoundAudio {
   readonly finishTime: Seconds
 }
 
-export const getPcmAudioDuration = (audio: SoundAudio): Seconds => Seconds(audio.pcm.length / DEFAULT_SAMPLE_RATE)
+/**
+ * Get the total duration in seconds of the underlying audio, ignoring the start and finish times.
+ */
+export const getTotalAudioDuration = (audio: SoundAudio): Seconds => Seconds(audio.pcm.length / DEFAULT_SAMPLE_RATE)
 
-export const getPlayableAudioDuration = (audio: SoundAudio): Seconds => Seconds(audio.finishTime - audio.startTime)
+/**
+ * Get the duration in seconds of the play region of the audio (between the start and finish times)
+ */
+export const getPlayRegionDuration = (audio: SoundAudio): Seconds => Seconds(audio.finishTime - audio.startTime)
 
 const cropPcm = (pcm: Pcm, start: Seconds, finish: Seconds): Pcm => {
   const startSample = Math.floor(start * DEFAULT_SAMPLE_RATE)
@@ -17,10 +23,10 @@ const cropPcm = (pcm: Pcm, start: Seconds, finish: Seconds): Pcm => {
   return Pcm(pcm.slice(startSample, finishSample))
 }
 
-export const getCroppedPcm = (audio: SoundAudio): Pcm => cropPcm(audio.pcm, audio.startTime, audio.finishTime)
+export const getPlayRegionPcm = (audio: SoundAudio): Pcm => cropPcm(audio.pcm, audio.startTime, audio.finishTime)
 
 export const validateSoundAudio = (soundId: SoundId, audio: SoundAudio): void => {
-  const pcmDuration = getPcmAudioDuration(audio)
+  const pcmDuration = getTotalAudioDuration(audio)
   if (audio.startTime < 0) {
     throw new Error(`Sound ${soundId} start time is negative: ${audio.startTime}`)
   }
