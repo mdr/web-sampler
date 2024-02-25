@@ -1,16 +1,9 @@
 import ReactDOM from 'react-dom/client'
-import { App } from './components/App.tsx'
 import { TestApp } from './tests/playwright/TestApp.tsx'
-import { WebAudioRecorder } from './audioRecorder/WebAudioRecorder.ts'
-import { LazyAudioContextProvider } from './audioRecorder/AudioContextProvider.ts'
-import { DefaultAudioPlayer } from './audioPlayer/DefaultAudioPlayer.ts'
 import 'typeface-roboto'
 import 'react-toastify/dist/ReactToastify.css'
 import './main.css'
-
-const audioContextProvider = new LazyAudioContextProvider()
-const audioRecorder = new WebAudioRecorder(audioContextProvider)
-const audioPlayer = new DefaultAudioPlayer(new Audio())
+import { ProdApp } from './components/ProdApp.tsx'
 
 const getDocumentRoot = (): HTMLElement => {
   const root = document.getElementById('root') ?? undefined
@@ -21,12 +14,6 @@ const getDocumentRoot = (): HTMLElement => {
 }
 
 // Set to try the TestApp (used in component tests) when running with yarn dev
-const VITE_USE_TEST_APP: boolean = import.meta.env.VITE_USE_TEST_APP === 'true'
+const useTestApp: boolean = import.meta.env.VITE_USE_TEST_APP === 'true'
 
-ReactDOM.createRoot(getDocumentRoot()).render(
-  VITE_USE_TEST_APP ? (
-    <TestApp />
-  ) : (
-    <App audioRecorder={audioRecorder} audioContextProvider={audioContextProvider} audioPlayer={audioPlayer} />
-  ),
-)
+ReactDOM.createRoot(getDocumentRoot()).render(useTestApp ? <TestApp /> : <ProdApp />)

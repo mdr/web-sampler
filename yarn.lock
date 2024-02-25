@@ -2781,6 +2781,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/ungap__structured-clone@npm:^1":
+  version: 1.2.0
+  resolution: "@types/ungap__structured-clone@npm:1.2.0"
+  checksum: 52f341ded16708603e5631769b26acf0e9ed7c556ce81abb4e55962110b30442576c631c8f7e298b561b8ff77c7823f0edc9f5e313e1c5e1441825a590e5b0f3
+  languageName: node
+  linkType: hard
+
 "@types/uuid@npm:^9.0.8":
   version: 9.0.8
   resolution: "@types/uuid@npm:9.0.8"
@@ -7817,9 +7824,11 @@ __metadata:
     "@types/react": "npm:^18.2.58"
     "@types/react-dom": "npm:^18.2.19"
     "@types/sinonjs__fake-timers": "npm:^8.1.5"
+    "@types/ungap__structured-clone": "npm:^1"
     "@types/uuid": "npm:^9.0.8"
     "@typescript-eslint/eslint-plugin": "npm:^7.0.2"
     "@typescript-eslint/parser": "npm:^7.0.2"
+    "@ungap/structured-clone": "npm:^1.2.0"
     "@vitejs/plugin-react": "npm:^4.2.1"
     "@zip.js/zip.js": "npm:^2.7.35"
     async-lock: "npm:^1.4.1"

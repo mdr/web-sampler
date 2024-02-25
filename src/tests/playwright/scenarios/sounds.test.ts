@@ -1,6 +1,8 @@
-import { test } from '@playwright/experimental-ct-react'
+import { expect, test } from '@playwright/experimental-ct-react'
 import { launchApp } from '../pageObjects/launchApp.tsx'
-import { launchAndStartAudioCapture } from '../pageObjects/SoundsEditorPageObject.ts'
+import { launchAndRecordNewSound, launchAndStartAudioCapture } from '../pageObjects/SoundsEditorPageObject.ts'
+import { getTotalAudioDuration } from '../../../types/SoundAudio.ts'
+import { Sound, soundHasAudio, SoundWithDefiniteAudio } from '../../../types/Sound.ts'
 
 test('sounds can be created and named', async ({ mount }) => {
   const soundsEditorPage = await launchApp(mount)
@@ -124,13 +126,27 @@ test('adjusting the start and finish times of a sound via keyboard shortcuts', a
   await soundsEditorPage.checkScreenshot('constrained-audio')
 })
 
-test('cropping a sound', async ({ mount }) => {
-  const soundsEditorPage = await launchAndStartAudioCapture(mount)
-  await soundsEditorPage.pressStop()
+test('cropping a sound should modify the audio', async ({ mount }) => {
+  const soundsEditorPage = await launchAndRecordNewSound(mount)
   await soundsEditorPage.shortcuts.seekRight()
   await soundsEditorPage.shortcuts.setStartPosition()
   await soundsEditorPage.shortcuts.seekRight()
   await soundsEditorPage.shortcuts.setFinishPosition()
+  const [initialSound] = await soundsEditorPage.getSounds()
+  assertSoundHasAudio(initialSound)
+  expect(getTotalAudioDuration(initialSound.audio)).toBe(10)
+  expect(initialSound.audio.startTime).toBe(0.5)
+  expect(initialSound.audio.finishTime).toBe(1)
 
   await soundsEditorPage.pressCropAudio()
+
+  const [croppedSound] = await soundsEditorPage.getSounds()
+  assertSoundHasAudio(croppedSound)
+  expect(getTotalAudioDuration(croppedSound.audio)).toBe(0.5)
+  expect(croppedSound.audio.startTime).toBe(0)
+  expect(croppedSound.audio.finishTime).toBe(0.5)
 })
+
+function assertSoundHasAudio(sound: Sound): asserts sound is SoundWithDefiniteAudio {
+  expect(soundHasAudio(sound)).toBe(true)
+}

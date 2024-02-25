@@ -1,8 +1,7 @@
 import { AudioRecorder, AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
 import { AbstractAudioRecorder } from '../../../audioRecorder/AbstractAudioRecorder.ts'
-import { Duration } from 'luxon'
 import { SOUND_DURATION } from '../testConstants.ts'
-import { Pcm } from '../../../utils/types/brandedTypes.ts'
+import { Pcm, Seconds } from '../../../utils/types/brandedTypes.ts'
 import { DEFAULT_SAMPLE_RATE } from '../../../types/Sound.ts'
 
 export class MockAudioRecorder extends AbstractAudioRecorder implements AudioRecorder {
@@ -26,9 +25,8 @@ export class MockAudioRecorder extends AbstractAudioRecorder implements AudioRec
   }
 }
 
-const createSampleAudio = (duration: Duration): Pcm => {
-  const durationInSeconds = duration.as('seconds')
-  const numberOfSamples = DEFAULT_SAMPLE_RATE * durationInSeconds
+const createSampleAudio = (duration: Seconds): Pcm => {
+  const numberOfSamples = DEFAULT_SAMPLE_RATE * duration
   const channelData = new Float32Array(numberOfSamples)
   const frequency = 440
   const lfoFrequency = 2

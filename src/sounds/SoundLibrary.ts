@@ -2,7 +2,7 @@ import { DEFAULT_SAMPLE_RATE, newSound, newSoundId, Sound, SoundId, validateSoun
 import { Option } from '../utils/types/Option.ts'
 import _ from 'lodash'
 import { SoundActions } from './soundHooks.ts'
-import { fireAndForget } from '../utils/utils.ts'
+import { fireAndForget, unawaited } from '../utils/utils.ts'
 import { Duration } from 'luxon'
 import { SoundStore } from './SoundStore.ts'
 import { Pcm, Seconds } from '../utils/types/brandedTypes.ts'
@@ -28,7 +28,7 @@ export class SoundLibrary implements SoundActions {
 
   constructor(private readonly soundStore: SoundStore) {
     setInterval(this.tryPersistDirtySounds, PERSIST_DIRTY_INTERVAL.toMillis())
-    fireAndForget(() => this.loadSounds())
+    unawaited(this.loadSounds())
   }
 
   private loadSounds = async (): Promise<void> => {
@@ -202,7 +202,7 @@ export class SoundLibrary implements SoundActions {
       return
     }
     const soundsToPersist = this.dirtySoundIds
-      .map((id) => this.findSound(id))
+      .map(this.findSound)
       .filter((sound): sound is Sound => sound !== undefined)
     const soundIdsToDelete = this.dirtySoundIds.filter((id) => this.findSound(id) === undefined)
     this.dirtySoundIds.length = 0

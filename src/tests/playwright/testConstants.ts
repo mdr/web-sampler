@@ -1,3 +1,3 @@
-import { Duration } from 'luxon'
+import { Seconds } from '../../utils/types/brandedTypes.ts'
 
-export const SOUND_DURATION = Duration.fromObject({ seconds: 10 })
+export const SOUND_DURATION = Seconds(10)

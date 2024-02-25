@@ -4,6 +4,8 @@ import { Duration } from 'luxon'
 import { TestId } from '../../../utils/types/brandedTypes.ts'
 import { platform } from 'node:os'
 import { Option } from '../../../utils/types/Option.ts'
+import { Sound } from '../../../types/Sound.ts'
+import { deserialiseSounds } from '../testApp/soundsSerialisation.ts'
 
 export abstract class PageObject {
   constructor(protected readonly mountResult: MountResult) {}
@@ -32,10 +34,18 @@ export abstract class PageObject {
 
   isAudioPlaying = (): Promise<boolean> => this.page.evaluate(() => window.testHooks.isAudioPlaying)
 
+  getSounds = (): Promise<Sound[]> =>
+    this.step('getSounds', async () => {
+      const jsonString = await this.page.evaluate(() => window.testHooks.getSoundsJson())
+      return deserialiseSounds(jsonString)
+    })
+
   wait = (duration: Duration): Promise<void> =>
     this.step(`wait ${duration.toHuman()}`, () =>
       this.page.evaluate((millis) => window.testHooks.clockTick(millis), duration.toMillis()),
     )
+
+  protected clockNext = (): Promise<void> => this.page.evaluate(() => window.testHooks.clockNext())
 
   checkScreenshot = async (name: string, testId: Option<TestId> = undefined): Promise<void> => {
     if (platform() !== 'linux') {
@@ -47,6 +57,4 @@ export abstract class PageObject {
       await expect(this.mountResult).toHaveScreenshot(`${name}.png`)
     }
   }
-
-  protected clockNext = (): Promise<void> => this.page.evaluate(() => window.testHooks.clockNext())
 }

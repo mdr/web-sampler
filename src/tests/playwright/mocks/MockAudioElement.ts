@@ -45,7 +45,7 @@ export class MockAudioElement implements PartialAudioElement {
     this._paused = true
     this._ended = false
     this.fireLoadStartListeners()
-    this._duration = Seconds(value === '' ? Number.NaN : SOUND_DURATION.toMillis() / 1000)
+    this._duration = Seconds(value === '' ? Number.NaN : SOUND_DURATION)
   }
 
   private _paused: boolean = true
