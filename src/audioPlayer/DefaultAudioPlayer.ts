@@ -7,7 +7,7 @@ import { unawaited } from '../utils/utils.ts'
 // How close to the end you can be before we auto seek to the start before playing
 const END_TOLERANCE: Seconds = Seconds(0.2)
 
-export class WebAudioPlayer implements AudioPlayer {
+export class DefaultAudioPlayer implements AudioPlayer {
   constructor(readonly audioElement: HTMLAudioElement) {}
 
   private playWindow: Option<PlayWindow> = undefined
