@@ -8,7 +8,22 @@ import { unawaited } from '../utils/utils.ts'
 const END_TOLERANCE: Seconds = Seconds(0.2)
 
 export class WebAudioPlayer implements AudioPlayer {
-  private readonly audioElement: HTMLAudioElement = new Audio()
+  constructor(readonly audioElement: HTMLAudioElement) {
+    const log = (event: string) => () =>
+      console.log({
+        event,
+        currentTime: audioElement.currentTime,
+        duration: audioElement.duration,
+        ended: audioElement.ended,
+        paused: audioElement.paused,
+        src: audioElement.src,
+      })
+    this.audioElement.addEventListener('play', log('play'))
+    this.audioElement.addEventListener('pause', log('pause'))
+    this.audioElement.addEventListener('ended', log('ended'))
+    this.audioElement.addEventListener('loadstart', log('loadstart'))
+  }
+
   private playWindow: Option<PlayWindow> = undefined
 
   // Lock to force play/pause operations to be sequential

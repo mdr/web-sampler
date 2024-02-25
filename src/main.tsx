@@ -10,7 +10,7 @@ import './main.css'
 
 const audioContextProvider = new LazyAudioContextProvider()
 const audioRecorder = new WebAudioRecorder(audioContextProvider)
-const audioPlayer = new WebAudioPlayer()
+const audioPlayer = new WebAudioPlayer(new Audio())
 
 const getDocumentRoot = (): HTMLElement => {
   const root = document.getElementById('root') ?? undefined
