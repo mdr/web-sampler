@@ -26,8 +26,8 @@ import { CropButton } from './audioSection/CropButton.tsx'
 import { getPlayRegionDuration } from '../../types/SoundAudio.ts'
 import humanizeDuration from 'humanize-duration'
 import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
-import Bowser from 'bowser'
 import { DuplicateSoundButton } from './DuplicateSoundButton.tsx'
+import { isChromiumBasedBrowser } from '../../utils/browserUtils.ts'
 
 const durationHumanizer = humanizeDuration.humanizer({
   units: ['s'],
@@ -39,14 +39,7 @@ export interface EditSoundPageProps {
 }
 
 // https://caniuse.com/mdn-api_mediadevices_getdisplaymedia_audio_capture_support
-const canCaptureAudioFromDisplayMedia = (): boolean =>
-  Bowser.getParser(window.navigator.userAgent).satisfies({
-    desktop: {
-      chrome: '>=74',
-      edge: '>=79',
-      opera: '>=62',
-    },
-  }) ?? false
+const canCaptureAudioFromDisplayMedia = (): boolean => isChromiumBasedBrowser()
 
 export const EditSoundPaneContents = ({ soundId }: EditSoundPageProps) => {
   const sound = useSound(soundId)

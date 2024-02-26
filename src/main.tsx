@@ -1,9 +1,9 @@
 import ReactDOM from 'react-dom/client'
+import { ProdApp } from './components/ProdApp.tsx'
 import { TestApp } from './tests/playwright/TestApp.tsx'
 import 'typeface-roboto'
 import 'react-toastify/dist/ReactToastify.css'
 import './main.css'
-import { ProdApp } from './components/ProdApp.tsx'
 
 const getDocumentRoot = (): HTMLElement => {
   const root = document.getElementById('root') ?? undefined

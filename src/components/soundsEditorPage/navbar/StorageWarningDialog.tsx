@@ -5,6 +5,7 @@ import Icon from '@mdi/react'
 import { mdiAlert } from '@mdi/js'
 import { Button, ButtonVariant } from '../../shared/Button.tsx'
 import { useStorageManagerActions } from '../../../storage/storageManagerHooks.ts'
+import { isChromiumBasedBrowser } from '../../../utils/browserUtils.ts'
 
 export const StorageWarningDialog = () => {
   const storageManagerActions = useStorageManagerActions()
@@ -13,10 +14,14 @@ export const StorageWarningDialog = () => {
       {({ close }) => {
         const handleAttemptToMakePersistent = () => {
           fireAndForget(async () => {
-            const notificationPermission = await Notification.requestPermission()
-            if (notificationPermission !== 'granted') {
-              toast.error('You need to grant notification permission to make storage persistent.')
-              return
+            // On Chromium-based browsers, the most reliable way to make storage persistent is to request
+            // notification permission:
+            if (isChromiumBasedBrowser()) {
+              const notificationPermission = await Notification.requestPermission()
+              if (notificationPermission !== 'granted') {
+                toast.error('You need to grant notification permission to make storage persistent.')
+                return
+              }
             }
             const isStoragePersistent = await storageManagerActions.attemptToMakeStoragePersistent()
             if (isStoragePersistent) {
