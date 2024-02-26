@@ -1,11 +1,15 @@
 import { Key, Menu, MenuItem } from 'react-aria-components'
-import { useSounds } from '../../../sounds/soundHooks.ts'
+import { useSoundActions, useSounds } from '../../../sounds/soundHooks.ts'
 import { fireAndForget } from '../../../utils/utils.ts'
 import { zipSounds } from './importExport/exportSounds.ts'
 import FileSaver from 'file-saver'
 import { toast } from 'react-toastify'
 import Icon from '@mdi/react'
 import { mdiExport, mdiImport } from '@mdi/js'
+import { useFilePicker } from 'use-file-picker'
+import { unzipSounds } from './importExport/importSounds.ts'
+import { Sound } from '../../../types/Sound.ts'
+import { SelectedFiles } from 'use-file-picker/types'
 
 const NavbarMenuIds = {
   exportSounds: 'exportSounds',
@@ -14,14 +18,36 @@ const NavbarMenuIds = {
 
 export const NavbarMenu = () => {
   const sounds = useSounds()
+  const soundActions = useSoundActions()
+
+  const handleFilesSuccessfullySelected = async ({ filesContent }: SelectedFiles<ArrayBuffer>): Promise<void> => {
+    const zipBlob = new Blob([filesContent[0].content])
+    let sounds: readonly Sound[]
+    try {
+      sounds = await unzipSounds(zipBlob)
+    } catch (e) {
+      console.error('Error importing sounds', e)
+      toast.error('Error importing sounds.')
+      return
+    }
+    await soundActions.importSounds(sounds)
+    toast.info('Sounds imported successfully.')
+  }
+
+  const { openFilePicker } = useFilePicker({
+    readAs: 'ArrayBuffer',
+    accept: '.sounds',
+    onFilesSuccessfullySelected: handleFilesSuccessfullySelected,
+  })
+
   const doExport = () =>
     fireAndForget(async () => {
       const zipBlob = await zipSounds(sounds)
-      FileSaver.saveAs(zipBlob, 'sounds.zip')
+      FileSaver.saveAs(zipBlob, 'library.sounds')
       toast.info('All sounds exported.')
     })
 
-  const doImport = () => undefined
+  const doImport = () => openFilePicker()
 
   const handleAction = (key: Key) => {
     switch (key) {

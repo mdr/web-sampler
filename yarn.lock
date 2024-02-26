@@ -4322,6 +4322,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"file-selector@npm:0.2.4":
+  version: 0.2.4
+  resolution: "file-selector@npm:0.2.4"
+  dependencies:
+    tslib: "npm:^2.0.3"
+  checksum: f43a8c370e69897c5c060dcfdeacb8828ccbdacdd2a255723c28fd16f230098ba079526de2dd0e7e519e4d9e72a06f2be0bbaee7ab8e09bed8f05b619f3fba94
+  languageName: node
+  linkType: hard
+
 "fill-range@npm:^7.0.1":
   version: 7.0.1
   resolution: "fill-range@npm:7.0.1"
@@ -7355,7 +7364,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.1.0, tslib@npm:^2.4.0":
+"tslib@npm:^2.0.3, tslib@npm:^2.1.0, tslib@npm:^2.4.0":
   version: 2.6.2
   resolution: "tslib@npm:2.6.2"
   checksum: e03a8a4271152c8b26604ed45535954c0a45296e32445b4b87f8a5abdb2421f40b59b4ca437c4346af0f28179780d604094eb64546bee2019d903d01c6c19bdb
@@ -7495,6 +7504,17 @@ __metadata:
     querystringify: "npm:^2.1.1"
     requires-port: "npm:^1.0.0"
   checksum: bd5aa9389f896974beb851c112f63b466505a04b4807cea2e5a3b7092f6fbb75316f0491ea84e44f66fed55f1b440df5195d7e3a8203f64fcefa19d182f5be87
+  languageName: node
+  linkType: hard
+
+"use-file-picker@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "use-file-picker@npm:2.1.1"
+  dependencies:
+    file-selector: "npm:0.2.4"
+  peerDependencies:
+    react: ">=16"
+  checksum: 225a4cbb5676157412c49f62f8473fa5c0b06e85abfb54cc37d3c0407219968a5492d986c63cb27fdcf0a9899b65c3f5b45016ac5119201280e07eed3d93a369
   languageName: node
   linkType: hard
 
@@ -7895,6 +7915,7 @@ __metadata:
     tmp: "npm:^0.2.1"
     typeface-roboto: "npm:^1.1.13"
     typescript: "npm:^5.3.3"
+    use-file-picker: "npm:^2.1.1"
     uuid: "npm:^9.0.1"
     vite: "npm:^5.1.4"
     vite-plugin-checker: "npm:^0.6.4"
