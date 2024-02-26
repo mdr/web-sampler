@@ -13,7 +13,7 @@ export class DefaultAudioPlayer implements AudioPlayer {
   private lock: AsyncLock = new AsyncLock()
 
   get isPlaying(): boolean {
-    return !this.audioElement.paused && this.audioElement.currentTime > 0
+    return !this.audioElement.paused
   }
 
   setUrl = (url: Option<Url>) => {

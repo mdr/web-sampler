@@ -16,20 +16,22 @@ const useAudioPlayer = (): AudioPlayer => {
 export const useAudioPlayerIsPlaying = (): boolean => {
   const audioPlayer = useAudioPlayer()
   const [isPlaying, setIsPlaying] = useState<boolean>(audioPlayer.isPlaying)
-  const handlePlay = useCallback(() => setIsPlaying(true), [setIsPlaying])
-  const handlePauseOrEnded = useCallback(() => setIsPlaying(false), [setIsPlaying])
+  const handlePlay = useCallback(() => setIsPlaying(true), [])
+  const handlePause = useCallback(() => setIsPlaying(false), [])
+  const handleEnded = useCallback(() => setIsPlaying(false), [])
+  const handleLoadStart = useCallback(() => setIsPlaying(audioPlayer.isPlaying), [audioPlayer.isPlaying])
   useEffect(() => {
     audioPlayer.addPlayListener(handlePlay)
-    audioPlayer.addPauseListener(handlePauseOrEnded)
-    audioPlayer.addEndedListener(handlePauseOrEnded)
-    audioPlayer.addLoadStartListener(handlePauseOrEnded)
+    audioPlayer.addPauseListener(handlePause)
+    audioPlayer.addEndedListener(handleEnded)
+    audioPlayer.addLoadStartListener(handleLoadStart)
     return () => {
       audioPlayer.removePlayListener(handlePlay)
-      audioPlayer.removePauseListener(handlePauseOrEnded)
-      audioPlayer.removeEndedListener(handlePauseOrEnded)
-      audioPlayer.removeLoadStartListener(handlePauseOrEnded)
+      audioPlayer.removePauseListener(handlePause)
+      audioPlayer.removeEndedListener(handleEnded)
+      audioPlayer.removeLoadStartListener(handleLoadStart)
     }
-  }, [audioPlayer, setIsPlaying, handlePlay, handlePauseOrEnded])
+  }, [audioPlayer, handleEnded, handleLoadStart, handlePause, handlePlay])
   return isPlaying
 }
 

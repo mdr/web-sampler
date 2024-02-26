@@ -17,6 +17,7 @@ import { WaveformVisualiser } from './WaveformVisualiser.tsx'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { getPlayRegionPcm, getTotalAudioDuration } from '../../../types/SoundAudio.ts'
 import { Option } from '../../../utils/types/Option.ts'
+import useUnmount from 'beautiful-react-hooks/useUnmount'
 
 const BIG_SEEK_JUMP = Seconds(0.5)
 const SMALL_SEEK_JUMP = Seconds(0.1)
@@ -54,17 +55,20 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
     const blob = audioBufferUtils.pcmToWavBlob(pcm)
     const objectUrl = Url(URL.createObjectURL(blob))
     audioPlayerActions.setUrl(objectUrl)
-    if (stashedTime !== undefined && stashedTime > sound.audio.startTime) {
+    if (stashedTime !== undefined && sound.audio.startTime <= stashedTime && stashedTime <= sound.audio.finishTime) {
       audioPlayerActions.seek(Seconds(stashedTime - sound.audio.startTime))
-    }
-    if (wasPlaying) {
-      unawaited(audioPlayerActions.play())
+      if (wasPlaying) {
+        unawaited(audioPlayerActions.play())
+      }
     }
     return () => {
-      audioPlayerActions.setUrl(undefined)
       URL.revokeObjectURL(objectUrl)
     }
   }, [audioContext, sound.audio, audioPlayerActions])
+
+  useUnmount(() => {
+    audioPlayerActions.setUrl(undefined)
+  })
 
   const togglePlayPause = () => {
     if (isPlaying) {
