@@ -158,3 +158,12 @@ test.skip('can download a sound as a Wav file', async ({ mount }) => {
     'downloaded Wav file should have the correct contents',
   ).toBe(true)
 })
+
+test('storage warning button should open a modal', async ({ mount }) => {
+  const soundsEditorPage = await launchApp(mount)
+
+  await soundsEditorPage.pressStorageWarningButton()
+
+  await soundsEditorPage.expectStorageWarningDialogToBeShown()
+  await soundsEditorPage.checkScreenshot('storage-warning-dialog')
+})

@@ -6,11 +6,12 @@ import { mdiAlert, mdiDatabaseLock } from '@mdi/js'
 import { Button, ButtonVariant } from '../../shared/Button.tsx'
 import { useStorageManagerActions } from '../../../storage/storageManagerHooks.ts'
 import { isChromiumBasedBrowser } from '../../../utils/browserUtils.ts'
+import { NavbarTestIds } from './NavbarTestIds.ts'
 
 export const StorageWarningDialog = () => {
   const storageManagerActions = useStorageManagerActions()
   return (
-    <Dialog className="relative outline-none">
+    <Dialog data-testid={NavbarTestIds.storageWarningDialog} className="relative outline-none">
       {({ close }) => {
         const handleAttemptToMakePersistent = () => {
           fireAndForget(async () => {

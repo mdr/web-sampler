@@ -5,4 +5,5 @@ export const NavbarTestIds = {
   undoButton: TestId('Navbar.undoButton'),
   redoButton: TestId('Navbar.redoButton'),
   storageWarningButton: TestId('Navbar.storageWarningButton'),
+  storageWarningDialog: TestId('Navbar.storageWarningDialog'),
 }

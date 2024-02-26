@@ -121,6 +121,12 @@ export class SoundsEditorPageObject extends PageObject {
 
   pressRedo = (): Promise<void> => this.step('pressRedo', () => this.press(NavbarTestIds.redoButton))
 
+  pressStorageWarningButton = (): Promise<void> =>
+    this.step('pressStorageWarningButton', async () => {
+      this.mountResult.getByTestId(NavbarTestIds.storageWarningButton)
+      return this.press(NavbarTestIds.storageWarningButton)
+    })
+
   simulateVolume = (volume: number): Promise<void> =>
     this.step(`simulateVolume ${volume}`, async () => {
       await this.page.evaluate((volume) => window.testHooks.simulateVolume(volume), volume)
@@ -167,6 +173,9 @@ export class SoundsEditorPageObject extends PageObject {
 
   expectPlayButtonToBeShown = (): Promise<void> =>
     this.step('expectPlayButtonToBeShown', () => this.expectToBeVisible(EditSoundPaneTestIds.playButton))
+
+  expectStorageWarningDialogToBeShown = (): Promise<void> =>
+    this.step('expectStorageWarningDialogToBeShown', () => this.expectToBeVisible(NavbarTestIds.storageWarningDialog))
 }
 
 export const launchAndStartAudioCapture = async (mount: MountFunction): Promise<SoundsEditorPageObject> => {
