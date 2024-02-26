@@ -10,6 +10,7 @@ import { useFilePicker } from 'use-file-picker'
 import { unzipSounds } from './importExport/importSounds.ts'
 import { Sound } from '../../../types/Sound.ts'
 import { SelectedFiles } from 'use-file-picker/types'
+import { useNavigate } from 'react-router-dom'
 
 const NavbarMenuIds = {
   exportSounds: 'exportSounds',
@@ -19,7 +20,7 @@ const NavbarMenuIds = {
 export const NavbarMenu = () => {
   const sounds = useSounds()
   const soundActions = useSoundActions()
-
+  const navigate = useNavigate()
   const handleFilesSuccessfullySelected = async ({ filesContent }: SelectedFiles<ArrayBuffer>): Promise<void> => {
     const zipBlob = new Blob([filesContent[0].content])
     let sounds: readonly Sound[]
@@ -31,6 +32,7 @@ export const NavbarMenu = () => {
       return
     }
     await soundActions.importSounds(sounds)
+    navigate('/')
     toast.info('Sounds imported successfully.')
   }
 

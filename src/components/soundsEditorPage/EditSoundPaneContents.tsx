@@ -82,7 +82,14 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPaneProps) => {
         case StartRecordingOutcome.CANCELLED_BY_USER:
           break
         case StartRecordingOutcome.NO_AUDIO_TRACK:
-          toast.error('No audio available in selected input')
+          if (canCaptureAudioFromDisplayMedia()) {
+            toast.error('No audio available in selected input')
+          } else {
+            toast.error('No audio available in selected input. Try a Chromium-based browser such as Chrome or Edge.', {
+              autoClose: 10000,
+            })
+          }
+
           break
       }
     })
@@ -113,7 +120,7 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPaneProps) => {
       {audioRecorderState === AudioRecorderState.IDLE && (
         <>
           <div className="flex space-x-2">
-            {canCaptureAudioFromDisplayMedia() && <CaptureAudioButton onPress={handleCaptureAudioButtonPressed} />}
+            <CaptureAudioButton onPress={handleCaptureAudioButtonPressed} />
             {soundHasAudio(sound) && getPlayRegionDuration(sound.audio) > 0 && <DownloadWavButton sound={sound} />}
             {audio !== undefined && <CropButton soundId={sound.id} />}
           </div>
