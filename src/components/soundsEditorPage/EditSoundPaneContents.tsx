@@ -20,7 +20,7 @@ import { fireAndForget } from '../../utils/utils.ts'
 import { AudioSection } from './audioSection/AudioSection.tsx'
 import { DeleteButton } from './DeleteButton.tsx'
 import { useNavigate } from 'react-router-dom'
-import { Pcm } from '../../utils/types/brandedTypes.ts'
+import { Pcm, secondsToMillis } from '../../utils/types/brandedTypes.ts'
 import { DownloadWavButton } from './audioSection/DownloadWavButton.tsx'
 import { CropButton } from './audioSection/CropButton.tsx'
 import { getPlayRegionDuration } from '../../types/SoundAudio.ts'
@@ -108,7 +108,7 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPageProps) => {
       </div>
       <h2 className="text-2xl" data-testid={EditSoundPaneTestIds.audioHeading}>
         Audio
-        {audio !== undefined && <> ({durationHumanizer(getPlayRegionDuration(audio) * 1000)})</>}
+        {audio !== undefined && <> ({durationHumanizer(secondsToMillis(getPlayRegionDuration(audio)))})</>}
       </h2>
       {audioRecorderState === AudioRecorderState.IDLE && (
         <>

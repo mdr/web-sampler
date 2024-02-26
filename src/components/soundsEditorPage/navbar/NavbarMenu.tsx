@@ -20,12 +20,16 @@ export const NavbarMenu = () => {
       FileSaver.saveAs(zipBlob, 'sounds.zip')
       toast.info('All sounds exported.')
     })
+
+  const doImport = () => undefined
+
   const handleAction = (key: Key) => {
     switch (key) {
       case NavbarMenuIds.exportSounds:
         doExport()
         break
       case NavbarMenuIds.importSounds:
+        doImport()
         break
     }
   }

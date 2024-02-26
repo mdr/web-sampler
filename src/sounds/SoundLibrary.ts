@@ -3,14 +3,13 @@ import { Option } from '../utils/types/Option.ts'
 import _ from 'lodash'
 import { SoundActions } from './soundHooks.ts'
 import { fireAndForget, unawaited } from '../utils/utils.ts'
-import { Duration } from 'luxon'
 import { SoundStore } from './SoundStore.ts'
-import { Pcm, Seconds } from '../utils/types/brandedTypes.ts'
+import { Pcm, Seconds, secondsToMillis } from '../utils/types/brandedTypes.ts'
 import { Draft, produce } from 'immer'
 
 export type SoundLibraryUpdatedListener = () => void
 
-const PERSIST_DIRTY_INTERVAL = Duration.fromObject({ seconds: 1 })
+const PERSIST_DIRTY_INTERVAL = Seconds(1)
 
 interface UndoRedoRecord {
   sounds: readonly Sound[]
@@ -27,7 +26,7 @@ export class SoundLibrary implements SoundActions {
   private readonly listeners: SoundLibraryUpdatedListener[] = []
 
   constructor(private readonly soundStore: SoundStore) {
-    setInterval(this.tryPersistDirtySounds, PERSIST_DIRTY_INTERVAL.toMillis())
+    setInterval(this.tryPersistDirtySounds, secondsToMillis(PERSIST_DIRTY_INTERVAL))
     unawaited(this.loadSounds())
   }
 
@@ -37,6 +36,15 @@ export class SoundLibrary implements SoundActions {
     this._sounds = sounds
     this._isLoading = false
     this.notifyListeners()
+  }
+
+  importSounds = async (sounds: readonly Sound[]): Promise<void> => {
+    this.checkNotLoading()
+    sounds.forEach(validateSound)
+    const previousSoundIds = this.sounds.map((sound) => sound.id)
+    const newSoundIds = sounds.map((sound) => sound.id)
+    const affectedSoundIds = _.union(previousSoundIds, newSoundIds)
+    this.setSounds(sounds, affectedSoundIds)
   }
 
   get sounds(): readonly Sound[] {

@@ -79,6 +79,8 @@ export interface SoundActions {
   undo(): void
 
   redo(): void
+
+  importSounds(sounds: readonly Sound[]): Promise<void>
 }
 
 export const useSoundActions = (): SoundActions => useSoundLibrary()
