@@ -33,6 +33,7 @@
     "luxon": "^3.4.4",
     "react": "^18.2.0",
     "react-aria-components": "^1.1.1",
+    "react-array-to-tree": "^2.0.1",
     "react-dom": "^18.2.0",
     "react-error-boundary": "^4.0.12",
     "react-hotkeys-hook": "^4.5.0",
