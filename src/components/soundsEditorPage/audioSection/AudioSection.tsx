@@ -55,10 +55,12 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
     const blob = audioBufferUtils.pcmToWavBlob(pcm)
     const objectUrl = Url(URL.createObjectURL(blob))
     audioPlayerActions.setUrl(objectUrl)
-    if (stashedTime !== undefined && sound.audio.startTime <= stashedTime && stashedTime <= sound.audio.finishTime) {
-      audioPlayerActions.seek(Seconds(stashedTime - sound.audio.startTime))
-      if (wasPlaying) {
-        unawaited(audioPlayerActions.play())
+    if (stashedTime !== undefined) {
+      if (stashedTime <= sound.audio.finishTime) {
+        audioPlayerActions.seek(Seconds(Math.max(0, stashedTime - sound.audio.startTime)))
+        if (wasPlaying) {
+          unawaited(audioPlayerActions.play())
+        }
       }
     }
     return () => {

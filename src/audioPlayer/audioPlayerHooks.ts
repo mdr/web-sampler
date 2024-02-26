@@ -40,7 +40,7 @@ export const useAudioPlayerCurrentTimeRaf = (): Seconds => {
   const [currentTime, setCurrentTime] = useState<Seconds>(audioPlayer.currentTime)
   const handleAnimationFrame = useCallback(() => {
     setCurrentTime(audioPlayer.currentTime)
-  }, [audioPlayer, setCurrentTime])
+  }, [audioPlayer])
   useRequestAnimationFrame(handleAnimationFrame)
   return currentTime
 }
