@@ -34,14 +34,14 @@ const durationHumanizer = humanizeDuration.humanizer({
   maxDecimalPoints: 1,
 })
 
-export interface EditSoundPageProps {
+export interface EditSoundPaneProps {
   soundId: SoundId
 }
 
 // https://caniuse.com/mdn-api_mediadevices_getdisplaymedia_audio_capture_support
 const canCaptureAudioFromDisplayMedia = (): boolean => isChromiumBasedBrowser()
 
-export const EditSoundPaneContents = ({ soundId }: EditSoundPageProps) => {
+export const EditSoundPaneContents = ({ soundId }: EditSoundPaneProps) => {
   const sound = useSound(soundId)
   const soundActions = useSoundActions()
   const audioRecorderActions = useAudioRecorderActions()
