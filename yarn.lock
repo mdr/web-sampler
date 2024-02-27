@@ -2598,13 +2598,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/audiobuffer-to-wav@npm:^1.0.4":
-  version: 1.0.4
-  resolution: "@types/audiobuffer-to-wav@npm:1.0.4"
-  checksum: 79d53844cdcaa360644abb9365a2e721f7ecf176c1ddb4a3ab782a5111eead80e2367782bf997f9663788031a7ce3fa0db1b1386d0e98bcb66134aec7bfdfc23
-  languageName: node
-  linkType: hard
-
 "@types/babel__core@npm:^7.20.5":
   version: 7.20.5
   resolution: "@types/babel__core@npm:7.20.5"
@@ -3217,13 +3210,6 @@ __metadata:
   version: 0.4.0
   resolution: "asynckit@npm:0.4.0"
   checksum: d73e2ddf20c4eb9337e1b3df1a0f6159481050a5de457c55b14ea2e5cb6d90bb69e004c9af54737a5ee0917fcf2c9e25de67777bbe58261847846066ba75bc9d
-  languageName: node
-  linkType: hard
-
-"audiobuffer-to-wav@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "audiobuffer-to-wav@npm:1.0.0"
-  checksum: 39e5ec0364578d081c684fde0e2d3d002785c1af9a32be58092611201abd85942236869a3a3311a31283e3a72419d9d91c87161b8b49004b7189dea49ce446c2
   languageName: node
   linkType: hard
 
@@ -7860,7 +7846,6 @@ __metadata:
     "@testing-library/react-hooks": "npm:^8.0.1"
     "@testing-library/user-event": "npm:^14.5.2"
     "@types/async-lock": "npm:^1.4.2"
-    "@types/audiobuffer-to-wav": "npm:^1.0.4"
     "@types/file-saver": "npm:^2.0.7"
     "@types/humanize-duration": "npm:^3.27.4"
     "@types/lodash": "npm:^4.14.202"
@@ -7878,7 +7863,6 @@ __metadata:
     "@vitejs/plugin-react": "npm:^4.2.1"
     "@zip.js/zip.js": "npm:^2.7.35"
     async-lock: "npm:^1.4.1"
-    audiobuffer-to-wav: "npm:^1.0.0"
     autoprefixer: "npm:^10.4.17"
     beautiful-react-hooks: "npm:^5.0.1"
     blob-polyfill: "npm:^7.0.20220408"

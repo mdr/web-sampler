@@ -6,7 +6,6 @@ import { SoundLibraryContext } from '../sounds/SoundLibraryContext.ts'
 import { ErrorBoundary } from 'react-error-boundary'
 import { ErrorFallback } from './misc/ErrorFallback.tsx'
 import { router } from './router.tsx'
-import { AudioContextProviderContext } from '../audioRecorder/AudioContextProvider.ts'
 import { AudioPlayerContext } from '../audioPlayer/AudioPlayerContext.ts'
 import { StorageManagerContext } from '../storage/StorageManagerContext.ts'
 import { WebStorageManager } from '../storage/StorageManager.tsx'
@@ -18,9 +17,8 @@ export interface AppProps {
 }
 
 const nestProviders = (config: AppConfig) => {
-  const { audioRecorder, audioContextProvider, audioPlayer, soundLibrary } = config
+  const { audioRecorder, audioPlayer, soundLibrary } = config
   return reactArrayToTree([
-    <AudioContextProviderContext.Provider value={audioContextProvider} />,
     <AudioRecorderContext.Provider value={audioRecorder} />,
     <AudioPlayerContext.Provider value={audioPlayer} />,
     <SoundLibraryContext.Provider value={soundLibrary} />,

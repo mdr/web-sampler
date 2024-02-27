@@ -2,14 +2,13 @@ import { Button } from 'react-aria-components'
 import Icon from '@mdi/react'
 import { mdiPlay } from '@mdi/js'
 import { getDisplayName, SoundWithDefiniteAudio } from '../../types/Sound.ts'
-import { useAudioContext } from '../../audioRecorder/AudioContextProvider.ts'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { AudioBufferUtils } from '../../audioRecorder/AudioBufferUtils.ts'
 import { unawaited } from '../../utils/utils.ts'
 import { Option } from '../../utils/types/Option.ts'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { getPlayRegionPcm } from '../../types/SoundAudio.ts'
 import clsx from 'clsx'
+import { pcmToWavBlob } from '../../utils/wav.ts'
 
 export interface SoundButtonProps {
   sound: SoundWithDefiniteAudio
@@ -20,19 +19,17 @@ export const SoundButton = ({ sound, hotkey }: SoundButtonProps) => {
   const { audio } = sound
   const [url, setUrl] = useState<Option<string>>(undefined)
   const [isPlaying, setIsPlaying] = useState(false)
-  const audioContext = useAudioContext()
 
   const audioRef = useRef<HTMLAudioElement>(null)
 
   useEffect(() => {
-    const audioBufferUtils = new AudioBufferUtils(audioContext)
-    const blob = audioBufferUtils.pcmToWavBlob(getPlayRegionPcm(audio))
+    const blob = pcmToWavBlob(getPlayRegionPcm(audio))
     const objectUrl = URL.createObjectURL(blob)
     setUrl(objectUrl)
     return () => {
       URL.revokeObjectURL(objectUrl)
     }
-  }, [audio, audioContext])
+  }, [audio])
 
   const handleAudioEnded = useCallback(() => {
     setIsPlaying(false)

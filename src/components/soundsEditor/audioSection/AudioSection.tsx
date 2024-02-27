@@ -1,6 +1,4 @@
 import { useCallback, useEffect, useRef } from 'react'
-import { AudioBufferUtils } from '../../../audioRecorder/AudioBufferUtils.ts'
-import { useAudioContext } from '../../../audioRecorder/AudioContextProvider.ts'
 import { Seconds, Url } from '../../../utils/types/brandedTypes.ts'
 import { mdiPause, mdiPlay } from '@mdi/js'
 import { unawaited } from '../../../utils/utils.ts'
@@ -18,6 +16,7 @@ import { getPlayRegionPcm, getTotalAudioDuration } from '../../../types/SoundAud
 import { Option } from '../../../utils/types/Option.ts'
 import useUnmount from 'beautiful-react-hooks/useUnmount'
 import { EditSoundPaneTestIds } from '../editSoundPane/EditSoundPaneTestIds.ts'
+import { pcmToWavBlob } from '../../../utils/wav.ts'
 
 const BIG_SEEK_JUMP = Seconds(0.5)
 const SMALL_SEEK_JUMP = Seconds(0.1)
@@ -40,7 +39,6 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
   const currentPosition = Seconds(currentAudioPlayerPosition + startTime)
   const totalAudioDuration = getTotalAudioDuration(sound.audio)
 
-  const audioContext = useAudioContext()
   useEffect(() => {
     const pcm = getPlayRegionPcm(sound.audio)
     const stashedTime = stashedTimeRef.current
@@ -51,8 +49,7 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
       audioPlayerActions.setUrl(undefined)
       return
     }
-    const audioBufferUtils = new AudioBufferUtils(audioContext)
-    const blob = audioBufferUtils.pcmToWavBlob(pcm)
+    const blob = pcmToWavBlob(pcm)
     const objectUrl = Url(URL.createObjectURL(blob))
     audioPlayerActions.setUrl(objectUrl)
     if (stashedTime !== undefined) {
@@ -66,7 +63,7 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
     return () => {
       URL.revokeObjectURL(objectUrl)
     }
-  }, [audioContext, sound.audio, audioPlayerActions])
+  }, [sound.audio, audioPlayerActions])
 
   useUnmount(() => {
     audioPlayerActions.setUrl(undefined)
