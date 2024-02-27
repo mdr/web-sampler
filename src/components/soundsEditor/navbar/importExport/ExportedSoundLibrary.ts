@@ -6,6 +6,7 @@ export const ExportedSoundAudio = z
   .object({
     startTime: z.number().transform(Seconds),
     finishTime: z.number().transform(Seconds),
+    volume: z.number().optional(),
   })
   .readonly()
 

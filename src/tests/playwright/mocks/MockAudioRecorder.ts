@@ -2,7 +2,8 @@ import { AudioRecorder, AudioRecorderState, StartRecordingOutcome } from '../../
 import { AbstractAudioRecorder } from '../../../audioRecorder/AbstractAudioRecorder.ts'
 import { SOUND_DURATION } from '../testConstants.ts'
 import { Pcm, Seconds } from '../../../utils/types/brandedTypes.ts'
-import { DEFAULT_SAMPLE_RATE } from '../../../types/Sound.ts'
+
+import { DEFAULT_SAMPLE_RATE } from '../../../types/soundConstants.ts'
 
 export class MockAudioRecorder extends AbstractAudioRecorder implements AudioRecorder {
   volume: number = 0

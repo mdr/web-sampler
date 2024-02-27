@@ -20,6 +20,7 @@ const pcmFromBlob = async (blob: Blob): Promise<Pcm> => {
 const asSoundAudio = (exportedSoundAudio: ExportedSoundAudio, pcm: Pcm): SoundAudio => ({
   startTime: exportedSoundAudio.startTime,
   finishTime: exportedSoundAudio.finishTime,
+  volume: exportedSoundAudio.volume,
   pcm,
 })
 

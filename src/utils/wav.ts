@@ -1,24 +1,7 @@
 // Adapted from https://github.com/Experience-Monks/audiobuffer-to-wav (MIT License)
 // itself adapted from https://github.com/mattdiamond/Recorderjs (MIT License)
-import { DEFAULT_SAMPLE_RATE } from '../types/Sound.ts'
-
-export const audioBufferToWav = (buffer: AudioBuffer, opt?: { float32?: boolean }): ArrayBuffer => {
-  opt = opt || {}
-
-  const numChannels = buffer.numberOfChannels
-  const sampleRate = buffer.sampleRate
-  const format = opt.float32 ? 3 : 1
-  const bitDepth = format === 3 ? 32 : 16
-  console.log('audioBufferToWav', { numChannels, sampleRate, format, bitDepth })
-  let result: Float32Array
-  if (numChannels === 2) {
-    result = interleave(buffer.getChannelData(0), buffer.getChannelData(1))
-  } else {
-    result = buffer.getChannelData(0)
-  }
-
-  return encodeWAV(result, format, sampleRate, numChannels == 2 ? 2 : 1, bitDepth)
-}
+import { Hz } from './types/brandedTypes.ts'
+import { DEFAULT_SAMPLE_RATE } from '../types/soundConstants.ts'
 
 export const pcmToWav = (pcm: Float32Array): ArrayBuffer => encodeWAV(pcm, 1, DEFAULT_SAMPLE_RATE, 1, 16)
 
@@ -27,7 +10,7 @@ export const pcmToWavBlob = (pcm: Float32Array): Blob => new Blob([pcmToWav(pcm)
 const encodeWAV = (
   samples: Float32Array,
   format: 1 | 3,
-  sampleRate: number,
+  sampleRate: Hz,
   numChannels: 1 | 2,
   bitDepth: 16 | 32,
 ): ArrayBuffer => {
@@ -57,21 +40,6 @@ const encodeWAV = (
   }
 
   return buffer
-}
-
-const interleave = (inputL: Float32Array, inputR: Float32Array): Float32Array => {
-  const length = inputL.length + inputR.length
-  const result = new Float32Array(length)
-
-  let index = 0
-  let inputIndex = 0
-
-  while (index < length) {
-    result[index++] = inputL[inputIndex]
-    result[index++] = inputR[inputIndex]
-    inputIndex++
-  }
-  return result
 }
 
 const writeFloat32 = (output: DataView, offset: number, input: Float32Array): void => {

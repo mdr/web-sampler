@@ -14,6 +14,7 @@ describe('zipSounds', () => {
           startTime: Seconds(0),
           finishTime: Seconds(1),
           pcm: Pcm(new Float32Array(0)),
+          volume: 0.5,
         },
       },
       {

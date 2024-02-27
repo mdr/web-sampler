@@ -1,11 +1,21 @@
 import { Pcm, Seconds } from '../utils/types/brandedTypes.ts'
-import { DEFAULT_SAMPLE_RATE, SoundId } from './Sound.ts'
+import { SoundId } from './Sound.ts'
+import { pcmDurationInSeconds } from '../utils/pcmUtils.ts'
+import { DEFAULT_SAMPLE_RATE } from './soundConstants.ts'
 
 export interface SoundAudio {
   readonly pcm: Pcm
   readonly startTime: Seconds
   readonly finishTime: Seconds
+  readonly volume?: number
 }
+
+export const newSoundAudio = (pcm: Pcm): SoundAudio => ({
+  pcm,
+  startTime: Seconds(0),
+  finishTime: pcmDurationInSeconds(pcm),
+  volume: 1,
+})
 
 /**
  * Get the total duration in seconds of the underlying audio, ignoring the start and finish times.
@@ -40,5 +50,8 @@ export const validateSoundAudio = (soundId: SoundId, audio: SoundAudio): void =>
     if (sample < -1 || sample > 1) {
       throw new Error(`Sound ${soundId} sample is out of range: ${sample}`)
     }
+  }
+  if (audio.volume !== undefined && (audio.volume < 0 || audio.volume > 1)) {
+    throw new Error(`Sound ${soundId} volume is out of range: ${audio.volume}`)
   }
 }

@@ -21,5 +21,8 @@ export const Pcm = Brand.nominal<Pcm>()
 export type Pixels = number & Brand.Brand<'Pixels'>
 export const Pixels = Brand.nominal<Pixels>()
 
+export type Hz = number & Brand.Brand<'Hz'>
+export const Hz = Brand.nominal<Hz>()
+
 export type Path = string & Brand.Brand<'Path'>
 export const Path = Brand.nominal<Path>()

@@ -1,4 +1,4 @@
-import { DEFAULT_SAMPLE_RATE, newSound, newSoundId, Sound, SoundId, validateSound } from '../types/Sound.ts'
+import { newSound, newSoundId, Sound, SoundId, validateSound } from '../types/Sound.ts'
 import { Option } from '../utils/types/Option.ts'
 import _ from 'lodash'
 import { SoundActions } from './soundHooks.ts'
@@ -6,6 +6,9 @@ import { fireAndForget, unawaited } from '../utils/utils.ts'
 import { SoundStore } from './SoundStore.ts'
 import { Pcm, Seconds, secondsToMillis } from '../utils/types/brandedTypes.ts'
 import { Draft, produce } from 'immer'
+import { pcmDurationInSeconds } from '../utils/pcmUtils.ts'
+import { newSoundAudio } from '../types/SoundAudio.ts'
+import { DEFAULT_SAMPLE_RATE } from '../types/soundConstants.ts'
 
 export type SoundLibraryUpdatedListener = () => void
 
@@ -101,30 +104,32 @@ export class SoundLibrary implements SoundActions {
     this.tryPersistDirtySounds()
   }
 
-  setName = (id: SoundId, name: string): void => this.updateSound(id, (sound) => ({ ...sound, name }))
+  setName = (id: SoundId, name: string): void =>
+    this.updateSound(id, (sound) => {
+      sound.name = name
+    })
 
   setAudioPcm = (id: SoundId, pcm: Pcm) =>
-    this.updateSound(id, (sound) => ({
-      ...sound,
-      audio: { pcm, startTime: Seconds(0), finishTime: pcmDurationInSeconds(pcm) },
-    }))
+    this.updateSound(id, (sound) => {
+      sound.audio = newSoundAudio(pcm)
+    })
 
   setStartTime = (id: SoundId, startTime: Seconds) =>
-    this.updateSoundImmer(id, (sound) => {
+    this.updateSound(id, (sound) => {
       if (sound.audio !== undefined) {
         sound.audio.startTime = startTime
       }
     })
 
   setFinishTime = (id: SoundId, finishTime: Seconds) =>
-    this.updateSoundImmer(id, (sound) => {
+    this.updateSound(id, (sound) => {
       if (sound.audio !== undefined) {
         sound.audio.finishTime = finishTime
       }
     })
 
   cropAudio = (id: SoundId) =>
-    this.updateSoundImmer(id, (sound) => {
+    this.updateSound(id, (sound) => {
       const audio = sound.audio
       if (audio !== undefined) {
         audio.pcm = Pcm(audio.pcm.slice(audio.startTime * DEFAULT_SAMPLE_RATE, audio.finishTime * DEFAULT_SAMPLE_RATE))
@@ -133,7 +138,7 @@ export class SoundLibrary implements SoundActions {
       }
     })
 
-  private updateSound = (id: SoundId, update: (sound: Sound) => Sound): void => {
+  private updateSoundPure = (id: SoundId, update: (sound: Sound) => Sound): void => {
     this.checkNotLoading()
     const sound = this.findSound(id)
     if (sound === undefined) {
@@ -147,8 +152,8 @@ export class SoundLibrary implements SoundActions {
     }
   }
 
-  private updateSoundImmer = (id: SoundId, update: (sound: Draft<Sound>) => void): void =>
-    this.updateSound(id, (sound) => produce(sound, update))
+  private updateSound = (id: SoundId, update: (sound: Draft<Sound>) => void): void =>
+    this.updateSoundPure(id, (sound) => produce(sound, update))
 
   deleteSound = (id: SoundId): void => {
     this.checkNotLoading()
@@ -218,5 +223,3 @@ export class SoundLibrary implements SoundActions {
     await this.soundStore.bulkUpdate(soundsToPersist, soundIdsToDelete)
   }
 }
-
-const pcmDurationInSeconds = (pcm: Pcm): Seconds => Seconds(pcm.length / DEFAULT_SAMPLE_RATE)

@@ -27,8 +27,6 @@ const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'bas
 export const sortSoundsByDisplayName = (sounds: readonly Sound[]): Sound[] =>
   [...sounds].sort((sound1, sound2) => collator.compare(getDisplayName(sound1), getDisplayName(sound2)))
 
-export const DEFAULT_SAMPLE_RATE = 48000
-
 export const validateSound = (sound: Sound): void => {
   const audio = sound.audio
   if (audio !== undefined) {

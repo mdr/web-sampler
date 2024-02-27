@@ -8,6 +8,7 @@ import { SOUNDS_JSON_FILE_NAME } from './importExportConstants.ts'
 const exportSoundAudio = (audio: SoundAudio): ExportedSoundAudio => ({
   startTime: audio.startTime,
   finishTime: audio.finishTime,
+  volume: audio.volume,
 })
 
 const exportSound = (sound: Sound): ExportedSound => ({

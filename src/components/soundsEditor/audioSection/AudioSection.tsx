@@ -7,7 +7,7 @@ import {
   useAudioPlayerCurrentTimeRaf,
   useAudioPlayerIsPlaying,
 } from '../../../audioPlayer/audioPlayerHooks.ts'
-import { DEFAULT_SAMPLE_RATE, SoundWithDefiniteAudio } from '../../../types/Sound.ts'
+import { SoundWithDefiniteAudio } from '../../../types/Sound.ts'
 import { useSoundActions } from '../../../sounds/soundHooks.ts'
 import { Button } from '../../shared/Button.tsx'
 import { WaveformVisualiser } from './WaveformVisualiser.tsx'
@@ -17,6 +17,7 @@ import { Option } from '../../../utils/types/Option.ts'
 import useUnmount from 'beautiful-react-hooks/useUnmount'
 import { EditSoundPaneTestIds } from '../editSoundPane/EditSoundPaneTestIds.ts'
 import { pcmToWavBlob } from '../../../utils/wav.ts'
+import { DEFAULT_SAMPLE_RATE } from '../../../types/soundConstants.ts'
 
 const BIG_SEEK_JUMP = Seconds(0.5)
 const SMALL_SEEK_JUMP = Seconds(0.1)
