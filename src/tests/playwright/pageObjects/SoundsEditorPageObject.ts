@@ -10,6 +10,7 @@ import tmp from 'tmp'
 import { NavbarPageObject } from './NavbarPageObject.ts'
 import { SoundSidebarTestIds } from '../../../components/soundsEditor/sidebar/SoundSidebarTestIds.ts'
 import { EditSoundPaneTestIds } from '../../../components/soundsEditor/editSoundPane/EditSoundPaneTestIds.ts'
+import { TestAppProps } from '../TestApp.tsx'
 
 class SoundsEditorKeyboardShortcutsPageObject extends PageObject {
   protected readonly name = 'SoundsEditorPage.shortcuts'
@@ -177,8 +178,11 @@ export class SoundsEditorPageObject extends PageObject {
     this.step('expectPlayButtonToBeShown', () => this.expectToBeVisible(EditSoundPaneTestIds.playButton))
 }
 
-export const launchAndStartAudioCapture = async (mount: MountFunction): Promise<SoundsEditorPageObject> => {
-  const soundsEditorPage = await launchApp(mount)
+export const launchAndStartAudioCapture = async (
+  mount: MountFunction,
+  props: TestAppProps = {},
+): Promise<SoundsEditorPageObject> => {
+  const soundsEditorPage = await launchApp(mount, props)
   await soundsEditorPage.sidebar.pressNewSound()
   await soundsEditorPage.pressCaptureAudio()
   return soundsEditorPage

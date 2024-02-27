@@ -9,15 +9,19 @@ import { AppConfig, makeAppConfig } from '../../config/AppConfig.ts'
 const makeTestAppConfig = (audioRecorder: MockAudioRecorder, mockAudioElement: MockAudioElement): AppConfig =>
   makeAppConfig(audioRecorder, castPartial<HTMLAudioElement>(mockAudioElement))
 
-export const TestApp = () => {
+export interface TestAppProps {
+  useFakeTimers?: boolean
+}
+
+export const TestApp = ({ useFakeTimers = false }: TestAppProps) => {
   const audioRecorder = new MockAudioRecorder()
   const mockAudioElement = new MockAudioElement()
   const config = makeTestAppConfig(audioRecorder, mockAudioElement)
 
   useDidMount(() => {
-    const clock = FakeTimers.install()
+    const clock = useFakeTimers ? FakeTimers.install() : undefined
     window.testHooks = new DefaultWindowTestHooks(audioRecorder, mockAudioElement, clock, config.soundLibrary)
-    return () => clock.uninstall()
+    return () => clock?.uninstall()
   })
   return <App config={config} />
 }

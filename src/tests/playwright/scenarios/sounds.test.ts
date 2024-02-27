@@ -168,13 +168,15 @@ test('storage warning button should open a modal', async ({ mount }) => {
   await soundsEditorPage.checkScreenshot('storage-warning-dialog')
 })
 
-test.skip('can export and import sounds', async ({ mount }) => {
+test('can export and import sounds', async ({ mount }) => {
   const soundsEditorPage = await launchAndRecordNewSound(mount)
   await soundsEditorPage.enterSoundName('Sound 1')
-  const menu = await soundsEditorPage.navbar.pressMenuButton()
+  let menu = await soundsEditorPage.navbar.pressMenuButton()
   const exportedSoundsPath = await menu.pressExportAllSounds()
 
   await soundsEditorPage.pressDelete()
+
+  menu = await soundsEditorPage.navbar.pressMenuButton()
   await menu.pressImportSounds(exportedSoundsPath)
 
   await soundsEditorPage.sidebar.expectSoundNamesToBe(['Sound 1'])

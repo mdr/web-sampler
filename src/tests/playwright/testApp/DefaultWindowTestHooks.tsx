@@ -6,12 +6,13 @@ import { MockAudioElement } from '../mocks/MockAudioElement.ts'
 import { SoundLibrary } from '../../../sounds/SoundLibrary.ts'
 import { serialiseSounds } from './soundsSerialisation.ts'
 import { Seconds } from '../../../utils/types/brandedTypes.ts'
+import { Option } from '../../../utils/types/Option.ts'
 
 export class DefaultWindowTestHooks implements WindowTestHooks {
   constructor(
     private readonly audioRecorder: MockAudioRecorder,
     private readonly audioElement: MockAudioElement,
-    private readonly clock: InstalledClock,
+    private readonly clock: Option<InstalledClock>,
     private readonly soundLibrary: SoundLibrary,
   ) {}
 
@@ -41,10 +42,10 @@ export class DefaultWindowTestHooks implements WindowTestHooks {
     return Seconds(this.audioElement.currentTime)
   }
 
-  clockNext = () => this.clock.next()
+  clockNext = () => this.clock?.next()
 
   clockTick = (millis: number): void => {
-    this.clock.tick(millis)
+    this.clock?.tick(millis)
   }
 
   getSoundsJson = (): string => serialiseSounds(this.soundLibrary.sounds)

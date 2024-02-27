@@ -9,11 +9,15 @@ export class SoundSidebarPageObject extends PageObject {
   pressNewSound = (): Promise<void> => this.step('pressNewSound', () => this.press(SoundSidebarTestIds.newSoundButton))
 
   expectSoundNamesToBe = (expectedNamesInOrder: string[]) =>
-    this.step(`expectSoundNamesToBe [${expectedNamesInOrder.join(', ')}]`, async () => {
-      const soundNames = this.page.getByTestId(SoundSidebarTestIds.soundName)
-      const textContents = await soundNames.evaluateAll((nodes) => nodes.map((node) => (node as HTMLElement).innerText))
-      expect(textContents).toEqual(expectedNamesInOrder)
-    })
+    this.step(`expectSoundNamesToBe [${expectedNamesInOrder.join(', ')}]`, () =>
+      expect(async () => {
+        const soundNames = this.page.getByTestId(SoundSidebarTestIds.soundName)
+        const textContents = await soundNames.evaluateAll((nodes) =>
+          nodes.map((node) => (node as HTMLElement).innerText),
+        )
+        expect(textContents).toEqual(expectedNamesInOrder)
+      }).toPass(),
+    )
 
   pickSound = (name: string): Promise<void> =>
     this.step(`pickSound ${name}`, () =>
