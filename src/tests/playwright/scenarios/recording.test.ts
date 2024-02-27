@@ -1,6 +1,6 @@
 import { test } from '@playwright/experimental-ct-react'
 import { launchApp } from '../pageObjects/launchApp.tsx'
-import { MAX_RECORDING_DURATION } from '../../../components/soundsEditorPage/recordingConstants.ts'
+import { MAX_RECORDING_DURATION } from '../../../components/soundsEditor/recordingConstants.ts'
 import { AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
 import { launchAndStartAudioCapture } from '../pageObjects/SoundsEditorPageObject.ts'
 

@@ -1,4 +1,3 @@
-import { EditSoundPaneTestIds } from '../SoundEditorPageTestIds.ts'
 import { mdiDownload } from '@mdi/js'
 import { getDisplayName, SoundWithDefiniteAudio } from '../../../types/Sound.ts'
 import { Button } from '../../shared/Button.tsx'
@@ -6,6 +5,7 @@ import { useAudioContext } from '../../../audioRecorder/AudioContextProvider.ts'
 import { AudioBufferUtils } from '../../../audioRecorder/AudioBufferUtils.ts'
 import { getPlayRegionPcm } from '../../../types/SoundAudio.ts'
 import FileSaver from 'file-saver'
+import { EditSoundPaneTestIds } from '../editSoundPane/EditSoundPaneTestIds.ts'
 
 interface DownloadWavButtonProps {
   sound: SoundWithDefiniteAudio

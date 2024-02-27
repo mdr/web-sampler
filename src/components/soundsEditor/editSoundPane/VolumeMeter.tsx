@@ -1,5 +1,6 @@
-import { useAudioRecorderVolumeRaf } from '../../audioRecorder/audioRecorderHooks.ts'
-import { EditSoundPaneTestIds } from './SoundEditorPageTestIds.ts'
+import { useAudioRecorderVolumeRaf } from '../../../audioRecorder/audioRecorderHooks.ts'
+
+import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
 
 export const VolumeMeter = () => {
   const volume = useAudioRecorderVolumeRaf()

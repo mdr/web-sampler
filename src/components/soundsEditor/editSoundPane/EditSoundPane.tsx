@@ -1,7 +1,7 @@
-import { SoundId } from '../../types/Sound.ts'
-import { useIsLoading, useMaybeSound } from '../../sounds/soundHooks.ts'
+import { SoundId } from '../../../types/Sound.ts'
+import { useIsLoading, useMaybeSound } from '../../../sounds/soundHooks.ts'
 import { EditSoundPaneContents } from './EditSoundPaneContents.tsx'
-import { SoundNotFound } from './SoundNotFound.tsx'
+import { SoundNotFound } from '../SoundNotFound.tsx'
 
 export interface EditSoundPaneProps {
   soundId: SoundId

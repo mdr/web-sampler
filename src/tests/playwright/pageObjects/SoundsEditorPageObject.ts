@@ -1,17 +1,15 @@
 import { expect } from '@playwright/experimental-ct-react'
 import { MountFunction, MountResult } from '../types.ts'
-import {
-  EditSoundPaneTestIds,
-  SoundSidebarTestIds,
-} from '../../../components/soundsEditorPage/SoundEditorPageTestIds.ts'
 import { PageObject } from './PageObject.ts'
 import { AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
-import { NavbarTestIds } from '../../../components/soundsEditorPage/navbar/NavbarTestIds.ts'
+import { NavbarTestIds } from '../../../components/soundsEditor/navbar/NavbarTestIds.ts'
 import { launchApp } from './launchApp.tsx'
 import { SoundSidebarPageObject } from './SoundSidebarPageObject.ts'
 import { platform } from 'node:os'
 import tmp from 'tmp'
 import { NavbarPageObject } from './NavbarPageObject.ts'
+import { SoundSidebarTestIds } from '../../../components/soundsEditor/sidebar/SoundSidebarTestIds.ts'
+import { EditSoundPaneTestIds } from '../../../components/soundsEditor/editSoundPane/EditSoundPaneTestIds.ts'
 
 class SoundsEditorKeyboardShortcutsPageObject extends PageObject {
   protected readonly name = 'SoundsEditorPage.shortcuts'

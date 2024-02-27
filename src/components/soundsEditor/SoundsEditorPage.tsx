@@ -1,5 +1,5 @@
 import { SoundsEditorPageLayout } from './SoundsEditorPageLayout.tsx'
-import { EditSoundPane } from './EditSoundPane.tsx'
+import { EditSoundPane } from './editSoundPane/EditSoundPane.tsx'
 import { NoSoundsMessage } from './NoSoundsMessage.tsx'
 import { EditOrCreateSoundMessage } from './EditOrCreateSoundMessage.tsx'
 import { useIsLoading, useSounds } from '../../sounds/soundHooks.ts'

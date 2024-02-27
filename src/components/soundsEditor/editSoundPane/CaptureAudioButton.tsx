@@ -1,6 +1,6 @@
-import { EditSoundPaneTestIds } from './SoundEditorPageTestIds.ts'
 import { mdiMonitorSpeaker } from '@mdi/js'
-import { Button, ButtonVariant } from '../shared/Button.tsx'
+import { Button, ButtonVariant } from '../../shared/Button.tsx'
+import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
 
 interface CaptureAudioButtonProps {
   onPress(): void

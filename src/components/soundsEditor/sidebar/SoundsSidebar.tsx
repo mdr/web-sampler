@@ -2,11 +2,11 @@ import { useSoundActions, useSounds } from '../../../sounds/soundHooks.ts'
 import { Link, useNavigate } from 'react-router-dom'
 import { NewSoundButton } from '../NewSoundButton.tsx'
 import { getDisplayName, sortSoundsByDisplayName, SoundId } from '../../../types/Sound.ts'
-import { SoundSidebarTestIds } from '../SoundEditorPageTestIds.ts'
 import * as ReactAriaComponents from 'react-aria-components'
 import Icon from '@mdi/react'
 import { mdiTrashCan } from '@mdi/js'
 import { useSoundIdParam } from '../../router.tsx'
+import { SoundSidebarTestIds } from './SoundSidebarTestIds.ts'
 
 export const SoundsSidebar = () => {
   const currentSoundId = useSoundIdParam()

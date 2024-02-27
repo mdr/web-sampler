@@ -1,8 +1,8 @@
-import { EditSoundPaneTestIds } from './SoundEditorPageTestIds.ts'
-import { Button } from '../shared/Button.tsx'
+import { Button } from '../../shared/Button.tsx'
 import { mdiContentDuplicate } from '@mdi/js'
-import { SoundId } from '../../types/Sound.ts'
-import { useSoundActions } from '../../sounds/soundHooks.ts'
+import { SoundId } from '../../../types/Sound.ts'
+import { useSoundActions } from '../../../sounds/soundHooks.ts'
+import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
 
 export interface DuplicateSoundButtonProps {
   soundId: SoundId

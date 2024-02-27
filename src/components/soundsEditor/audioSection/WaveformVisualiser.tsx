@@ -6,9 +6,9 @@ import { DraggableTimeBoundary } from './DraggableTimeBoundary.tsx'
 import { CANVAS_HEIGHT } from './waveformConstants.ts'
 import Konva from 'konva'
 import { Option } from '../../../utils/types/Option.ts'
-import { EditSoundPaneTestIds } from '../SoundEditorPageTestIds.ts'
 import { Waveform } from './Waveform.tsx'
 import { Ticks } from './Ticks.tsx'
+import { EditSoundPaneTestIds } from '../editSoundPane/EditSoundPaneTestIds.ts'
 import KonvaEventObject = Konva.KonvaEventObject
 
 export interface WaveformVisualiserProps {

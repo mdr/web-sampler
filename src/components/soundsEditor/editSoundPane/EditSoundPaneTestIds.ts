@@ -1,4 +1,4 @@
-import { TestId } from '../../utils/types/brandedTypes.ts'
+import { TestId } from '../../../utils/types/brandedTypes.ts'
 
 export const EditSoundPaneTestIds = {
   soundNameInput: TestId('EditSoundPane.soundNameInput'),
@@ -13,15 +13,4 @@ export const EditSoundPaneTestIds = {
   pauseButton: TestId('EditSoundPane.pauseButton'),
   waveformCanvas: TestId('EditSoundPane.waveformCanvas'),
   audioHeading: TestId('EditSoundPane.audioHeading'),
-}
-
-export const NoSoundsMessageTestIds = {
-  newSoundButton: TestId('NoSoundsMessage.newSoundButton'),
-}
-
-export const SoundSidebarTestIds = {
-  sidebar: TestId('SoundsEditorPage.sidebar'),
-  newSoundButton: TestId('SoundSidebar.newSoundButton'),
-  soundName: TestId('SoundSidebar.soundName'),
-  exportSoundsButton: TestId('SoundSidebar.exportSoundsButton'),
 }

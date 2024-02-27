@@ -1,7 +1,7 @@
 import { expect } from '@playwright/experimental-ct-react'
 import { MountResult } from '../types.ts'
 import { PageObject } from './PageObject.ts'
-import { NavbarTestIds } from '../../../components/soundsEditorPage/navbar/NavbarTestIds.ts'
+import { NavbarTestIds } from '../../../components/soundsEditor/navbar/NavbarTestIds.ts'
 
 export class NavbarPageObject extends PageObject {
   protected readonly name = 'Navbar'

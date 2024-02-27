@@ -1,4 +1,3 @@
-import { EditSoundPaneTestIds } from '../SoundEditorPageTestIds.ts'
 import { useCallback, useEffect, useRef } from 'react'
 import { AudioBufferUtils } from '../../../audioRecorder/AudioBufferUtils.ts'
 import { useAudioContext } from '../../../audioRecorder/AudioContextProvider.ts'
@@ -18,6 +17,7 @@ import { useHotkeys } from 'react-hotkeys-hook'
 import { getPlayRegionPcm, getTotalAudioDuration } from '../../../types/SoundAudio.ts'
 import { Option } from '../../../utils/types/Option.ts'
 import useUnmount from 'beautiful-react-hooks/useUnmount'
+import { EditSoundPaneTestIds } from '../editSoundPane/EditSoundPaneTestIds.ts'
 
 const BIG_SEEK_JUMP = Seconds(0.5)
 const SMALL_SEEK_JUMP = Seconds(0.1)
