@@ -127,6 +127,12 @@ export class SoundsEditorPageObject extends PageObject {
       return this.press(NavbarTestIds.storageWarningButton)
     })
 
+  clickCentreOfWaveform = (): Promise<void> =>
+    this.step('clickCentreOfWaveform', async () => {
+      await this.get(EditSoundPaneTestIds.waveformCanvas).click()
+      await this.clockNext()
+    })
+
   simulateVolume = (volume: number): Promise<void> =>
     this.step(`simulateVolume ${volume}`, async () => {
       await this.page.evaluate((volume) => window.testHooks.simulateVolume(volume), volume)

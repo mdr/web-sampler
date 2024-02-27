@@ -70,3 +70,12 @@ test('audio position can be controlled with shortcuts', async ({ mount }) => {
   await soundsEditorPage.shortcuts.seekLeft()
   await soundsEditorPage.expectAudioPositionToBe(Seconds(0.0))
 })
+
+test('audio position can be controlled by clicking in the waveform', async ({ mount }) => {
+  const soundsEditorPage = await launchAndRecordNewSound(mount)
+  await soundsEditorPage.expectAudioPositionToBe(Seconds(0))
+
+  await soundsEditorPage.clickCentreOfWaveform()
+
+  await soundsEditorPage.expectAudioPositionToBe(Seconds(5), { exact: false })
+})

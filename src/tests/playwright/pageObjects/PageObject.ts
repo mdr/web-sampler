@@ -34,9 +34,21 @@ export abstract class PageObject {
 
   private isAudioPlaying = (): Promise<boolean> => this.page.evaluate(() => window.testHooks.isAudioPlaying)
 
-  expectAudioPositionToBe = async (position: Seconds): Promise<void> =>
-    this.step(`expectAudioPositionToBe ${position}s`, async () => {
-      expect(await this.getAudioPosition()).toBe(position)
+  expectAudioPositionToBe = async (
+    expectedPosition: Seconds,
+    {
+      exact = true,
+    }: {
+      exact?: boolean
+    } = {},
+  ): Promise<void> =>
+    this.step(`expectAudioPositionToBe ${expectedPosition}s`, async () => {
+      const actualPosition = await this.getAudioPosition()
+      if (exact) {
+        expect(actualPosition).toBe(expectedPosition)
+      } else {
+        expect(actualPosition).toBeCloseTo(expectedPosition)
+      }
     })
 
   private getAudioPosition = (): Promise<Seconds> => this.page.evaluate(() => window.testHooks.audioPosition)
