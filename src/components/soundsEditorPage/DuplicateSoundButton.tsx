@@ -1,4 +1,4 @@
-import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
+import { EditSoundPaneTestIds } from './SoundEditorPageTestIds.ts'
 import { Button } from '../shared/Button.tsx'
 import { mdiContentDuplicate } from '@mdi/js'
 import { SoundId } from '../../types/Sound.ts'

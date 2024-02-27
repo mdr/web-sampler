@@ -71,16 +71,16 @@ test('undo/redo should handle sound creation and name editing', async ({ mount }
   await soundsEditorPage.enterSoundName('A')
   await soundsEditorPage.sidebar.expectSoundNamesToBe(['A'])
 
-  await soundsEditorPage.pressUndo()
+  await soundsEditorPage.navbar.pressUndo()
   await soundsEditorPage.sidebar.expectSoundNamesToBe(['Untitled Sound'])
 
-  await soundsEditorPage.pressUndo()
+  await soundsEditorPage.navbar.pressUndo()
   await soundsEditorPage.sidebar.expectSoundNamesToBe([])
 
-  await soundsEditorPage.pressRedo()
+  await soundsEditorPage.navbar.pressRedo()
   await soundsEditorPage.sidebar.expectSoundNamesToBe(['Untitled Sound'])
 
-  await soundsEditorPage.pressRedo()
+  await soundsEditorPage.navbar.pressRedo()
   await soundsEditorPage.sidebar.expectSoundNamesToBe(['A'])
 })
 
@@ -91,10 +91,10 @@ test('undo/redo should handle sound deletion', async ({ mount }) => {
   await soundsEditorPage.pressDelete()
   await soundsEditorPage.sidebar.expectSoundNamesToBe([])
 
-  await soundsEditorPage.pressUndo()
+  await soundsEditorPage.navbar.pressUndo()
   await soundsEditorPage.sidebar.expectSoundNamesToBe(['A'])
 
-  await soundsEditorPage.pressRedo()
+  await soundsEditorPage.navbar.pressRedo()
   await soundsEditorPage.sidebar.expectSoundNamesToBe([])
 })
 
@@ -162,8 +162,8 @@ test.skip('can download a sound as a Wav file', async ({ mount }) => {
 test('storage warning button should open a modal', async ({ mount }) => {
   const soundsEditorPage = await launchApp(mount)
 
-  await soundsEditorPage.pressStorageWarningButton()
+  await soundsEditorPage.navbar.pressStorageWarningButton()
 
-  await soundsEditorPage.expectStorageWarningDialogToBeShown()
+  await soundsEditorPage.navbar.expectStorageWarningDialogToBeShown()
   await soundsEditorPage.checkScreenshot('storage-warning-dialog')
 })

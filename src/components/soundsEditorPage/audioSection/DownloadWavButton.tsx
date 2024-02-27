@@ -1,4 +1,4 @@
-import { EditSoundPaneTestIds } from '../EditSoundPaneTestIds.ts'
+import { EditSoundPaneTestIds } from '../SoundEditorPageTestIds.ts'
 import { mdiDownload } from '@mdi/js'
 import { getDisplayName, SoundWithDefiniteAudio } from '../../../types/Sound.ts'
 import { Button } from '../../shared/Button.tsx'

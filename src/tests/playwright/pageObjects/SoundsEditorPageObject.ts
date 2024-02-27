@@ -1,6 +1,9 @@
 import { expect } from '@playwright/experimental-ct-react'
 import { MountFunction, MountResult } from '../types.ts'
-import { EditSoundPaneTestIds, SoundSidebarTestIds } from '../../../components/soundsEditorPage/EditSoundPaneTestIds.ts'
+import {
+  EditSoundPaneTestIds,
+  SoundSidebarTestIds,
+} from '../../../components/soundsEditorPage/SoundEditorPageTestIds.ts'
 import { PageObject } from './PageObject.ts'
 import { AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
 import { NavbarTestIds } from '../../../components/soundsEditorPage/navbar/NavbarTestIds.ts'
@@ -8,6 +11,7 @@ import { launchApp } from './launchApp.tsx'
 import { SoundSidebarPageObject } from './SoundSidebarPageObject.ts'
 import { platform } from 'node:os'
 import tmp from 'tmp'
+import { NavbarPageObject } from './NavbarPageObject.ts'
 
 class SoundsEditorKeyboardShortcutsPageObject extends PageObject {
   protected readonly name = 'SoundsEditorPage.shortcuts'
@@ -69,6 +73,10 @@ export class SoundsEditorPageObject extends PageObject {
     return new SoundSidebarPageObject(this.mountResult)
   }
 
+  get navbar() {
+    return new NavbarPageObject(this.mountResult)
+  }
+
   get shortcuts() {
     return new SoundsEditorKeyboardShortcutsPageObject(this.mountResult)
   }
@@ -116,16 +124,6 @@ export class SoundsEditorPageObject extends PageObject {
     this.step('pressDuplicateSound', () => this.press(EditSoundPaneTestIds.duplicateButton))
 
   pressHomeLink = (): Promise<void> => this.step('pressHomeLink', () => this.press(NavbarTestIds.homeLink))
-
-  pressUndo = (): Promise<void> => this.step('pressUndo', () => this.press(NavbarTestIds.undoButton))
-
-  pressRedo = (): Promise<void> => this.step('pressRedo', () => this.press(NavbarTestIds.redoButton))
-
-  pressStorageWarningButton = (): Promise<void> =>
-    this.step('pressStorageWarningButton', async () => {
-      this.mountResult.getByTestId(NavbarTestIds.storageWarningButton)
-      return this.press(NavbarTestIds.storageWarningButton)
-    })
 
   clickCentreOfWaveform = (): Promise<void> =>
     this.step('clickCentreOfWaveform', async () => {
@@ -179,9 +177,6 @@ export class SoundsEditorPageObject extends PageObject {
 
   expectPlayButtonToBeShown = (): Promise<void> =>
     this.step('expectPlayButtonToBeShown', () => this.expectToBeVisible(EditSoundPaneTestIds.playButton))
-
-  expectStorageWarningDialogToBeShown = (): Promise<void> =>
-    this.step('expectStorageWarningDialogToBeShown', () => this.expectToBeVisible(NavbarTestIds.storageWarningDialog))
 }
 
 export const launchAndStartAudioCapture = async (mount: MountFunction): Promise<SoundsEditorPageObject> => {

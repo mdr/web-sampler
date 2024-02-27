@@ -1,4 +1,4 @@
-import { EditSoundPaneTestIds } from '../EditSoundPaneTestIds.ts'
+import { EditSoundPaneTestIds } from '../SoundEditorPageTestIds.ts'
 import { useCallback, useEffect, useRef } from 'react'
 import { AudioBufferUtils } from '../../../audioRecorder/AudioBufferUtils.ts'
 import { useAudioContext } from '../../../audioRecorder/AudioContextProvider.ts'

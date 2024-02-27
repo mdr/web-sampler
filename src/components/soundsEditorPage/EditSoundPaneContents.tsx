@@ -25,7 +25,7 @@ import { DownloadWavButton } from './audioSection/DownloadWavButton.tsx'
 import { CropButton } from './audioSection/CropButton.tsx'
 import { getPlayRegionDuration } from '../../types/SoundAudio.ts'
 import humanizeDuration from 'humanize-duration'
-import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
+import { EditSoundPaneTestIds } from './SoundEditorPageTestIds.ts'
 import { DuplicateSoundButton } from './DuplicateSoundButton.tsx'
 import { isChromiumBasedBrowser } from '../../utils/browserUtils.ts'
 

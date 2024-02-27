@@ -1,5 +1,5 @@
 import { Input, Label, TextField } from 'react-aria-components'
-import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
+import { EditSoundPaneTestIds } from './SoundEditorPageTestIds.ts'
 
 export interface SoundNameTextFieldProps {
   soundName: string
