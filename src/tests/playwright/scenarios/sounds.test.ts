@@ -148,7 +148,7 @@ test('cropping a sound should modify the audio', async ({ mount }) => {
   expect(croppedSound.audio.finishTime).toBe(0.5)
 })
 
-test.skip('can download a sound as a Wav file', async ({ mount }) => {
+test('can download a sound as a Wav file', async ({ mount }) => {
   const soundsEditorPage = await launchAndRecordNewSound(mount)
 
   const downloadedWavPath = await soundsEditorPage.pressDownloadWav()
@@ -166,4 +166,16 @@ test('storage warning button should open a modal', async ({ mount }) => {
 
   await soundsEditorPage.navbar.expectStorageWarningDialogToBeShown()
   await soundsEditorPage.checkScreenshot('storage-warning-dialog')
+})
+
+test.skip('can export and import sounds', async ({ mount }) => {
+  const soundsEditorPage = await launchAndRecordNewSound(mount)
+  await soundsEditorPage.enterSoundName('Sound 1')
+  const menu = await soundsEditorPage.navbar.pressMenuButton()
+  const exportedSoundsPath = await menu.pressExportAllSounds()
+
+  await soundsEditorPage.pressDelete()
+  await menu.pressImportSounds(exportedSoundsPath)
+
+  await soundsEditorPage.sidebar.expectSoundNamesToBe(['Sound 1'])
 })

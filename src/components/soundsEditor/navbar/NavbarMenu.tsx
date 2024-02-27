@@ -11,9 +11,10 @@ import { unzipSounds } from './importExport/importSounds.ts'
 import { Sound } from '../../../types/Sound.ts'
 import { SelectedFiles } from 'use-file-picker/types'
 import { useNavigate } from 'react-router-dom'
+import { NavbarTestIds } from './NavbarTestIds.ts'
 
 const NavbarMenuIds = {
-  exportSounds: 'exportSounds',
+  exportAllSounds: 'exportSounds',
   importSounds: 'importSounds',
 }
 
@@ -53,7 +54,7 @@ export const NavbarMenu = () => {
 
   const handleAction = (key: Key) => {
     switch (key) {
-      case NavbarMenuIds.exportSounds:
+      case NavbarMenuIds.exportAllSounds:
         doExport()
         break
       case NavbarMenuIds.importSounds:
@@ -64,13 +65,15 @@ export const NavbarMenu = () => {
   return (
     <Menu onAction={handleAction} className="outline-none">
       <MenuItem
-        id={NavbarMenuIds.exportSounds}
+        id={NavbarMenuIds.exportAllSounds}
+        data-testid={NavbarTestIds.exportAllSoundsMenuItem}
         className="group box-border flex w-full cursor-default items-center rounded-md px-3 py-2 text-gray-900 outline-none focus:bg-gray-500 focus:text-white"
       >
         <Icon path={mdiExport} size={1} className="mr-2" /> Export All Sounds
       </MenuItem>
       <MenuItem
         id={NavbarMenuIds.importSounds}
+        data-testid={NavbarTestIds.importSoundsMenuItem}
         className="group box-border flex w-full cursor-default items-center rounded-md px-3 py-2 text-gray-900 outline-none focus:bg-gray-500 focus:text-white"
       >
         <Icon path={mdiImport} size={1} className="mr-2" /> Import Sounds…

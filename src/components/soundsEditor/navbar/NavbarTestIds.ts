@@ -4,6 +4,9 @@ export const NavbarTestIds = {
   homeLink: TestId('Navbar.homeLink'),
   undoButton: TestId('Navbar.undoButton'),
   redoButton: TestId('Navbar.redoButton'),
+  menuButton: TestId('Navbar.menuButton'),
+  exportAllSoundsMenuItem: TestId('Navbar.exportAllSoundsMenuItem'),
+  importSoundsMenuItem: TestId('Navbar.importSoundsMenuItem'),
   storageWarningButton: TestId('Navbar.storageWarningButton'),
   storageWarningDialog: TestId('Navbar.storageWarningDialog'),
 }
