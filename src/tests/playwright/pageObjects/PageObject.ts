@@ -1,11 +1,12 @@
 import { expect, test } from '@playwright/experimental-ct-react'
 import { MountResult } from '../types.ts'
 import { Duration } from 'luxon'
-import { Seconds, TestId } from '../../../utils/types/brandedTypes.ts'
+import { Path, Seconds, TestId } from '../../../utils/types/brandedTypes.ts'
 import { platform } from 'node:os'
 import { Option } from '../../../utils/types/Option.ts'
 import { Sound } from '../../../types/Sound.ts'
 import { deserialiseSounds } from '../testApp/soundsSerialisation.ts'
+import tmp from 'tmp'
 
 export abstract class PageObject {
   constructor(protected readonly mountResult: MountResult) {}
@@ -75,5 +76,14 @@ export abstract class PageObject {
     } else {
       await expect(this.mountResult).toHaveScreenshot(`${name}.png`)
     }
+  }
+
+  protected triggerDownload = async (fn: () => Promise<void>): Promise<Path> => {
+    const downloadPromise = this.page.waitForEvent('download')
+    await fn()
+    const download = await downloadPromise
+    const path = Path(tmp.fileSync().name)
+    await download.saveAs(path)
+    return path
   }
 }

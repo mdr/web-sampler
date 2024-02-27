@@ -6,11 +6,11 @@ import { NavbarTestIds } from '../../../components/soundsEditor/navbar/NavbarTes
 import { launchApp } from './launchApp.tsx'
 import { SoundSidebarPageObject } from './SoundSidebarPageObject.ts'
 import { platform } from 'node:os'
-import tmp from 'tmp'
 import { NavbarPageObject } from './NavbarPageObject.ts'
 import { SoundSidebarTestIds } from '../../../components/soundsEditor/sidebar/SoundSidebarTestIds.ts'
 import { EditSoundPaneTestIds } from '../../../components/soundsEditor/editSoundPane/EditSoundPaneTestIds.ts'
 import { TestAppProps } from '../TestApp.tsx'
+import { Path } from '../../../utils/types/brandedTypes.ts'
 
 class SoundsEditorKeyboardShortcutsPageObject extends PageObject {
   protected readonly name = 'SoundsEditorPage.shortcuts'
@@ -101,16 +101,8 @@ export class SoundsEditorPageObject extends PageObject {
   pressCropAudio = (): Promise<void> =>
     this.step('pressCropAudio', () => this.press(EditSoundPaneTestIds.cropAudioButton))
 
-  pressDownloadWav = (): Promise<string> =>
-    this.step('pressDownloadWav', async () => {
-      const downloadPromise = this.page.waitForEvent('download')
-      await this.press(EditSoundPaneTestIds.downloadWavButton)
-      await this.clockNext() // Needed for the download to kick off
-      const download = await downloadPromise
-      const file = tmp.fileSync({ prefix: 'download', postfix: '.wav' }).name
-      await download.saveAs(file)
-      return file
-    })
+  pressDownloadWav = (): Promise<Path> =>
+    this.step('pressDownloadWav', () => this.triggerDownload(() => this.press(EditSoundPaneTestIds.downloadWavButton)))
 
   pressPlayButton = (): Promise<void> => this.step('pressPlayButton', () => this.press(EditSoundPaneTestIds.playButton))
 

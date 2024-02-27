@@ -3,8 +3,9 @@ import { launchApp } from '../pageObjects/launchApp.tsx'
 import { launchAndRecordNewSound, launchAndStartAudioCapture } from '../pageObjects/SoundsEditorPageObject.ts'
 import { getTotalAudioDuration } from '../../../types/SoundAudio.ts'
 import { assertSoundHasAudio, filesAreEqual } from '../testUtils.ts'
+import { Path } from '../../../utils/types/brandedTypes.ts'
 
-export const EXPECTED_DOWNLOAD_PATH = 'src/tests/playwright/data/expected-download.wav'
+export const EXPECTED_DOWNLOAD_PATH = Path('src/tests/playwright/data/expected-download.wav')
 test('sounds can be created and named', async ({ mount }) => {
   const soundsEditorPage = await launchApp(mount)
 
@@ -171,10 +172,12 @@ test('storage warning button should open a modal', async ({ mount }) => {
 test('can export and import sounds', async ({ mount }) => {
   const soundsEditorPage = await launchAndRecordNewSound(mount)
   await soundsEditorPage.enterSoundName('Sound 1')
+
   let menu = await soundsEditorPage.navbar.pressMenuButton()
   const exportedSoundsPath = await menu.pressExportAllSounds()
 
   await soundsEditorPage.pressDelete()
+  await soundsEditorPage.sidebar.expectSoundNamesToBe([])
 
   menu = await soundsEditorPage.navbar.pressMenuButton()
   await menu.pressImportSounds(exportedSoundsPath)
