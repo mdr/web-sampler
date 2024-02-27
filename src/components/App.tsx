@@ -11,6 +11,8 @@ import { StorageManagerContext } from '../storage/StorageManagerContext.ts'
 import { WebStorageManager } from '../storage/StorageManager.tsx'
 import { AppConfig } from '../config/AppConfig.ts'
 import reactArrayToTree from 'react-array-to-tree'
+import { ExclusiveTab } from './misc/ExclusiveTab.tsx'
+import { AlreadyOpenInAnotherTabPage } from './misc/AlreadyOpenInAnotherTabPage.tsx'
 
 export interface AppProps {
   config: AppConfig
@@ -31,10 +33,12 @@ export const App = ({ config }: AppProps) => {
   return (
     <React.StrictMode>
       <ErrorBoundary fallback={<ErrorFallback />}>
-        <ToastContainer position="top-center" hideProgressBar closeOnClick closeButton={false} />
-        <AllProviders config={config}>
-          <RouterProvider router={router} />
-        </AllProviders>
+        <ExclusiveTab fallback={<AlreadyOpenInAnotherTabPage />}>
+          <ToastContainer position="top-center" hideProgressBar closeOnClick closeButton={false} />
+          <AllProviders config={config}>
+            <RouterProvider router={router} />
+          </AllProviders>
+        </ExclusiveTab>
       </ErrorBoundary>
     </React.StrictMode>
   )
