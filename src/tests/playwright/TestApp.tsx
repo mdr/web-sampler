@@ -13,7 +13,7 @@ export interface TestAppProps {
   useFakeTimers?: boolean
 }
 
-export const TestApp = ({ useFakeTimers = false }: TestAppProps) => {
+export const TestApp = ({ useFakeTimers = true }: TestAppProps) => {
   const audioRecorder = new MockAudioRecorder()
   const mockAudioElement = new MockAudioElement()
   const config = makeTestAppConfig(audioRecorder, mockAudioElement)
