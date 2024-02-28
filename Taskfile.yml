@@ -9,7 +9,7 @@ tasks:
       - us
     desc: Update screenshots using Docker
     cmds:
-      - docker run -it --rm -p 9323:9323 -v $(pwd):$(pwd) mcr.microsoft.com/playwright:v1.42.0-jammy sh -c "cd $(pwd) && yarn && yarn test-ct --update-snapshots"
+      - docker run -it --rm -p 9323:9323 -v $(pwd):$(pwd) mcr.microsoft.com/playwright:v1.41.1-jammy sh -c "cd $(pwd) && yarn && yarn test-ct --update-snapshots"
   check-all:
     aliases:
       - ca
