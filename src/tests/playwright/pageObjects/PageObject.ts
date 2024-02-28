@@ -81,6 +81,7 @@ export abstract class PageObject {
   protected triggerDownload = async (fn: () => Promise<void>): Promise<Path> => {
     const downloadPromise = this.page.waitForEvent('download')
     await fn()
+    await this.clockNext() // May be needed for the download to kick off
     const download = await downloadPromise
     const path = Path(tmp.fileSync().name)
     await download.saveAs(path)

@@ -149,7 +149,7 @@ test('cropping a sound should modify the audio', async ({ mount }) => {
   expect(croppedSound.audio.finishTime).toBe(0.5)
 })
 
-test.skip('can download a sound as a Wav file', async ({ mount }) => {
+test('can download a sound as a Wav file', async ({ mount }) => {
   const soundsEditorPage = await launchAndRecordNewSound(mount)
 
   const downloadedWavPath = await soundsEditorPage.pressDownloadWav()
