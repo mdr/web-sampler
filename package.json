@@ -17,7 +17,7 @@
     "@mdi/react": "^1.6.1",
     "@sinonjs/fake-timers": "^11.2.2",
     "@ungap/structured-clone": "^1.2.0",
-    "@zip.js/zip.js": "^2.7.35",
+    "@zip.js/zip.js": "^2.7.36",
     "async-lock": "^1.4.1",
     "beautiful-react-hooks": "^5.0.1",
     "bowser": "^2.11.0",
