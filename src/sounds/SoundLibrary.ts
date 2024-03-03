@@ -3,12 +3,12 @@ import { Option } from '../utils/types/Option.ts'
 import _ from 'lodash'
 import { SoundActions } from './soundHooks.ts'
 import { fireAndForget, unawaited } from '../utils/utils.ts'
-import { SoundStore } from './SoundStore.ts'
 import { Pcm, Seconds, secondsToMillis } from '../utils/types/brandedTypes.ts'
 import { Draft, produce } from 'immer'
 import { pcmDurationInSeconds } from '../utils/pcmUtils.ts'
 import { newSoundAudio } from '../types/SoundAudio.ts'
 import { DEFAULT_SAMPLE_RATE } from '../types/soundConstants.ts'
+import { SoundStore } from './SoundStore.ts'
 
 export type SoundLibraryUpdatedListener = () => void
 
@@ -41,15 +41,6 @@ export class SoundLibrary implements SoundActions {
     this.notifyListeners()
   }
 
-  importSounds = async (sounds: readonly Sound[]): Promise<void> => {
-    this.checkNotLoading()
-    sounds.forEach(validateSound)
-    const previousSoundIds = this.sounds.map((sound) => sound.id)
-    const newSoundIds = sounds.map((sound) => sound.id)
-    const affectedSoundIds = _.union(previousSoundIds, newSoundIds)
-    this.setSounds(sounds, affectedSoundIds)
-  }
-
   get sounds(): readonly Sound[] {
     return this._sounds
   }
@@ -80,12 +71,6 @@ export class SoundLibrary implements SoundActions {
 
   findSound = (id: SoundId): Option<Sound> => this._sounds.find((sound) => sound.id === id)
 
-  private checkNotLoading = (): void => {
-    if (this._isLoading) {
-      throw new Error('Sounds are still loading')
-    }
-  }
-
   newSound = (): Sound => {
     this.checkNotLoading()
     const sound: Sound = newSound()
@@ -93,15 +78,6 @@ export class SoundLibrary implements SoundActions {
     const updatedSounds = [...this._sounds, sound]
     this.setSounds(updatedSounds, [sound.id])
     return sound
-  }
-
-  private setSounds = (sounds: readonly Sound[], affectedSoundIds: readonly SoundId[]): void => {
-    this.undoStack.push({ sounds: this._sounds, affectedSoundIds })
-    this.redoStack.length = 0
-    this._sounds = sounds
-    this.dirtySoundIds.push(...affectedSoundIds)
-    this.notifyListeners()
-    this.tryPersistDirtySounds()
   }
 
   setName = (id: SoundId, name: string): void =>
@@ -138,23 +114,6 @@ export class SoundLibrary implements SoundActions {
       }
     })
 
-  private updateSoundPure = (id: SoundId, update: (sound: Sound) => Sound): void => {
-    this.checkNotLoading()
-    const sound = this.findSound(id)
-    if (sound === undefined) {
-      throw new Error(`No sound found with id ${id}`)
-    }
-    const updatedSound = update(sound)
-    if (!_.isEqual(sound, updatedSound)) {
-      validateSound(updatedSound)
-      const updatedSounds = this._sounds.map((s) => (s.id === id ? updatedSound : s))
-      this.setSounds(updatedSounds, [id])
-    }
-  }
-
-  private updateSound = (id: SoundId, update: (sound: Draft<Sound>) => void): void =>
-    this.updateSoundPure(id, (sound) => produce(sound, update))
-
   deleteSound = (id: SoundId): void => {
     this.checkNotLoading()
     const updatedSounds = this._sounds.filter((sound) => sound.id !== id)
@@ -173,7 +132,17 @@ export class SoundLibrary implements SoundActions {
     this.setSounds(updatedSounds, [newSound.id])
   }
 
+  importSounds = async (sounds: readonly Sound[]): Promise<void> => {
+    this.checkNotLoading()
+    sounds.forEach(validateSound)
+    const previousSoundIds = this.sounds.map((sound) => sound.id)
+    const newSoundIds = sounds.map((sound) => sound.id)
+    const affectedSoundIds = _.union(previousSoundIds, newSoundIds)
+    this.setSounds(sounds, affectedSoundIds)
+  }
+
   undo = (): void => {
+    this.checkNotLoading()
     const record = this.undoStack.pop()
     if (record === undefined) {
       return
@@ -186,6 +155,7 @@ export class SoundLibrary implements SoundActions {
   }
 
   redo = (): void => {
+    this.checkNotLoading()
     const record = this.redoStack.pop()
     if (record === undefined) {
       return
@@ -193,6 +163,32 @@ export class SoundLibrary implements SoundActions {
     this.undoStack.push({ sounds: this._sounds, affectedSoundIds: record.affectedSoundIds })
     this._sounds = record.sounds
     this.dirtySoundIds.push(...record.affectedSoundIds)
+    this.notifyListeners()
+    this.tryPersistDirtySounds()
+  }
+
+  private updateSound = (id: SoundId, update: (sound: Draft<Sound>) => void): void =>
+    this.updateSoundPure(id, (sound) => produce(sound, update))
+
+  private updateSoundPure = (id: SoundId, update: (sound: Sound) => Sound): void => {
+    this.checkNotLoading()
+    const sound = this.findSound(id)
+    if (sound === undefined) {
+      throw new Error(`No sound found with id ${id}`)
+    }
+    const updatedSound = update(sound)
+    if (!_.isEqual(sound, updatedSound)) {
+      validateSound(updatedSound)
+      const updatedSounds = this._sounds.map((s) => (s.id === id ? updatedSound : s))
+      this.setSounds(updatedSounds, [id])
+    }
+  }
+
+  private setSounds = (sounds: readonly Sound[], affectedSoundIds: readonly SoundId[]): void => {
+    this.undoStack.push({ sounds: this._sounds, affectedSoundIds })
+    this.redoStack.length = 0
+    this._sounds = sounds
+    this.dirtySoundIds.push(...affectedSoundIds)
     this.notifyListeners()
     this.tryPersistDirtySounds()
   }
@@ -221,5 +217,11 @@ export class SoundLibrary implements SoundActions {
     this.dirtySoundIds.length = 0
 
     await this.soundStore.bulkUpdate(soundsToPersist, soundIdsToDelete)
+  }
+
+  private checkNotLoading = (): void => {
+    if (this._isLoading) {
+      throw new Error('Sounds are still loading')
+    }
   }
 }
