@@ -29,7 +29,7 @@ export class SoundSyncer {
     this.memorySounds = sounds
   }
 
-  memorySoundsUpdated = (sounds: readonly Sound[]): void => {
+  soundsUpdated = (sounds: readonly Sound[]): void => {
     if (this.persistedSounds === undefined || this.memorySounds === undefined) {
       throw new Error('memorySoundsUpdated called before soundsLoaded')
     }
@@ -49,6 +49,7 @@ export class SoundSyncer {
     if (soundsToUpsert.length > 0 || soundIdsToDelete.length > 0) {
       await this.soundStore.bulkUpdate(soundsToUpsert, soundIdsToDelete)
     }
+    this.persistedSounds = memorySounds
   }
 
   private tryPersistSounds = (): void =>
