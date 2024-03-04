@@ -1,5 +1,5 @@
-import { expect } from '@playwright/experimental-ct-react'
-import { MountFunction, MountResult } from '../types.ts'
+import { expect, MountResult } from '@playwright/experimental-ct-react'
+import { MountFunction } from '../types.ts'
 import { PageObject } from './PageObject.ts'
 import { AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
 import { NavbarTestIds } from '../../../components/soundsEditor/navbar/NavbarTestIds.ts'

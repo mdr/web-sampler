@@ -1,5 +1,4 @@
-import { expect, test } from '@playwright/experimental-ct-react'
-import { MountResult } from '../types.ts'
+import { expect, MountResult, test } from '@playwright/experimental-ct-react'
 import { Duration } from 'luxon'
 import { Path, Seconds, TestId } from '../../../utils/types/brandedTypes.ts'
 import { platform } from 'node:os'
