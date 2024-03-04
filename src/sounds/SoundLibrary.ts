@@ -29,7 +29,6 @@ export class SoundLibrary implements SoundActions {
   private readonly listeners: SoundLibraryUpdatedListener[] = []
 
   constructor(private readonly soundStore: SoundStore) {
-    setInterval(this.tryPersistDirtySounds, secondsToMillis(PERSIST_DIRTY_INTERVAL))
     unawaited(this.loadSounds())
   }
 
@@ -39,6 +38,7 @@ export class SoundLibrary implements SoundActions {
     this._sounds = sounds
     this._isLoading = false
     this.notifyListeners()
+    setInterval(this.tryPersistDirtySounds, secondsToMillis(PERSIST_DIRTY_INTERVAL))
   }
 
   get sounds(): readonly Sound[] {
@@ -70,6 +70,16 @@ export class SoundLibrary implements SoundActions {
   }
 
   findSound = (id: SoundId): Option<Sound> => this._sounds.find((sound) => sound.id === id)
+
+  soundExists = (id: SoundId): boolean => this.findSound(id) !== undefined
+
+  getSound = (id: SoundId): Sound => {
+    const sound = this.findSound(id)
+    if (sound === undefined) {
+      throw new Error(`Sound with id ${id} does not exist`)
+    }
+    return sound
+  }
 
   newSound = (): Sound => {
     this.checkNotLoading()
@@ -122,10 +132,7 @@ export class SoundLibrary implements SoundActions {
 
   duplicateSound = (id: SoundId): void => {
     this.checkNotLoading()
-    const sound = this.findSound(id)
-    if (sound === undefined) {
-      throw new Error(`No sound found with id ${id}`)
-    }
+    const sound = this.getSound(id)
     const newSound = { ...sound, id: newSoundId() }
     validateSound(newSound)
     const updatedSounds = [...this._sounds, newSound]
@@ -172,14 +179,11 @@ export class SoundLibrary implements SoundActions {
 
   private updateSoundPure = (id: SoundId, update: (sound: Sound) => Sound): void => {
     this.checkNotLoading()
-    const sound = this.findSound(id)
-    if (sound === undefined) {
-      throw new Error(`No sound found with id ${id}`)
-    }
-    const updatedSound = update(sound)
-    if (!_.isEqual(sound, updatedSound)) {
+    const currentSound = this.getSound(id)
+    const updatedSound = update(currentSound)
+    if (!_.isEqual(currentSound, updatedSound)) {
       validateSound(updatedSound)
-      const updatedSounds = this._sounds.map((s) => (s.id === id ? updatedSound : s))
+      const updatedSounds = this._sounds.map((sound) => (sound.id === id ? updatedSound : sound))
       this.setSounds(updatedSounds, [id])
     }
   }
@@ -213,7 +217,7 @@ export class SoundLibrary implements SoundActions {
     const soundsToPersist = this.dirtySoundIds
       .map(this.findSound)
       .filter((sound): sound is Sound => sound !== undefined)
-    const soundIdsToDelete = this.dirtySoundIds.filter((id) => this.findSound(id) === undefined)
+    const soundIdsToDelete = this.dirtySoundIds.filter((id) => !this.soundExists(id))
     this.dirtySoundIds.length = 0
 
     await this.soundStore.bulkUpdate(soundsToPersist, soundIdsToDelete)
