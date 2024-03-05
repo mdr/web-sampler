@@ -3,7 +3,7 @@ import { SoundLibrary, SoundLibraryUpdatedListener } from './SoundLibrary.ts'
 import { MemorySoundStore } from './MemorySoundStore.testSupport.ts'
 import flushPromises from 'flush-promises'
 import { makeSound, SoundTestConstants } from '../types/sound.testSupport.ts'
-import { newSoundId } from '../types/Sound.ts'
+import { newSoundId, Sound } from '../types/Sound.ts'
 import { SoundStore } from './SoundStore.ts'
 
 describe('SoundLibrary', () => {
@@ -40,20 +40,38 @@ describe('SoundLibrary', () => {
   })
 
   it('should allow a new sound to be added', async () => {
-    const soundStore = new MemorySoundStore()
-    const library = await makeLoadedSoundLibrary(soundStore)
-    const listener = mockFunction<SoundLibraryUpdatedListener>()
-    library.addListener(listener)
+    const { library, soundStore, listener } = await setUpTest()
 
     const sound = library.newSound()
-    await flushPromises()
-    
-    expect(soundStore.sounds).toEqual([sound])
+
+    expect(library.sounds).toEqual([sound])
     expect(sound.name).toEqual('')
     expect(sound.audio).toBeUndefined()
     expect(listener).toHaveBeenCalledTimes(1)
+    await flushPromises()
+    expect(soundStore.sounds).toEqual([sound])
+  })
+
+  it('should allow a sound to be deleted', async () => {
+    const sound = makeSound()
+    const { library, soundStore, listener } = await setUpTest([sound])
+
+    library.deleteSound(sound.id)
+
+    expect(library.sounds).toEqual([])
+    expect(listener).toHaveBeenCalledTimes(1)
+    await flushPromises()
+    expect(soundStore.sounds).toEqual([])
   })
 })
+
+const setUpTest = async (initialSounds: Sound[] = []) => {
+  const soundStore = new MemorySoundStore(initialSounds)
+  const library = await makeLoadedSoundLibrary(soundStore)
+  const listener = mockFunction<SoundLibraryUpdatedListener>()
+  library.addListener(listener)
+  return { library, soundStore, listener }
+}
 
 const makeLoadedSoundLibrary = async (soundStore: SoundStore): Promise<SoundLibrary> => {
   const library = new SoundLibrary(soundStore)
