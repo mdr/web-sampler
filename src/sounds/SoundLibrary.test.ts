@@ -2,10 +2,11 @@ import { describe, expect, it } from 'vitest'
 import { SoundLibrary, SoundLibraryUpdatedListener } from './SoundLibrary.ts'
 import { MemorySoundStore } from './MemorySoundStore.testSupport.ts'
 import flushPromises from 'flush-promises'
-import { makeSound, SoundTestConstants } from '../types/sound.testSupport.ts'
+import { makeSound, makeSoundAudio, SoundTestConstants } from '../types/sound.testSupport.ts'
 import { newSoundId, Sound } from '../types/Sound.ts'
 import { SoundStore } from './SoundStore.ts'
 import { mockFunction } from '../utils/mockUtils.testSupport.ts'
+import { Volume } from '../utils/types/brandedTypes.ts'
 
 describe('SoundLibrary', () => {
   it('should load sounds from the store on creation', async () => {
@@ -89,6 +90,18 @@ describe('SoundLibrary', () => {
     expect(library.sounds).toEqual(newSounds)
     await flushPromises()
     expect(soundStore.sounds).toEqual(newSounds)
+  })
+
+  it('should allow the volume of a sound to be set', async () => {
+    const sound = makeSound({ audio: makeSoundAudio({ volume: Volume(1) }) })
+    const { library, soundStore, listener } = await setUpTest([sound])
+
+    library.setVolume(sound.id, Volume(0.5))
+
+    expect(listener).toHaveBeenCalledTimes(1)
+    expect(library.getSound(sound.id).audio?.volume).toEqual(Volume(0.5))
+    await flushPromises()
+    expect(soundStore.sounds[0].audio?.volume).toEqual(Volume(0.5))
   })
 })
 
