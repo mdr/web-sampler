@@ -3,7 +3,7 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 import { SoundLibraryContext } from './SoundLibraryContext.ts'
 import { Option } from '../utils/types/Option.ts'
 import { SoundLibrary } from './SoundLibrary.ts'
-import { Pcm, Seconds } from '../utils/types/brandedTypes.ts'
+import { Pcm, Seconds, Volume } from '../utils/types/brandedTypes.ts'
 
 const useSoundLibrary = (): SoundLibrary => {
   const soundLibrary = useContext(SoundLibraryContext)
@@ -73,6 +73,8 @@ export interface SoundActions {
   setStartTime(id: SoundId, startTime: Seconds): void
 
   setFinishTime(id: SoundId, finishTime: Seconds): void
+
+  setVolume(id: SoundId, volume: Option<Volume>): void
 
   cropAudio(id: SoundId): void
 

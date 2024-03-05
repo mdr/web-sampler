@@ -1,4 +1,4 @@
-import { Pcm, Seconds } from '../utils/types/brandedTypes.ts'
+import { Pcm, Seconds, Volume } from '../utils/types/brandedTypes.ts'
 import { SoundId } from './Sound.ts'
 import { pcmDurationInSeconds } from '../utils/pcmUtils.ts'
 import { DEFAULT_SAMPLE_RATE } from './soundConstants.ts'
@@ -7,14 +7,14 @@ export interface SoundAudio {
   readonly pcm: Pcm
   readonly startTime: Seconds
   readonly finishTime: Seconds
-  readonly volume?: number
+  readonly volume?: Volume
 }
 
 export const newSoundAudio = (pcm: Pcm): SoundAudio => ({
   pcm,
   startTime: Seconds(0),
   finishTime: pcmDurationInSeconds(pcm),
-  volume: 1,
+  volume: Volume(1),
 })
 
 /**

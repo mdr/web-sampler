@@ -1,12 +1,15 @@
 import { z } from 'zod'
-import { Seconds } from '../../../../utils/types/brandedTypes.ts'
+import { Seconds, Volume } from '../../../../utils/types/brandedTypes.ts'
 import { SoundId } from '../../../../types/Sound.ts'
 
 export const ExportedSoundAudio = z
   .object({
     startTime: z.number().transform(Seconds),
     finishTime: z.number().transform(Seconds),
-    volume: z.number().optional(),
+    volume: z
+      .number()
+      .optional()
+      .transform((volume) => (volume === undefined ? undefined : Volume(volume))),
   })
   .readonly()
 

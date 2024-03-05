@@ -26,3 +26,11 @@ export const Hz = Brand.nominal<Hz>()
 
 export type Path = string & Brand.Brand<'Path'>
 export const Path = Brand.nominal<Path>()
+
+// Volume between 0 and 1 inclusive
+export type Volume = number & Brand.Brand<'Volume'>
+
+export const Volume = Brand.refined<Volume>(
+  (n) => 0 <= n && n <= 1,
+  (n) => Brand.error(`Expected ${n} to be between 0 and 1`),
+)

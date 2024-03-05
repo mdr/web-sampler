@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react'
-import { Seconds, Url } from '../../../utils/types/brandedTypes.ts'
+import { Seconds, Url, Volume } from '../../../utils/types/brandedTypes.ts'
 import { mdiPause, mdiPlay } from '@mdi/js'
 import { unawaited } from '../../../utils/utils.ts'
 import {
@@ -18,6 +18,7 @@ import useUnmount from 'beautiful-react-hooks/useUnmount'
 import { EditSoundPaneTestIds } from '../editSoundPane/EditSoundPaneTestIds.ts'
 import { pcmToWavBlob } from '../../../utils/wav.ts'
 import { DEFAULT_SAMPLE_RATE } from '../../../types/soundConstants.ts'
+import { VolumeSlider } from './VolumeSlider.tsx'
 
 const BIG_SEEK_JUMP = Seconds(0.5)
 const SMALL_SEEK_JUMP = Seconds(0.1)
@@ -36,7 +37,7 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
   const stashedTimeRef = useRef<Option<Seconds>>(undefined)
   const stashedIsPlayingRef = useRef<Option<boolean>>(undefined)
 
-  const { startTime, finishTime, pcm } = sound.audio
+  const { startTime, finishTime, pcm, volume } = sound.audio
   const currentPosition = Seconds(currentAudioPlayerPosition + startTime)
   const totalAudioDuration = getTotalAudioDuration(sound.audio)
 
@@ -140,6 +141,12 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
           iconOnly
           label={isPlaying ? 'Pause' : 'Play'}
           onPress={togglePlayPause}
+        />
+      </div>
+      <div>
+        <VolumeSlider
+          volume={volume ?? Volume(1)}
+          onVolumeChange={(volume) => soundActions.setVolume(sound.id, volume)}
         />
       </div>
     </div>

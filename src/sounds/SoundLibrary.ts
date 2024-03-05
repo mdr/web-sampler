@@ -3,7 +3,7 @@ import { Option } from '../utils/types/Option.ts'
 import _ from 'lodash'
 import { SoundActions } from './soundHooks.ts'
 import { unawaited } from '../utils/utils.ts'
-import { Pcm, Seconds } from '../utils/types/brandedTypes.ts'
+import { Pcm, Seconds, Volume } from '../utils/types/brandedTypes.ts'
 import { Draft, produce } from 'immer'
 import { pcmDurationInSeconds } from '../utils/pcmUtils.ts'
 import { newSoundAudio } from '../types/SoundAudio.ts'
@@ -110,6 +110,14 @@ export class SoundLibrary implements SoundActions {
         throw Error(`No audio defined for sound ${sound.id}`)
       }
       sound.audio.finishTime = finishTime
+    })
+
+  setVolume = (id: SoundId, volume: Option<Volume>) =>
+    this.updateSound(id, (sound) => {
+      if (sound.audio === undefined) {
+        throw Error(`No audio defined for sound ${sound.id}`)
+      }
+      sound.audio.volume = volume
     })
 
   cropAudio = (id: SoundId) =>
