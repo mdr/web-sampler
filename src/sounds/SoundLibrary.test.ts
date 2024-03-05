@@ -107,6 +107,7 @@ describe('SoundLibrary', () => {
   it('should allow undo and redo', async () => {
     const sound = makeSound({ name: SoundTestConstants.oldName })
     const { library, soundStore, listener } = await setUpTest([sound])
+    expect(library).toMatchObject({ canUndo: false, canRedo: false })
 
     library.setName(sound.id, SoundTestConstants.newName)
 
@@ -114,6 +115,7 @@ describe('SoundLibrary', () => {
     expect(library.sounds).toEqual([{ ...sound, name: SoundTestConstants.newName }])
     await flushPromises()
     expect(soundStore.sounds).toEqual([{ ...sound, name: SoundTestConstants.newName }])
+    expect(library).toMatchObject({ canUndo: true, canRedo: false })
 
     library.undo()
 
@@ -121,6 +123,7 @@ describe('SoundLibrary', () => {
     expect(library.sounds).toEqual([sound])
     await flushPromises()
     expect(soundStore.sounds).toEqual([sound])
+    expect(library).toMatchObject({ canUndo: false, canRedo: true })
 
     library.redo()
 
@@ -136,12 +139,15 @@ describe('SoundLibrary', () => {
 
     library.setName(sound.id, 'Name 2')
     expect(library.sounds).toEqual([{ ...sound, name: 'Name 2' }])
+    expect(library).toMatchObject({ canUndo: true, canRedo: false })
 
     library.undo()
     expect(library.sounds).toEqual([sound])
+    expect(library).toMatchObject({ canUndo: false, canRedo: true })
 
     library.setName(sound.id, 'Name 3')
     expect(library.sounds).toEqual([{ ...sound, name: 'Name 3' }])
+    expect(library).toMatchObject({ canUndo: true, canRedo: false })
 
     library.redo()
     expect(library.sounds).toEqual([{ ...sound, name: 'Name 3' }])
