@@ -5,7 +5,7 @@ import { MemorySoundStore } from './MemorySoundStore.testSupport.ts'
 import flushPromises from 'flush-promises'
 
 describe('SoundSyncer', () => {
-  it('should be tested', async () => {
+  it('should write modifications to a sound store as sounds are changed', async () => {
     const soundStore = new MemorySoundStore()
     const soundSyncer = new SoundSyncer(soundStore)
     soundSyncer.soundsLoaded([])
