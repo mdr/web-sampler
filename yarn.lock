@@ -4144,6 +4144,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"flush-promises@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "flush-promises@npm:1.0.2"
+  checksum: d183449e54562f6262ebfcf2bf2e850d43c22561cafe600d1238d65c69bd32f355bcc3468546b1d51d3e77b678e686ff92cd15c774663581df58ca793690838a
+  languageName: node
+  linkType: hard
+
 "for-each@npm:^0.3.3":
   version: 0.3.3
   resolution: "for-each@npm:0.3.3"
@@ -7642,6 +7649,7 @@ __metadata:
     eslint-plugin-react-hooks: "npm:^4.6.0"
     eslint-plugin-react-refresh: "npm:^0.4.5"
     file-saver: "npm:^2.0.5"
+    flush-promises: "npm:^1.0.2"
     humanize-duration: "npm:^3.31.0"
     immer: "npm:^10.0.3"
     jest-extended: "npm:^4.0.2"
