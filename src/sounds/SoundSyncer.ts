@@ -4,6 +4,9 @@ import { fireAndForget } from '../utils/utils.ts'
 import { Option } from '../utils/types/Option.ts'
 import { diffSounds } from './SoundsDiff.ts'
 
+/**
+ * Write-behind sync for persisting changes to in-memory sounds into a SoundStore.
+ */
 export class SoundSyncer {
   /**
    * The exact set of Sounds that are known to be persisted in the SoundStore.
@@ -11,7 +14,7 @@ export class SoundSyncer {
    */
   private persistedSounds: Option<readonly Sound[]> = undefined
   /**
-   * The latest set of Sounds in memory that may need to be synced with the SoundStore.
+   * The latest set of Sounds in memory that may need to be written to the SoundStore.
    */
   private memorySounds: Option<readonly Sound[]> = undefined
 

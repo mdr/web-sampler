@@ -67,13 +67,13 @@ describe('SoundLibrary', () => {
   })
 
   it('should allow a sound name to be changed', async () => {
-    const sound = makeSound({ name: 'Old sound' })
+    const sound = makeSound({ name: SoundTestConstants.oldName })
     const { library, soundStore, listener } = await setUpTest([sound])
 
-    library.setName(sound.id, 'New name')
+    library.setName(sound.id, SoundTestConstants.newName)
 
     expect(listener).toHaveBeenCalledTimes(1)
-    const updatedSounds = [{ ...sound, name: 'New name' }]
+    const updatedSounds = [{ ...sound, name: SoundTestConstants.newName }]
     expect(library.sounds).toEqual(updatedSounds)
     await flushPromises()
     expect(soundStore.sounds).toEqual(updatedSounds)
@@ -102,6 +102,32 @@ describe('SoundLibrary', () => {
     expect(library.getSound(sound.id).audio?.volume).toEqual(Volume(0.5))
     await flushPromises()
     expect(soundStore.sounds[0].audio?.volume).toEqual(Volume(0.5))
+  })
+
+  it('should allow undo and redo', async () => {
+    const sound = makeSound({ name: SoundTestConstants.oldName })
+    const { library, soundStore, listener } = await setUpTest([sound])
+
+    library.setName(sound.id, SoundTestConstants.newName)
+
+    expect(listener).toHaveBeenCalledTimes(1)
+    expect(library.sounds).toEqual([{ ...sound, name: SoundTestConstants.newName }])
+    await flushPromises()
+    expect(soundStore.sounds).toEqual([{ ...sound, name: SoundTestConstants.newName }])
+
+    library.undo()
+
+    expect(listener).toHaveBeenCalledTimes(2)
+    expect(library.sounds).toEqual([sound])
+    await flushPromises()
+    expect(soundStore.sounds).toEqual([sound])
+
+    library.redo()
+
+    expect(listener).toHaveBeenCalledTimes(3)
+    expect(library.sounds).toEqual([{ ...sound, name: SoundTestConstants.newName }])
+    await flushPromises()
+    expect(soundStore.sounds).toEqual([{ ...sound, name: SoundTestConstants.newName }])
   })
 })
 

@@ -17,6 +17,9 @@ interface UndoRedoRecord {
   sounds: readonly Sound[]
 }
 
+/**
+ * In-memory storage and manipulation of sounds in the app.
+ */
 export class SoundLibrary implements SoundActions {
   private _sounds: readonly Sound[] = []
   private readonly undoStack: UndoRedoRecord[] = []
@@ -78,7 +81,6 @@ export class SoundLibrary implements SoundActions {
   }
 
   newSound = (): Sound => {
-    this.checkNotLoading()
     const sound: Sound = newSound()
     validateSound(sound)
     const updatedSounds = [...this._sounds, sound]
@@ -133,13 +135,11 @@ export class SoundLibrary implements SoundActions {
     })
 
   deleteSound = (id: SoundId): void => {
-    this.checkNotLoading()
     const updatedSounds = this._sounds.filter((sound) => sound.id !== id)
     this.setSounds(updatedSounds)
   }
 
   duplicateSound = (id: SoundId): void => {
-    this.checkNotLoading()
     const sound = this.getSound(id)
     const newSound = { ...sound, id: newSoundId() }
     validateSound(newSound)
@@ -148,7 +148,6 @@ export class SoundLibrary implements SoundActions {
   }
 
   importSounds = (sounds: readonly Sound[]) => {
-    this.checkNotLoading()
     sounds.forEach(validateSound)
     this.setSounds(sounds)
   }
@@ -177,17 +176,15 @@ export class SoundLibrary implements SoundActions {
     this.updateSoundPure(id, (sound) => produce(sound, update))
 
   private updateSoundPure = (id: SoundId, update: (sound: Sound) => Sound): void => {
-    this.checkNotLoading()
     const currentSound = this.getSound(id)
     const updatedSound = update(currentSound)
-    if (!_.isEqual(currentSound, updatedSound)) {
-      validateSound(updatedSound)
-      const updatedSounds = this._sounds.map((sound) => (sound.id === id ? updatedSound : sound))
-      this.setSounds(updatedSounds)
-    }
+    validateSound(updatedSound)
+    const updatedSounds = this._sounds.map((sound) => (sound.id === id ? updatedSound : sound))
+    this.setSounds(updatedSounds)
   }
 
   private setSounds = (sounds: readonly Sound[]): void => {
+    this.checkNotLoading()
     this.undoStack.push({ sounds: this._sounds })
     this.redoStack.length = 0
     this.setSoundsCore(sounds)
@@ -201,7 +198,7 @@ export class SoundLibrary implements SoundActions {
 
   private checkNotLoading = (): void => {
     if (this._isLoading) {
-      throw new Error('Sounds are still loading')
+      throw new Error('Cannot manipulate sounds yet as they are still loading')
     }
   }
 }

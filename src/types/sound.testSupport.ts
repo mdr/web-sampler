@@ -8,6 +8,8 @@ export const SoundTestConstants = {
   id2: SoundId('SoundTestConstants.id2'),
   id3: SoundId('SoundTestConstants.id3'),
   name: 'SoundTestConstants.name',
+  oldName: 'SoundTestConstants.oldName',
+  newName: 'SoundTestConstants.newName',
   startTime: Seconds(5),
   finishTime: Seconds(10),
   volume: Volume(0.5),
