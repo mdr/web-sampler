@@ -44,10 +44,10 @@ describe('SoundLibrary', () => {
 
     const sound = library.newSound()
 
-    expect(library.sounds).toEqual([sound])
     expect(sound.name).toEqual('')
     expect(sound.audio).toBeUndefined()
     expect(listener).toHaveBeenCalledTimes(1)
+    expect(library.sounds).toEqual([sound])
     await flushPromises()
     expect(soundStore.sounds).toEqual([sound])
   })
@@ -58,10 +58,36 @@ describe('SoundLibrary', () => {
 
     library.deleteSound(sound.id)
 
-    expect(library.sounds).toEqual([])
     expect(listener).toHaveBeenCalledTimes(1)
+    expect(library.sounds).toEqual([])
     await flushPromises()
     expect(soundStore.sounds).toEqual([])
+  })
+
+  it('should allow a sound name to be changed', async () => {
+    const sound = makeSound({ name: 'Old sound' })
+    const { library, soundStore, listener } = await setUpTest([sound])
+
+    library.setName(sound.id, 'New name')
+
+    expect(listener).toHaveBeenCalledTimes(1)
+    const updatedSounds = [{ ...sound, name: 'New name' }]
+    expect(library.sounds).toEqual(updatedSounds)
+    await flushPromises()
+    expect(soundStore.sounds).toEqual(updatedSounds)
+  })
+
+  it('should allow sounds to be imported', async () => {
+    const oldSounds = [makeSound()]
+    const { library, soundStore, listener } = await setUpTest(oldSounds)
+    const newSounds = [makeSound()]
+
+    library.importSounds(newSounds)
+
+    expect(listener).toHaveBeenCalledTimes(1)
+    expect(library.sounds).toEqual(newSounds)
+    await flushPromises()
+    expect(soundStore.sounds).toEqual(newSounds)
   })
 })
 

@@ -76,11 +76,11 @@ export interface SoundActions {
 
   cropAudio(id: SoundId): void
 
+  importSounds(sounds: readonly Sound[]): void
+
   undo(): void
 
   redo(): void
-
-  importSounds(sounds: readonly Sound[]): Promise<void>
 }
 
 export const useSoundActions = (): SoundActions => useSoundLibrary()

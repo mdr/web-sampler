@@ -98,26 +98,30 @@ export class SoundLibrary implements SoundActions {
 
   setStartTime = (id: SoundId, startTime: Seconds) =>
     this.updateSound(id, (sound) => {
-      if (sound.audio !== undefined) {
-        sound.audio.startTime = startTime
+      if (sound.audio === undefined) {
+        throw Error(`No audio defined for sound ${sound.id}`)
       }
+      sound.audio.startTime = startTime
     })
 
   setFinishTime = (id: SoundId, finishTime: Seconds) =>
     this.updateSound(id, (sound) => {
-      if (sound.audio !== undefined) {
-        sound.audio.finishTime = finishTime
+      if (sound.audio === undefined) {
+        throw Error(`No audio defined for sound ${sound.id}`)
       }
+      sound.audio.finishTime = finishTime
     })
 
   cropAudio = (id: SoundId) =>
     this.updateSound(id, (sound) => {
       const audio = sound.audio
-      if (audio !== undefined) {
-        audio.pcm = Pcm(audio.pcm.slice(audio.startTime * DEFAULT_SAMPLE_RATE, audio.finishTime * DEFAULT_SAMPLE_RATE))
-        audio.startTime = Seconds(0)
-        audio.finishTime = pcmDurationInSeconds(audio.pcm)
+      if (audio === undefined) {
+        throw Error(`No audio defined for sound ${sound.id}`)
       }
+
+      audio.pcm = Pcm(audio.pcm.slice(audio.startTime * DEFAULT_SAMPLE_RATE, audio.finishTime * DEFAULT_SAMPLE_RATE))
+      audio.startTime = Seconds(0)
+      audio.finishTime = pcmDurationInSeconds(audio.pcm)
     })
 
   deleteSound = (id: SoundId): void => {
@@ -135,7 +139,7 @@ export class SoundLibrary implements SoundActions {
     this.setSounds(updatedSounds)
   }
 
-  importSounds = async (sounds: readonly Sound[]): Promise<void> => {
+  importSounds = (sounds: readonly Sound[]) => {
     this.checkNotLoading()
     sounds.forEach(validateSound)
     this.setSounds(sounds)

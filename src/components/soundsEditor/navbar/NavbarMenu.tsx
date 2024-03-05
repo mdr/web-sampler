@@ -32,7 +32,7 @@ export const NavbarMenu = () => {
       toast.error('Error importing sounds.')
       return
     }
-    await soundActions.importSounds(sounds)
+    soundActions.importSounds(sounds)
     navigate('/')
     toast.info('Sounds imported successfully.')
   }
