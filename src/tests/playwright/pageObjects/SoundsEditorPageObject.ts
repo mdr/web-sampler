@@ -10,7 +10,7 @@ import { NavbarPageObject } from './NavbarPageObject.ts'
 import { SoundSidebarTestIds } from '../../../components/soundsEditor/sidebar/SoundSidebarTestIds.ts'
 import { EditSoundPaneTestIds } from '../../../components/soundsEditor/editSoundPane/EditSoundPaneTestIds.ts'
 import { TestAppProps } from '../TestApp.tsx'
-import { Path, Volume } from '../../../utils/types/brandedTypes.ts'
+import { Path } from '../../../utils/types/brandedTypes.ts'
 
 class SoundsEditorKeyboardShortcutsPageObject extends PageObject {
   protected readonly name = 'SoundsEditorPage.shortcuts'
@@ -122,11 +122,12 @@ export class SoundsEditorPageObject extends PageObject {
       await this.clockNext()
     })
 
-  setVolumeOnSlider = (volume: Volume): Promise<void> =>
-    this.step(`setVolumeOnSlider ${volume}`, async () => {
-      const sliderVolume = (volume * 100).toString()
-      this.get(EditSoundPaneTestIds.volumeSlider).locator('input[type="range"]')
-      await this.get(EditSoundPaneTestIds.volumeSlider).fill(sliderVolume)
+  moveVolumeSliderLeft = (times: number): Promise<void> =>
+    this.step(`moveVolumeSliderLeft ${times}`, async () => {
+      await this.press(EditSoundPaneTestIds.volumeSlider)
+      for (let i = 0; i < times; i++) {
+        await this.page.keyboard.press('ArrowLeft')
+      }
     })
 
   simulateAudioRecordingVolume = (volume: number): Promise<void> =>

@@ -80,13 +80,10 @@ test('audio position can be controlled by clicking in the waveform', async ({ mo
   await soundsEditorPage.expectAudioPositionToBe(Seconds(5), { exact: false })
 })
 
-test.skip('volume can be controlled with the volume slider', async ({ mount }) => {
+test('volume can be controlled with the volume slider', async ({ mount }) => {
   const soundsEditorPage = await launchAndRecordNewSound(mount)
-  await soundsEditorPage.expectVolumeToBe(Volume(1))
+  await soundsEditorPage.expectAudioPlaybackVolumeToBe(Volume(1))
 
-  await soundsEditorPage.setVolumeOnSlider(Volume(0.5))
-  await soundsEditorPage.expectVolumeToBe(Volume(0.5))
-
-  await soundsEditorPage.setVolumeOnSlider(Volume(0))
-  await soundsEditorPage.expectVolumeToBe(Volume(0))
+  await soundsEditorPage.moveVolumeSliderLeft(10)
+  await soundsEditorPage.expectAudioPlaybackVolumeToBe(Volume(0.9))
 })

@@ -53,13 +53,13 @@ export abstract class PageObject {
 
   private getAudioPosition = (): Promise<Seconds> => this.page.evaluate(() => window.testHooks.audioPosition)
 
-  expectVolumeToBe = async (expectedVolume: Volume): Promise<void> =>
-    this.step(`expectVolumeToBe ${expectedVolume}`, async () => {
-      const actualVolume = await this.getVolume()
+  expectAudioPlaybackVolumeToBe = async (expectedVolume: Volume): Promise<void> =>
+    this.step(`expectAudioVolumeToBe ${expectedVolume}`, async () => {
+      const actualVolume = await this.getAudioPlaybackVolume()
       expect(actualVolume).toBe(expectedVolume)
     })
 
-  private getVolume = (): Promise<Volume> => this.page.evaluate(() => window.testHooks.volume)
+  private getAudioPlaybackVolume = (): Promise<Volume> => this.page.evaluate(() => window.testHooks.audioPlaybackVolume)
 
   getSounds = (): Promise<Sound[]> =>
     this.step('getSounds', async () => {

@@ -13,7 +13,7 @@ export interface WindowTestHooks {
   simulateAudioPlaybackComplete: () => void
   isAudioPlaying: boolean
   audioPosition: Seconds
-  volume: Volume
+  audioPlaybackVolume: Volume
 
   // Sounds
   getSoundsJson(): string

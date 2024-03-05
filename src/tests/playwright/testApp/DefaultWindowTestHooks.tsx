@@ -42,7 +42,7 @@ export class DefaultWindowTestHooks implements WindowTestHooks {
     return Seconds(this.audioElement.currentTime)
   }
 
-  get volume(): Volume {
+  get audioPlaybackVolume(): Volume {
     return Volume(this.audioElement.volume)
   }
 
