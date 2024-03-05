@@ -1,10 +1,11 @@
-import { describe, expect, it, Mock, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { SoundLibrary, SoundLibraryUpdatedListener } from './SoundLibrary.ts'
 import { MemorySoundStore } from './MemorySoundStore.testSupport.ts'
 import flushPromises from 'flush-promises'
 import { makeSound, SoundTestConstants } from '../types/sound.testSupport.ts'
 import { newSoundId, Sound } from '../types/Sound.ts'
 import { SoundStore } from './SoundStore.ts'
+import { mockFunction } from '../utils/mockUtils.testSupport.ts'
 
 describe('SoundLibrary', () => {
   it('should load sounds from the store on creation', async () => {
@@ -105,6 +106,3 @@ const makeLoadedSoundLibrary = async (soundStore: SoundStore): Promise<SoundLibr
   expect(library.isLoading).toBe(false)
   return library
 }
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const mockFunction = <T extends (...args: any) => any>(): Mock<Parameters<T>, ReturnType<T>> => vi.fn()
