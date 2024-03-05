@@ -10,7 +10,7 @@ import { NavbarPageObject } from './NavbarPageObject.ts'
 import { SoundSidebarTestIds } from '../../../components/soundsEditor/sidebar/SoundSidebarTestIds.ts'
 import { EditSoundPaneTestIds } from '../../../components/soundsEditor/editSoundPane/EditSoundPaneTestIds.ts'
 import { TestAppProps } from '../TestApp.tsx'
-import { Path } from '../../../utils/types/brandedTypes.ts'
+import { Path, Volume } from '../../../utils/types/brandedTypes.ts'
 
 class SoundsEditorKeyboardShortcutsPageObject extends PageObject {
   protected readonly name = 'SoundsEditorPage.shortcuts'
@@ -122,16 +122,23 @@ export class SoundsEditorPageObject extends PageObject {
       await this.clockNext()
     })
 
-  simulateVolume = (volume: number): Promise<void> =>
-    this.step(`simulateVolume ${volume}`, async () => {
-      await this.page.evaluate((volume) => window.testHooks.simulateVolume(volume), volume)
+  setVolumeOnSlider = (volume: Volume): Promise<void> =>
+    this.step(`setVolumeOnSlider ${volume}`, async () => {
+      const sliderVolume = (volume * 100).toString()
+      this.get(EditSoundPaneTestIds.volumeSlider).locator('input[type="range"]')
+      await this.get(EditSoundPaneTestIds.volumeSlider).fill(sliderVolume)
+    })
+
+  simulateAudioRecordingVolume = (volume: number): Promise<void> =>
+    this.step(`simulateAudioRecordingVolume ${volume}`, async () => {
+      await this.page.evaluate((volume) => window.testHooks.simulateAudioRecordingVolume(volume), volume)
       await this.clockNext()
     })
 
   simulateAudioPlaybackComplete = (): Promise<void> =>
-    this.step('simulateAudioPlaybackComplete', () => {
-      this.page.evaluate(() => window.testHooks.simulateAudioPlaybackComplete())
-    })
+    this.step('simulateAudioPlaybackComplete', () =>
+      this.page.evaluate(() => window.testHooks.simulateAudioPlaybackComplete()),
+    )
 
   getAudioRecorderState = (): Promise<AudioRecorderState> =>
     this.page.evaluate(() => window.testHooks.getAudioRecorderState())

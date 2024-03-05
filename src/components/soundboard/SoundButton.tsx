@@ -9,6 +9,7 @@ import { useHotkeys } from 'react-hotkeys-hook'
 import { getPlayRegionPcm } from '../../types/SoundAudio.ts'
 import clsx from 'clsx'
 import { pcmToWavBlob } from '../../utils/wav.ts'
+import { Volume } from '../../utils/types/brandedTypes.ts'
 
 export interface SoundButtonProps {
   sound: SoundWithDefiniteAudio
@@ -37,7 +38,14 @@ export const SoundButton = ({ sound, hotkey }: SoundButtonProps) => {
 
   useEffect(() => {
     const audioElement = audioRef.current ?? undefined
-    if (audioElement) {
+    if (audioElement !== undefined) {
+      audioElement.volume = audio.volume ?? Volume(1)
+    }
+  }, [audio.volume])
+
+  useEffect(() => {
+    const audioElement = audioRef.current ?? undefined
+    if (audioElement !== undefined) {
       audioElement.addEventListener('ended', handleAudioEnded)
       return () => {
         audioElement.removeEventListener('ended', handleAudioEnded)

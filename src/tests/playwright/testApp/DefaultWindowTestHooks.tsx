@@ -5,7 +5,7 @@ import { AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorde
 import { MockAudioElement } from '../mocks/MockAudioElement.ts'
 import { SoundLibrary } from '../../../sounds/SoundLibrary.ts'
 import { serialiseSounds } from './soundsSerialisation.ts'
-import { Seconds } from '../../../utils/types/brandedTypes.ts'
+import { Seconds, Volume } from '../../../utils/types/brandedTypes.ts'
 import { Option } from '../../../utils/types/Option.ts'
 
 export class DefaultWindowTestHooks implements WindowTestHooks {
@@ -16,7 +16,7 @@ export class DefaultWindowTestHooks implements WindowTestHooks {
     private readonly soundLibrary: SoundLibrary,
   ) {}
 
-  simulateVolume = (volume: number): void => {
+  simulateAudioRecordingVolume = (volume: number): void => {
     this.audioRecorder.volume = volume
   }
 
@@ -40,6 +40,10 @@ export class DefaultWindowTestHooks implements WindowTestHooks {
 
   get audioPosition(): Seconds {
     return Seconds(this.audioElement.currentTime)
+  }
+
+  get volume(): Volume {
+    return Volume(this.audioElement.volume)
   }
 
   clockNext = () => this.clock?.next()

@@ -16,10 +16,10 @@ test('captured audio should be shown after recording', async ({ mount }) => {
 test('a volume meter should indicate audio level during recording', async ({ mount }) => {
   const soundsEditorPage = await launchAndStartAudioCapture(mount)
 
-  await soundsEditorPage.simulateVolume(25)
+  await soundsEditorPage.simulateAudioRecordingVolume(25)
   await soundsEditorPage.expectVolumeMeterToShowLevel(25)
 
-  await soundsEditorPage.simulateVolume(50)
+  await soundsEditorPage.simulateAudioRecordingVolume(50)
   await soundsEditorPage.expectVolumeMeterToShowLevel(50)
 })
 

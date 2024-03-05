@@ -1,9 +1,9 @@
 import { AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
-import { Seconds } from '../../../utils/types/brandedTypes.ts'
+import { Seconds, Volume } from '../../../utils/types/brandedTypes.ts'
 
 export interface WindowTestHooks {
   // Recording
-  simulateVolume: (volume: number) => void
+  simulateAudioRecordingVolume: (volume: number) => void
   primeStartRecordingOutcome: (outcome: StartRecordingOutcome) => void
   primeNoAudioOnStopRecording: () => void
 
@@ -13,6 +13,7 @@ export interface WindowTestHooks {
   simulateAudioPlaybackComplete: () => void
   isAudioPlaying: boolean
   audioPosition: Seconds
+  volume: Volume
 
   // Sounds
   getSoundsJson(): string

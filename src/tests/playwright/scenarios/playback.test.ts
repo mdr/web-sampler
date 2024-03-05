@@ -1,6 +1,6 @@
 import { test } from '@playwright/experimental-ct-react'
 import { launchAndRecordNewSound } from '../pageObjects/SoundsEditorPageObject.ts'
-import { Seconds } from '../../../utils/types/brandedTypes.ts'
+import { Seconds, Volume } from '../../../utils/types/brandedTypes.ts'
 
 test('start, pause and resume playback can be controlled via the play/pause button', async ({ mount }) => {
   const soundsEditorPage = await launchAndRecordNewSound(mount)
@@ -78,4 +78,15 @@ test('audio position can be controlled by clicking in the waveform', async ({ mo
   await soundsEditorPage.clickCentreOfWaveform()
 
   await soundsEditorPage.expectAudioPositionToBe(Seconds(5), { exact: false })
+})
+
+test.skip('volume can be controlled with the volume slider', async ({ mount }) => {
+  const soundsEditorPage = await launchAndRecordNewSound(mount)
+  await soundsEditorPage.expectVolumeToBe(Volume(1))
+
+  await soundsEditorPage.setVolumeOnSlider(Volume(0.5))
+  await soundsEditorPage.expectVolumeToBe(Volume(0.5))
+
+  await soundsEditorPage.setVolumeOnSlider(Volume(0))
+  await soundsEditorPage.expectVolumeToBe(Volume(0))
 })

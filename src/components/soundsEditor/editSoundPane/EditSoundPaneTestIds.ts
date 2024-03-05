@@ -13,4 +13,5 @@ export const EditSoundPaneTestIds = {
   pauseButton: TestId('EditSoundPane.pauseButton'),
   waveformCanvas: TestId('EditSoundPane.waveformCanvas'),
   audioHeading: TestId('EditSoundPane.audioHeading'),
+  volumeSlider: TestId('EditSoundPane.volumeSlider'),
 }
