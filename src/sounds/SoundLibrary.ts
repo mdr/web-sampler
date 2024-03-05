@@ -13,18 +13,14 @@ import { SoundSyncer } from './SoundSyncer.ts'
 
 export type SoundLibraryUpdatedListener = () => void
 
-interface UndoRedoRecord {
-  sounds: readonly Sound[]
-}
-
 /**
  * In-memory storage and manipulation of sounds in the app.
  */
 export class SoundLibrary implements SoundActions {
-  private _sounds: readonly Sound[] = []
-  private readonly undoStack: UndoRedoRecord[] = []
-  private readonly redoStack: UndoRedoRecord[] = []
   private _isLoading = true
+  private _sounds: readonly Sound[] = []
+  private readonly undoStack: (readonly Sound[])[] = []
+  private readonly redoStack: (readonly Sound[])[] = []
   private readonly listeners: SoundLibraryUpdatedListener[] = []
   private readonly soundSyncer: SoundSyncer
 
@@ -154,22 +150,22 @@ export class SoundLibrary implements SoundActions {
 
   undo = (): void => {
     this.checkNotLoading()
-    const record = this.undoStack.pop()
-    if (record === undefined) {
+    const sounds = this.undoStack.pop()
+    if (sounds === undefined) {
       return
     }
-    this.redoStack.push({ sounds: this._sounds })
-    this.setSoundsCore(record.sounds)
+    this.redoStack.push(this._sounds)
+    this.setSoundsCore(sounds)
   }
 
   redo = (): void => {
     this.checkNotLoading()
-    const record = this.redoStack.pop()
-    if (record === undefined) {
+    const sounds = this.redoStack.pop()
+    if (sounds === undefined) {
       return
     }
-    this.undoStack.push({ sounds: this._sounds })
-    this.setSoundsCore(record.sounds)
+    this.undoStack.push(this._sounds)
+    this.setSoundsCore(sounds)
   }
 
   private updateSound = (id: SoundId, update: (sound: Draft<Sound>) => void): void =>
@@ -185,7 +181,7 @@ export class SoundLibrary implements SoundActions {
 
   private setSounds = (sounds: readonly Sound[]): void => {
     this.checkNotLoading()
-    this.undoStack.push({ sounds: this._sounds })
+    this.undoStack.push(this._sounds)
     this.redoStack.length = 0
     this.setSoundsCore(sounds)
   }
