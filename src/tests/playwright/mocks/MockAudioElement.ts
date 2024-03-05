@@ -14,6 +14,7 @@ type AudioElementListener<K extends keyof HTMLMediaElementEventMap> =
 export interface PartialAudioElement extends Partial<HTMLAudioElement> {
   src: string
   currentTime: number
+  volume: number
   readonly duration: number
   readonly paused: boolean
   readonly ended: boolean
@@ -32,6 +33,16 @@ export class MockAudioElement implements PartialAudioElement {
 
   set currentTime(value: number) {
     this._currentTime = Seconds(value)
+  }
+
+  private _volume: number = 1
+
+  get volume(): number {
+    return this._volume
+  }
+
+  set volume(value: number) {
+    this._volume = value
   }
 
   private _src: string = ''

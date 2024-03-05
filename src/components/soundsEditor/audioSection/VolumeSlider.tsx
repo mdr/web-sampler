@@ -10,7 +10,7 @@ export const VolumeSlider = ({ volume, onVolumeChange }: VolumeProps) => {
   const onSliderChange = (value: number) => onVolumeChange(Volume(value / 100))
   return (
     <div className="mt-4 flex justify-center rounded-lg bg-blue-500 px-6 py-4">
-      <Slider defaultValue={volume * 100} onChange={onSliderChange} className="w-[250px]">
+      <Slider value={volume * 100} onChange={onSliderChange} className="w-[250px]">
         <div className="flex text-white">
           <Label className="flex-1">Sound Volume</Label>
           <SliderOutput />

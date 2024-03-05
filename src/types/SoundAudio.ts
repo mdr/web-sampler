@@ -27,7 +27,7 @@ export const getTotalAudioDuration = (audio: SoundAudio): Seconds => Seconds(aud
  */
 export const getPlayRegionDuration = (audio: SoundAudio): Seconds => Seconds(audio.finishTime - audio.startTime)
 
-const cropPcm = (pcm: Pcm, start: Seconds, finish: Seconds): Pcm => {
+export const cropPcm = (pcm: Pcm, start: Seconds, finish: Seconds): Pcm => {
   const startSample = Math.floor(start * DEFAULT_SAMPLE_RATE)
   const finishSample = Math.floor(finish * DEFAULT_SAMPLE_RATE)
   return Pcm(pcm.slice(startSample, finishSample))

@@ -12,7 +12,7 @@ import { useSoundActions } from '../../../sounds/soundHooks.ts'
 import { Button } from '../../shared/Button.tsx'
 import { WaveformVisualiser } from './WaveformVisualiser.tsx'
 import { useHotkeys } from 'react-hotkeys-hook'
-import { getPlayRegionPcm, getTotalAudioDuration } from '../../../types/SoundAudio.ts'
+import { cropPcm, getPlayRegionPcm, getTotalAudioDuration } from '../../../types/SoundAudio.ts'
 import { Option } from '../../../utils/types/Option.ts'
 import useUnmount from 'beautiful-react-hooks/useUnmount'
 import { EditSoundPaneTestIds } from '../editSoundPane/EditSoundPaneTestIds.ts'
@@ -42,21 +42,25 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
   const totalAudioDuration = getTotalAudioDuration(sound.audio)
 
   useEffect(() => {
-    const pcm = getPlayRegionPcm(sound.audio)
+    audioPlayerActions.setVolume(volume ?? Volume(1))
+  }, [audioPlayerActions, volume])
+
+  useEffect(() => {
+    const playablePcm = cropPcm(pcm, startTime, finishTime)
     const stashedTime = stashedTimeRef.current
     stashedTimeRef.current = undefined
     const wasPlaying = stashedIsPlayingRef.current
     stashedIsPlayingRef.current = undefined
-    if (pcm.length === 0) {
+    if (playablePcm.length === 0) {
       audioPlayerActions.setUrl(undefined)
       return
     }
-    const blob = pcmToWavBlob(pcm)
+    const blob = pcmToWavBlob(playablePcm)
     const objectUrl = Url(URL.createObjectURL(blob))
     audioPlayerActions.setUrl(objectUrl)
     if (stashedTime !== undefined) {
-      if (stashedTime <= sound.audio.finishTime) {
-        audioPlayerActions.seek(Seconds(Math.max(0, stashedTime - sound.audio.startTime)))
+      if (stashedTime <= finishTime) {
+        audioPlayerActions.seek(Seconds(Math.max(0, stashedTime - startTime)))
         if (wasPlaying) {
           unawaited(audioPlayerActions.play())
         }
@@ -65,7 +69,7 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
     return () => {
       URL.revokeObjectURL(objectUrl)
     }
-  }, [sound.audio, audioPlayerActions])
+  }, [startTime, finishTime, pcm, audioPlayerActions])
 
   useUnmount(() => {
     audioPlayerActions.setUrl(undefined)

@@ -1,4 +1,4 @@
-import { Seconds, Url } from '../utils/types/brandedTypes'
+import { Seconds, Url, Volume } from '../utils/types/brandedTypes'
 import { AudioPlayer } from './AudioPlayer'
 import { Option } from '../utils/types/Option.ts'
 import AsyncLock from 'async-lock'
@@ -20,6 +20,8 @@ export class DefaultAudioPlayer implements AudioPlayer {
     this.url = url
     this.audioElement.src = url ?? ''
   }
+
+  setVolume = (volume: Volume) => (this.audioElement.volume = volume)
 
   play = (): Promise<void> =>
     this.lock.acquire('lock', async () => {

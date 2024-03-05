@@ -1,14 +1,8 @@
 import { Seconds } from '../utils/types/brandedTypes.ts'
 import { AudioPlayerActions } from './audioPlayerHooks.ts'
 
-export interface PlayWindow {
-  readonly start: Seconds
-  readonly finish: Seconds
-}
-
 export interface AudioPlayer extends AudioPlayerActions {
   readonly isPlaying: boolean
-
   readonly currentTime: Seconds
   readonly duration: Seconds
 
