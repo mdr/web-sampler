@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, test } from 'vitest'
 import { SoundLibrary, SoundLibraryUpdatedListener } from './SoundLibrary.ts'
 import { MemorySoundStore } from './MemorySoundStore.testSupport.ts'
 import flushPromises from 'flush-promises'
@@ -128,6 +128,23 @@ describe('SoundLibrary', () => {
     expect(library.sounds).toEqual([{ ...sound, name: SoundTestConstants.newName }])
     await flushPromises()
     expect(soundStore.sounds).toEqual([{ ...sound, name: SoundTestConstants.newName }])
+  })
+
+  test('redo stack should be cleared when a new action is performed', async () => {
+    const sound = makeSound({ name: 'Name 1' })
+    const { library } = await setUpTest([sound])
+
+    library.setName(sound.id, 'Name 2')
+    expect(library.sounds).toEqual([{ ...sound, name: 'Name 2' }])
+
+    library.undo()
+    expect(library.sounds).toEqual([sound])
+
+    library.setName(sound.id, 'Name 3')
+    expect(library.sounds).toEqual([{ ...sound, name: 'Name 3' }])
+
+    library.redo()
+    expect(library.sounds).toEqual([{ ...sound, name: 'Name 3' }])
   })
 })
 
