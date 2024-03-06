@@ -174,6 +174,9 @@ export class SoundLibrary implements SoundActions {
   private updateSoundPure = (id: SoundId, update: (sound: Sound) => Sound): void => {
     const currentSound = this.getSound(id)
     const updatedSound = update(currentSound)
+    if (_.isEqual(currentSound, updatedSound)) {
+      return
+    }
     validateSound(updatedSound)
     const updatedSounds = this._sounds.map((sound) => (sound.id === id ? updatedSound : sound))
     this.setSounds(updatedSounds)

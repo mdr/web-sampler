@@ -111,6 +111,17 @@ test('keyboard shortcuts should work for undo/redo', async ({ mount }) => {
   await soundsEditorPage.sidebar.expectSoundNamesToBe(['A'])
 })
 
+test('undo shortcut should suppress browser undo behavior', async ({ mount }) => {
+  const soundsEditorPage = await launchAndRecordNewSound(mount)
+  await soundsEditorPage.enterSoundName('A')
+  await soundsEditorPage.shortcuts.seekRight()
+  await soundsEditorPage.shortcuts.setStartPosition()
+
+  await soundsEditorPage.shortcuts.undo()
+
+  await soundsEditorPage.sidebar.expectSoundNamesToBe(['A'])
+})
+
 test('adjusting the start and finish times of a sound via keyboard shortcuts', async ({ mount }) => {
   const soundsEditorPage = await launchAndStartAudioCapture(mount)
   await soundsEditorPage.pressStop()

@@ -16,9 +16,9 @@ export const Navbar = () => {
   const canRedo = useCanRedo()
   const { isStoragePersistent } = useStorageManagerState()
 
-  useHotkeys('mod+z', () => soundActions.undo(), [soundActions])
-  useHotkeys('mod+shift+z', () => soundActions.redo(), [soundActions])
-  useHotkeys('ctrl+y', () => soundActions.redo(), [soundActions])
+  useHotkeys('mod+z', () => soundActions.undo(), { preventDefault: true }, [soundActions])
+  useHotkeys('mod+shift+z', () => soundActions.redo(), { preventDefault: true }, [soundActions])
+  useHotkeys('ctrl+y', () => soundActions.redo(), { preventDefault: true }, [soundActions])
 
   return (
     <nav className="bg-gray-800 p-4 text-white">

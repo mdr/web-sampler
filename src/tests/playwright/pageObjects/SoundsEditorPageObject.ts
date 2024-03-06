@@ -81,7 +81,10 @@ export class SoundsEditorPageObject extends PageObject {
   }
 
   enterSoundName = (name: string): Promise<void> =>
-    this.step(`enterName ${name}`, () => this.get(EditSoundPaneTestIds.soundNameInput).fill(name))
+    this.step(`enterSoundName ${name}`, async () => {
+      await this.get(EditSoundPaneTestIds.soundNameInput).fill(name)
+      await this.get(EditSoundPaneTestIds.soundNameInput).blur()
+    })
 
   pressCaptureAudio = ({
     primedOutcome = StartRecordingOutcome.SUCCESS,
