@@ -2559,12 +2559,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^18.2.20":
-  version: 18.2.20
-  resolution: "@types/react-dom@npm:18.2.20"
+"@types/react-dom@npm:^18.2.21":
+  version: 18.2.21
+  resolution: "@types/react-dom@npm:18.2.21"
   dependencies:
     "@types/react": "npm:*"
-  checksum: d352fb9c4fbb773f1db1e463b0228dfb0dc0a670a742983ae840d77f54ad9d4ac38084b23c975487fc37814f44425fc6d1adafbb432a7c48957669c124b5f8df
+  checksum: a887b4b647071df48173f054854713b68fdacfceeba7fa14f64ba26688d7d43574d7dc88a2a346e28f2e667eeab1b9bdbcad8a54353869835e52638607f61ff5
   languageName: node
   linkType: hard
 
@@ -2588,14 +2588,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:^18.2.63":
-  version: 18.2.63
-  resolution: "@types/react@npm:18.2.63"
+"@types/react@npm:^18.2.64":
+  version: 18.2.64
+  resolution: "@types/react@npm:18.2.64"
   dependencies:
     "@types/prop-types": "npm:*"
     "@types/scheduler": "npm:*"
     csstype: "npm:^3.0.2"
-  checksum: 53d86727b966a3ba097553b5ef75a1f2bea78bd8c54ebcf6d00bd338000112b208ab30536c8c0a9f5fc61055cc3fbabbc7a23910c55092341602845de4c13714
+  checksum: ab3ba9597990d08ffd419a5ad28fd22393c7a9a241ae455fb1d5d193d209471aa1909fa7ad016fd8d161eab6d0babba77b013b56a5170bedf78833085b9ee424
   languageName: node
   linkType: hard
 
@@ -5081,10 +5081,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"konva@npm:^9.3.5":
-  version: 9.3.5
-  resolution: "konva@npm:9.3.5"
-  checksum: eebefd2580bdcca0a5b6487080e393548ad79091aff5c0bff0065f897393213304086130a7c0df9b5c82ac62b3969504c82c8ef117dfece9532954d318bcebd1
+"konva@npm:^9.3.6":
+  version: 9.3.6
+  resolution: "konva@npm:9.3.6"
+  checksum: ad4c9abe7b9e61bd4a119f3cf17525be9437645cfa1e38e2fc2c0bd157d2d00db6d5a7304adf3e1056e793889794d99d695e11be3df0109c71d8b5ccccd6ef96
   languageName: node
   linkType: hard
 
@@ -7669,8 +7669,8 @@ __metadata:
     "@types/lodash": "npm:^4.14.202"
     "@types/luxon": "npm:^3.4.2"
     "@types/node": "npm:^20.11.25"
-    "@types/react": "npm:^18.2.63"
-    "@types/react-dom": "npm:^18.2.20"
+    "@types/react": "npm:^18.2.64"
+    "@types/react-dom": "npm:^18.2.21"
     "@types/sinonjs__fake-timers": "npm:^8.1.5"
     "@types/tmp": "npm:^0.2.6"
     "@types/ungap__structured-clone": "npm:^1.2.0"
@@ -7697,7 +7697,7 @@ __metadata:
     immer: "npm:^10.0.3"
     jest-extended: "npm:^4.0.2"
     jsdom: "npm:^24.0.0"
-    konva: "npm:^9.3.5"
+    konva: "npm:^9.3.6"
     lodash: "npm:^4.17.21"
     luxon: "npm:^3.4.4"
     postcss: "npm:^8.4.35"
