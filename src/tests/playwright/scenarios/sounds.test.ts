@@ -6,6 +6,7 @@ import { assertSoundHasAudio, filesAreEqual } from '../testUtils.ts'
 import { Path } from '../../../utils/types/brandedTypes.ts'
 
 export const EXPECTED_DOWNLOAD_PATH = Path('src/tests/playwright/data/expected-download.wav')
+
 test('sounds can be created and named', async ({ mount }) => {
   const soundsEditorPage = await launchApp(mount)
 
@@ -169,15 +170,6 @@ test('can download a sound as a Wav file', async ({ mount }) => {
     await filesAreEqual(downloadedWavPath, EXPECTED_DOWNLOAD_PATH),
     'downloaded Wav file should have the correct contents',
   ).toBe(true)
-})
-
-test('storage warning button should open a modal', async ({ mount }) => {
-  const soundsEditorPage = await launchApp(mount)
-
-  await soundsEditorPage.navbar.pressStorageWarningButton()
-
-  await soundsEditorPage.navbar.expectStorageWarningDialogToBeShown()
-  await soundsEditorPage.checkScreenshot('storage-warning-dialog')
 })
 
 test.skip('can export and import sounds', async ({ mount }) => {

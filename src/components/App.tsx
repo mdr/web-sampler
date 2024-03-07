@@ -8,7 +8,6 @@ import { ErrorFallback } from './misc/ErrorFallback.tsx'
 import { router } from './router.tsx'
 import { AudioPlayerContext } from '../audioPlayer/AudioPlayerContext.ts'
 import { StorageManagerContext } from '../storage/StorageManagerContext.ts'
-import { WebStorageManager } from '../storage/StorageManager.tsx'
 import { AppConfig } from '../config/AppConfig.ts'
 import reactArrayToTree from 'react-array-to-tree'
 import { ExclusiveTab } from './misc/ExclusiveTab.tsx'
@@ -19,12 +18,12 @@ export interface AppProps {
 }
 
 const nestProviders = (config: AppConfig) => {
-  const { audioRecorder, audioPlayer, soundLibrary } = config
+  const { audioRecorder, audioPlayer, soundLibrary, storageManager } = config
   return reactArrayToTree([
     <AudioRecorderContext.Provider value={audioRecorder} />,
     <AudioPlayerContext.Provider value={audioPlayer} />,
     <SoundLibraryContext.Provider value={soundLibrary} />,
-    <StorageManagerContext.Provider value={new WebStorageManager()} />,
+    <StorageManagerContext.Provider value={storageManager} />,
   ])
 }
 

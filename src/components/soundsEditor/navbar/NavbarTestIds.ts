@@ -8,5 +8,4 @@ export const NavbarTestIds = {
   exportAllSoundsMenuItem: TestId('Navbar.exportAllSoundsMenuItem'),
   importSoundsMenuItem: TestId('Navbar.importSoundsMenuItem'),
   storageWarningButton: TestId('Navbar.storageWarningButton'),
-  storageWarningDialog: TestId('Navbar.storageWarningDialog'),
 }

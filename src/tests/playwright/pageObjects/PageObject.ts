@@ -24,6 +24,8 @@ export abstract class PageObject {
 
   protected expectToBeVisible = (testId: TestId): Promise<void> => expect(this.get(testId)).toBeVisible()
 
+  protected expectToBeHidden = (testId: TestId): Promise<void> => expect(this.get(testId)).toBeHidden()
+
   expectToastToBeShown = (message: string): Promise<void> =>
     this.step(`expectToastToBeShown "${message}"`, () => expect(this.mountResult.getByText(message)).toBeVisible())
 

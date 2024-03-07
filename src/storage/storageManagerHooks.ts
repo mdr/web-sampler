@@ -17,7 +17,7 @@ const useStorageManager = () => {
 export const useStorageManagerState = (): StorageManagerState => {
   const storageManager = useStorageManager()
   const [state, setState] = useState(getStorageManagerState(storageManager))
-  const handleUpdate = useCallback(() => setState(getStorageManagerState(storageManager)), [storageManager, setState])
+  const handleUpdate = useCallback(() => setState(getStorageManagerState(storageManager)), [storageManager])
   useEffect(() => {
     storageManager.addListener(handleUpdate)
     return () => storageManager.removeListener(handleUpdate)

@@ -1,6 +1,8 @@
 import { PageObject } from './PageObject.ts'
 import { NavbarTestIds } from '../../../components/soundsEditor/navbar/NavbarTestIds.ts'
 import { NavbarMenuPageObject } from './NavbarMenuPageObject.ts'
+import { StorageWarningDialogPageObject } from './StorageWarningDialogPageObject.ts'
+import { StorageWarningDialogTestIds } from '../../../components/soundsEditor/navbar/StorageWarningDialogTestIds.ts'
 
 export class NavbarPageObject extends PageObject {
   protected readonly name = 'Navbar'
@@ -14,9 +16,18 @@ export class NavbarPageObject extends PageObject {
     return new NavbarMenuPageObject(this.mountResult)
   }
 
-  pressStorageWarningButton = (): Promise<void> =>
-    this.step('pressStorageWarningButton', () => this.press(NavbarTestIds.storageWarningButton))
+  pressStorageWarningButton = (): Promise<StorageWarningDialogPageObject> =>
+    this.step('pressStorageWarningButton', async () => {
+      await this.press(NavbarTestIds.storageWarningButton)
+      return await StorageWarningDialogPageObject.verifyIsShown(this.mountResult)
+    })
+
+  expectStorageWarningButtonToBeShown = (): Promise<void> =>
+    this.step('expectStorageWarningButtonToBeShown', () => this.expectToBeVisible(NavbarTestIds.storageWarningButton))
 
   expectStorageWarningDialogToBeShown = (): Promise<void> =>
-    this.step('expectStorageWarningDialogToBeShown', () => this.expectToBeVisible(NavbarTestIds.storageWarningDialog))
+    this.step('expectStorageWarningDialogToBeShown', () => this.expectToBeVisible(StorageWarningDialogTestIds.dialog))
+
+  expectStorageWarningDialogToNotBeShown = (): Promise<void> =>
+    this.step('expectStorageWarningDialogToNotBeShown', () => this.expectToBeHidden(StorageWarningDialogTestIds.dialog))
 }
