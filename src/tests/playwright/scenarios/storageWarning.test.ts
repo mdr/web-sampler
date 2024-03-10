@@ -6,6 +6,7 @@ test('if storage has not been made persistent, a warning button is shown, and th
   mount,
 }) => {
   const soundsEditorPage = await launchApp(mount, {
+    isStoragePersistent: false,
     attemptToMakeStoragePersistentResult: AttemptToMakeStoragePersistentResult.SUCCESSFUL,
   })
   await soundsEditorPage.navbar.expectStorageWarningButtonToBeShown()
@@ -20,6 +21,7 @@ test('if storage has not been made persistent, a warning button is shown, and th
 
 test('if notification permission is denied, show an appropriate toast', async ({ mount }) => {
   const soundsEditorPage = await launchApp(mount, {
+    isStoragePersistent: false,
     attemptToMakeStoragePersistentResult: AttemptToMakeStoragePersistentResult.NOTIFICATION_PERMISSION_DENIED,
   })
   const dialog = await soundsEditorPage.navbar.pressStorageWarningButton()
@@ -32,6 +34,7 @@ test('if notification permission is denied, show an appropriate toast', async ({
 
 test('if storage cannot be made persistent, show an appropriate toast', async ({ mount }) => {
   const soundsEditorPage = await launchApp(mount, {
+    isStoragePersistent: false,
     attemptToMakeStoragePersistentResult: AttemptToMakeStoragePersistentResult.UNSUCCESSFUL,
   })
   const dialog = await soundsEditorPage.navbar.pressStorageWarningButton()
@@ -43,8 +46,7 @@ test('if storage cannot be made persistent, show an appropriate toast', async ({
 })
 
 test('if storage is already persistent, no warning button is shown', async ({ mount }) => {
-  const soundsEditorPage = await launchApp(mount, {
-    isStoragePersistent: true,
-  })
+  const soundsEditorPage = await launchApp(mount, { isStoragePersistent: true })
+  
   await soundsEditorPage.navbar.expectStorageWarningButtonToNotBeShown()
 })
