@@ -25,6 +25,9 @@ export class NavbarPageObject extends PageObject {
   expectStorageWarningButtonToBeShown = (): Promise<void> =>
     this.step('expectStorageWarningButtonToBeShown', () => this.expectToBeVisible(NavbarTestIds.storageWarningButton))
 
+  expectStorageWarningButtonToNotBeShown = (): Promise<void> =>
+    this.step('expectStorageWarningButtonToNotBeShown', () => this.expectToBeHidden(NavbarTestIds.storageWarningButton))
+
   expectStorageWarningDialogToBeShown = (): Promise<void> =>
     this.step('expectStorageWarningDialogToBeShown', () => this.expectToBeVisible(StorageWarningDialogTestIds.dialog))
 

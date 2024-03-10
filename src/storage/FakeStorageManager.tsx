@@ -4,8 +4,18 @@ import { AttemptToMakeStoragePersistentResult, StorageManager } from './StorageM
 export class FakeStorageManager extends AbstractStorageManager implements StorageManager {
   isStoragePersistent: boolean = false
 
+  constructor(
+    isStoragePersistent: boolean,
+    private readonly result: AttemptToMakeStoragePersistentResult,
+  ) {
+    super()
+    this.isStoragePersistent = isStoragePersistent
+  }
+
   attemptToMakeStoragePersistent = async (): Promise<AttemptToMakeStoragePersistentResult> => {
-    this.isStoragePersistent = true
-    return AttemptToMakeStoragePersistentResult.SUCCESSFUL
+    if (this.result === AttemptToMakeStoragePersistentResult.SUCCESSFUL) {
+      this.isStoragePersistent = true
+    }
+    return this.result
   }
 }
