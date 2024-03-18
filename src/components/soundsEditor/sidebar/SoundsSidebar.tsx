@@ -1,24 +1,13 @@
-import { useSoundActions, useSounds } from '../../../sounds/soundHooks.ts'
-import { Link, useNavigate } from 'react-router-dom'
+import { useSounds } from '../../../sounds/soundHooks.ts'
+import { Link } from 'react-router-dom'
 import { NewSoundButton } from '../NewSoundButton.tsx'
-import { getDisplayName, sortSoundsByDisplayName, SoundId } from '../../../types/Sound.ts'
-import * as ReactAriaComponents from 'react-aria-components'
-import Icon from '@mdi/react'
-import { mdiTrashCan } from '@mdi/js'
+import { getDisplayName, sortSoundsByDisplayName } from '../../../types/Sound.ts'
 import { useSoundIdParam } from '../../router.tsx'
 import { SoundSidebarTestIds } from './SoundSidebarTestIds.ts'
 
 export const SoundsSidebar = () => {
   const currentSoundId = useSoundIdParam()
   const sounds = sortSoundsByDisplayName(useSounds())
-  const soundActions = useSoundActions()
-  const navigate = useNavigate()
-  const handleDeleteSound = (soundId: SoundId) => {
-    if (currentSoundId === soundId) {
-      navigate('/')
-    }
-    soundActions.deleteSound(soundId)
-  }
   return (
     <div data-testid={SoundSidebarTestIds.sidebar} className="flex h-full flex-col">
       <div className="flex-grow overflow-auto">
@@ -37,13 +26,6 @@ export const SoundsSidebar = () => {
                 >
                   {getDisplayName(sound)}
                 </Link>
-                <ReactAriaComponents.Button
-                  className="absolute right-2 top-1/2 -translate-y-1/2 transform opacity-0 hover:text-blue-500 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-blue-300 group-hover:opacity-100"
-                  aria-label="Delete"
-                  onPress={() => handleDeleteSound(sound.id)}
-                >
-                  <Icon path={mdiTrashCan} size={1} title="Delete" />
-                </ReactAriaComponents.Button>
               </div>
             </li>
           ))}
