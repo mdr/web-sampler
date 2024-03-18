@@ -4,6 +4,10 @@ import { fireAndForget } from '../utils/utils.ts'
 import { Option } from '../utils/types/Option.ts'
 import { diffSounds } from './SoundsDiff.ts'
 
+export interface State {
+  readonly sounds: readonly Sound[]
+}
+
 /**
  * Write-behind sync for persisting changes to in-memory sounds into a SoundStore.
  */
@@ -12,11 +16,12 @@ export class SoundSyncer {
    * The exact set of Sounds that are known to be persisted in the SoundStore.
    * Or undefined if still loading.
    */
-  private persistedSounds: Option<readonly Sound[]> = undefined
+  private persistedState: Option<State> = undefined
   /**
    * The latest set of Sounds in memory that may need to be written to the SoundStore.
+   * Or undefined if still loading.
    */
-  private memorySounds: Option<readonly Sound[]> = undefined
+  private memoryState: Option<State> = undefined
 
   private isDirty: boolean = false
 
@@ -25,25 +30,25 @@ export class SoundSyncer {
   constructor(private readonly soundStore: SoundStore) {}
 
   soundsLoaded = (sounds: readonly Sound[]): void => {
-    if (this.persistedSounds !== undefined || this.memorySounds !== undefined) {
+    if (this.persistedState !== undefined || this.memoryState !== undefined) {
       throw new Error('soundsLoaded called multiple times')
     }
-    this.persistedSounds = sounds
-    this.memorySounds = sounds
+    this.persistedState = { sounds }
+    this.memoryState = { sounds }
   }
 
   soundsUpdated = (sounds: readonly Sound[]): void => {
-    if (this.persistedSounds === undefined || this.memorySounds === undefined) {
+    if (this.persistedState === undefined || this.memoryState === undefined) {
       throw new Error('memorySoundsUpdated called before soundsLoaded')
     }
-    this.memorySounds = sounds
+    this.memoryState = { sounds }
     this.isDirty = true
     this.tryPersistSounds()
   }
 
   private maybePersistSounds = async (): Promise<void> => {
-    const persistedSounds = this.persistedSounds
-    const memorySounds = this.memorySounds
+    const persistedSounds = this.persistedState
+    const memorySounds = this.memoryState
     if (persistedSounds === undefined || memorySounds === undefined) {
       throw new Error('attempting to persist sounds before they have been loaded')
     }
@@ -52,7 +57,7 @@ export class SoundSyncer {
     if (soundsToUpsert.length > 0 || soundIdsToDelete.length > 0) {
       await this.soundStore.bulkUpdate(soundsToUpsert, soundIdsToDelete)
     }
-    this.persistedSounds = memorySounds
+    this.persistedState = memorySounds
   }
 
   private tryPersistSounds = (): void =>

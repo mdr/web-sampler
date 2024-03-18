@@ -11,8 +11,10 @@ describe('diffSounds', () => {
     const sound3 = makeSound({ id: SoundTestConstants.id3 })
     const oldSounds: Sound[] = [sound1, sound2Version1]
     const newSounds: Sound[] = [sound2Version2, sound3]
-
-    const diff = diffSounds(oldSounds, newSounds)
+    const oldState = { sounds: oldSounds }
+    const newState = { sounds: newSounds }
+    
+    const diff = diffSounds(oldState, newState)
 
     expect(diff.soundsToUpsert).toIncludeSameMembers([sound2Version2, sound3])
     expect(diff.soundIdsToDelete).toEqual([sound1.id])
