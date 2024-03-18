@@ -2666,21 +2666,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^7.1.1":
-  version: 7.1.1
-  resolution: "@typescript-eslint/parser@npm:7.1.1"
+"@typescript-eslint/parser@npm:^7.3.0":
+  version: 7.3.0
+  resolution: "@typescript-eslint/parser@npm:7.3.0"
   dependencies:
-    "@typescript-eslint/scope-manager": "npm:7.1.1"
-    "@typescript-eslint/types": "npm:7.1.1"
-    "@typescript-eslint/typescript-estree": "npm:7.1.1"
-    "@typescript-eslint/visitor-keys": "npm:7.1.1"
+    "@typescript-eslint/scope-manager": "npm:7.3.0"
+    "@typescript-eslint/types": "npm:7.3.0"
+    "@typescript-eslint/typescript-estree": "npm:7.3.0"
+    "@typescript-eslint/visitor-keys": "npm:7.3.0"
     debug: "npm:^4.3.4"
   peerDependencies:
     eslint: ^8.56.0
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 84eb44f3767aaa1d7b26176348c89bd6732bc711f7f24186b1354eba95bf9e9c65b5675838772b831391210e525ff1f3bd4b51a3130ec35413aa362920effc57
+  checksum: 7af4238bf8c536a5592586d66a6eebea8800856d9902c4cb456a3e30a2643a0b16d28a6c470c03326370eaeb9020268611b65b8670a046eec3204a74953d47dc
   languageName: node
   linkType: hard
 
@@ -2691,6 +2691,16 @@ __metadata:
     "@typescript-eslint/types": "npm:7.1.1"
     "@typescript-eslint/visitor-keys": "npm:7.1.1"
   checksum: a955c8529f24945d448b95982d06b5f15a74fc5df97307f5821d55e9861d6c26d61cbd118c1ca41634164ed1d4f6c74fcb8388761341c49e6902a6fb72036afc
+  languageName: node
+  linkType: hard
+
+"@typescript-eslint/scope-manager@npm:7.3.0":
+  version: 7.3.0
+  resolution: "@typescript-eslint/scope-manager@npm:7.3.0"
+  dependencies:
+    "@typescript-eslint/types": "npm:7.3.0"
+    "@typescript-eslint/visitor-keys": "npm:7.3.0"
+  checksum: 33f7cdb9dee9cf1f35e437b7c4e6f3a3f93fcbb14756a973242e5fe150d60a5b5f79d569c09baf413b8eb0ad8560c337143916bc40fc543e94cbe778880c2ab4
   languageName: node
   linkType: hard
 
@@ -2718,6 +2728,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@typescript-eslint/types@npm:7.3.0":
+  version: 7.3.0
+  resolution: "@typescript-eslint/types@npm:7.3.0"
+  checksum: ffe8d42cca8ffdc262ba1a013cb2e67bfd0cda2645fa9b198353aa0b0ff0e3405e19eae5ff1a2bc441397766376df1ea3197f5b5bc0a88d82523355015cf027f
+  languageName: node
+  linkType: hard
+
 "@typescript-eslint/typescript-estree@npm:7.1.1":
   version: 7.1.1
   resolution: "@typescript-eslint/typescript-estree@npm:7.1.1"
@@ -2734,6 +2751,25 @@ __metadata:
     typescript:
       optional: true
   checksum: 2cec9d21cfe46e523a6d29aff554e5450edf1ee30ce9cf644ee8f1f5e1cfd44b94afb3632db97a949c86c4a392ae80f264d56d8747b2b0fdbe5c54139433366a
+  languageName: node
+  linkType: hard
+
+"@typescript-eslint/typescript-estree@npm:7.3.0":
+  version: 7.3.0
+  resolution: "@typescript-eslint/typescript-estree@npm:7.3.0"
+  dependencies:
+    "@typescript-eslint/types": "npm:7.3.0"
+    "@typescript-eslint/visitor-keys": "npm:7.3.0"
+    debug: "npm:^4.3.4"
+    globby: "npm:^11.1.0"
+    is-glob: "npm:^4.0.3"
+    minimatch: "npm:9.0.3"
+    semver: "npm:^7.5.4"
+    ts-api-utils: "npm:^1.0.1"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: dbcb1ebcd425ec8cb606c081f3d0c624bd8827d8aae5f42a77f9851d45b84cf32e62cee8ab595c242f4571a48caaa4e8cba0a2e4ad87609f6a198823793acd08
   languageName: node
   linkType: hard
 
@@ -2761,6 +2797,16 @@ __metadata:
     "@typescript-eslint/types": "npm:7.1.1"
     eslint-visitor-keys: "npm:^3.4.1"
   checksum: 1ab19ec966ff0b86317eddcbfcda645856ec01c3b76a451298031f35e4da0a363e4888ce5ae9e2526e874799a502c49922d83d57d21cb6fef7f3912f51e4a271
+  languageName: node
+  linkType: hard
+
+"@typescript-eslint/visitor-keys@npm:7.3.0":
+  version: 7.3.0
+  resolution: "@typescript-eslint/visitor-keys@npm:7.3.0"
+  dependencies:
+    "@typescript-eslint/types": "npm:7.3.0"
+    eslint-visitor-keys: "npm:^3.4.1"
+  checksum: 788e5ea6bedb0b21cb24fa8d3f9990d50c9a09948f64196f3d5e46184a3cbbb3eea48cf144472c5bf325a85ad0b3b33fa3d7010a774bc1c825271603a26bb782
   languageName: node
   linkType: hard
 
@@ -7676,7 +7722,7 @@ __metadata:
     "@types/ungap__structured-clone": "npm:^1.2.0"
     "@types/uuid": "npm:^9.0.8"
     "@typescript-eslint/eslint-plugin": "npm:^7.1.1"
-    "@typescript-eslint/parser": "npm:^7.1.1"
+    "@typescript-eslint/parser": "npm:^7.3.0"
     "@ungap/structured-clone": "npm:^1.2.0"
     "@vitejs/plugin-react": "npm:^4.2.1"
     "@zip.js/zip.js": "npm:^2.7.37"
