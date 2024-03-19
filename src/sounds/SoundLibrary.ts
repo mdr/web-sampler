@@ -10,7 +10,7 @@ import { newSoundAudio } from '../types/SoundAudio.ts'
 import { DEFAULT_SAMPLE_RATE } from '../types/soundConstants.ts'
 import { SoundStore } from './SoundStore.ts'
 import { SoundSyncer } from './SoundSyncer.ts'
-import { SoundState } from './SoundState.ts'
+import { UndoRedoManager } from './UndoRedoManager.ts'
 
 export type SoundLibraryUpdatedListener = () => void
 
@@ -20,8 +20,7 @@ export type SoundLibraryUpdatedListener = () => void
 export class SoundLibrary implements SoundActions {
   private _isLoading = true
   private _sounds: readonly Sound[] = []
-  private readonly undoStack: SoundState[] = []
-  private readonly redoStack: SoundState[] = []
+  private readonly undoRedoManager = new UndoRedoManager()
   private readonly listeners: SoundLibraryUpdatedListener[] = []
   private readonly soundSyncer: SoundSyncer
 
@@ -34,6 +33,7 @@ export class SoundLibrary implements SoundActions {
     const sounds = await this.soundStore.getAllSounds()
     sounds.forEach(validateSound)
     this._sounds = sounds
+    this.undoRedoManager.initialise({ sounds })
     this._isLoading = false
     this.notifyListeners()
     this.soundSyncer.soundsLoaded(sounds)
@@ -48,11 +48,11 @@ export class SoundLibrary implements SoundActions {
   }
 
   get canUndo(): boolean {
-    return this.undoStack.length > 0
+    return this.undoRedoManager.canUndo
   }
 
   get canRedo(): boolean {
-    return this.redoStack.length > 0
+    return this.undoRedoManager.canRedo
   }
 
   addListener = (listener: SoundLibraryUpdatedListener): void => {
@@ -151,21 +151,19 @@ export class SoundLibrary implements SoundActions {
 
   undo = (): void => {
     this.checkNotLoading()
-    const state = this.undoStack.pop()
-    if (state === undefined) {
+    const soundState = this.undoRedoManager.undo()
+    if (soundState === undefined) {
       return
     }
-    this.redoStack.push({ sounds: this._sounds })
-    this.setSoundsCore(state.sounds)
+    this.setSoundsCore(soundState.sounds)
   }
 
   redo = (): void => {
     this.checkNotLoading()
-    const soundState = this.redoStack.pop()
+    const soundState = this.undoRedoManager.redo()
     if (soundState === undefined) {
       return
     }
-    this.undoStack.push({ sounds: this._sounds })
     this.setSoundsCore(soundState.sounds)
   }
 
@@ -185,8 +183,7 @@ export class SoundLibrary implements SoundActions {
 
   private setSounds = (sounds: readonly Sound[]): void => {
     this.checkNotLoading()
-    this.undoStack.push({ sounds: this._sounds })
-    this.redoStack.length = 0
+    this.undoRedoManager.change({ sounds })
     this.setSoundsCore(sounds)
   }
 
