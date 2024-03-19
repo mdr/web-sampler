@@ -1,12 +1,15 @@
 import 'fake-indexeddb/auto'
 import { describe, expect, it } from 'vitest'
+import { makeSound, SoundTestConstants } from '../types/sound.testSupport.ts'
+import { MemorySoundStore } from './MemorySoundStore.testSupport.ts'
 import { DexieSoundStore } from './DexieSoundStore.ts'
 import { AppDb } from './AppDb.ts'
-import { makeSound, SoundTestConstants } from '../types/sound.testSupport.ts'
 
-describe('DexieSoundStore', () => {
-  it('should allow sounds to be added, updated, and removed', async () => {
-    const store = new DexieSoundStore(new AppDb())
+describe('SoundStore', () => {
+  it.each([
+    { name: 'MemorySoundStore', store: new MemorySoundStore() },
+    { name: 'DexieSoundStore', store: new DexieSoundStore(new AppDb()) },
+  ])('$name: should allow sounds to be added, updated, and removed', async ({ store }) => {
     const soundState = await store.getSoundState()
     expect(soundState).toMatchObject({ sounds: [], soundboards: [] })
 
