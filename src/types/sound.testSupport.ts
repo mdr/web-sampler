@@ -14,6 +14,7 @@ export const SoundTestConstants = {
   finishTime: Seconds(10),
   volume: Volume(0.5),
   pcm: Pcm(new Float32Array(20 * DEFAULT_SAMPLE_RATE)),
+  emptyPcm: Pcm(new Float32Array(0)),
 }
 
 export const makeSound = ({
