@@ -3,25 +3,23 @@ import { SoundStore } from './SoundStore.ts'
 import { fireAndForget } from '../utils/utils.ts'
 import { Option } from '../utils/types/Option.ts'
 import { diffSounds } from './SoundsDiff.ts'
-
-export interface State {
-  readonly sounds: readonly Sound[]
-}
+import { SoundState } from './SoundState.ts'
 
 /**
  * Write-behind sync for persisting changes to in-memory sounds into a SoundStore.
  */
 export class SoundSyncer {
   /**
-   * The exact set of Sounds that are known to be persisted in the SoundStore.
+   * The state as currently persisted in the SoundStore.
    * Or undefined if still loading.
    */
-  private persistedState: Option<State> = undefined
+  private persistedState: Option<SoundState> = undefined
+
   /**
-   * The latest set of Sounds in memory that may need to be written to the SoundStore.
+   * The latest state in memory that may potentially need to be written out to the SoundStore.
    * Or undefined if still loading.
    */
-  private memoryState: Option<State> = undefined
+  private memoryState: Option<SoundState> = undefined
 
   private isDirty: boolean = false
 

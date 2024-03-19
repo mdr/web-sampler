@@ -1,13 +1,14 @@
 import { Sound, SoundId } from '../types/Sound.ts'
 import _ from 'lodash'
-import { State } from './SoundSyncer.ts'
+
+import { SoundState } from './SoundState.ts'
 
 export interface SoundsDiff {
   soundsToUpsert: readonly Sound[]
   soundIdsToDelete: readonly SoundId[]
 }
 
-export const diffSounds = (oldState: State, newState: State): SoundsDiff => {
+export const diffSounds = (oldState: SoundState, newState: SoundState): SoundsDiff => {
   const { sounds: oldSounds } = oldState
   const { sounds: newSounds } = newState
   const oldSoundIds = oldSounds.map((sound) => sound.id)

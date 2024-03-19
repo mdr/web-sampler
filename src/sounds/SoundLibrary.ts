@@ -10,6 +10,7 @@ import { newSoundAudio } from '../types/SoundAudio.ts'
 import { DEFAULT_SAMPLE_RATE } from '../types/soundConstants.ts'
 import { SoundStore } from './SoundStore.ts'
 import { SoundSyncer } from './SoundSyncer.ts'
+import { SoundState } from './SoundState.ts'
 
 export type SoundLibraryUpdatedListener = () => void
 
@@ -19,8 +20,8 @@ export type SoundLibraryUpdatedListener = () => void
 export class SoundLibrary implements SoundActions {
   private _isLoading = true
   private _sounds: readonly Sound[] = []
-  private readonly undoStack: (readonly Sound[])[] = []
-  private readonly redoStack: (readonly Sound[])[] = []
+  private readonly undoStack: SoundState[] = []
+  private readonly redoStack: SoundState[] = []
   private readonly listeners: SoundLibraryUpdatedListener[] = []
   private readonly soundSyncer: SoundSyncer
 
@@ -150,22 +151,22 @@ export class SoundLibrary implements SoundActions {
 
   undo = (): void => {
     this.checkNotLoading()
-    const sounds = this.undoStack.pop()
-    if (sounds === undefined) {
+    const state = this.undoStack.pop()
+    if (state === undefined) {
       return
     }
-    this.redoStack.push(this._sounds)
-    this.setSoundsCore(sounds)
+    this.redoStack.push({ sounds: this._sounds })
+    this.setSoundsCore(state.sounds)
   }
 
   redo = (): void => {
     this.checkNotLoading()
-    const sounds = this.redoStack.pop()
-    if (sounds === undefined) {
+    const soundState = this.redoStack.pop()
+    if (soundState === undefined) {
       return
     }
-    this.undoStack.push(this._sounds)
-    this.setSoundsCore(sounds)
+    this.undoStack.push({ sounds: this._sounds })
+    this.setSoundsCore(soundState.sounds)
   }
 
   private updateSound = (id: SoundId, update: (sound: Draft<Sound>) => void): void =>
@@ -184,7 +185,7 @@ export class SoundLibrary implements SoundActions {
 
   private setSounds = (sounds: readonly Sound[]): void => {
     this.checkNotLoading()
-    this.undoStack.push(this._sounds)
+    this.undoStack.push({ sounds: this._sounds })
     this.redoStack.length = 0
     this.setSoundsCore(sounds)
   }
