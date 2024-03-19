@@ -1,12 +1,12 @@
 import { Brand } from 'effect'
 import { SoundId } from './Sound.ts'
 
-export type SoundBoardId = string & Brand.Brand<'SoundBoardId'>
+export type SoundboardId = string & Brand.Brand<'SoundboardId'>
 
-export const SoundBoardId = Brand.nominal<SoundBoardId>()
+export const SoundboardId = Brand.nominal<SoundboardId>()
 
 export interface Soundboard {
-  readonly id: SoundBoardId
+  readonly id: SoundboardId
   readonly name: string
   readonly sounds: SoundId[]
 }

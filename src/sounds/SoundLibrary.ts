@@ -1,4 +1,4 @@
-import { newSound, newSoundId, Sound, SoundId, validateSound } from '../types/Sound.ts'
+import { newSound, newSoundId, Sound, SoundId } from '../types/Sound.ts'
 import { Option } from '../utils/types/Option.ts'
 import _ from 'lodash'
 import { SoundActions } from './soundHooks.ts'
@@ -11,6 +11,7 @@ import { DEFAULT_SAMPLE_RATE } from '../types/soundConstants.ts'
 import { SoundStore } from './SoundStore.ts'
 import { SoundSyncer } from './SoundSyncer.ts'
 import { UndoRedoManager } from './UndoRedoManager.ts'
+import { validateSound, validateSoundState } from './SoundStateValidator.ts'
 
 export type SoundLibraryUpdatedListener = () => void
 
@@ -30,7 +31,7 @@ export class SoundLibrary implements SoundActions {
 
   private loadSounds = async (): Promise<void> => {
     const soundState = await this.soundStore.getSoundState()
-    soundState.sounds.forEach(validateSound)
+    validateSoundState(soundState)
     this.undoRedoManager.initialise(soundState)
     this._isLoading = false
     this.notifyListeners()

@@ -1,6 +1,6 @@
 import { Brand } from 'effect'
 import * as uuid from 'uuid'
-import { SoundAudio, validateSoundAudio } from './SoundAudio.ts'
+import { SoundAudio } from './SoundAudio.ts'
 
 export type SoundId = string & Brand.Brand<'SoundId'>
 
@@ -26,10 +26,3 @@ const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'bas
 
 export const sortSoundsByDisplayName = (sounds: readonly Sound[]): Sound[] =>
   [...sounds].sort((sound1, sound2) => collator.compare(getDisplayName(sound1), getDisplayName(sound2)))
-
-export const validateSound = (sound: Sound): void => {
-  const audio = sound.audio
-  if (audio !== undefined) {
-    validateSoundAudio(sound.id, audio)
-  }
-}

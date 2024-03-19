@@ -3,13 +3,15 @@ import { Sound, SoundId } from '../types/Sound.ts'
 import { Table } from 'dexie'
 import { SoundStore } from './SoundStore.ts'
 import { SoundState } from './SoundState.ts'
+import { Soundboard, SoundboardId } from '../types/Soundboard.ts'
 
 export class DexieSoundStore implements SoundStore {
   constructor(private readonly db: AppDb) {}
 
   getSoundState = async (): Promise<SoundState> => {
     const sounds = await this.sounds.toArray()
-    return { sounds, soundboards: [] }
+    const soundboards = await this.soundboards.toArray()
+    return { sounds, soundboards }
   }
 
   bulkUpdate = (soundsToUpsert: readonly Sound[], soundIdsToDelete: readonly SoundId[]): Promise<void> =>
@@ -20,5 +22,9 @@ export class DexieSoundStore implements SoundStore {
 
   private get sounds(): Table<Sound, SoundId> {
     return this.db.sounds
+  }
+
+  private get soundboards(): Table<Soundboard, SoundboardId> {
+    return this.db.soundboards
   }
 }
