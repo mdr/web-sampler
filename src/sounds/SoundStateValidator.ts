@@ -23,7 +23,7 @@ class SoundStateValidator {
   }
 }
 
-const validateSound = (sound: Sound): void => {
+export const validateSound = (sound: Sound): void => {
   const audio = sound.audio
   if (audio !== undefined) {
     validateSoundAudio(sound.id, audio)
