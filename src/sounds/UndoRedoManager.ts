@@ -12,6 +12,8 @@ export class UndoRedoManager {
     this.redoStack.length = 0
   }
 
+  getCurrentState = (): SoundState => this.currentState
+
   change = (state: SoundState) => {
     this.undoStack.push(this.currentState)
     this.currentState = state

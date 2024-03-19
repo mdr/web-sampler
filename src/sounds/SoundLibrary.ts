@@ -19,7 +19,6 @@ export type SoundLibraryUpdatedListener = () => void
  */
 export class SoundLibrary implements SoundActions {
   private _isLoading = true
-  private _sounds: readonly Sound[] = []
   private readonly undoRedoManager = new UndoRedoManager()
   private readonly listeners: SoundLibraryUpdatedListener[] = []
   private readonly soundSyncer: SoundSyncer
@@ -32,7 +31,6 @@ export class SoundLibrary implements SoundActions {
   private loadSounds = async (): Promise<void> => {
     const sounds = await this.soundStore.getAllSounds()
     sounds.forEach(validateSound)
-    this._sounds = sounds
     this.undoRedoManager.initialise({ sounds })
     this._isLoading = false
     this.notifyListeners()
@@ -40,7 +38,7 @@ export class SoundLibrary implements SoundActions {
   }
 
   get sounds(): readonly Sound[] {
-    return this._sounds
+    return this.undoRedoManager.getCurrentState().sounds
   }
 
   get isLoading(): boolean {
@@ -67,7 +65,7 @@ export class SoundLibrary implements SoundActions {
     this.listeners.forEach((listener) => listener())
   }
 
-  findSound = (id: SoundId): Option<Sound> => this._sounds.find((sound) => sound.id === id)
+  findSound = (id: SoundId): Option<Sound> => this.sounds.find((sound) => sound.id === id)
 
   getSound = (id: SoundId): Sound => {
     const sound = this.findSound(id)
@@ -80,7 +78,7 @@ export class SoundLibrary implements SoundActions {
   newSound = (): Sound => {
     const sound: Sound = newSound()
     validateSound(sound)
-    const updatedSounds = [...this._sounds, sound]
+    const updatedSounds = [...this.sounds, sound]
     this.setSounds(updatedSounds)
     return sound
   }
@@ -132,7 +130,7 @@ export class SoundLibrary implements SoundActions {
     })
 
   deleteSound = (id: SoundId): void => {
-    const updatedSounds = this._sounds.filter((sound) => sound.id !== id)
+    const updatedSounds = this.sounds.filter((sound) => sound.id !== id)
     this.setSounds(updatedSounds)
   }
 
@@ -140,7 +138,7 @@ export class SoundLibrary implements SoundActions {
     const sound = this.getSound(id)
     const newSound = { ...sound, id: newSoundId() }
     validateSound(newSound)
-    const updatedSounds = [...this._sounds, newSound]
+    const updatedSounds = [...this.sounds, newSound]
     this.setSounds(updatedSounds)
   }
 
@@ -155,7 +153,8 @@ export class SoundLibrary implements SoundActions {
     if (soundState === undefined) {
       return
     }
-    this.setSoundsCore(soundState.sounds)
+    this.soundSyncer.soundsUpdated(soundState.sounds)
+    this.notifyListeners()
   }
 
   redo = (): void => {
@@ -164,7 +163,8 @@ export class SoundLibrary implements SoundActions {
     if (soundState === undefined) {
       return
     }
-    this.setSoundsCore(soundState.sounds)
+    this.soundSyncer.soundsUpdated(soundState.sounds)
+    this.notifyListeners()
   }
 
   private updateSound = (id: SoundId, update: (sound: Draft<Sound>) => void): void =>
@@ -177,18 +177,13 @@ export class SoundLibrary implements SoundActions {
       return
     }
     validateSound(updatedSound)
-    const updatedSounds = this._sounds.map((sound) => (sound.id === id ? updatedSound : sound))
+    const updatedSounds = this.sounds.map((sound) => (sound.id === id ? updatedSound : sound))
     this.setSounds(updatedSounds)
   }
 
   private setSounds = (sounds: readonly Sound[]): void => {
     this.checkNotLoading()
     this.undoRedoManager.change({ sounds })
-    this.setSoundsCore(sounds)
-  }
-
-  private setSoundsCore = (sounds: readonly Sound[]): void => {
-    this._sounds = sounds
     this.soundSyncer.soundsUpdated(sounds)
     this.notifyListeners()
   }
