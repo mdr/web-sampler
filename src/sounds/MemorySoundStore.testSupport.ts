@@ -1,6 +1,7 @@
 import { SoundStore } from './SoundStore.ts'
 import { Sound, SoundId } from '../types/Sound.ts'
 import _ from 'lodash'
+import { SoundState } from './SoundState.ts'
 
 export class MemorySoundStore implements SoundStore {
   sounds: Sound[] = []
@@ -9,7 +10,7 @@ export class MemorySoundStore implements SoundStore {
     this.sounds = [...initialSounds]
   }
 
-  getAllSounds = async (): Promise<Sound[]> => [...this.sounds]
+  getSoundState = async (): Promise<SoundState> => ({ sounds: [...this.sounds], soundboards: [] })
 
   bulkUpdate = async (soundsToUpsert: readonly Sound[], soundIdsToDelete: readonly SoundId[]): Promise<void> => {
     this.sounds = _.unionBy(soundsToUpsert, this.sounds, 'id')

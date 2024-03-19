@@ -29,12 +29,12 @@ export class SoundLibrary implements SoundActions {
   }
 
   private loadSounds = async (): Promise<void> => {
-    const sounds = await this.soundStore.getAllSounds()
-    sounds.forEach(validateSound)
-    this.undoRedoManager.initialise({ sounds })
+    const soundState = await this.soundStore.getSoundState()
+    soundState.sounds.forEach(validateSound)
+    this.undoRedoManager.initialise(soundState)
     this._isLoading = false
     this.notifyListeners()
-    this.soundSyncer.soundsLoaded(sounds)
+    this.soundSyncer.soundsLoaded(soundState)
   }
 
   get sounds(): readonly Sound[] {
@@ -183,7 +183,7 @@ export class SoundLibrary implements SoundActions {
 
   private setSounds = (sounds: readonly Sound[]): void => {
     this.checkNotLoading()
-    const newState = { sounds }
+    const newState = { ...this.undoRedoManager.getCurrentState(), sounds }
     this.undoRedoManager.change(newState)
     this.soundSyncer.soundsUpdated(newState)
     this.notifyListeners()

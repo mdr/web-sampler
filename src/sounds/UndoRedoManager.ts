@@ -3,7 +3,7 @@ import { Option } from '../utils/types/Option.ts'
 
 export class UndoRedoManager {
   private undoStack: SoundState[] = []
-  private currentState: SoundState = { sounds: [] }
+  private currentState: SoundState = { sounds: [], soundboards: [] }
   private redoStack: SoundState[] = []
 
   initialise = (state: SoundState) => {

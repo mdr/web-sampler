@@ -1,4 +1,3 @@
-import { Sound } from '../types/Sound.ts'
 import { SoundStore } from './SoundStore.ts'
 import { fireAndForget } from '../utils/utils.ts'
 import { Option } from '../utils/types/Option.ts'
@@ -27,12 +26,12 @@ export class SoundSyncer {
 
   constructor(private readonly soundStore: SoundStore) {}
 
-  soundsLoaded = (sounds: readonly Sound[]): void => {
+  soundsLoaded = (soundState: SoundState): void => {
     if (this.persistedState !== undefined || this.memoryState !== undefined) {
       throw new Error('soundsLoaded called multiple times')
     }
-    this.persistedState = { sounds }
-    this.memoryState = { sounds }
+    this.persistedState = soundState
+    this.memoryState = soundState
   }
 
   soundsUpdated = (state: SoundState): void => {
