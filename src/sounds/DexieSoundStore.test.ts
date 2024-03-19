@@ -11,14 +11,14 @@ describe('DexieSoundStore', () => {
     expect(soundState).toMatchObject({ sounds: [], soundboards: [] })
 
     const sound = makeSound()
-    await store.bulkUpdate([sound], [])
+    await store.bulkUpdate({ soundsToUpsert: [sound], soundIdsToDelete: [] })
     expect((await store.getSoundState()).sounds).toEqual([sound])
 
     const updatedSound = { ...sound, name: SoundTestConstants.newName }
-    await store.bulkUpdate([updatedSound], [])
+    await store.bulkUpdate({ soundsToUpsert: [updatedSound], soundIdsToDelete: [] })
     expect((await store.getSoundState()).sounds).toEqual([updatedSound])
-    
-    await store.bulkUpdate([], [sound.id])
+
+    await store.bulkUpdate({ soundsToUpsert: [], soundIdsToDelete: [updatedSound.id] })
     expect((await store.getSoundState()).sounds).toEqual([])
   })
 })

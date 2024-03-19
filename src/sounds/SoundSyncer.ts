@@ -52,7 +52,7 @@ export class SoundSyncer {
     const { soundsToUpsert, soundIdsToDelete } = diffSounds(persistedSounds, memorySounds)
     this.isDirty = false
     if (soundsToUpsert.length > 0 || soundIdsToDelete.length > 0) {
-      await this.soundStore.bulkUpdate(soundsToUpsert, soundIdsToDelete)
+      await this.soundStore.bulkUpdate({ soundsToUpsert, soundIdsToDelete })
     }
     this.persistedState = memorySounds
   }

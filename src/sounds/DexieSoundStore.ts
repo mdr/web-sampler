@@ -1,7 +1,7 @@
 import { AppDb } from './AppDb.ts'
 import { Sound, SoundId } from '../types/Sound.ts'
 import { Table } from 'dexie'
-import { SoundStore } from './SoundStore.ts'
+import { BulkSoundUpdate, SoundStore } from './SoundStore.ts'
 import { SoundState } from './SoundState.ts'
 import { Soundboard, SoundboardId } from '../types/Soundboard.ts'
 
@@ -14,7 +14,7 @@ export class DexieSoundStore implements SoundStore {
     return { sounds, soundboards }
   }
 
-  bulkUpdate = (soundsToUpsert: readonly Sound[], soundIdsToDelete: readonly SoundId[]): Promise<void> =>
+  bulkUpdate = ({ soundsToUpsert, soundIdsToDelete }: BulkSoundUpdate): Promise<void> =>
     this.db.transaction('rw', this.sounds, async () => {
       await this.sounds.bulkPut(soundsToUpsert)
       await this.sounds.bulkDelete([...soundIdsToDelete])
