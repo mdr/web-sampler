@@ -1,7 +1,7 @@
 import { SoundStore } from './SoundStore.ts'
 import { fireAndForget } from '../utils/utils.ts'
 import { Option } from '../utils/types/Option.ts'
-import { diffSounds } from './SoundsDiff.ts'
+import { diffSounds, isDiffEmpty } from './SoundsDiff.ts'
 import { SoundState } from './SoundState.ts'
 
 /**
@@ -49,10 +49,10 @@ export class SoundSyncer {
     if (persistedSounds === undefined || memorySounds === undefined) {
       throw new Error('attempting to persist sounds before they have been loaded')
     }
-    const { soundsToUpsert, soundIdsToDelete } = diffSounds(persistedSounds, memorySounds)
+    const diff = diffSounds(persistedSounds, memorySounds)
     this.isDirty = false
-    if (soundsToUpsert.length > 0 || soundIdsToDelete.length > 0) {
-      await this.soundStore.bulkUpdate({ soundsToUpsert, soundIdsToDelete })
+    if (!isDiffEmpty(diff)) {
+      await this.soundStore.bulkUpdate(diff)
     }
     this.persistedState = memorySounds
   }

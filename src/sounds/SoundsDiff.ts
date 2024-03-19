@@ -8,6 +8,9 @@ export interface SoundsDiff {
   soundIdsToDelete: readonly SoundId[]
 }
 
+export const isDiffEmpty = (diff: SoundsDiff): boolean =>
+  diff.soundsToUpsert.length === 0 && diff.soundIdsToDelete.length === 0
+
 export const diffSounds = (oldState: SoundState, newState: SoundState): SoundsDiff => {
   const { sounds: oldSounds } = oldState
   const { sounds: newSounds } = newState

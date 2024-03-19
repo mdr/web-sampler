@@ -12,6 +12,7 @@ import { SoundStore } from './SoundStore.ts'
 import { SoundSyncer } from './SoundSyncer.ts'
 import { UndoRedoManager } from './UndoRedoManager.ts'
 import { validateSound, validateSoundState } from './SoundStateValidator.ts'
+import { SoundState } from './SoundState.ts'
 
 export type SoundLibraryUpdatedListener = () => void
 
@@ -20,7 +21,7 @@ export type SoundLibraryUpdatedListener = () => void
  */
 export class SoundLibrary implements SoundActions {
   private _isLoading = true
-  private readonly undoRedoManager = new UndoRedoManager()
+  private readonly undoRedoManager = new UndoRedoManager<SoundState>({ sounds: [], soundboards: [] })
   private readonly listeners: SoundLibraryUpdatedListener[] = []
   private readonly soundSyncer: SoundSyncer
 

@@ -1,26 +1,29 @@
-import { SoundState } from './SoundState.ts'
 import { Option } from '../utils/types/Option.ts'
 
-export class UndoRedoManager {
-  private undoStack: SoundState[] = []
-  private currentState: SoundState = { sounds: [], soundboards: [] }
-  private redoStack: SoundState[] = []
+export class UndoRedoManager<T> {
+  private undoStack: T[] = []
+  private currentState: T
+  private redoStack: T[] = []
 
-  initialise = (state: SoundState) => {
+  constructor(initialState: T) {
+    this.currentState = initialState
+  }
+
+  initialise = (state: T) => {
     this.currentState = state
     this.undoStack.length = 0
     this.redoStack.length = 0
   }
 
-  getCurrentState = (): SoundState => this.currentState
+  getCurrentState = (): T => this.currentState
 
-  change = (state: SoundState) => {
+  change = (state: T) => {
     this.undoStack.push(this.currentState)
     this.currentState = state
     this.redoStack.length = 0
   }
 
-  undo = (): Option<SoundState> => {
+  undo = (): Option<T> => {
     const previousState = this.undoStack.pop()
     if (previousState === undefined) {
       return undefined
@@ -30,7 +33,7 @@ export class UndoRedoManager {
     return previousState
   }
 
-  redo = (): Option<SoundState> => {
+  redo = (): Option<T> => {
     const nextState = this.redoStack.pop()
     if (nextState === undefined) {
       return undefined

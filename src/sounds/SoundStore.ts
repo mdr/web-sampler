@@ -1,15 +1,10 @@
-import { Sound, SoundId } from '../types/Sound.ts'
 import { SoundState } from './SoundState.ts'
-
-export interface BulkSoundUpdate {
-  soundsToUpsert: readonly Sound[]
-  soundIdsToDelete: readonly SoundId[]
-}
+import { SoundsDiff } from './SoundsDiff.ts'
 
 /**
  * Persistent storage for sounds in the app.
  */
 export interface SoundStore {
   getSoundState: () => Promise<SoundState>
-  bulkUpdate: (update: BulkSoundUpdate) => Promise<void>
+  bulkUpdate: (update: SoundsDiff) => Promise<void>
 }
