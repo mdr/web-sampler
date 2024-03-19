@@ -3,6 +3,7 @@ import { newSoundboardId, Soundboard, SoundboardId } from './Soundboard.ts'
 export const SoundboardTestConstants = {
   id: SoundboardId('SoundboardTestConstants.id'),
   name: 'SoundboardTestConstants.name',
+  newName: 'SoundboardTestConstants.newName',
 }
 
 export const makeSoundboard = ({

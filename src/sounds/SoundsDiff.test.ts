@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { Sound } from '../types/Sound'
-import { diffSounds } from './SoundsDiff.ts'
+import { compareSoundStates } from './SoundsDiff.ts'
 import { makeSound, SoundTestConstants } from '../types/sound.testSupport.ts'
 
 describe('diffSounds', () => {
@@ -14,7 +14,7 @@ describe('diffSounds', () => {
     const oldState = { sounds: oldSounds, soundboards: [] }
     const newState = { sounds: newSounds, soundboards: [] }
 
-    const diff = diffSounds(oldState, newState)
+    const diff = compareSoundStates(oldState, newState)
 
     expect(diff.soundsToUpsert).toIncludeSameMembers([sound2Version2, sound3])
     expect(diff.soundIdsToDelete).toEqual([sound1.id])

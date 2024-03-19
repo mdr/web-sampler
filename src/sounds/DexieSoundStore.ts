@@ -15,10 +15,17 @@ export class DexieSoundStore implements SoundStore {
     return { sounds, soundboards }
   }
 
-  bulkUpdate = ({ soundsToUpsert, soundIdsToDelete }: SoundsDiff): Promise<void> =>
-    this.db.transaction('rw', this.sounds, async () => {
+  bulkUpdate = ({
+    soundsToUpsert,
+    soundIdsToDelete,
+    soundboardsToUpsert,
+    soundboardIdsToDelete,
+  }: SoundsDiff): Promise<void> =>
+    this.db.transaction('rw', this.sounds, this.soundboards, async () => {
       await this.sounds.bulkPut(soundsToUpsert)
       await this.sounds.bulkDelete([...soundIdsToDelete])
+      await this.soundboards.bulkPut(soundboardsToUpsert)
+      await this.soundboards.bulkDelete([...soundboardIdsToDelete])
     })
 
   private get sounds(): Table<Sound, SoundId> {

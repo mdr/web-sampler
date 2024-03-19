@@ -16,8 +16,15 @@ export class MemorySoundStore implements SoundStore {
 
   getSoundState = async (): Promise<SoundState> => ({ sounds: [...this.sounds], soundboards: [...this.soundboards] })
 
-  bulkUpdate = async ({ soundsToUpsert, soundIdsToDelete }: SoundsDiff): Promise<void> => {
+  bulkUpdate = async ({
+    soundsToUpsert,
+    soundIdsToDelete,
+    soundboardsToUpsert,
+    soundboardIdsToDelete,
+  }: SoundsDiff): Promise<void> => {
     this.sounds = _.unionBy(soundsToUpsert, this.sounds, 'id')
     _.remove(this.sounds, (sound) => soundIdsToDelete.includes(sound.id))
+    this.soundboards = _.unionBy(soundboardsToUpsert, this.soundboards, 'id')
+    _.remove(this.soundboards, (soundboard) => soundboardIdsToDelete.includes(soundboard.id))
   }
 }
