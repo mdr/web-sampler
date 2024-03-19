@@ -13,6 +13,7 @@ import { SoundSyncer } from './SoundSyncer.ts'
 import { UndoRedoManager } from './UndoRedoManager.ts'
 import { validateSound, validateSoundState } from './SoundStateValidator.ts'
 import { SoundState } from './SoundState.ts'
+import { Soundboard } from '../types/Soundboard.ts'
 
 export type SoundLibraryUpdatedListener = () => void
 
@@ -40,7 +41,15 @@ export class SoundLibrary implements SoundActions {
   }
 
   get sounds(): readonly Sound[] {
-    return this.undoRedoManager.getCurrentState().sounds
+    return this.soundState.sounds
+  }
+
+  get soundboards(): readonly Soundboard[] {
+    return this.soundState.soundboards
+  }
+
+  private get soundState(): SoundState {
+    return this.undoRedoManager.getCurrentState()
   }
 
   get isLoading(): boolean {
@@ -185,7 +194,7 @@ export class SoundLibrary implements SoundActions {
 
   private setSounds = (sounds: readonly Sound[]): void => {
     this.checkNotLoading()
-    const newState = { ...this.undoRedoManager.getCurrentState(), sounds }
+    const newState = { ...this.soundState, sounds }
     this.undoRedoManager.change(newState)
     this.soundSyncer.soundsUpdated(newState)
     this.notifyListeners()

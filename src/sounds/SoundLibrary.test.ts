@@ -7,19 +7,23 @@ import { newSoundId, Sound } from '../types/Sound.ts'
 import { SoundStore } from './SoundStore.ts'
 import { mockFunction } from '../utils/mockUtils.testSupport.ts'
 import { Volume } from '../utils/types/brandedTypes.ts'
+import { makeSoundboard } from '../types/soundboard.testSupport.ts'
 
 describe('SoundLibrary', () => {
   it('should load sounds from the store on creation', async () => {
     const sounds = [makeSound()]
-    const soundStore = new MemorySoundStore(sounds)
+    const soundBoards = [makeSoundboard()]
+    const soundStore = new MemorySoundStore(sounds, soundBoards)
     const library = new SoundLibrary(soundStore)
     expect(library.isLoading).toBe(true)
     expect(library.sounds).toEqual([])
+    expect(library.soundboards).toEqual([])
 
     await flushPromises()
 
     expect(library.isLoading).toBe(false)
     expect(library.sounds).toIncludeSameMembers(sounds)
+    expect(library.soundboards).toIncludeSameMembers(soundBoards)
   })
 
   it('should not allow sounds to be modified while still loading', async () => {
