@@ -153,7 +153,7 @@ export class SoundLibrary implements SoundActions {
     if (soundState === undefined) {
       return
     }
-    this.soundSyncer.soundsUpdated(soundState.sounds)
+    this.soundSyncer.soundsUpdated(soundState)
     this.notifyListeners()
   }
 
@@ -163,7 +163,7 @@ export class SoundLibrary implements SoundActions {
     if (soundState === undefined) {
       return
     }
-    this.soundSyncer.soundsUpdated(soundState.sounds)
+    this.soundSyncer.soundsUpdated(soundState)
     this.notifyListeners()
   }
 
@@ -183,8 +183,9 @@ export class SoundLibrary implements SoundActions {
 
   private setSounds = (sounds: readonly Sound[]): void => {
     this.checkNotLoading()
-    this.undoRedoManager.change({ sounds })
-    this.soundSyncer.soundsUpdated(sounds)
+    const newState = { sounds }
+    this.undoRedoManager.change(newState)
+    this.soundSyncer.soundsUpdated(newState)
     this.notifyListeners()
   }
 

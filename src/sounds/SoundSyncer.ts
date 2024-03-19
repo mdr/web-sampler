@@ -35,11 +35,11 @@ export class SoundSyncer {
     this.memoryState = { sounds }
   }
 
-  soundsUpdated = (sounds: readonly Sound[]): void => {
+  soundsUpdated = (state: SoundState): void => {
     if (this.persistedState === undefined || this.memoryState === undefined) {
       throw new Error('memorySoundsUpdated called before soundsLoaded')
     }
-    this.memoryState = { sounds }
+    this.memoryState = state
     this.isDirty = true
     this.tryPersistSounds()
   }

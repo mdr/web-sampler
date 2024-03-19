@@ -11,14 +11,14 @@ describe('SoundSyncer', () => {
     soundSyncer.soundsLoaded([])
     const sound1 = makeSound()
     const sound2 = makeSound({ name: SoundTestConstants.oldName })
-    soundSyncer.soundsUpdated([sound1, sound2])
+    soundSyncer.soundsUpdated({ sounds: [sound1, sound2] })
     await flushPromises()
 
     expect(soundStore.sounds).toIncludeSameMembers([sound1, sound2])
 
     const sound2Updated = { ...sound2, name: SoundTestConstants.newName }
     const sound3 = makeSound()
-    soundSyncer.soundsUpdated([sound2Updated, sound3])
+    soundSyncer.soundsUpdated({ sounds: [sound2Updated, sound3] })
     await flushPromises()
 
     expect(soundStore.sounds).toIncludeSameMembers([sound2Updated, sound3])
