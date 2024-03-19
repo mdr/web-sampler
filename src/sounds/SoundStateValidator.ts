@@ -17,7 +17,7 @@ class SoundStateValidator {
     const sounds = this.soundState.sounds
     for (const soundId of soundboard.sounds) {
       if (!sounds.some((sound) => sound.id === soundId)) {
-        throw new Error(`Soundboard ${soundboard.id} references missing sound: ${soundId}`)
+        throw new SoundValidationError(`Soundboard ${soundboard.id} references missing sound: ${soundId}`)
       }
     }
   }
@@ -33,27 +33,38 @@ export const validateSound = (sound: Sound): void => {
 export const validateSoundAudio = (soundId: SoundId, audio: SoundAudio): void => {
   const pcmDuration = getTotalAudioDuration(audio)
   if (audio.startTime < 0) {
-    throw new Error(`Sound ${soundId} start time is negative: ${audio.startTime}`)
+    throw new SoundValidationError(`Sound ${soundId} start time is negative: ${audio.startTime}`)
   }
   if (audio.finishTime > pcmDuration) {
-    throw new Error(`Sound ${soundId} finish time is after sound duration: ${audio.finishTime} > ${pcmDuration}`)
+    throw new SoundValidationError(
+      `Sound ${soundId} finish time is after sound duration: ${audio.finishTime} > ${pcmDuration}`,
+    )
   }
   if (audio.finishTime < audio.startTime) {
-    throw new Error(`Sound ${soundId} finish time is before start time: ${audio.finishTime} < ${audio.startTime}`)
+    throw new SoundValidationError(
+      `Sound ${soundId} finish time is before start time: ${audio.finishTime} < ${audio.startTime}`,
+    )
   }
   for (const sample of audio.pcm) {
     validatePcmSample(soundId, sample)
   }
   if (audio.volume !== undefined && (audio.volume < 0 || audio.volume > 1)) {
-    throw new Error(`Sound ${soundId} volume is out of range: ${audio.volume}`)
+    throw new SoundValidationError(`Sound ${soundId} volume is out of range: ${audio.volume}`)
   }
 }
 
 export const validatePcmSample = (soundId: SoundId, sample: number) => {
-  if (sample < -1 || sample > 1) {
-    throw new Error(`Sound ${soundId} sample is out of range: ${sample}`)
-  }
   if (Number.isNaN(sample)) {
-    throw new Error(`Sound ${soundId} sample is not a number`)
+    throw new SoundValidationError(`Sound ${soundId} sample is not a number`)
+  }
+  if (!(-1 <= sample && sample <= 1)) {
+    throw new SoundValidationError(`Sound ${soundId} sample is out of range: ${sample}`)
+  }
+}
+
+class SoundValidationError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = 'SoundValidationError'
   }
 }
