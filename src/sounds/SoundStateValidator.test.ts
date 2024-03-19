@@ -22,6 +22,16 @@ describe('validateSoundState', () => {
       `[SoundValidationError: Soundboard SoundboardTestConstants.id references missing sound: SoundTestConstants.id]`,
     )
   })
+
+  it('throws an appropriate error if a soundboard references the same sound twice', () => {
+    const sound = makeSound({ id: SoundTestConstants.id })
+    const soundboard = makeSoundboard({ id: SoundboardTestConstants.id, sounds: [sound.id, sound.id] })
+    const soundState = { sounds: [sound], soundboards: [soundboard] }
+
+    expect(() => validateSoundState(soundState)).toThrowErrorMatchingInlineSnapshot(
+      `[SoundValidationError: Soundboard SoundboardTestConstants.id contains duplicate sound ID: SoundTestConstants.id]`,
+    )
+  })
 })
 
 describe('validateSoundAudio', () => {

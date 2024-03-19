@@ -8,6 +8,7 @@ import { SoundStore } from './SoundStore.ts'
 import { mockFunction } from '../utils/mockUtils.testSupport.ts'
 import { Volume } from '../utils/types/brandedTypes.ts'
 import { makeSoundboard } from '../types/soundboard.testSupport.ts'
+import { Soundboard } from '../types/Soundboard.ts'
 
 describe('SoundLibrary', () => {
   it('should load sounds from the store on creation', async () => {
@@ -68,6 +69,20 @@ describe('SoundLibrary', () => {
     expect(library.sounds).toEqual([])
     await flushPromises()
     expect(soundStore.sounds).toEqual([])
+  })
+
+  it('should remove a sound from any soundboard it is in when deleted', async () => {
+    const sound1 = makeSound()
+    const sound2 = makeSound()
+    const soundboard = makeSoundboard({ sounds: [sound1.id, sound2.id] })
+    const { library, soundStore } = await setUpTest([sound1, sound2], [soundboard])
+
+    library.deleteSound(sound1.id)
+
+    const expectedSoundboard = { ...soundboard, sounds: [sound2.id] }
+    expect(library.soundboards).toEqual([expectedSoundboard])
+    await flushPromises()
+    expect(soundStore.soundboards).toEqual([expectedSoundboard])
   })
 
   it('should allow a sound name to be changed', async () => {
@@ -158,8 +173,8 @@ describe('SoundLibrary', () => {
   })
 })
 
-const setUpTest = async (initialSounds: Sound[] = []) => {
-  const soundStore = new MemorySoundStore(initialSounds)
+const setUpTest = async (initialSounds: Sound[] = [], initialSoundboards: Soundboard[] = []) => {
+  const soundStore = new MemorySoundStore(initialSounds, initialSoundboards)
   const library = await makeLoadedSoundLibrary(soundStore)
   const listener = mockFunction<SoundLibraryUpdatedListener>()
   library.addListener(listener)

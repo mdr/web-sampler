@@ -15,10 +15,15 @@ class SoundStateValidator {
 
   private validateSoundboard = (soundboard: Soundboard) => {
     const sounds = this.soundState.sounds
+    const seenSoundIds = new Set<SoundId>()
     for (const soundId of soundboard.sounds) {
       if (!sounds.some((sound) => sound.id === soundId)) {
         throw new SoundValidationError(`Soundboard ${soundboard.id} references missing sound: ${soundId}`)
       }
+      if (seenSoundIds.has(soundId)) {
+        throw new SoundValidationError(`Soundboard ${soundboard.id} contains duplicate sound ID: ${soundId}`)
+      }
+      seenSoundIds.add(soundId)
     }
   }
 }

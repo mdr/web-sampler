@@ -142,7 +142,13 @@ export class SoundLibrary implements SoundActions {
 
   deleteSound = (id: SoundId): void => {
     const updatedSounds = this.sounds.filter((sound) => sound.id !== id)
-    this.setSounds(updatedSounds)
+    const removeSoundFromSoundboard = (soundboard: Soundboard): Soundboard => ({
+      ...soundboard,
+      sounds: soundboard.sounds.filter((soundId) => soundId !== id),
+    })
+    const updatedSoundboards = this.soundboards.map(removeSoundFromSoundboard)
+    const newState = { sounds: updatedSounds, soundboards: updatedSoundboards }
+    this.setState(newState)
   }
 
   duplicateSound = (id: SoundId): void => {
@@ -193,10 +199,14 @@ export class SoundLibrary implements SoundActions {
   }
 
   private setSounds = (sounds: readonly Sound[]): void => {
-    this.checkNotLoading()
     const newState = { ...this.soundState, sounds }
-    this.undoRedoManager.change(newState)
-    this.soundSyncer.soundsUpdated(newState)
+    this.setState(newState)
+  }
+
+  private setState = (state: SoundState): void => {
+    this.checkNotLoading()
+    this.undoRedoManager.change(state)
+    this.soundSyncer.soundsUpdated(state)
     this.notifyListeners()
   }
 
