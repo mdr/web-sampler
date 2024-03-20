@@ -24,34 +24,38 @@ describe.each([
   { name: 'DexieSoundStore', store: new DexieSoundStore(new AppDb()) },
 ])('$name', ({ store }) => {
   it('should allow sounds to be added, updated, and removed', async () => {
-    const soundState = await store.getSoundState()
-    expect(soundState).toMatchObject({ sounds: [], soundboards: [] })
+    expect((await store.getSoundState()).sounds).toEqual([])
 
     const sound = makeSound()
-    await store.bulkUpdate(makeSoundsDiff({ soundsToUpsert: [sound], soundIdsToDelete: [] }))
+    const change1 = makeSoundsDiff({ soundsToUpsert: [sound], soundIdsToDelete: [] })
+    await store.bulkUpdate(change1)
     expect((await store.getSoundState()).sounds).toEqual([sound])
 
     const updatedSound = { ...sound, name: SoundTestConstants.newName }
-    await store.bulkUpdate(makeSoundsDiff({ soundsToUpsert: [updatedSound], soundIdsToDelete: [] }))
+    const change2 = makeSoundsDiff({ soundsToUpsert: [updatedSound], soundIdsToDelete: [] })
+    await store.bulkUpdate(change2)
     expect((await store.getSoundState()).sounds).toEqual([updatedSound])
 
-    await store.bulkUpdate(makeSoundsDiff({ soundsToUpsert: [], soundIdsToDelete: [updatedSound.id] }))
+    const change3 = makeSoundsDiff({ soundsToUpsert: [], soundIdsToDelete: [updatedSound.id] })
+    await store.bulkUpdate(change3)
     expect((await store.getSoundState()).sounds).toEqual([])
   })
 
   it('should allow soundboards to be added, updated, and removed', async () => {
-    const soundState = await store.getSoundState()
-    expect(soundState).toMatchObject({ sounds: [], soundboards: [] })
+    expect((await store.getSoundState()).soundboards).toEqual([])
 
     const soundboard = makeSoundboard()
-    await store.bulkUpdate(makeSoundsDiff({ soundboardsToUpsert: [soundboard], soundboardIdsToDelete: [] }))
+    const change1 = makeSoundsDiff({ soundboardsToUpsert: [soundboard], soundboardIdsToDelete: [] })
+    await store.bulkUpdate(change1)
     expect((await store.getSoundState()).soundboards).toEqual([soundboard])
 
     const updatedSoundboard = { ...soundboard, name: SoundboardTestConstants.newName }
-    await store.bulkUpdate(makeSoundsDiff({ soundboardsToUpsert: [updatedSoundboard], soundboardIdsToDelete: [] }))
+    const change2 = makeSoundsDiff({ soundboardsToUpsert: [updatedSoundboard], soundboardIdsToDelete: [] })
+    await store.bulkUpdate(change2)
     expect((await store.getSoundState()).soundboards).toEqual([updatedSoundboard])
 
-    await store.bulkUpdate(makeSoundsDiff({ soundboardsToUpsert: [], soundboardIdsToDelete: [updatedSoundboard.id] }))
+    const change3 = makeSoundsDiff({ soundboardsToUpsert: [], soundboardIdsToDelete: [updatedSoundboard.id] })
+    await store.bulkUpdate(change3)
     expect((await store.getSoundState()).soundboards).toEqual([])
   })
 })

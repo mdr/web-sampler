@@ -62,7 +62,8 @@ export const validatePcmSample = (soundId: SoundId, sample: number) => {
   if (Number.isNaN(sample)) {
     throw new SoundValidationError(`Sound ${soundId} sample is not a number`)
   }
-  if (!(-1 <= sample && sample <= 1)) {
+  const sampleInRange = -1 <= sample && sample <= 1
+  if (!sampleInRange) {
     throw new SoundValidationError(`Sound ${soundId} sample is out of range: ${sample}`)
   }
 }
