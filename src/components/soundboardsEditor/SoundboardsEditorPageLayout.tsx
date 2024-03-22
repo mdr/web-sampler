@@ -1,6 +1,7 @@
 import React from 'react'
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels'
 import { Navbar } from '../soundsEditor/navbar/Navbar.tsx'
+import { SoundboardsSidebar } from './sidebar/SoundboardsSidebar.tsx'
 
 interface SoundboardsEditorPageLayoutProps {
   children?: React.ReactNode
@@ -11,7 +12,7 @@ export const SoundboardsEditorPageLayout = ({ children }: SoundboardsEditorPageL
     <Navbar />
     <PanelGroup autoSaveId="SoundboardsEditorPage" className="flex-grow" direction="horizontal">
       <Panel collapsible={true} defaultSize={15} minSize={5}>
-        {/*<SoundsSidebar />*/}
+        <SoundboardsSidebar />
       </Panel>
       <PanelResizeHandle className="border-l border-gray-200" />
       <Panel defaultSize={85} minSize={20}>
