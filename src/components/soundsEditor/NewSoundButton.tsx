@@ -7,7 +7,7 @@ import { TestId } from '../../utils/types/brandedTypes.ts'
 import { Button, ButtonVariant } from '../shared/Button.tsx'
 
 export interface NewSoundButtonProps {
-  testId: TestId
+  testId?: TestId
 }
 
 export const NewSoundButton = ({ testId }: NewSoundButtonProps) => {

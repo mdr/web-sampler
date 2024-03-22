@@ -11,9 +11,18 @@ export interface SoundsDiff {
 }
 
 export const isDiffEmpty = (diff: SoundsDiff): boolean =>
-  diff.soundsToUpsert.length === 0 && diff.soundIdsToDelete.length === 0
+  diff.soundsToUpsert.length === 0 &&
+  diff.soundIdsToDelete.length === 0 &&
+  diff.soundboardsToUpsert.length === 0 &&
+  diff.soundboardIdsToDelete.length === 0
 
-const compareItems = <Id, T extends { id: Id }>(oldItems: readonly T[], newItems: readonly T[]) => {
+const compareItems = <Id, T extends { id: Id }>(
+  oldItems: readonly T[],
+  newItems: readonly T[],
+): {
+  itemsToUpsert: T[]
+  itemIdsToDelete: Id[]
+} => {
   const oldItemIds = oldItems.map((item) => item.id)
   const newItemIds = newItems.map((item) => item.id)
   const oldItemsContains = (item: T): boolean => oldItems.some((oldItem) => _.isEqual(oldItem, item))

@@ -24,8 +24,13 @@ export const router = createHashRouter([
     errorElement: <ErrorFallback />,
   },
   {
-    path: '/soundboard',
+    path: '/play',
     element: <SoundboardPage />,
+    errorElement: <ErrorFallback />,
+  },
+  {
+    path: '/soundboard/:soundboardId',
+    element: <SoundboardsEditorPage />,
     errorElement: <ErrorFallback />,
   },
 ])
@@ -40,4 +45,8 @@ export const useSoundboardIdParam = (): Option<SoundboardId> => {
   return soundboardId === undefined ? undefined : SoundboardId(soundboardId)
 }
 
-export const editSoundRoute = (soundId: SoundId) => `/sound/${soundId}`
+export const editSoundRoute = (soundId: SoundId): string => `/sound/${soundId}`
+
+export const editSoundboardRoute = (soundboardId: SoundboardId): string => `/soundboard/${soundboardId}`
+
+export const playSoundboardRoute = (): string => '/play'

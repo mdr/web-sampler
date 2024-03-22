@@ -93,6 +93,8 @@ export interface SoundActions {
 
   importSounds(sounds: readonly Sound[]): void
 
+  newSoundboard(): Soundboard
+
   undo(): void
 
   redo(): void

@@ -9,6 +9,7 @@ import { NavbarIconButton } from './NavbarIconButton.tsx'
 import { MenuTrigger, Popover } from 'react-aria-components'
 import { NavbarMenu } from './NavbarMenu.tsx'
 import Icon from '@mdi/react'
+import { playSoundboardRoute } from '../../router.tsx'
 
 export const Navbar = () => {
   const soundActions = useSoundActions()
@@ -29,7 +30,7 @@ export const Navbar = () => {
           </NavLink>
         </li>
         <li className="flex items-center">
-          <NavLink to="/soundboard">
+          <NavLink to={playSoundboardRoute()}>
             <Icon path={mdiViewGridOutline} size={1} title="Soundboard" />
           </NavLink>
         </li>

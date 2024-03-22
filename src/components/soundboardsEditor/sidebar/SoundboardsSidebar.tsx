@@ -1,11 +1,13 @@
 import { useSoundboards } from '../../../sounds/soundHooks.ts'
 import { Link } from 'react-router-dom'
-import { useSoundboardIdParam } from '../../router.tsx'
+import { editSoundboardRoute, useSoundboardIdParam } from '../../router.tsx'
 import { SoundboardsSidebarTestIds } from './SoundboardsSidebarTestIds.ts'
+import { getDisplayName, sortSoundboardsByDisplayName } from '../../../types/Soundboard.ts'
+import { NewSoundboardButton } from '../NewSoundboardButton.tsx'
 
 export const SoundboardsSidebar = () => {
   const currentSoundboardId = useSoundboardIdParam()
-  const soundboards = useSoundboards() // sortSoundsByDisplayName
+  const soundboards = sortSoundboardsByDisplayName(useSoundboards())
   return (
     <div data-testid={SoundboardsSidebarTestIds.sidebar} className="flex h-full flex-col">
       <div className="flex-grow overflow-auto">
@@ -17,12 +19,12 @@ export const SoundboardsSidebar = () => {
             >
               <div className="flex items-center justify-between">
                 <Link
-                  to={`/soundboard/${soundboard.id}`}
+                  to={editSoundboardRoute(soundboard.id)}
                   className="block w-full p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
                   draggable={false}
                   data-testid={SoundboardsSidebarTestIds.soundboardName}
                 >
-                  {soundboard.name} {/*getDisplayName*/}
+                  {getDisplayName(soundboard)}
                 </Link>
               </div>
             </li>
@@ -30,7 +32,7 @@ export const SoundboardsSidebar = () => {
         </ul>
       </div>
       <div className="flex justify-center px-4 py-4">
-        {/*<NewSoundButton testId={SoundSidebarTestIds.newSoundButton} />*/}
+        <NewSoundboardButton testId={SoundboardsSidebarTestIds.newSoundboardButton} />
       </div>
     </div>
   )

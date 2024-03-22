@@ -7,7 +7,7 @@ import { newSoundId, Sound } from '../types/Sound.ts'
 import { SoundStore } from './SoundStore.ts'
 import { mockFunction } from '../utils/mockUtils.testSupport.ts'
 import { Volume } from '../utils/types/brandedTypes.ts'
-import { makeSoundboard } from '../types/soundboard.testSupport.ts'
+import { makeSoundboard, SoundboardTestConstants } from '../types/soundboard.testSupport.ts'
 import { Soundboard } from '../types/Soundboard.ts'
 
 describe('SoundLibrary', () => {
@@ -121,6 +121,32 @@ describe('SoundLibrary', () => {
     expect(library.getSound(sound.id).audio?.volume).toEqual(Volume(0.5))
     await flushPromises()
     expect(soundStore.sounds[0].audio?.volume).toEqual(Volume(0.5))
+  })
+
+  it('should allow a soundboard to be created', async () => {
+    const { library, soundStore, listener } = await setUpTest()
+
+    const soundboard = library.newSoundboard()
+
+    expect(soundboard.name).toEqual('')
+    expect(soundboard.sounds).toEqual([])
+    expect(listener).toHaveBeenCalledTimes(1)
+    expect(library.soundboards).toEqual([soundboard])
+    await flushPromises()
+    expect(soundStore.soundboards).toEqual([soundboard])
+  })
+
+  it('should allow a soundboard name to be changed', async () => {
+    const soundboard = makeSoundboard({ name: SoundboardTestConstants.oldName })
+    const { library, soundStore, listener } = await setUpTest([], [soundboard])
+
+    library.setSoundboardName(soundboard.id, SoundboardTestConstants.newName)
+
+    expect(listener).toHaveBeenCalledTimes(1)
+    const updatedSoundboards = [{ ...soundboard, name: SoundboardTestConstants.newName }]
+    expect(library.soundboards).toEqual(updatedSoundboards)
+    await flushPromises()
+    expect(soundStore.soundboards).toEqual(updatedSoundboards)
   })
 
   it('should allow undo and redo', async () => {

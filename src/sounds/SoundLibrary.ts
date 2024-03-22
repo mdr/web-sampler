@@ -13,7 +13,7 @@ import { SoundSyncer } from './SoundSyncer.ts'
 import { UndoRedoManager } from './UndoRedoManager.ts'
 import { validateSound, validateSoundState } from './SoundStateValidator.ts'
 import { EMPTY_SOUND_STATE, SoundState } from './SoundState.ts'
-import { Soundboard } from '../types/Soundboard.ts'
+import { newSoundboard, Soundboard, SoundboardId } from '../types/Soundboard.ts'
 
 export type SoundLibraryUpdatedListener = () => void
 
@@ -159,6 +159,45 @@ export class SoundLibrary implements SoundActions {
     this.setSounds(updatedSounds)
   }
 
+  findSoundboard = (id: SoundboardId): Option<Soundboard> => this.soundboards.find((soundboard) => soundboard.id === id)
+
+  getSoundboard = (id: SoundboardId): Soundboard => {
+    const soundboard = this.findSoundboard(id)
+    if (soundboard === undefined) {
+      throw new Error(`Soundboard with id ${id} does not exist`)
+    }
+    return soundboard
+  }
+
+  newSoundboard = (): Soundboard => {
+    const soundboard: Soundboard = newSoundboard()
+    // validateSoundboard
+    const updatedSoundboards = [...this.soundboards, soundboard]
+    this.setSoundboards(updatedSoundboards)
+    return soundboard
+  }
+
+  setSoundboardName = (id: SoundboardId, name: string): void =>
+    this.updateSoundboard(id, (soundboard) => {
+      soundboard.name = name
+    })
+
+  updateSoundboard = (id: SoundboardId, update: (soundboard: Draft<Soundboard>) => void): void =>
+    this.updateSoundboardPure(id, (soundboard) => produce(soundboard, update))
+
+  updateSoundboardPure = (id: SoundboardId, update: (soundboard: Soundboard) => Soundboard): void => {
+    const currentSoundboard = this.getSoundboard(id)
+    const updatedSoundboard = update(currentSoundboard)
+    // validateSoundboard(updatedSoundboard)
+    if (_.isEqual(currentSoundboard, updatedSoundboard)) {
+      return
+    }
+    const updatedSoundboards = this.soundboards.map((soundboard) =>
+      soundboard.id === id ? updatedSoundboard : soundboard,
+    )
+    this.setSoundboards(updatedSoundboards)
+  }
+
   importSounds = (sounds: readonly Sound[]) => {
     sounds.forEach(validateSound)
     this.setSounds(sounds)
@@ -200,6 +239,11 @@ export class SoundLibrary implements SoundActions {
 
   private setSounds = (sounds: readonly Sound[]): void => {
     const newState = { ...this.soundState, sounds }
+    this.setState(newState)
+  }
+
+  private setSoundboards = (soundboards: readonly Soundboard[]): void => {
+    const newState = { ...this.soundState, soundboards }
     this.setState(newState)
   }
 

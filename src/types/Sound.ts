@@ -1,6 +1,7 @@
 import { Brand } from 'effect'
 import * as uuid from 'uuid'
 import { SoundAudio } from './SoundAudio.ts'
+import { displayCollator } from '../utils/sortUtils.ts'
 
 export type SoundId = string & Brand.Brand<'SoundId'>
 
@@ -22,7 +23,5 @@ export const newSound = (): Sound => ({ id: newSoundId(), name: '' })
 
 export const getDisplayName = (sound: Sound): string => (sound.name.trim() === '' ? 'Untitled Sound' : sound.name)
 
-const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' })
-
 export const sortSoundsByDisplayName = (sounds: readonly Sound[]): Sound[] =>
-  [...sounds].sort((sound1, sound2) => collator.compare(getDisplayName(sound1), getDisplayName(sound2)))
+  [...sounds].sort((sound1, sound2) => displayCollator.compare(getDisplayName(sound1), getDisplayName(sound2)))
