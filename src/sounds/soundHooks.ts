@@ -4,6 +4,7 @@ import { SoundLibraryContext } from './SoundLibraryContext.ts'
 import { Option } from '../utils/types/Option.ts'
 import { SoundLibrary } from './SoundLibrary.ts'
 import { Pcm, Seconds, Volume } from '../utils/types/brandedTypes.ts'
+import { Soundboard, SoundboardId } from '../types/Soundboard.ts'
 
 const useSoundLibrary = (): SoundLibrary => {
   const soundLibrary = useContext(SoundLibraryContext)
@@ -15,6 +16,7 @@ const useSoundLibrary = (): SoundLibrary => {
 
 interface SoundLibraryState {
   sounds: readonly Sound[]
+  soundboards: readonly Soundboard[]
   isLoading: boolean
   canUndo: boolean
   canRedo: boolean
@@ -22,6 +24,7 @@ interface SoundLibraryState {
 
 const getSoundLibraryState = (soundLibrary: SoundLibrary): SoundLibraryState => ({
   sounds: soundLibrary.sounds,
+  soundboards: soundLibrary.soundboards,
   isLoading: soundLibrary.isLoading,
   canUndo: soundLibrary.canUndo,
   canRedo: soundLibrary.canRedo,
@@ -40,10 +43,7 @@ export const useSoundLibraryState = (): SoundLibraryState => {
 
 export const useSounds = (): readonly Sound[] => useSoundLibraryState().sounds
 
-export const useMaybeSound = (id: SoundId): Option<Sound> => {
-  const sounds = useSounds()
-  return sounds.find((sound) => sound.id === id)
-}
+export const useMaybeSound = (id: SoundId): Option<Sound> => useSounds().find((sound) => sound.id === id)
 
 export const useSound = (id: SoundId): Sound => {
   const sound = useMaybeSound(id)
@@ -51,6 +51,19 @@ export const useSound = (id: SoundId): Sound => {
     throw new Error(`no sound found with id ${id}`)
   }
   return sound
+}
+
+export const useSoundboards = (): readonly Soundboard[] => useSoundLibraryState().soundboards
+
+export const useMaybeSoundboard = (id: SoundboardId): Option<Soundboard> =>
+  useSoundboards().find((soundboard) => soundboard.id === id)
+
+export const useSoundboard = (id: SoundboardId): Soundboard => {
+  const soundboard = useMaybeSoundboard(id)
+  if (soundboard === undefined) {
+    throw new Error(`no soundboard found with id ${id}`)
+  }
+  return soundboard
 }
 
 export const useIsLoading = (): boolean => useSoundLibraryState().isLoading
