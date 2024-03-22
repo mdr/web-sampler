@@ -95,6 +95,8 @@ export interface SoundActions {
 
   newSoundboard(): Soundboard
 
+  setSoundboardName(id: SoundboardId, name: string): void
+  
   undo(): void
 
   redo(): void
