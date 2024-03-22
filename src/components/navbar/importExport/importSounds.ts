@@ -1,10 +1,10 @@
 import { BlobReader, BlobWriter, Entry, TextWriter, WritableWriter, Writer, ZipReader } from '@zip.js/zip.js'
-import { SoundAudio } from '../../../../types/SoundAudio.ts'
-import { Sound, SoundId } from '../../../../types/Sound.ts'
+import { SoundAudio } from '../../../types/SoundAudio.ts'
+import { Sound, SoundId } from '../../../types/Sound.ts'
 import { ExportedSound, ExportedSoundAudio, ExportedSoundLibrary } from './ExportedSoundLibrary.ts'
-import { Pcm } from '../../../../utils/types/brandedTypes.ts'
+import { Pcm } from '../../../utils/types/brandedTypes.ts'
 import { SOUNDS_JSON_FILE_NAME } from './importExportConstants.ts'
-import { Option } from '../../../../utils/types/Option.ts'
+import { Option } from '../../../utils/types/Option.ts'
 
 const pcmFromBlob = async (blob: Blob): Promise<Pcm> => {
   const arrayBuffer = await blob.arrayBuffer()

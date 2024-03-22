@@ -1,11 +1,11 @@
-import { fireAndForget } from '../../../utils/utils.ts'
+import { fireAndForget } from '../../utils/utils.ts'
 import { toast } from 'react-toastify'
 import { Dialog, Heading } from 'react-aria-components'
 import Icon from '@mdi/react'
 import { mdiAlert, mdiDatabaseLock } from '@mdi/js'
-import { Button, ButtonVariant } from '../../shared/Button.tsx'
-import { useStorageManagerActions } from '../../../storage/storageManagerHooks.ts'
-import { isChromiumBasedBrowser } from '../../../utils/browserUtils.ts'
+import { Button, ButtonVariant } from '../shared/Button.tsx'
+import { useStorageManagerActions } from '../../storage/storageManagerHooks.ts'
+import { isChromiumBasedBrowser } from '../../utils/browserUtils.ts'
 import { StorageWarningDialogTestIds } from './StorageWarningDialogTestIds.ts'
 
 export const StorageWarningDialog = () => {

@@ -1,5 +1,5 @@
 import { PageObject } from './PageObject.ts'
-import { NavbarTestIds } from '../../../components/soundsEditor/navbar/NavbarTestIds.ts'
+import { NavbarTestIds } from '../../../components/navbar/NavbarTestIds.ts'
 import { Path } from '../../../utils/types/brandedTypes.ts'
 
 export class NavbarMenuPageObject extends PageObject {

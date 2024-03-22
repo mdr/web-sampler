@@ -1,7 +1,7 @@
-import { SoundAudio } from '../../../../types/SoundAudio.ts'
+import { SoundAudio } from '../../../types/SoundAudio.ts'
 import { ExportedSound, ExportedSoundAudio, ExportedSoundLibrary } from './ExportedSoundLibrary.ts'
-import { Pcm } from '../../../../utils/types/brandedTypes.ts'
-import { Sound } from '../../../../types/Sound.ts'
+import { Pcm } from '../../../utils/types/brandedTypes.ts'
+import { Sound } from '../../../types/Sound.ts'
 import { BlobReader, BlobWriter, TextReader, ZipWriter } from '@zip.js/zip.js'
 import { SOUNDS_JSON_FILE_NAME } from './importExportConstants.ts'
 
