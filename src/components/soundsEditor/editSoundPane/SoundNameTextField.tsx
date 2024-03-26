@@ -1,22 +1,38 @@
-import { Input, Label, TextField } from 'react-aria-components'
+import { Input, TextField } from 'react-aria-components'
+import InlineEdit from '@atlaskit/inline-edit'
 
 import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
+import { getDisplayNameText } from '../../../types/Sound.ts'
 
 export interface SoundNameTextFieldProps {
-  soundName: string
-  setSoundName: (soundName: string) => void
+  name: string
+  setName: (name: string) => void
 }
 
-export const SoundNameTextField = ({ soundName, setSoundName }: SoundNameTextFieldProps) => (
-  <TextField className="flex flex-col space-y-2">
-    <Label className="font-medium text-gray-700">Sound Name</Label>
-    <Input
-      data-testid={EditSoundPaneTestIds.soundNameInput}
-      className="block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
-      value={soundName}
-      placeholder="Enter sound name"
-      onChange={(e) => setSoundName(e.target.value)}
-      data-1p-ignore
-    />
-  </TextField>
+export const SoundNameTextField = ({ name, setName }: SoundNameTextFieldProps) => (
+  <InlineEdit
+    readViewFitContainerWidth
+    // keepEditViewOpenOnBlur
+    defaultValue={name}
+    editView={({ value, onChange }) => (
+      // my-[2px] - to avoid jitter when switching from read to edit view
+      <TextField className="my-[2px] flex flex-col space-y-2">
+        <Input
+          data-testid={EditSoundPaneTestIds.soundNameInput}
+          className="block w-full rounded-md border border-gray-300 px-3 text-2xl shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+          value={value}
+          autoFocus
+          placeholder="Enter sound name"
+          onChange={(e) => onChange(e.target.value)}
+          data-1p-ignore
+        />
+      </TextField>
+    )}
+    readView={() => (
+      <h1 data-testid={EditSoundPaneTestIds.soundNameInput} className="text-2xl">
+        {getDisplayNameText(name)}
+      </h1>
+    )}
+    onConfirm={setName}
+  />
 )

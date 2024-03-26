@@ -9,10 +9,10 @@ export interface EditSoundboardPaneProps {
 export const EditSoundboardPaneContents = ({ soundboardId }: EditSoundboardPaneProps) => {
   const soundboard = useSoundboard(soundboardId)
   const soundActions = useSoundActions()
-  const setSoundName = (name: string) => soundActions.setSoundboardName(soundboard.id, name)
+  const setSoundboardName = (name: string) => soundActions.setSoundboardName(soundboard.id, name)
   return (
     <div className="flex flex-col space-y-4 px-4 pt-4">
-      <SoundboardNameTextField name={soundboard.name} setName={setSoundName} />
+      <SoundboardNameTextField name={soundboard.name} setName={setSoundboardName} />
     </div>
   )
 }

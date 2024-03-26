@@ -13,6 +13,7 @@
     "test-ct": "playwright test -c playwright-ct.config.ts"
   },
   "dependencies": {
+    "@atlaskit/inline-edit": "^13.1.0",
     "@mdi/js": "^7.4.47",
     "@mdi/react": "^1.6.1",
     "@sinonjs/fake-timers": "^11.2.2",

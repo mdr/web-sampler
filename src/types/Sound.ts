@@ -21,7 +21,8 @@ export const newSoundId = (): SoundId => SoundId(uuid.v4())
 
 export const newSound = (): Sound => ({ id: newSoundId(), name: '' })
 
-export const getDisplayName = (sound: Sound): string => (sound.name.trim() === '' ? 'Untitled Sound' : sound.name)
+export const getDisplayName = (sound: Sound): string => getDisplayNameText(sound.name)
+export const getDisplayNameText = (name: string): string => (name.trim() === '' ? 'Untitled Sound' : name)
 
 export const sortSoundsByDisplayName = (sounds: readonly Sound[]): Sound[] =>
   [...sounds].sort((sound1, sound2) => displayCollator.compare(getDisplayName(sound1), getDisplayName(sound2)))

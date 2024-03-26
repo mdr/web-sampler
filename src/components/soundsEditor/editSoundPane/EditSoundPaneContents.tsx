@@ -108,12 +108,12 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPaneProps) => {
 
   return (
     <div className="flex flex-col space-y-4 px-4 pt-4">
-      <SoundNameTextField soundName={sound.name} setSoundName={setSoundName} />
+      <SoundNameTextField name={sound.name} setName={setSoundName} />
       <div className="flex space-x-2">
         <DeleteButton onPress={handleDeleteButtonPressed} />
         <DuplicateSoundButton soundId={sound.id} />
       </div>
-      <h2 className="text-2xl" data-testid={EditSoundPaneTestIds.audioHeading}>
+      <h2 className="text-xl" data-testid={EditSoundPaneTestIds.audioHeading}>
         Audio
         {audio !== undefined && <> ({durationHumanizer(secondsToMillis(getPlayRegionDuration(audio)))})</>}
       </h2>
