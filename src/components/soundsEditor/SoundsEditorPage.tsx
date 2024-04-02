@@ -22,7 +22,7 @@ export const SoundsEditorPage: React.FC = () => {
           <EditOrCreateSoundMessage />
         )
       ) : (
-        <EditSoundPane soundId={soundId} />
+        <EditSoundPane key={soundId} soundId={soundId} />
       )}
     </SoundsEditorPageLayout>
   )

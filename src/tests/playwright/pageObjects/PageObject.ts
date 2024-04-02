@@ -8,7 +8,7 @@ import { deserialiseSounds } from '../testApp/soundsSerialisation.ts'
 import tmp from 'tmp'
 
 export abstract class PageObject {
-  constructor(protected readonly mountResult: MountResult) {}
+  protected constructor(protected readonly mountResult: MountResult) {}
 
   protected get page() {
     return this.mountResult.page()

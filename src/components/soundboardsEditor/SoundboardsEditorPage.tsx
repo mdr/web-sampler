@@ -22,7 +22,7 @@ export const SoundboardsEditorPage: React.FC = () => {
           <EditOrCreateSoundboardMessage />
         )
       ) : (
-        <EditSoundboardPane soundboardId={soundboardId} />
+        <EditSoundboardPane key={soundboardId} soundboardId={soundboardId} />
       )}
     </SoundboardsEditorPageLayout>
   )
