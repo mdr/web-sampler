@@ -3419,14 +3419,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:^18.2.71":
-  version: 18.2.71
-  resolution: "@types/react@npm:18.2.71"
+"@types/react@npm:^18.2.74":
+  version: 18.2.74
+  resolution: "@types/react@npm:18.2.74"
   dependencies:
     "@types/prop-types": "npm:*"
-    "@types/scheduler": "npm:*"
     csstype: "npm:^3.0.2"
-  checksum: 0b2fc05a33aa83f09880c1172f6112450fa507ea56a168521172161e057277a8a474ff2fae02fa4910ce74853d7b5cff560586f912a0c9d8102cfd316bdb1b19
+  checksum: 347e38b4c5dc20d50ff71bf04b7caaef490e5ff695e74a0088a13fbb2a0c5d125a5ecfd142adfa30f0176da0e2734942c91ba61d95ce269c43b3265bd7379361
   languageName: node
   linkType: hard
 
@@ -8845,7 +8844,7 @@ __metadata:
     "@types/lodash": "npm:^4.17.0"
     "@types/luxon": "npm:^3.4.2"
     "@types/node": "npm:^20.11.30"
-    "@types/react": "npm:^18.2.71"
+    "@types/react": "npm:^18.2.74"
     "@types/react-dom": "npm:^18.2.22"
     "@types/sinonjs__fake-timers": "npm:^8.1.5"
     "@types/tmp": "npm:^0.2.6"
