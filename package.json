@@ -24,7 +24,7 @@
     "bowser": "^2.11.0",
     "clsx": "^2.1.1",
     "dexie": "^4.0.4",
-    "effect": "^2.4.19",
+    "effect": "^3.0.3",
     "file-saver": "^2.0.5",
     "humanize-duration": "^3.32.0",
     "immer": "^10.0.4",
