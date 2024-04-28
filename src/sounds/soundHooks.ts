@@ -83,9 +83,9 @@ export interface SoundActions {
 
   duplicateSound(id: SoundId): void
 
-  setStartTime(id: SoundId, startTime: Samples): void
+  setAudioStart(id: SoundId, startTime: Samples): void
 
-  setFinishTime(id: SoundId, finishTime: Samples): void
+  setAudioFinish(id: SoundId, finishTime: Samples): void
 
   setVolume(id: SoundId, volume: Volume): void
 

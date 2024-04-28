@@ -111,7 +111,7 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
     (startTime: Seconds) => {
       stashedTimeRef.current = currentPosition
       stashedIsPlayingRef.current = isPlaying
-      soundActions.setStartTime(sound.id, secondsToSamples(startTime))
+      soundActions.setAudioStart(sound.id, secondsToSamples(startTime))
     },
     [currentPosition, isPlaying, soundActions, sound.id],
   )
@@ -120,7 +120,7 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
     (finishTime: Seconds) => {
       stashedTimeRef.current = currentPosition
       stashedIsPlayingRef.current = isPlaying
-      soundActions.setFinishTime(sound.id, secondsToSamples(finishTime))
+      soundActions.setAudioFinish(sound.id, secondsToSamples(finishTime))
     },
     [currentPosition, isPlaying, soundActions, sound.id],
   )

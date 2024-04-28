@@ -103,14 +103,14 @@ export class SoundLibrary implements SoundActions {
       sound.audio = newSoundAudio(pcm)
     })
 
-  setStartTime = (id: SoundId, startTime: Samples) =>
+  setAudioStart = (id: SoundId, start: Samples) =>
     this.updateSoundAudio(id, (audio) => {
-      audio.start = startTime
+      audio.start = start
     })
 
-  setFinishTime = (id: SoundId, finishTime: Samples) =>
+  setAudioFinish = (id: SoundId, finish: Samples) =>
     this.updateSoundAudio(id, (audio) => {
-      audio.finish = finishTime
+      audio.finish = finish
     })
 
   setVolume = (id: SoundId, volume: Volume) =>
