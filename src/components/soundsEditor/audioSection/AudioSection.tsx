@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react'
-import { Samples, Seconds, Url, Volume } from '../../../utils/types/brandedTypes.ts'
+import { Samples, Seconds, Url } from '../../../utils/types/brandedTypes.ts'
 import { mdiPause, mdiPlay } from '@mdi/js'
 import { unawaited } from '../../../utils/utils.ts'
 import {
@@ -46,7 +46,7 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
   const totalAudioDuration = getTotalAudioDuration(sound.audio)
 
   useEffect(() => {
-    audioPlayerActions.setVolume(volume ?? Volume(1))
+    audioPlayerActions.setVolume(volume)
   }, [audioPlayerActions, volume])
 
   useEffect(() => {
@@ -153,10 +153,7 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
         />
       </div>
       <div>
-        <VolumeSlider
-          volume={volume ?? Volume(1)}
-          onVolumeChange={(volume) => soundActions.setVolume(sound.id, volume)}
-        />
+        <VolumeSlider volume={volume} onVolumeChange={(volume) => soundActions.setVolume(sound.id, volume)} />
       </div>
     </div>
   )

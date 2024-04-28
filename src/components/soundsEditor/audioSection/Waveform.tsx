@@ -18,7 +18,7 @@ export const Waveform = ({ pcm, width }: WaveformProps) => (
         let min = 1.0
         let max = -1.0
         for (let sampleIndex = 0; sampleIndex < samplesPerPixel; sampleIndex++) {
-          const datum = pcm[x * samplesPerPixel + sampleIndex]
+          const datum = pcm.at(x * samplesPerPixel + sampleIndex)
           if (datum === undefined) break
           if (datum < min) min = datum
           if (datum > max) max = datum

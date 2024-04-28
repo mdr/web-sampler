@@ -56,7 +56,7 @@ export class WebAudioRecorder extends AbstractAudioRecorder implements AudioReco
       console.warn('Error setting up recording:', error)
       return StartRecordingOutcome.CANCELLED_BY_USER
     }
- 
+
     if (mediaStream.getAudioTracks().length === 0) {
       console.error('No audio track in media stream')
       mediaStream.getTracks().forEach((track) => track.stop())
@@ -94,7 +94,7 @@ export class WebAudioRecorder extends AbstractAudioRecorder implements AudioReco
     this.setState(AudioRecorderState.IDLE)
     const combinedAudio = concatenateFloat32Arrays(this.audioPieces)
     this.audioPieces = []
-    this.fireRecordingCompleteListeners(combinedAudio?.length > 0 ? Pcm(combinedAudio) : undefined)
+    this.fireRecordingCompleteListeners(combinedAudio.length > 0 ? Pcm(combinedAudio) : undefined)
 
     this.source?.disconnect()
     this.source = undefined

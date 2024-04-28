@@ -32,8 +32,8 @@ export const Button = ({
   onPress,
   variant = ButtonVariant.ORDINARY,
 }: ButtonProps) => {
-  if (label === undefined && icon === undefined) {
-    throw new Error('Button must have either a label or an icon')
+  if (iconOnly && icon === undefined) {
+    throw new Error('An iconOnly Button must have an icon')
   }
   return (
     <ReactAriaComponents.Button

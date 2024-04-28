@@ -24,16 +24,22 @@ export const Pixels = Brand.nominal<Pixels>()
 export type Hz = number & Brand.Brand<'Hz'>
 export const Hz = Brand.nominal<Hz>()
 
+// a count of samples or an index into a PCM array
 export type Samples = number & Brand.Brand<'Samples'>
-export const Samples = Brand.nominal<Samples>()
+export const Samples = Brand.refined<Samples>(
+  (n) => Number.isInteger(n),
+  (n) => Brand.error(`Expected ${n} to be an integer number of samples`),
+)
 
 export type Path = string & Brand.Brand<'Path'>
 export const Path = Brand.nominal<Path>()
 
 // Volume between 0 and 1 inclusive
 export type Volume = number & Brand.Brand<'Volume'>
-
 export const Volume = Brand.refined<Volume>(
   (n) => 0 <= n && n <= 1,
   (n) => Brand.error(`Expected ${n} to be between 0 and 1`),
 )
+
+export const MIN_VOLUME: Volume = Volume(0)
+export const MAX_VOLUME: Volume = Volume(1)

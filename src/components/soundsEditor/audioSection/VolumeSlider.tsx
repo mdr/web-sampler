@@ -25,7 +25,7 @@ export const VolumeSlider = ({ volume, onVolumeChange }: VolumeProps) => {
               <div
                 className="absolute top-[50%] h-2 translate-y-[-50%] rounded-full bg-white"
                 style={{
-                  width: state.getThumbPercent(0) * 100 + '%',
+                  width: `${state.getThumbPercent(0) * 100}%`,
                 }}
               />
               <SliderThumb

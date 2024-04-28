@@ -28,7 +28,7 @@ describe('SoundLibrary', () => {
     expect(library.soundboards).toIncludeSameMembers(soundBoards)
   })
 
-  it('should not allow sounds to be modified while still loading', async () => {
+  it('should not allow sounds to be modified while still loading', () => {
     const sound = makeSound()
     const soundStore = new MemorySoundStore([sound])
     const library = new SoundLibrary(soundStore)

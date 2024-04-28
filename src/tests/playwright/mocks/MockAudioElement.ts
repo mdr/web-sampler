@@ -95,18 +95,24 @@ export class MockAudioElement implements PartialAudioElement {
   private loadStartListeners: AudioElementListener<'loadstart'>[] = []
 
   private firePlayListeners = () =>
-    this.playListeners.forEach((listener) => listener.call(castPartial<HTMLAudioElement>(this), new Event('play')))
+    this.playListeners.forEach((listener) => {
+      listener.call(castPartial<HTMLAudioElement>(this), new Event('play'))
+    })
 
   private firePauseListeners = () =>
-    this.pauseListeners.forEach((listener) => listener.call(castPartial<HTMLAudioElement>(this), new Event('pause')))
+    this.pauseListeners.forEach((listener) => {
+      listener.call(castPartial<HTMLAudioElement>(this), new Event('pause'))
+    })
 
   private fireEndedListeners = () =>
-    this.endedListeners.forEach((listener) => listener.call(castPartial<HTMLAudioElement>(this), new Event('ended')))
+    this.endedListeners.forEach((listener) => {
+      listener.call(castPartial<HTMLAudioElement>(this), new Event('ended'))
+    })
 
   private fireLoadStartListeners = () =>
-    this.loadStartListeners.forEach((listener) =>
-      listener.call(castPartial<HTMLAudioElement>(this), new Event('loadstart')),
-    )
+    this.loadStartListeners.forEach((listener) => {
+      listener.call(castPartial<HTMLAudioElement>(this), new Event('loadstart'))
+    })
 
   addEventListener<K extends keyof HTMLMediaElementEventMap>(type: K, listener: AudioElementListener<K>): void {
     switch (type) {

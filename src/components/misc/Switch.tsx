@@ -24,7 +24,7 @@ export const Switch: React.FC<SwitchProps> = ({ children }) => {
     }
   })
 
-  return match ? React.cloneElement(match) : defaultCase
+  return match === undefined ? defaultCase : React.cloneElement(match)
 }
 
 export const Case: React.FC<CaseProps> = ({ children }) => <>{children}</>

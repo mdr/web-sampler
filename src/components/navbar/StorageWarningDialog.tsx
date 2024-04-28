@@ -7,6 +7,7 @@ import { Button, ButtonVariant } from '../shared/Button.tsx'
 import { useStorageManagerActions } from '../../storage/storageManagerHooks.ts'
 import { isChromiumBasedBrowser } from '../../utils/browserUtils.ts'
 import { StorageWarningDialogTestIds } from './StorageWarningDialogTestIds.ts'
+import { AttemptToMakeStoragePersistentResult } from '../../storage/StorageManager.tsx'
 
 export const StorageWarningDialog = () => {
   const storageManagerActions = useStorageManagerActions()
@@ -17,14 +18,14 @@ export const StorageWarningDialog = () => {
           fireAndForget(async () => {
             const result = await storageManagerActions.attemptToMakeStoragePersistent()
             switch (result) {
-              case 'SUCCESSFUL':
+              case AttemptToMakeStoragePersistentResult.SUCCESSFUL:
                 toast.info('Storage is now persistent. Your recordings are safe in local storage.')
                 close()
                 break
-              case 'UNSUCCESSFUL':
+              case AttemptToMakeStoragePersistentResult.UNSUCCESSFUL:
                 toast.error('Unable to make storage persistent.')
                 break
-              case 'NOTIFICATION_PERMISSION_DENIED':
+              case AttemptToMakeStoragePersistentResult.NOTIFICATION_PERMISSION_DENIED:
                 toast.error('Grant notification permission to make storage persistent.')
                 break
             }

@@ -1,4 +1,4 @@
-import { Pcm, Samples, Seconds, Volume } from '../utils/types/brandedTypes.ts'
+import { MAX_VOLUME, Pcm, Samples, Seconds, Volume } from '../utils/types/brandedTypes.ts'
 import { pcmLength, pcmSlice } from '../utils/pcmUtils.ts'
 import { samplesToSeconds } from './soundConstants.ts'
 
@@ -13,7 +13,7 @@ export const newSoundAudio = (pcm: Pcm): SoundAudio => ({
   pcm,
   start: Samples(0),
   finish: pcmLength(pcm),
-  volume: Volume(1),
+  volume: MAX_VOLUME,
 })
 
 export const getTotalNumberOfSamples = (audio: SoundAudio): Samples => Samples(audio.pcm.length)

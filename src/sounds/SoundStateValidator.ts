@@ -2,6 +2,7 @@ import { SoundState } from './SoundState.ts'
 import { Sound, SoundId } from '../types/Sound.ts'
 import { getTotalNumberOfSamples, SoundAudio } from '../types/SoundAudio.ts'
 import { Soundboard } from '../types/Soundboard.ts'
+import { MAX_VOLUME, MIN_VOLUME } from '../utils/types/brandedTypes.ts'
 
 export const validateSoundState = (soundState: SoundState): void => new SoundStateValidator(soundState).validate()
 
@@ -53,7 +54,7 @@ export const validateSoundAudio = (soundId: SoundId, audio: SoundAudio): void =>
   for (const sample of audio.pcm) {
     validatePcmSample(soundId, sample)
   }
-  if (audio.volume !== undefined && (audio.volume < 0 || audio.volume > 1)) {
+  if (audio.volume < MIN_VOLUME || audio.volume > MAX_VOLUME) {
     throw new SoundValidationError(`Sound ${soundId} volume is out of range: ${audio.volume}`)
   }
 }

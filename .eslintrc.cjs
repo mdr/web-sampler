@@ -1,11 +1,21 @@
 module.exports = {
   root: true,
   env: { browser: true, es2020: true },
-  extends: ['eslint:recommended', 'plugin:@typescript-eslint/strict', 'plugin:react-hooks/recommended'],
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/strict',
+    // enable for type-checked rules:
+    // 'plugin:@typescript-eslint/strict-type-checked'
+    'plugin:react-hooks/recommended'
+  ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
-  plugins: ['react-refresh'],
+  // for use with @typescript-eslint/strict-type-checked:
+  // parserOptions: { project: './tsconfig.json' },
+  // plugins: ['react-refresh'],
   rules: {
-    '@typescript-eslint/no-confusing-void-expression': 'off'
+    '@typescript-eslint/no-confusing-void-expression': 'off',
+    // '@typescript-eslint/restrict-template-expressions': ['error', { 'allowNumber': true }],
+    'object-shorthand': ['error', 'always']
   }
 }

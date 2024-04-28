@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest'
 import { validatePcmSample, validateSoundAudio, validateSoundState } from './SoundStateValidator.ts'
-import { makeSound, makeSoundAudio, SoundTestConstants } from '../types/sound.testSupport.ts'
+import { makePcm, makeSound, makeSoundAudio, SoundTestConstants } from '../types/sound.testSupport.ts'
 import { SoundState } from './SoundState.ts'
 import { makeSoundboard, SoundboardTestConstants } from '../types/soundboard.testSupport.ts'
-import { Pcm, Samples } from '../utils/types/brandedTypes.ts'
+import { Samples } from '../utils/types/brandedTypes.ts'
 
 describe('validateSoundState', () => {
   it('finds no issue with a valid sound state', () => {
@@ -57,8 +57,8 @@ describe('validateSoundAudio', () => {
   })
 
   it('should not throw an error if the finish time is before the end of the audio', () => {
-    const pcm = Pcm(new Float32Array(Samples(100)))
-    const audio = makeSoundAudio({ pcm: pcm, finishTime: Samples(50) })
+    const pcm = makePcm(Samples(100))
+    const audio = makeSoundAudio({ pcm, finishTime: Samples(50) })
     expect(() => validateSoundAudio(SoundTestConstants.id, audio)).not.toThrow()
   })
 })
