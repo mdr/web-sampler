@@ -12,7 +12,7 @@ interface DownloadWavButtonProps {
 
 export const DownloadWavButton = ({ sound }: DownloadWavButtonProps) => {
   const doDownload = () => {
-    const audioBlob = pcmToWavBlob(getPlayRegionPcm(sound.audio))
+    const audioBlob = pcmToWavBlob(getPlayRegionPcm(sound.audio), sound.audio.sampleRate)
     FileSaver.saveAs(audioBlob, `${getDisplayName(sound)}.wav`)
   }
   return (

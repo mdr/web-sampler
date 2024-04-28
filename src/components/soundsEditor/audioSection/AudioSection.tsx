@@ -38,7 +38,7 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
   const stashedTimeRef = useRef<Option<Seconds>>(undefined)
   const stashedIsPlayingRef = useRef<Option<boolean>>(undefined)
 
-  const { pcm, volume } = sound.audio
+  const { pcm, sampleRate, volume } = sound.audio
   const startTime = getStartTime(sound.audio)
   const finishTime = getFinishTime(sound.audio)
 
@@ -59,7 +59,7 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
       audioPlayerActions.setUrl(undefined)
       return
     }
-    const blob = pcmToWavBlob(playablePcm)
+    const blob = pcmToWavBlob(playablePcm, sampleRate)
     const objectUrl = Url(URL.createObjectURL(blob))
     audioPlayerActions.setUrl(objectUrl)
     if (stashedTime !== undefined) {
@@ -73,7 +73,7 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
     return () => {
       URL.revokeObjectURL(objectUrl)
     }
-  }, [startTime, finishTime, pcm, audioPlayerActions])
+  }, [startTime, finishTime, pcm, audioPlayerActions, sampleRate])
 
   useUnmount(() => {
     audioPlayerActions.setUrl(undefined)

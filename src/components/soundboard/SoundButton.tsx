@@ -23,7 +23,7 @@ export const SoundButton = ({ sound, hotkey }: SoundButtonProps) => {
   const audioRef = useRef<HTMLAudioElement>(null)
 
   useEffect(() => {
-    const blob = pcmToWavBlob(getPlayRegionPcm(audio))
+    const blob = pcmToWavBlob(getPlayRegionPcm(audio), audio.sampleRate)
     const objectUrl = URL.createObjectURL(blob)
     setUrl(objectUrl)
     return () => {
