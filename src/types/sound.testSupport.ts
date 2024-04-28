@@ -4,7 +4,7 @@ import { SoundAudio } from './SoundAudio.ts'
 import { DEFAULT_SAMPLE_RATE, secondsToSamples } from './soundConstants.ts'
 
 export const makePcm = (samples: Samples): Pcm => Pcm(new Float32Array(samples))
-export const makePcmOfDuration = (seconds: Seconds): Pcm => makePcm(secondsToSamples(seconds))
+export const makePcmOfDuration = (seconds: Seconds): Pcm => makePcm(secondsToSamples(seconds, DEFAULT_SAMPLE_RATE))
 
 export const SoundTestConstants = {
   id: SoundId('SoundTestConstants.id'),

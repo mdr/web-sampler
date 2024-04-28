@@ -50,7 +50,7 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
   }, [audioPlayerActions, volume])
 
   useEffect(() => {
-    const playablePcm = pcmSlice(pcm, secondsToSamples(startTime), secondsToSamples(finishTime))
+    const playablePcm = pcmSlice(pcm, secondsToSamples(startTime, sampleRate), secondsToSamples(finishTime, sampleRate))
     const stashedTime = stashedTimeRef.current
     stashedTimeRef.current = undefined
     const wasPlaying = stashedIsPlayingRef.current
@@ -111,18 +111,18 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
     (startTime: Seconds) => {
       stashedTimeRef.current = currentPosition
       stashedIsPlayingRef.current = isPlaying
-      soundActions.setAudioStart(sound.id, secondsToSamples(startTime))
+      soundActions.setAudioStart(sound.id, secondsToSamples(startTime, sampleRate))
     },
-    [currentPosition, isPlaying, soundActions, sound.id],
+    [currentPosition, isPlaying, soundActions, sound.id, sampleRate],
   )
 
   const setFinishTime = useCallback(
     (finishTime: Seconds) => {
       stashedTimeRef.current = currentPosition
       stashedIsPlayingRef.current = isPlaying
-      soundActions.setAudioFinish(sound.id, secondsToSamples(finishTime))
+      soundActions.setAudioFinish(sound.id, secondsToSamples(finishTime, sampleRate))
     },
-    [currentPosition, isPlaying, soundActions, sound.id],
+    [currentPosition, isPlaying, soundActions, sound.id, sampleRate],
   )
 
   const markStart = () => setStartTime(currentPosition)

@@ -27,15 +27,15 @@ export class MockAudioRecorder extends AbstractAudioRecorder implements AudioRec
     }
     this.setState(AudioRecorderState.IDLE)
     const completedRecording: CompletedRecording = {
-      pcm: createSampleAudio(SOUND_DURATION),
+      pcm: createSampleAudio(SOUND_DURATION, DEFAULT_SAMPLE_RATE),
       sampleRate: DEFAULT_SAMPLE_RATE,
     }
     this.fireRecordingCompleteListeners(this.noAudioOnStopRecording ? undefined : completedRecording)
   }
 }
 
-const createSampleAudio = (duration: Seconds): Pcm => {
-  const numberOfSamples = secondsToSamples(duration)
+const createSampleAudio = (duration: Seconds, sampleRate: Hz): Pcm => {
+  const numberOfSamples = secondsToSamples(duration, sampleRate)
   const channelData = new Float32Array(numberOfSamples)
   const frequency = Hz(440)
   const lfoFrequency = 2
