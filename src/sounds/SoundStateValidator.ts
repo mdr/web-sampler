@@ -1,6 +1,6 @@
 import { SoundState } from './SoundState.ts'
 import { Sound, SoundId } from '../types/Sound.ts'
-import { getTotalAudioDuration, SoundAudio } from '../types/SoundAudio.ts'
+import { getTotalNumberOfSamples, SoundAudio } from '../types/SoundAudio.ts'
 import { Soundboard } from '../types/Soundboard.ts'
 
 export const validateSoundState = (soundState: SoundState): void => new SoundStateValidator(soundState).validate()
@@ -36,13 +36,13 @@ export const validateSound = (sound: Sound): void => {
 }
 
 export const validateSoundAudio = (soundId: SoundId, audio: SoundAudio): void => {
-  const pcmDuration = getTotalAudioDuration(audio)
+  const totalSamples = getTotalNumberOfSamples(audio)
   if (audio.startTime < 0) {
     throw new SoundValidationError(`Sound ${soundId} start time is negative: ${audio.startTime}`)
   }
-  if (audio.finishTime > pcmDuration) {
+  if (audio.finishTime > totalSamples) {
     throw new SoundValidationError(
-      `Sound ${soundId} finish time is after sound duration: ${audio.finishTime} > ${pcmDuration}`,
+      `Sound ${soundId} finish time is after sound duration: ${audio.finishTime} > ${totalSamples}`,
     )
   }
   if (audio.finishTime < audio.startTime) {

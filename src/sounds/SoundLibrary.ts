@@ -3,11 +3,10 @@ import { Option } from '../utils/types/Option.ts'
 import _ from 'lodash'
 import { SoundActions } from './soundHooks.ts'
 import { unawaited } from '../utils/utils.ts'
-import { Pcm, Seconds, Volume } from '../utils/types/brandedTypes.ts'
+import { Pcm, Samples, Volume } from '../utils/types/brandedTypes.ts'
 import { Draft, produce } from 'immer'
-import { pcmDurationInSeconds } from '../utils/pcmUtils.ts'
+import { pcmDurationInSamples, pcmSlice } from '../utils/pcmUtils.ts'
 import { newSoundAudio } from '../types/SoundAudio.ts'
-import { DEFAULT_SAMPLE_RATE } from '../types/soundConstants.ts'
 import { SoundStore } from './SoundStore.ts'
 import { SoundSyncer } from './SoundSyncer.ts'
 import { UndoRedoManager } from './UndoRedoManager.ts'
@@ -104,7 +103,7 @@ export class SoundLibrary implements SoundActions {
       sound.audio = newSoundAudio(pcm)
     })
 
-  setStartTime = (id: SoundId, startTime: Seconds) =>
+  setStartTime = (id: SoundId, startTime: Samples) =>
     this.updateSound(id, (sound) => {
       if (sound.audio === undefined) {
         throw Error(`No audio defined for sound ${sound.id}`)
@@ -112,7 +111,7 @@ export class SoundLibrary implements SoundActions {
       sound.audio.startTime = startTime
     })
 
-  setFinishTime = (id: SoundId, finishTime: Seconds) =>
+  setFinishTime = (id: SoundId, finishTime: Samples) =>
     this.updateSound(id, (sound) => {
       if (sound.audio === undefined) {
         throw Error(`No audio defined for sound ${sound.id}`)
@@ -135,9 +134,9 @@ export class SoundLibrary implements SoundActions {
         throw Error(`No audio defined for sound ${sound.id}`)
       }
 
-      audio.pcm = Pcm(audio.pcm.slice(audio.startTime * DEFAULT_SAMPLE_RATE, audio.finishTime * DEFAULT_SAMPLE_RATE))
-      audio.startTime = Seconds(0)
-      audio.finishTime = pcmDurationInSeconds(audio.pcm)
+      audio.pcm = pcmSlice(audio.pcm, audio.startTime, audio.finishTime)
+      audio.startTime = Samples(0)
+      audio.finishTime = pcmDurationInSamples(audio.pcm)
     })
 
   deleteSound = (id: SoundId): void => {

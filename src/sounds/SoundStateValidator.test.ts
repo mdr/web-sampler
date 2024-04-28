@@ -3,7 +3,7 @@ import { validatePcmSample, validateSoundAudio, validateSoundState } from './Sou
 import { makeSound, makeSoundAudio, SoundTestConstants } from '../types/sound.testSupport.ts'
 import { SoundState } from './SoundState.ts'
 import { makeSoundboard, SoundboardTestConstants } from '../types/soundboard.testSupport.ts'
-import { Seconds } from '../utils/types/brandedTypes.ts'
+import { Pcm, Samples } from '../utils/types/brandedTypes.ts'
 
 describe('validateSoundState', () => {
   it('finds no issue with a valid sound state', () => {
@@ -36,24 +36,30 @@ describe('validateSoundState', () => {
 
 describe('validateSoundAudio', () => {
   it('throws an appropriate error if start time is negative', () => {
-    const audio = makeSoundAudio({ startTime: Seconds(-1) })
+    const audio = makeSoundAudio({ startTime: Samples(-1) })
     expect(() => validateSoundAudio(SoundTestConstants.id, audio)).toThrowErrorMatchingInlineSnapshot(
       `[SoundValidationError: Sound SoundTestConstants.id start time is negative: -1]`,
     )
   })
 
   it('throws an appropriate error if start time is after finish time', () => {
-    const audio = makeSoundAudio({ startTime: Seconds(2), finishTime: Seconds(1) })
+    const audio = makeSoundAudio({ startTime: Samples(2), finishTime: Samples(1) })
     expect(() => validateSoundAudio(SoundTestConstants.id, audio)).toThrowErrorMatchingInlineSnapshot(
       `[SoundValidationError: Sound SoundTestConstants.id finish time is before start time: 1 < 2]`,
     )
   })
 
   it('throws an appropriate error if the finish time is after the end of the audio', () => {
-    const audio = makeSoundAudio({ pcm: SoundTestConstants.emptyPcm, finishTime: Seconds(100) })
+    const audio = makeSoundAudio({ pcm: SoundTestConstants.emptyPcm, finishTime: Samples(100) })
     expect(() => validateSoundAudio(SoundTestConstants.id, audio)).toThrowErrorMatchingInlineSnapshot(
       `[SoundValidationError: Sound SoundTestConstants.id finish time is after sound duration: 100 > 0]`,
     )
+  })
+
+  it('should not throw an error if the finish time is before the end of the audio', () => {
+    const pcm = Pcm(new Float32Array(Samples(100)))
+    const audio = makeSoundAudio({ pcm: pcm, finishTime: Samples(50) })
+    expect(() => validateSoundAudio(SoundTestConstants.id, audio)).not.toThrow()
   })
 })
 

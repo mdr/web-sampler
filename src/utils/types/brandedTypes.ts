@@ -24,6 +24,9 @@ export const Pixels = Brand.nominal<Pixels>()
 export type Hz = number & Brand.Brand<'Hz'>
 export const Hz = Brand.nominal<Hz>()
 
+export type Samples = number & Brand.Brand<'Samples'>
+export const Samples = Brand.nominal<Samples>()
+
 export type Path = string & Brand.Brand<'Path'>
 export const Path = Brand.nominal<Path>()
 

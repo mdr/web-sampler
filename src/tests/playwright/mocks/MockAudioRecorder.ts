@@ -1,9 +1,8 @@
 import { AudioRecorder, AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
 import { AbstractAudioRecorder } from '../../../audioRecorder/AbstractAudioRecorder.ts'
 import { SOUND_DURATION } from '../testConstants.ts'
-import { Pcm, Seconds } from '../../../utils/types/brandedTypes.ts'
-
-import { DEFAULT_SAMPLE_RATE } from '../../../types/soundConstants.ts'
+import { Hz, Pcm, Samples, Seconds } from '../../../utils/types/brandedTypes.ts'
+import { samplesToSeconds, secondsToSamples } from '../../../types/SoundAudio.ts'
 
 export class MockAudioRecorder extends AbstractAudioRecorder implements AudioRecorder {
   volume: number = 0
@@ -27,13 +26,13 @@ export class MockAudioRecorder extends AbstractAudioRecorder implements AudioRec
 }
 
 const createSampleAudio = (duration: Seconds): Pcm => {
-  const numberOfSamples = DEFAULT_SAMPLE_RATE * duration
+  const numberOfSamples = secondsToSamples(duration)
   const channelData = new Float32Array(numberOfSamples)
-  const frequency = 440
+  const frequency = Hz(440)
   const lfoFrequency = 2
 
   for (let sampleIndex = 0; sampleIndex < numberOfSamples; sampleIndex++) {
-    const time = sampleIndex / DEFAULT_SAMPLE_RATE
+    const time = samplesToSeconds(Samples(sampleIndex))
     const primarySine = Math.sin(2 * Math.PI * frequency * time)
     const lfoSine = Math.sin(2 * Math.PI * lfoFrequency * time)
     const amplitude = primarySine * ((lfoSine + 1) / 2)

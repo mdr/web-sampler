@@ -2,7 +2,8 @@ import { describe, expect, it } from 'vitest'
 import { zipSounds } from './exportSounds.ts'
 import { unzipSounds } from './importSounds.ts'
 import { newSoundId, Sound } from '../../../types/Sound.ts'
-import { Pcm, Seconds, Volume } from '../../../utils/types/brandedTypes.ts'
+import { Samples, Volume } from '../../../utils/types/brandedTypes.ts'
+import { SoundTestConstants } from '../../../types/sound.testSupport.ts'
 
 describe('zipSounds', () => {
   it('preserves a collection of sounds on a round trip', async () => {
@@ -11,9 +12,9 @@ describe('zipSounds', () => {
         id: newSoundId(),
         name: 'Sound 1',
         audio: {
-          startTime: Seconds(0),
-          finishTime: Seconds(1),
-          pcm: Pcm(new Float32Array(0)),
+          startTime: Samples(0),
+          finishTime: Samples(1),
+          pcm: SoundTestConstants.pcm,
           volume: Volume(0.5),
         },
       },

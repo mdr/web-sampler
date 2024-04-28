@@ -3,7 +3,7 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 import { SoundLibraryContext } from './SoundLibraryContext.ts'
 import { Option } from '../utils/types/Option.ts'
 import { SoundLibrary } from './SoundLibrary.ts'
-import { Pcm, Seconds, Volume } from '../utils/types/brandedTypes.ts'
+import { Pcm, Samples, Volume } from '../utils/types/brandedTypes.ts'
 import { Soundboard, SoundboardId } from '../types/Soundboard.ts'
 
 const useSoundLibrary = (): SoundLibrary => {
@@ -83,9 +83,9 @@ export interface SoundActions {
 
   duplicateSound(id: SoundId): void
 
-  setStartTime(id: SoundId, startTime: Seconds): void
+  setStartTime(id: SoundId, startTime: Samples): void
 
-  setFinishTime(id: SoundId, finishTime: Seconds): void
+  setFinishTime(id: SoundId, finishTime: Samples): void
 
   setVolume(id: SoundId, volume: Option<Volume>): void
 
@@ -96,7 +96,7 @@ export interface SoundActions {
   newSoundboard(): Soundboard
 
   setSoundboardName(id: SoundboardId, name: string): void
-  
+
   undo(): void
 
   redo(): void
