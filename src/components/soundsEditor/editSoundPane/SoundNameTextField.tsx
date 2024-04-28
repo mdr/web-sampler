@@ -16,7 +16,7 @@ export const SoundNameTextField = ({ name, setName }: SoundNameTextFieldProps) =
     defaultValue={name}
     editView={({ value, onChange }) => (
       // my-[2px] - to avoid jitter when switching from read to edit view
-      <TextField className="my-[2px] flex flex-col space-y-2">
+      <TextField aria-label="Sound name" className="my-[2px] flex flex-col space-y-2">
         <Input
           data-testid={EditSoundPaneTestIds.soundNameInput}
           className="block w-full rounded-md border border-gray-300 px-3 text-2xl shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
