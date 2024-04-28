@@ -3,7 +3,7 @@ import { Sound, SoundId } from '../types/Sound.ts'
 import { Soundboard, SoundboardId } from '../types/Soundboard.ts'
 
 // Used for temporary collection names before we stabilise the IndexedDB schema
-const DEV_UUID = '78ca3c7c-70ad-42ae-81f9-bca7e9f676a7'
+const DEV_UUID = 'ef3634c6-10e9-4714-87fd-f73ec5dfefc6'
 
 export class AppDb extends Dexie {
   sounds!: Table<Sound, SoundId>
