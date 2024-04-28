@@ -2,17 +2,22 @@
 // itself adapted from https://github.com/mattdiamond/Recorderjs (MIT License)
 import { Hz } from './types/brandedTypes.ts'
 import { DEFAULT_SAMPLE_RATE } from '../types/soundConstants.ts'
+import { AUDIO_WAV } from './mediaTypes.ts'
 
-export const pcmToWav = (pcm: Float32Array): ArrayBuffer => encodeWAV(pcm, 1, DEFAULT_SAMPLE_RATE, 1, 16)
+export const pcmToWav = (pcm: Float32Array): ArrayBuffer => encodeWav(pcm)
 
-export const pcmToWavBlob = (pcm: Float32Array): Blob => new Blob([pcmToWav(pcm)], { type: 'audio/wav' })
+export const pcmToWavBlob = (pcm: Float32Array): Blob => new Blob([pcmToWav(pcm)], { type: AUDIO_WAV })
 
-const encodeWAV = (
+interface EncodeWavOptions {
+  readonly format?: 1 | 3
+  readonly sampleRate?: Hz
+  readonly numChannels?: 1 | 2
+  readonly bitDepth?: 16 | 32
+}
+
+const encodeWav = (
   samples: Float32Array,
-  format: 1 | 3,
-  sampleRate: Hz,
-  numChannels: 1 | 2,
-  bitDepth: 16 | 32,
+  { format = 1, sampleRate = DEFAULT_SAMPLE_RATE, numChannels = 1, bitDepth = 16 }: EncodeWavOptions = {},
 ): ArrayBuffer => {
   const bytesPerSample = bitDepth / 8
   const blockAlign = numChannels * bytesPerSample
