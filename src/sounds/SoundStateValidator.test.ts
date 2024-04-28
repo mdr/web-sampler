@@ -62,10 +62,21 @@ describe('validateSoundAudio', () => {
     expect(() => validateSoundAudio(SoundTestConstants.id, audio)).not.toThrow()
   })
 
-  it('throws an appropriate error if the sample rate is negative', () => {
-    const audio = makeSoundAudio({ sampleRate: Hz(-1) })
-    expect(() => validateSoundAudio(SoundTestConstants.id, audio)).toThrowErrorMatchingInlineSnapshot(
+  it('throws an appropriate error if the sample rate is invalid', () => {
+    expect(() =>
+      validateSoundAudio(SoundTestConstants.id, makeSoundAudio({ sampleRate: Hz(-1) })),
+    ).toThrowErrorMatchingInlineSnapshot(
       `[SoundValidationError: Sound SoundTestConstants.id sample rate is not positive: -1]`,
+    )
+    expect(() =>
+      validateSoundAudio(SoundTestConstants.id, makeSoundAudio({ sampleRate: Hz(0) })),
+    ).toThrowErrorMatchingInlineSnapshot(
+      `[SoundValidationError: Sound SoundTestConstants.id sample rate is not positive: 0]`,
+    )
+    expect(() =>
+      validateSoundAudio(SoundTestConstants.id, makeSoundAudio({ sampleRate: Hz(Number.NaN) })),
+    ).toThrowErrorMatchingInlineSnapshot(
+      `[SoundValidationError: Sound SoundTestConstants.id sample rate is not positive: NaN]`,
     )
   })
 })

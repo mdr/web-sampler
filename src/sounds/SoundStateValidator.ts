@@ -54,7 +54,7 @@ export const validateSoundAudio = (soundId: SoundId, audio: SoundAudio): void =>
   for (const sample of audio.pcm) {
     validatePcmSample(soundId, sample)
   }
-  if (audio.sampleRate <= 0) {
+  if (Number.isNaN(audio.sampleRate) || audio.sampleRate <= 0) {
     throw new SoundValidationError(`Sound ${soundId} sample rate is not positive: ${audio.sampleRate}`)
   }
   if (audio.volume < MIN_VOLUME || audio.volume > MAX_VOLUME) {
