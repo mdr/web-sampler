@@ -8,6 +8,7 @@ import _ from 'lodash'
 
 import workletUrl from './CapturingAudioWorkletProcessor?worker&url'
 import { Pcm } from '../utils/types/brandedTypes.ts'
+import { DEFAULT_SAMPLE_RATE } from '../types/soundConstants.ts'
 
 export class WebAudioRecorder extends AbstractAudioRecorder implements AudioRecorder {
   private mediaStream: Option<MediaStream> = undefined
@@ -92,9 +93,11 @@ export class WebAudioRecorder extends AbstractAudioRecorder implements AudioReco
       return
     }
     this.setState(AudioRecorderState.IDLE)
-    const combinedAudio = concatenateFloat32Arrays(this.audioPieces)
+    const combinedAudio = Pcm(concatenateFloat32Arrays(this.audioPieces))
     this.audioPieces = []
-    this.fireRecordingCompleteListeners(combinedAudio.length > 0 ? Pcm(combinedAudio) : undefined)
+    const completedRecording =
+      combinedAudio.length > 0 ? { pcm: combinedAudio, sampleRate: DEFAULT_SAMPLE_RATE } : undefined
+    this.fireRecordingCompleteListeners(completedRecording)
 
     this.source?.disconnect()
     this.source = undefined
