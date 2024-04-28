@@ -1,6 +1,7 @@
 import { newSoundId, Sound, SoundId } from './Sound.ts'
 import { Pcm, Samples, Seconds, Volume } from '../utils/types/brandedTypes.ts'
-import { secondsToSamples, SoundAudio } from './SoundAudio.ts'
+import { SoundAudio } from './SoundAudio.ts'
+import { secondsToSamples } from './soundConstants.ts'
 
 export const makePcm = (samples: Samples): Pcm => Pcm(new Float32Array(samples))
 export const makePcmOfDuration = (seconds: Seconds): Pcm => makePcm(secondsToSamples(seconds))

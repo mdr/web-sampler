@@ -12,20 +12,14 @@ import { useSoundActions } from '../../../sounds/soundHooks.ts'
 import { Button } from '../../shared/Button.tsx'
 import { WaveformVisualiser } from './WaveformVisualiser.tsx'
 import { useHotkeys } from 'react-hotkeys-hook'
-import {
-  getFinishTime,
-  getPlayRegionPcm,
-  getStartTime,
-  getTotalAudioDuration,
-  samplesToSeconds,
-  secondsToSamples,
-} from '../../../types/SoundAudio.ts'
+import { getFinishTime, getPlayRegionPcm, getStartTime, getTotalAudioDuration } from '../../../types/SoundAudio.ts'
 import { Option } from '../../../utils/types/Option.ts'
 import useUnmount from 'beautiful-react-hooks/useUnmount'
 import { EditSoundPaneTestIds } from '../editSoundPane/EditSoundPaneTestIds.ts'
 import { pcmToWavBlob } from '../../../utils/wav.ts'
 import { VolumeSlider } from './VolumeSlider.tsx'
 import { pcmSlice } from '../../../utils/pcmUtils.ts'
+import { samplesToSeconds, secondsToSamples } from '../../../types/soundConstants.ts'
 
 const BIG_SEEK_JUMP = Seconds(0.5)
 const SMALL_SEEK_JUMP = Seconds(0.1)

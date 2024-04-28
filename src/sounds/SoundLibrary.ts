@@ -5,7 +5,7 @@ import { SoundActions } from './soundHooks.ts'
 import { unawaited } from '../utils/utils.ts'
 import { Pcm, Samples, Volume } from '../utils/types/brandedTypes.ts'
 import { Draft, produce } from 'immer'
-import { pcmDurationInSamples, pcmSlice } from '../utils/pcmUtils.ts'
+import { pcmLength, pcmSlice } from '../utils/pcmUtils.ts'
 import { newSoundAudio } from '../types/SoundAudio.ts'
 import { SoundStore } from './SoundStore.ts'
 import { SoundSyncer } from './SoundSyncer.ts'
@@ -136,7 +136,7 @@ export class SoundLibrary implements SoundActions {
 
       audio.pcm = pcmSlice(audio.pcm, audio.startTime, audio.finishTime)
       audio.startTime = Samples(0)
-      audio.finishTime = pcmDurationInSamples(audio.pcm)
+      audio.finishTime = pcmLength(audio.pcm)
     })
 
   deleteSound = (id: SoundId): void => {

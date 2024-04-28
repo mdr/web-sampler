@@ -1,6 +1,6 @@
 import { Pcm, Samples, Seconds, Volume } from '../utils/types/brandedTypes.ts'
-import { pcmDurationInSamples, pcmSlice } from '../utils/pcmUtils.ts'
-import { DEFAULT_SAMPLE_RATE } from './soundConstants.ts'
+import { pcmLength, pcmSlice } from '../utils/pcmUtils.ts'
+import { samplesToSeconds } from './soundConstants.ts'
 
 export interface SoundAudio {
   readonly pcm: Pcm
@@ -12,7 +12,7 @@ export interface SoundAudio {
 export const newSoundAudio = (pcm: Pcm): SoundAudio => ({
   pcm,
   startTime: Samples(0),
-  finishTime: pcmDurationInSamples(pcm),
+  finishTime: pcmLength(pcm),
   volume: Volume(1),
 })
 
@@ -34,7 +34,3 @@ export const getPlayRegionPcm = (audio: SoundAudio): Pcm => pcmSlice(audio.pcm, 
 export const getStartTime = (audio: SoundAudio): Seconds => samplesToSeconds(audio.startTime)
 
 export const getFinishTime = (audio: SoundAudio): Seconds => samplesToSeconds(audio.finishTime)
-
-export const secondsToSamples = (seconds: Seconds): Samples => Samples(Math.floor(seconds * DEFAULT_SAMPLE_RATE))
-
-export const samplesToSeconds = (samples: Samples): Seconds => Seconds(samples / DEFAULT_SAMPLE_RATE)
