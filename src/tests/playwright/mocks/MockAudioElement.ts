@@ -1,6 +1,6 @@
 import { SOUND_DURATION } from '../testConstants.ts'
 import _ from 'lodash'
-import { Seconds } from '../../../utils/types/brandedTypes.ts'
+import { MAX_VOLUME, Seconds, Volume } from '../../../utils/types/brandedTypes.ts'
 
 export const castPartial = <T>(thing: Partial<T>): T => thing as T
 
@@ -14,7 +14,7 @@ type AudioElementListener<K extends keyof HTMLMediaElementEventMap> =
 export interface PartialAudioElement extends Partial<HTMLAudioElement> {
   src: string
   currentTime: number
-  volume: number
+  volume: Volume
   readonly duration: number
   readonly paused: boolean
   readonly ended: boolean
@@ -35,13 +35,13 @@ export class MockAudioElement implements PartialAudioElement {
     this._currentTime = Seconds(value)
   }
 
-  private _volume: number = 1
+  private _volume: Volume = MAX_VOLUME
 
-  get volume(): number {
+  get volume(): Volume {
     return this._volume
   }
 
-  set volume(value: number) {
+  set volume(value: Volume) {
     this._volume = value
   }
 

@@ -3,6 +3,7 @@ import { launchApp } from '../pageObjects/launchApp.tsx'
 import { MAX_RECORDING_DURATION } from '../../../components/soundsEditor/recordingConstants.ts'
 import { AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
 import { launchAndStartAudioCapture } from '../pageObjects/SoundsEditorPageObject.ts'
+import { Volume } from '../../../utils/types/brandedTypes.ts'
 
 test('captured audio should be shown after recording', async ({ mount }) => {
   const soundsEditorPage = await launchAndStartAudioCapture(mount)
@@ -16,11 +17,11 @@ test('captured audio should be shown after recording', async ({ mount }) => {
 test('a volume meter should indicate audio level during recording', async ({ mount }) => {
   const soundsEditorPage = await launchAndStartAudioCapture(mount)
 
-  await soundsEditorPage.simulateAudioRecordingVolume(25)
-  await soundsEditorPage.expectVolumeMeterToShowLevel(25)
+  await soundsEditorPage.simulateAudioRecordingVolume(Volume(0.25))
+  await soundsEditorPage.expectVolumeMeterToShowLevel(Volume(0.25))
 
-  await soundsEditorPage.simulateAudioRecordingVolume(50)
-  await soundsEditorPage.expectVolumeMeterToShowLevel(50)
+  await soundsEditorPage.simulateAudioRecordingVolume(Volume(0.5))
+  await soundsEditorPage.expectVolumeMeterToShowLevel(Volume(0.5))
 })
 
 test('audio capture should stop automatically after 20 seconds', async ({ mount }) => {

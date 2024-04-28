@@ -16,7 +16,7 @@ export class DefaultWindowTestHooks implements WindowTestHooks {
     private readonly soundLibrary: SoundLibrary,
   ) {}
 
-  simulateAudioRecordingVolume = (volume: number): void => {
+  simulateAudioRecordingVolume = (volume: Volume): void => {
     this.audioRecorder.volume = volume
   }
 

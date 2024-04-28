@@ -1,5 +1,5 @@
 import { Option } from '../utils/types/Option.ts'
-import { Hz, Pcm } from '../utils/types/brandedTypes.ts'
+import { Hz, Pcm, Volume } from '../utils/types/brandedTypes.ts'
 
 export enum AudioRecorderState {
   IDLE = 'IDLE',
@@ -37,5 +37,5 @@ export interface AudioRecorder {
 
   readonly state: AudioRecorderState
 
-  readonly volume: number
+  readonly volume: Volume
 }

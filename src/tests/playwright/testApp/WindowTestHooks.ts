@@ -3,7 +3,7 @@ import { Seconds, Volume } from '../../../utils/types/brandedTypes.ts'
 
 export interface WindowTestHooks {
   // Recording
-  simulateAudioRecordingVolume: (volume: number) => void
+  simulateAudioRecordingVolume: (volume: Volume) => void
   primeStartRecordingOutcome: (outcome: StartRecordingOutcome) => void
   primeNoAudioOnStopRecording: () => void
 

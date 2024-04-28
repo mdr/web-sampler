@@ -10,7 +10,7 @@ import { NavbarPageObject } from './NavbarPageObject.ts'
 import { SoundSidebarTestIds } from '../../../components/soundsEditor/sidebar/SoundSidebarTestIds.ts'
 import { EditSoundPaneTestIds } from '../../../components/soundsEditor/editSoundPane/EditSoundPaneTestIds.ts'
 import { TestAppProps } from '../TestApp.tsx'
-import { Path } from '../../../utils/types/brandedTypes.ts'
+import { Path, Volume } from '../../../utils/types/brandedTypes.ts'
 
 class SoundsEditorKeyboardShortcutsPageObject extends PageObject {
   protected readonly name = 'SoundsEditorPage.shortcuts'
@@ -134,7 +134,7 @@ export class SoundsEditorPageObject extends PageObject {
       }
     })
 
-  simulateAudioRecordingVolume = (volume: number): Promise<void> =>
+  simulateAudioRecordingVolume = (volume: Volume): Promise<void> =>
     this.step(`simulateAudioRecordingVolume ${volume}`, async () => {
       await this.page.evaluate((volume) => window.testHooks.simulateAudioRecordingVolume(volume), volume)
       await this.clockNext()
@@ -153,7 +153,7 @@ export class SoundsEditorPageObject extends PageObject {
       expect(await this.getAudioRecorderState()).toBe(state)
     })
 
-  expectVolumeMeterToShowLevel = (volume: number): Promise<void> =>
+  expectVolumeMeterToShowLevel = (volume: Volume): Promise<void> =>
     this.step(`expectVolumeMeterToShowLevel ${volume}`, async () => {
       await expect(this.get(EditSoundPaneTestIds.volumeMeter)).toHaveAttribute('data-volume', `${volume}`)
     })

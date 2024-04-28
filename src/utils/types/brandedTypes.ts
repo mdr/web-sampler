@@ -38,7 +38,7 @@ export const Path = Brand.nominal<Path>()
 export type Volume = number & Brand.Brand<'Volume'>
 export const Volume = Brand.refined<Volume>(
   (n) => 0 <= n && n <= 1,
-  (n) => Brand.error(`Expected ${n} to be between 0 and 1`),
+  (n) => Brand.error(`Expected volume value ${n} to be between 0 and 1 inclusive`),
 )
 
 export const MIN_VOLUME: Volume = Volume(0)

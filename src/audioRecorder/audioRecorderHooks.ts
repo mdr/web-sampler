@@ -2,6 +2,7 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 import { useRequestAnimationFrame } from '../utils/hooks/useRequestAnimationFrame.ts'
 import { AudioRecorder, AudioRecorderState, RecordingCompleteListener, StartRecordingOutcome } from './AudioRecorder.ts'
 import { AudioRecorderContext } from './AudioRecorderContext.ts'
+import { Volume } from '../utils/types/brandedTypes.ts'
 
 const useAudioRecorder = (): AudioRecorder => {
   const audioRecorder = useContext(AudioRecorderContext)
@@ -22,9 +23,9 @@ export const useAudioRecorderState = (): AudioRecorderState => {
   return state
 }
 
-export const useAudioRecorderVolumeRaf = (): number => {
+export const useAudioRecorderVolumeRaf = (): Volume => {
   const audioRecorder = useAudioRecorder()
-  const [volume, setVolume] = useState<number>(audioRecorder.volume)
+  const [volume, setVolume] = useState<Volume>(audioRecorder.volume)
   const handleAnimationFrame = useCallback(() => setVolume(audioRecorder.volume), [setVolume, audioRecorder])
   useRequestAnimationFrame(handleAnimationFrame)
   return volume

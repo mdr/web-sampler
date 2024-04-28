@@ -7,12 +7,12 @@ import { concatenateFloat32Arrays } from '../utils/utils.ts'
 import _ from 'lodash'
 
 import workletUrl from './CapturingAudioWorkletProcessor?worker&url'
-import { Pcm } from '../utils/types/brandedTypes.ts'
+import { Pcm, Volume } from '../utils/types/brandedTypes.ts'
 import { DEFAULT_SAMPLE_RATE } from '../types/soundConstants.ts'
 
 export class WebAudioRecorder extends AbstractAudioRecorder implements AudioRecorder {
   private mediaStream: Option<MediaStream> = undefined
-  private getVolume: Option<() => number> = undefined
+  private getVolume: Option<() => Volume> = undefined
   private audioPieces: Float32Array[] = []
   private captureAudioWorkletNode: Option<AudioWorkletNode> = undefined
   private source: Option<MediaStreamAudioSourceNode> = undefined
@@ -29,8 +29,8 @@ export class WebAudioRecorder extends AbstractAudioRecorder implements AudioReco
     this.stopRecording()
   }
 
-  get volume(): number {
-    return this.getVolume?.() ?? 0
+  get volume(): Volume {
+    return Volume(this.getVolume?.() ?? 0)
   }
 
   private handleWorkletMessage = (event: MessageEvent<Float32Array>) => {
@@ -76,9 +76,9 @@ export class WebAudioRecorder extends AbstractAudioRecorder implements AudioReco
     analyser.fftSize = 256
     source.connect(analyser)
     const dataArray = new Uint8Array(analyser.frequencyBinCount)
-    this.getVolume = (): number => {
+    this.getVolume = (): Volume => {
       analyser.getByteFrequencyData(dataArray)
-      return average(dataArray) ?? 0
+      return Volume((average(dataArray) ?? 0) / 255)
     }
 
     const captureAudioWorkletNode = new AudioWorkletNode(this.audioContext, CAPTURING_AUDIO_WORKLET_NAME)

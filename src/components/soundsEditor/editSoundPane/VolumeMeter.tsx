@@ -4,7 +4,7 @@ import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
 
 export const VolumeMeter = () => {
   const volume = useAudioRecorderVolumeRaf()
-  const volumeBarStyle = { height: `${volume}%` }
+  const volumeBarStyle = { height: `${100 * volume}%` }
   return (
     <div className="flex h-20 w-8 flex-col justify-end rounded bg-gray-200">
       <div
