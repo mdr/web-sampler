@@ -41,7 +41,7 @@ const createSampleAudio = (duration: Seconds, sampleRate: Hz): Pcm => {
   const lfoFrequency = 2
 
   for (let sampleIndex = 0; sampleIndex < numberOfSamples; sampleIndex++) {
-    const time = samplesToSeconds(Samples(sampleIndex))
+    const time = samplesToSeconds(Samples(sampleIndex), sampleRate)
     const primarySine = Math.sin(2 * Math.PI * frequency * time)
     const lfoSine = Math.sin(2 * Math.PI * lfoFrequency * time)
     const amplitude = primarySine * ((lfoSine + 1) / 2)

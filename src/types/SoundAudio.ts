@@ -23,16 +23,17 @@ export const getTotalNumberOfSamples = (audio: SoundAudio): Samples => pcmLength
 /**
  * Get the total duration in seconds of the underlying audio, ignoring the start and finish times.
  */
-export const getTotalAudioDuration = (audio: SoundAudio): Seconds => samplesToSeconds(getTotalNumberOfSamples(audio))
+export const getTotalAudioDuration = (audio: SoundAudio): Seconds =>
+  samplesToSeconds(getTotalNumberOfSamples(audio), audio.sampleRate)
 
 /**
  * Get the duration in seconds of the play region of the audio (between the start and finish times)
  */
 export const getPlayRegionDuration = (audio: SoundAudio): Seconds =>
-  samplesToSeconds(Samples(audio.finish - audio.start))
+  samplesToSeconds(Samples(audio.finish - audio.start), audio.sampleRate)
 
 export const getPlayRegionPcm = (audio: SoundAudio): Pcm => pcmSlice(audio.pcm, audio.start, audio.finish)
 
-export const getStartTime = (audio: SoundAudio): Seconds => samplesToSeconds(audio.start)
+export const getStartTime = (audio: SoundAudio): Seconds => samplesToSeconds(audio.start, audio.sampleRate)
 
-export const getFinishTime = (audio: SoundAudio): Seconds => samplesToSeconds(audio.finish)
+export const getFinishTime = (audio: SoundAudio): Seconds => samplesToSeconds(audio.finish, audio.sampleRate)

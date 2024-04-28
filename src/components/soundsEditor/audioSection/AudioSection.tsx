@@ -91,12 +91,12 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
   const seek = useCallback(
     (position: Seconds) => {
       const playRegionSamples = Samples(getPlayRegionPcm(sound.audio).length)
-      const strictFinishTime = startTime + samplesToSeconds(playRegionSamples)
+      const strictFinishTime = startTime + samplesToSeconds(playRegionSamples, sampleRate)
       const clampedPosition = Math.min(Math.max(position, startTime), strictFinishTime)
       const seekPosition = Seconds(clampedPosition - startTime)
       audioPlayerActions.seek(seekPosition)
     },
-    [audioPlayerActions, sound.audio, startTime],
+    [audioPlayerActions, sampleRate, sound.audio, startTime],
   )
 
   const seekBack = (amount: Seconds) => () => seek(Seconds(currentPosition - amount))

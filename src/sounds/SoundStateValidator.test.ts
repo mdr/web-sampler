@@ -3,7 +3,7 @@ import { validatePcmSample, validateSoundAudio, validateSoundState } from './Sou
 import { makePcm, makeSound, makeSoundAudio, SoundTestConstants } from '../types/sound.testSupport.ts'
 import { SoundState } from './SoundState.ts'
 import { makeSoundboard, SoundboardTestConstants } from '../types/soundboard.testSupport.ts'
-import { Samples } from '../utils/types/brandedTypes.ts'
+import { Hz, Samples } from '../utils/types/brandedTypes.ts'
 
 describe('validateSoundState', () => {
   it('finds no issue with a valid sound state', () => {
@@ -60,6 +60,13 @@ describe('validateSoundAudio', () => {
     const pcm = makePcm(Samples(100))
     const audio = makeSoundAudio({ pcm, start: Samples(0), finish: Samples(50) })
     expect(() => validateSoundAudio(SoundTestConstants.id, audio)).not.toThrow()
+  })
+
+  it('throws an appropriate error if the sample rate is negative', () => {
+    const audio = makeSoundAudio({ sampleRate: Hz(-1) })
+    expect(() => validateSoundAudio(SoundTestConstants.id, audio)).toThrowErrorMatchingInlineSnapshot(
+      `[SoundValidationError: Sound SoundTestConstants.id sample rate is not positive: -1]`,
+    )
   })
 })
 
