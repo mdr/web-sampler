@@ -5,6 +5,8 @@ import { Sound } from '../../../types/Sound.ts'
 import { BlobReader, BlobWriter, TextReader, ZipWriter } from '@zip.js/zip.js'
 import { SOUNDS_JSON_FILE_NAME } from './importExportConstants.ts'
 
+export const VERSION_NUMBER = 1
+
 const exportSoundAudio = (audio: SoundAudio): ExportedSoundAudio => ({
   startTime: audio.start,
   finishTime: audio.finish,
@@ -18,7 +20,7 @@ const exportSound = (sound: Sound): ExportedSound => ({
 })
 
 const exportSounds = (sounds: readonly Sound[]): ExportedSoundLibrary => ({
-  version: 1,
+  version: VERSION_NUMBER,
   sounds: sounds.map(exportSound),
 })
 

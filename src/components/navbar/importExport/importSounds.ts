@@ -5,6 +5,7 @@ import { ExportedSound, ExportedSoundAudio, ExportedSoundLibrary } from './Expor
 import { Pcm } from '../../../utils/types/brandedTypes.ts'
 import { SOUNDS_JSON_FILE_NAME } from './importExportConstants.ts'
 import { Option } from '../../../utils/types/Option.ts'
+import { VERSION_NUMBER } from './exportSounds.ts'
 
 const pcmFromBlob = async (blob: Blob): Promise<Pcm> => {
   const arrayBuffer = await blob.arrayBuffer()
@@ -72,7 +73,7 @@ const getExportedSoundsLibrary = async (entries: Entry[]): Promise<ExportedSound
   }
   const jsonString = await getData(soundsEntry, new TextWriter())
   const json = JSON.parse(jsonString)
-  if (json.version !== 1) {
+  if (json.version !== VERSION_NUMBER) {
     throw new Error(`Unexpected version: ${json.version}`)
   }
   return ExportedSoundLibrary.parse(json)
