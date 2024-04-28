@@ -37,17 +37,17 @@ export const validateSound = (sound: Sound): void => {
 
 export const validateSoundAudio = (soundId: SoundId, audio: SoundAudio): void => {
   const totalSamples = getTotalNumberOfSamples(audio)
-  if (audio.startTime < 0) {
-    throw new SoundValidationError(`Sound ${soundId} start time is negative: ${audio.startTime}`)
+  if (audio.start < 0) {
+    throw new SoundValidationError(`Sound ${soundId} start time is negative: ${audio.start}`)
   }
-  if (audio.finishTime > totalSamples) {
+  if (audio.finish > totalSamples) {
     throw new SoundValidationError(
-      `Sound ${soundId} finish time is after sound duration: ${audio.finishTime} > ${totalSamples}`,
+      `Sound ${soundId} finish time is after sound duration: ${audio.finish} > ${totalSamples}`,
     )
   }
-  if (audio.finishTime < audio.startTime) {
+  if (audio.finish < audio.start) {
     throw new SoundValidationError(
-      `Sound ${soundId} finish time is before start time: ${audio.finishTime} < ${audio.startTime}`,
+      `Sound ${soundId} finish time is before start time: ${audio.finish} < ${audio.start}`,
     )
   }
   for (const sample of audio.pcm) {

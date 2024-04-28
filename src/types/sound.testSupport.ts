@@ -37,7 +37,7 @@ export const makeSoundAudio = ({
   volume = SoundTestConstants.volume,
 } = {}): SoundAudio => ({
   pcm,
-  startTime,
-  finishTime,
+  start: startTime,
+  finish: finishTime,
   volume,
 })

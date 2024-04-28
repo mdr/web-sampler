@@ -6,8 +6,8 @@ import { BlobReader, BlobWriter, TextReader, ZipWriter } from '@zip.js/zip.js'
 import { SOUNDS_JSON_FILE_NAME } from './importExportConstants.ts'
 
 const exportSoundAudio = (audio: SoundAudio): ExportedSoundAudio => ({
-  startTime: audio.startTime,
-  finishTime: audio.finishTime,
+  startTime: audio.start,
+  finishTime: audio.finish,
   volume: audio.volume,
 })
 

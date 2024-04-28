@@ -108,7 +108,7 @@ export class SoundLibrary implements SoundActions {
       if (sound.audio === undefined) {
         throw Error(`No audio defined for sound ${sound.id}`)
       }
-      sound.audio.startTime = startTime
+      sound.audio.start = startTime
     })
 
   setFinishTime = (id: SoundId, finishTime: Samples) =>
@@ -116,10 +116,10 @@ export class SoundLibrary implements SoundActions {
       if (sound.audio === undefined) {
         throw Error(`No audio defined for sound ${sound.id}`)
       }
-      sound.audio.finishTime = finishTime
+      sound.audio.finish = finishTime
     })
 
-  setVolume = (id: SoundId, volume: Option<Volume>) =>
+  setVolume = (id: SoundId, volume: Volume) =>
     this.updateSound(id, (sound) => {
       if (sound.audio === undefined) {
         throw Error(`No audio defined for sound ${sound.id}`)
@@ -134,9 +134,9 @@ export class SoundLibrary implements SoundActions {
         throw Error(`No audio defined for sound ${sound.id}`)
       }
 
-      audio.pcm = pcmSlice(audio.pcm, audio.startTime, audio.finishTime)
-      audio.startTime = Samples(0)
-      audio.finishTime = pcmLength(audio.pcm)
+      audio.pcm = pcmSlice(audio.pcm, audio.start, audio.finish)
+      audio.start = Samples(0)
+      audio.finish = pcmLength(audio.pcm)
     })
 
   deleteSound = (id: SoundId): void => {

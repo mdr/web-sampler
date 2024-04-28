@@ -12,8 +12,8 @@ describe('zipSounds', () => {
         id: newSoundId(),
         name: 'Sound 1',
         audio: {
-          startTime: Samples(0),
-          finishTime: Samples(1),
+          start: Samples(0),
+          finish: Samples(1),
           pcm: SoundTestConstants.pcm,
           volume: Volume(0.5),
         },

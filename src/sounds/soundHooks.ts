@@ -87,7 +87,7 @@ export interface SoundActions {
 
   setFinishTime(id: SoundId, finishTime: Samples): void
 
-  setVolume(id: SoundId, volume: Option<Volume>): void
+  setVolume(id: SoundId, volume: Volume): void
 
   cropAudio(id: SoundId): void
 
