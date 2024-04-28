@@ -3,7 +3,7 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 import { SoundLibraryContext } from './SoundLibraryContext.ts'
 import { Option } from '../utils/types/Option.ts'
 import { SoundLibrary } from './SoundLibrary.ts'
-import { Pcm, Samples, Volume } from '../utils/types/brandedTypes.ts'
+import { Hz, Pcm, Samples, Volume } from '../utils/types/brandedTypes.ts'
 import { Soundboard, SoundboardId } from '../types/Soundboard.ts'
 
 const useSoundLibrary = (): SoundLibrary => {
@@ -77,7 +77,7 @@ export interface SoundActions {
 
   setName(id: SoundId, name: string): void
 
-  setAudioPcm(id: SoundId, pcm: Pcm): void
+  setAudioPcm(id: SoundId, pcm: Pcm, sampleRate: Hz): void
 
   deleteSound(id: SoundId): void
 

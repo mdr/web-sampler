@@ -28,6 +28,7 @@ import humanizeDuration from 'humanize-duration'
 import { DuplicateSoundButton } from './DuplicateSoundButton.tsx'
 import { isChromiumBasedBrowser } from '../../../utils/browserUtils.ts'
 import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
+import { DEFAULT_SAMPLE_RATE } from '../../../types/soundConstants.ts'
 
 const durationHumanizer = humanizeDuration.humanizer({
   units: ['s'],
@@ -54,7 +55,7 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPaneProps) => {
       if (audio === undefined) {
         toast.error('No audio captured')
       } else {
-        soundActions.setAudioPcm(sound.id, audio)
+        soundActions.setAudioPcm(sound.id, audio, DEFAULT_SAMPLE_RATE)
       }
       if (timerIdRef.current) {
         clearTimeout(timerIdRef.current)

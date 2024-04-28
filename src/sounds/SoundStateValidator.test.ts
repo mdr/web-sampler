@@ -36,21 +36,21 @@ describe('validateSoundState', () => {
 
 describe('validateSoundAudio', () => {
   it('throws an appropriate error if start time is negative', () => {
-    const audio = makeSoundAudio({ startTime: Samples(-1) })
+    const audio = makeSoundAudio({ start: Samples(-1) })
     expect(() => validateSoundAudio(SoundTestConstants.id, audio)).toThrowErrorMatchingInlineSnapshot(
       `[SoundValidationError: Sound SoundTestConstants.id start time is negative: -1]`,
     )
   })
 
   it('throws an appropriate error if start time is after finish time', () => {
-    const audio = makeSoundAudio({ startTime: Samples(2), finishTime: Samples(1) })
+    const audio = makeSoundAudio({ start: Samples(2), finish: Samples(1) })
     expect(() => validateSoundAudio(SoundTestConstants.id, audio)).toThrowErrorMatchingInlineSnapshot(
       `[SoundValidationError: Sound SoundTestConstants.id finish time is before start time: 1 < 2]`,
     )
   })
 
   it('throws an appropriate error if the finish time is after the end of the audio', () => {
-    const audio = makeSoundAudio({ pcm: SoundTestConstants.emptyPcm, finishTime: Samples(100) })
+    const audio = makeSoundAudio({ pcm: SoundTestConstants.emptyPcm, finish: Samples(100) })
     expect(() => validateSoundAudio(SoundTestConstants.id, audio)).toThrowErrorMatchingInlineSnapshot(
       `[SoundValidationError: Sound SoundTestConstants.id finish time is after sound duration: 100 > 0]`,
     )
@@ -58,7 +58,7 @@ describe('validateSoundAudio', () => {
 
   it('should not throw an error if the finish time is before the end of the audio', () => {
     const pcm = makePcm(Samples(100))
-    const audio = makeSoundAudio({ pcm, finishTime: Samples(50) })
+    const audio = makeSoundAudio({ pcm, start: Samples(0), finish: Samples(50) })
     expect(() => validateSoundAudio(SoundTestConstants.id, audio)).not.toThrow()
   })
 })

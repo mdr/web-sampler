@@ -4,6 +4,7 @@ import { unzipSounds } from './importSounds.ts'
 import { newSoundId, Sound } from '../../../types/Sound.ts'
 import { Samples, Volume } from '../../../utils/types/brandedTypes.ts'
 import { SoundTestConstants } from '../../../types/sound.testSupport.ts'
+import { DEFAULT_SAMPLE_RATE } from '../../../types/soundConstants.ts'
 
 describe('zipSounds', () => {
   it('preserves a collection of sounds on a round trip', async () => {
@@ -12,9 +13,10 @@ describe('zipSounds', () => {
         id: newSoundId(),
         name: 'Sound 1',
         audio: {
+          sampleRate: DEFAULT_SAMPLE_RATE,
+          pcm: SoundTestConstants.pcm,
           start: Samples(0),
           finish: Samples(1),
-          pcm: SoundTestConstants.pcm,
           volume: Volume(0.5),
         },
       },

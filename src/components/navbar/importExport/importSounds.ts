@@ -19,10 +19,11 @@ const pcmFromBlob = async (blob: Blob): Promise<Pcm> => {
 }
 
 const asSoundAudio = (exportedSoundAudio: ExportedSoundAudio, pcm: Pcm): SoundAudio => ({
+  pcm,
+  sampleRate: exportedSoundAudio.sampleRate,
   start: exportedSoundAudio.startTime,
   finish: exportedSoundAudio.finishTime,
   volume: exportedSoundAudio.volume,
-  pcm,
 })
 
 const getData = async <Type>(entry: Entry, writer: Writer<Type> | WritableWriter): Promise<Type> => {

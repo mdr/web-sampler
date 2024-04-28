@@ -1,7 +1,7 @@
 import { newSoundId, Sound, SoundId } from './Sound.ts'
 import { Pcm, Samples, Seconds, Volume } from '../utils/types/brandedTypes.ts'
 import { SoundAudio } from './SoundAudio.ts'
-import { secondsToSamples } from './soundConstants.ts'
+import { DEFAULT_SAMPLE_RATE, secondsToSamples } from './soundConstants.ts'
 
 export const makePcm = (samples: Samples): Pcm => Pcm(new Float32Array(samples))
 export const makePcmOfDuration = (seconds: Seconds): Pcm => makePcm(secondsToSamples(seconds))
@@ -32,12 +32,14 @@ export const makeSound = ({
 
 export const makeSoundAudio = ({
   pcm = SoundTestConstants.pcm,
-  startTime = SoundTestConstants.startTime,
-  finishTime = SoundTestConstants.finishTime,
+  sampleRate = DEFAULT_SAMPLE_RATE,
+  start = SoundTestConstants.startTime,
+  finish = SoundTestConstants.finishTime,
   volume = SoundTestConstants.volume,
-} = {}): SoundAudio => ({
+}: Partial<SoundAudio> = {}): SoundAudio => ({
   pcm,
-  start: startTime,
-  finish: finishTime,
+  sampleRate,
+  start,
+  finish,
   volume,
 })

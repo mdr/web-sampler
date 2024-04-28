@@ -14,7 +14,7 @@ export const Millis = Brand.nominal<Millis>()
 
 export const secondsToMillis = (seconds: Seconds): Millis => Millis(seconds * 1000)
 
-// Mono, 48000 Hz
+// Mono
 export type Pcm = Float32Array & Brand.Brand<'Pcm'>
 export const Pcm = Brand.nominal<Pcm>()
 

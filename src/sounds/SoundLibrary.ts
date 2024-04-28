@@ -3,7 +3,7 @@ import { Option } from '../utils/types/Option.ts'
 import _ from 'lodash'
 import { SoundActions } from './soundHooks.ts'
 import { unawaited } from '../utils/utils.ts'
-import { Pcm, Samples, Volume } from '../utils/types/brandedTypes.ts'
+import { Hz, Pcm, Samples, Volume } from '../utils/types/brandedTypes.ts'
 import { Draft, produce } from 'immer'
 import { pcmLength, pcmSlice } from '../utils/pcmUtils.ts'
 import { newSoundAudio, SoundAudio } from '../types/SoundAudio.ts'
@@ -98,9 +98,9 @@ export class SoundLibrary implements SoundActions {
       sound.name = name
     })
 
-  setAudioPcm = (id: SoundId, pcm: Pcm) =>
+  setAudioPcm = (id: SoundId, pcm: Pcm, sampleRate: Hz) =>
     this.updateSound(id, (sound) => {
-      sound.audio = newSoundAudio(pcm)
+      sound.audio = newSoundAudio(pcm, sampleRate)
     })
 
   setAudioStart = (id: SoundId, start: Samples) =>

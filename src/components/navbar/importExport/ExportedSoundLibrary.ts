@@ -1,9 +1,10 @@
 import { z } from 'zod'
-import { Samples, Volume } from '../../../utils/types/brandedTypes.ts'
+import { Hz, Samples, Volume } from '../../../utils/types/brandedTypes.ts'
 import { SoundId } from '../../../types/Sound.ts'
 
 export const ExportedSoundAudio = z
   .object({
+    sampleRate: z.number().transform(Hz),
     startTime: z.number().transform(Samples),
     finishTime: z.number().transform(Samples),
     volume: z.number().transform(Volume),

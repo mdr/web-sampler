@@ -130,8 +130,8 @@ describe('SoundLibrary', () => {
     const sound = makeSound({
       audio: makeSoundAudio({
         pcm,
-        startTime: Samples(10),
-        finishTime: Samples(90),
+        start: Samples(10),
+        finish: Samples(90),
       }),
     })
     const { library, soundStore, listener } = await setUpTest([sound])
@@ -144,8 +144,8 @@ describe('SoundLibrary', () => {
         ...sound,
         audio: makeSoundAudio({
           pcm: pcmSlice(pcm, Samples(10), Samples(90)),
-          startTime: Samples(0),
-          finishTime: Samples(80),
+          start: Samples(0),
+          finish: Samples(80),
         }),
       },
     ]
@@ -155,7 +155,7 @@ describe('SoundLibrary', () => {
   })
 
   it('should allow a sound start time to be updated', async () => {
-    const sound = makeSound({ audio: makeSoundAudio({ startTime: Samples(10), finishTime: Samples(20) }) })
+    const sound = makeSound({ audio: makeSoundAudio({ start: Samples(10), finish: Samples(20) }) })
     const { library, listener } = await setUpTest([sound])
 
     library.setAudioStart(sound.id, Samples(15))
@@ -165,7 +165,7 @@ describe('SoundLibrary', () => {
   })
 
   it('should allow a sound finish time to be updated', async () => {
-    const sound = makeSound({ audio: makeSoundAudio({ startTime: Samples(10), finishTime: Samples(20) }) })
+    const sound = makeSound({ audio: makeSoundAudio({ start: Samples(10), finish: Samples(20) }) })
     const { library, listener } = await setUpTest([sound])
 
     library.setAudioFinish(sound.id, Samples(15))
