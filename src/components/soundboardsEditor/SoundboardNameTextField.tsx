@@ -1,5 +1,5 @@
 import { Input, TextField } from 'react-aria-components'
-import { EditSoundboardPaneTestIds } from './EditSoundboardPaneTestIds.ts'
+import { EditSoundboardPaneTestIds } from './editSoundboardPane/EditSoundboardPaneTestIds.ts'
 import InlineEdit from '@atlaskit/inline-edit'
 
 export interface SoundboardNameTextFieldProps {

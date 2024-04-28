@@ -3,7 +3,10 @@ import { SoundboardId } from '../../../types/Soundboard.ts'
 import { SoundboardNameTextField } from '../SoundboardNameTextField.tsx'
 import { Button, ButtonVariant } from '../../shared/Button.tsx'
 import { mdiViewGridPlusOutline } from '@mdi/js'
-import { EditSoundboardPaneTestIds } from '../EditSoundboardPaneTestIds.ts'
+import { EditSoundboardPaneTestIds } from './EditSoundboardPaneTestIds.ts'
+import { DialogTrigger } from 'react-aria-components'
+import { Modal } from '../../shared/Modal.tsx'
+import { AddSoundDialog } from './AddSoundDialog.tsx'
 
 export interface EditSoundboardPaneProps {
   soundboardId: SoundboardId
@@ -26,12 +29,17 @@ export const EditSoundboardPaneContents = ({ soundboardId }: EditSoundboardPaneP
 export const AddSoundButton = () => {
   const handlePress = () => {}
   return (
-    <Button
-      variant={ButtonVariant.PRIMARY}
-      testId={EditSoundboardPaneTestIds.addSoundButton}
-      icon={mdiViewGridPlusOutline}
-      label="Add Sound"
-      onPress={handlePress}
-    />
+    <DialogTrigger>
+      <Button
+        variant={ButtonVariant.PRIMARY}
+        testId={EditSoundboardPaneTestIds.addSoundButton}
+        icon={mdiViewGridPlusOutline}
+        label="Add Sound"
+        onPress={handlePress}
+      />
+      <Modal>
+        <AddSoundDialog />
+      </Modal>
+    </DialogTrigger>
   )
 }
