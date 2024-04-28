@@ -16,7 +16,7 @@ export const newSoundAudio = (pcm: Pcm): SoundAudio => ({
   volume: MAX_VOLUME,
 })
 
-export const getTotalNumberOfSamples = (audio: SoundAudio): Samples => Samples(audio.pcm.length)
+export const getTotalNumberOfSamples = (audio: SoundAudio): Samples => pcmLength(audio.pcm)
 
 /**
  * Get the total duration in seconds of the underlying audio, ignoring the start and finish times.

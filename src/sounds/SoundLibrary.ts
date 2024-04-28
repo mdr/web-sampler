@@ -6,7 +6,7 @@ import { unawaited } from '../utils/utils.ts'
 import { Pcm, Samples, Volume } from '../utils/types/brandedTypes.ts'
 import { Draft, produce } from 'immer'
 import { pcmLength, pcmSlice } from '../utils/pcmUtils.ts'
-import { newSoundAudio } from '../types/SoundAudio.ts'
+import { newSoundAudio, SoundAudio } from '../types/SoundAudio.ts'
 import { SoundStore } from './SoundStore.ts'
 import { SoundSyncer } from './SoundSyncer.ts'
 import { UndoRedoManager } from './UndoRedoManager.ts'
@@ -104,39 +104,26 @@ export class SoundLibrary implements SoundActions {
     })
 
   setStartTime = (id: SoundId, startTime: Samples) =>
-    this.updateSound(id, (sound) => {
-      if (sound.audio === undefined) {
-        throw Error(`No audio defined for sound ${sound.id}`)
-      }
-      sound.audio.start = startTime
+    this.updateSoundAudio(id, (audio) => {
+      audio.start = startTime
     })
 
   setFinishTime = (id: SoundId, finishTime: Samples) =>
-    this.updateSound(id, (sound) => {
-      if (sound.audio === undefined) {
-        throw Error(`No audio defined for sound ${sound.id}`)
-      }
-      sound.audio.finish = finishTime
+    this.updateSoundAudio(id, (audio) => {
+      audio.finish = finishTime
     })
 
   setVolume = (id: SoundId, volume: Volume) =>
-    this.updateSound(id, (sound) => {
-      if (sound.audio === undefined) {
-        throw Error(`No audio defined for sound ${sound.id}`)
-      }
-      sound.audio.volume = volume
+    this.updateSoundAudio(id, (audio) => {
+      audio.volume = volume
     })
 
   cropAudio = (id: SoundId) =>
-    this.updateSound(id, (sound) => {
-      const audio = sound.audio
-      if (audio === undefined) {
-        throw Error(`No audio defined for sound ${sound.id}`)
-      }
-
-      audio.pcm = pcmSlice(audio.pcm, audio.start, audio.finish)
+    this.updateSoundAudio(id, (audio) => {
+      const croppedPcm = pcmSlice(audio.pcm, audio.start, audio.finish)
+      audio.pcm = croppedPcm
       audio.start = Samples(0)
-      audio.finish = pcmLength(audio.pcm)
+      audio.finish = pcmLength(croppedPcm)
     })
 
   deleteSound = (id: SoundId): void => {
@@ -224,6 +211,15 @@ export class SoundLibrary implements SoundActions {
 
   private updateSound = (id: SoundId, update: (sound: Draft<Sound>) => void): void =>
     this.updateSoundPure(id, (sound) => produce(sound, update))
+
+  private updateSoundAudio = (id: SoundId, update: (audio: Draft<SoundAudio>) => void): void => {
+    this.updateSound(id, (sound) => {
+      if (sound.audio === undefined) {
+        throw Error(`No audio defined for sound ${sound.id}`)
+      }
+      update(sound.audio)
+    })
+  }
 
   private updateSoundPure = (id: SoundId, update: (sound: Sound) => Sound): void => {
     const currentSound = this.getSound(id)

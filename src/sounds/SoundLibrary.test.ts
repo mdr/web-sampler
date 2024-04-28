@@ -154,6 +154,26 @@ describe('SoundLibrary', () => {
     expect(soundStore.sounds).toEqual(expectedUpdatedSounds)
   })
 
+  it('should allow a sound start time to be updated', async () => {
+    const sound = makeSound({ audio: makeSoundAudio({ startTime: Samples(10), finishTime: Samples(20) }) })
+    const { library, listener } = await setUpTest([sound])
+
+    library.setStartTime(sound.id, Samples(15))
+
+    expect(listener).toHaveBeenCalledTimes(1)
+    expect(library.getSound(sound.id).audio?.start).toEqual(Samples(15))
+  })
+
+  it('should allow a sound finish time to be updated', async () => {
+    const sound = makeSound({ audio: makeSoundAudio({ startTime: Samples(10), finishTime: Samples(20) }) })
+    const { library, listener } = await setUpTest([sound])
+
+    library.setFinishTime(sound.id, Samples(15))
+
+    expect(listener).toHaveBeenCalledTimes(1)
+    expect(library.getSound(sound.id).audio?.finish).toEqual(Samples(15))
+  })
+
   it('should allow a soundboard to be created', async () => {
     const { library, soundStore, listener } = await setUpTest()
 
