@@ -6,23 +6,37 @@ import { useFilePicker } from 'use-file-picker'
 import { SelectedFiles } from 'use-file-picker/types'
 import { useSoundActions } from '../../../sounds/soundHooks.ts'
 import { useAudioOperations } from '../../../audioOperations/audioOperationsHooks.ts'
+import { toast } from 'react-toastify'
+import { CompletedRecording } from '../../../audioRecorder/AudioRecorder.ts'
+import { Option } from '../../../utils/types/Option.ts'
 
 export interface ImportAudioButtonProps {
   soundId: SoundId
 }
+
+export const SUPPORTED_AUDIO_EXTENSIONS = ['.wav', '.mp3', '.ogg', '.aac', '.flac', '.m4a', '.weba']
 
 export const ImportAudioButton = ({ soundId }: ImportAudioButtonProps) => {
   const soundActions = useSoundActions()
   const audioOperations = useAudioOperations()
   const handleFilesSuccessfullySelected = async ({ filesContent }: SelectedFiles<ArrayBuffer>): Promise<void> => {
     const arrayBuffer = filesContent[0].content
-    const { pcm, sampleRate } = await audioOperations.importAudio(arrayBuffer)
-    soundActions.setAudioPcm(soundId, pcm, sampleRate)
+    let audioData: Option<CompletedRecording>
+    try {
+      audioData = await audioOperations.importAudio(arrayBuffer)
+    } catch (e) {
+      console.error('Error importing audio', e)
+      toast.error('Error importing audio.')
+    }
+    if (audioData !== undefined) {
+      const { pcm, sampleRate } = audioData
+      soundActions.setAudioPcm(soundId, pcm, sampleRate)
+    }
   }
 
   const { openFilePicker } = useFilePicker({
     readAs: 'ArrayBuffer',
-    accept: ['.wav', '.mp3', '.ogg', '.aac', '.flac', '.m4a', '.weba'],
+    accept: SUPPORTED_AUDIO_EXTENSIONS,
     onFilesSuccessfullySelected: handleFilesSuccessfullySelected,
   })
 

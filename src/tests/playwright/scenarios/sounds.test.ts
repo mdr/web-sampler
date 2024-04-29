@@ -16,6 +16,8 @@ export const EXPECTED_DOWNLOAD_PATH = Path(`${DATA_DIRECTORY}/expected-download.
 // https://commons.wikimedia.org/wiki/File:Emma_Freud_voice.ogg
 export const TEST_AUDIO_FILE = Path(`${DATA_DIRECTORY}/test-audio-file.ogg`)
 
+export const INVALID_AUDIO_FILE = Path(`${DATA_DIRECTORY}/invalid-audio-file.ogg`)
+
 test('sounds can be created and named', async ({ mount }) => {
   const soundsEditorPage = await launchApp(mount)
 
@@ -191,6 +193,14 @@ test('can upload audio from an audio file', async ({ mount }) => {
   const [sound] = await soundsEditorPage.getSounds()
   assertSoundHasAudio(sound)
   expect(getTotalAudioDuration(sound.audio)).toBeCloseTo(Seconds(7), 0)
+})
+
+test('handling of invalid audio file', async ({ mount }) => {
+  const soundsEditorPage = await launchAndCreateNewSound(mount)
+
+  await soundsEditorPage.pressImportAudioButton(INVALID_AUDIO_FILE)
+
+  await soundsEditorPage.expectToastToBeShown('Error importing audio.')
 })
 
 test.skip('can export and import sounds', async ({ mount }) => {
