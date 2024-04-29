@@ -3,7 +3,7 @@ import { Option } from '../utils/types/Option.ts'
 import _ from 'lodash'
 import { SoundActions } from './soundHooks.ts'
 import { unawaited } from '../utils/utils.ts'
-import { Hz, Pcm, Samples, Volume } from '../utils/types/brandedTypes.ts'
+import { Samples, Volume } from '../utils/types/brandedTypes.ts'
 import { Draft, produce } from 'immer'
 import { pcmLength, pcmSlice } from '../utils/pcmUtils.ts'
 import { newSoundAudio, SoundAudio } from '../types/SoundAudio.ts'
@@ -13,6 +13,7 @@ import { UndoRedoManager } from './UndoRedoManager.ts'
 import { validateSound, validateSoundState } from './SoundStateValidator.ts'
 import { EMPTY_SOUND_STATE, SoundState } from './SoundState.ts'
 import { newSoundboard, Soundboard, SoundboardId } from '../types/Soundboard.ts'
+import { AudioData } from '../types/AudioData.ts'
 
 export type SoundLibraryUpdatedListener = () => void
 
@@ -98,9 +99,9 @@ export class SoundLibrary implements SoundActions {
       sound.name = name
     })
 
-  setAudioPcm = (id: SoundId, pcm: Pcm, sampleRate: Hz) =>
+  setAudioPcm = (id: SoundId, audioData: AudioData) =>
     this.updateSound(id, (sound) => {
-      sound.audio = newSoundAudio(pcm, sampleRate)
+      sound.audio = newSoundAudio(audioData)
     })
 
   setAudioStart = (id: SoundId, start: Samples) =>

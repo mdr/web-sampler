@@ -1,6 +1,7 @@
 import { Hz, MAX_VOLUME, Pcm, Samples, Seconds, Volume } from '../utils/types/brandedTypes.ts'
 import { pcmLength, pcmSlice } from '../utils/pcmUtils.ts'
 import { samplesToSeconds } from './soundConstants.ts'
+import { AudioData } from './AudioData.ts'
 
 export interface SoundAudio {
   readonly pcm: Pcm
@@ -10,7 +11,7 @@ export interface SoundAudio {
   readonly volume: Volume
 }
 
-export const newSoundAudio = (pcm: Pcm, sampleRate: Hz): SoundAudio => ({
+export const newSoundAudio = ({ pcm, sampleRate }: AudioData): SoundAudio => ({
   pcm,
   sampleRate,
   start: Samples(0),

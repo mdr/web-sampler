@@ -1,11 +1,7 @@
-import {
-  AudioRecorderState,
-  AudioRecorderStateChangeListener,
-  CompletedRecording,
-  RecordingCompleteListener,
-} from './AudioRecorder.ts'
+import { AudioRecorderState, AudioRecorderStateChangeListener, RecordingCompleteListener } from './AudioRecorder.ts'
 import _ from 'lodash'
 import { Option } from '../utils/types/Option.ts'
+import { AudioData } from '../types/AudioData.ts'
 
 export class AbstractAudioRecorder {
   private readonly stateChangeListeners: AudioRecorderStateChangeListener[] = []
@@ -32,8 +28,8 @@ export class AbstractAudioRecorder {
     _.remove(this.recordingCompleteListeners, (l) => l === listener)
   }
 
-  protected fireRecordingCompleteListeners = (completedRecording: Option<CompletedRecording>): void => {
-    this.recordingCompleteListeners.forEach((listener) => listener(completedRecording))
+  protected fireRecordingCompleteListeners = (audioData: Option<AudioData>): void => {
+    this.recordingCompleteListeners.forEach((listener) => listener(audioData))
   }
 
   protected setState = (state: AudioRecorderState) => {

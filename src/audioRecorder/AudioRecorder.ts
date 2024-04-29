@@ -1,5 +1,6 @@
 import { Option } from '../utils/types/Option.ts'
-import { Hz, Pcm, Volume } from '../utils/types/brandedTypes.ts'
+import { Volume } from '../utils/types/brandedTypes.ts'
+import { AudioData } from '../types/AudioData.ts'
 
 export enum AudioRecorderState {
   IDLE = 'IDLE',
@@ -14,13 +15,8 @@ export enum StartRecordingOutcome {
 
 export type AudioRecorderStateChangeListener = (state: AudioRecorderState) => void
 
-export interface CompletedRecording {
-  pcm: Pcm
-  sampleRate: Hz
-}
-
 // audio is undefined if the recording was empty
-export type RecordingCompleteListener = (completedRecording: Option<CompletedRecording>) => void
+export type RecordingCompleteListener = (audioData: Option<AudioData>) => void
 
 export interface AudioRecorder {
   addStateChangeListener(listener: AudioRecorderStateChangeListener): void

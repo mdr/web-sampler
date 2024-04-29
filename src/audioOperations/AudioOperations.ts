@@ -1,11 +1,12 @@
 import { AudioContextProvider } from '../audioRecorder/AudioContextProvider.ts'
 import { Hz, Pcm } from '../utils/types/brandedTypes.ts'
-import { CompletedRecording } from '../audioRecorder/AudioRecorder.ts'
+
+import { AudioData } from '../types/AudioData.ts'
 
 export class AudioOperations {
   constructor(private readonly audioContextProvider: AudioContextProvider) {}
 
-  importAudio = async (buffer: ArrayBuffer): Promise<CompletedRecording> => {
+  importAudio = async (buffer: ArrayBuffer): Promise<AudioData> => {
     const audioContext = this.audioContextProvider.audioContext
     const audioBuffer = await audioContext.decodeAudioData(buffer)
     const pcm = Pcm(audioBuffer.getChannelData(0))

@@ -95,9 +95,8 @@ export class WebAudioRecorder extends AbstractAudioRecorder implements AudioReco
     this.setState(AudioRecorderState.IDLE)
     const combinedAudio = Pcm(concatenateFloat32Arrays(this.audioPieces))
     this.audioPieces = []
-    const completedRecording =
-      combinedAudio.length > 0 ? { pcm: combinedAudio, sampleRate: DEFAULT_SAMPLE_RATE } : undefined
-    this.fireRecordingCompleteListeners(completedRecording)
+    const audioData = combinedAudio.length > 0 ? { pcm: combinedAudio, sampleRate: DEFAULT_SAMPLE_RATE } : undefined
+    this.fireRecordingCompleteListeners(audioData)
 
     this.source?.disconnect()
     this.source = undefined

@@ -1,13 +1,9 @@
-import {
-  AudioRecorder,
-  AudioRecorderState,
-  CompletedRecording,
-  StartRecordingOutcome,
-} from '../../../audioRecorder/AudioRecorder.ts'
+import { AudioRecorder, AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
 import { AbstractAudioRecorder } from '../../../audioRecorder/AbstractAudioRecorder.ts'
 import { SOUND_DURATION } from '../testConstants.ts'
 import { Hz, MIN_VOLUME, Pcm, Samples, Seconds, Volume } from '../../../utils/types/brandedTypes.ts'
 import { DEFAULT_SAMPLE_RATE, samplesToSeconds, secondsToSamples } from '../../../types/soundConstants.ts'
+import { AudioData } from '../../../types/AudioData.ts'
 
 export class MockAudioRecorder extends AbstractAudioRecorder implements AudioRecorder {
   volume: Volume = MIN_VOLUME
@@ -26,11 +22,11 @@ export class MockAudioRecorder extends AbstractAudioRecorder implements AudioRec
       return
     }
     this.setState(AudioRecorderState.IDLE)
-    const completedRecording: CompletedRecording = {
+    const audioData: AudioData = {
       pcm: createSampleAudio(SOUND_DURATION, DEFAULT_SAMPLE_RATE),
       sampleRate: DEFAULT_SAMPLE_RATE,
     }
-    this.fireRecordingCompleteListeners(this.noAudioOnStopRecording ? undefined : completedRecording)
+    this.fireRecordingCompleteListeners(this.noAudioOnStopRecording ? undefined : audioData)
   }
 }
 

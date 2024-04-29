@@ -7,8 +7,8 @@ import { SelectedFiles } from 'use-file-picker/types'
 import { useSoundActions } from '../../../sounds/soundHooks.ts'
 import { useAudioOperations } from '../../../audioOperations/audioOperationsHooks.ts'
 import { toast } from 'react-toastify'
-import { CompletedRecording } from '../../../audioRecorder/AudioRecorder.ts'
 import { Option } from '../../../utils/types/Option.ts'
+import { AudioData } from '../../../types/AudioData.ts'
 
 export interface ImportAudioButtonProps {
   soundId: SoundId
@@ -21,7 +21,7 @@ export const ImportAudioButton = ({ soundId }: ImportAudioButtonProps) => {
   const audioOperations = useAudioOperations()
   const handleFilesSuccessfullySelected = async ({ filesContent }: SelectedFiles<ArrayBuffer>): Promise<void> => {
     const arrayBuffer = filesContent[0].content
-    let audioData: Option<CompletedRecording>
+    let audioData: Option<AudioData>
     try {
       audioData = await audioOperations.importAudio(arrayBuffer)
     } catch (e) {
@@ -29,8 +29,7 @@ export const ImportAudioButton = ({ soundId }: ImportAudioButtonProps) => {
       toast.error('Error importing audio.')
     }
     if (audioData !== undefined) {
-      const { pcm, sampleRate } = audioData
-      soundActions.setAudioPcm(soundId, pcm, sampleRate)
+      soundActions.setAudioPcm(soundId, audioData)
     }
   }
 

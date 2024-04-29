@@ -2,7 +2,7 @@ import { useCallback, useRef } from 'react'
 import { CaptureAudioButton } from './CaptureAudioButton.tsx'
 import { VolumeMeter } from './VolumeMeter.tsx'
 import { StopButton } from './StopButton.tsx'
-import { AudioRecorderState, CompletedRecording, StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
+import { AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
 import { Option } from '../../../utils/types/Option.ts'
 import useUnmount from 'beautiful-react-hooks/useUnmount'
 import { TimerId } from '../../../utils/types/TimerId.ts'
@@ -29,6 +29,7 @@ import { DuplicateSoundButton } from './DuplicateSoundButton.tsx'
 import { isChromiumBasedBrowser } from '../../../utils/browserUtils.ts'
 import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
 import { ImportAudioButton } from './ImportAudioButton.tsx'
+import { AudioData } from '../../../types/AudioData.ts'
 
 const durationHumanizer = humanizeDuration.humanizer({
   units: ['s'],
@@ -51,12 +52,11 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPaneProps) => {
   const navigate = useNavigate()
 
   const handleRecordingComplete = useCallback(
-    (completedRecording: Option<CompletedRecording>) => {
-      if (completedRecording === undefined) {
+    (audioData: Option<AudioData>) => {
+      if (audioData === undefined) {
         toast.error('No audio captured')
       } else {
-        const { pcm, sampleRate } = completedRecording
-        soundActions.setAudioPcm(sound.id, pcm, sampleRate)
+        soundActions.setAudioPcm(sound.id, audioData)
       }
       if (timerIdRef.current) {
         clearTimeout(timerIdRef.current)
