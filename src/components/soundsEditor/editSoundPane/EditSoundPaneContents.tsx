@@ -79,7 +79,10 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPaneProps) => {
       const outcome = await audioRecorderActions.startRecording()
       switch (outcome) {
         case StartRecordingOutcome.SUCCESS:
-          timerIdRef.current = setTimeout(() => audioRecorderActions.stopRecording(), MAX_RECORDING_DURATION.toMillis())
+          timerIdRef.current = setTimeout(
+            () => audioRecorderActions.stopRecording(),
+            secondsToMillis(MAX_RECORDING_DURATION),
+          )
           break
         case StartRecordingOutcome.CANCELLED_BY_USER:
           break
@@ -91,7 +94,6 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPaneProps) => {
               autoClose: 10000,
             })
           }
-
           break
       }
     })

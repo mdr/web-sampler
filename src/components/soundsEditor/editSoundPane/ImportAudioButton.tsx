@@ -9,6 +9,8 @@ import { useAudioOperations } from '../../../audioOperations/audioOperationsHook
 import { toast } from 'react-toastify'
 import { Option } from '../../../utils/types/Option.ts'
 import { AudioData } from '../../../types/AudioData.ts'
+import { Pcm, Seconds } from '../../../utils/types/brandedTypes.ts'
+import { MAX_RECORDING_DURATION } from '../recordingConstants.ts'
 
 export interface ImportAudioButtonProps {
   soundId: SoundId
@@ -29,7 +31,7 @@ export const ImportAudioButton = ({ soundId }: ImportAudioButtonProps) => {
       toast.error('Error importing audio.')
     }
     if (audioData !== undefined) {
-      soundActions.setAudioPcm(soundId, audioData)
+      soundActions.setAudioPcm(soundId, truncateAudioData(audioData, MAX_RECORDING_DURATION))
     }
   }
 
@@ -47,4 +49,11 @@ export const ImportAudioButton = ({ soundId }: ImportAudioButtonProps) => {
       onPress={openFilePicker}
     />
   )
+}
+
+const truncateAudioData = (audioData: AudioData, duration: Seconds): AudioData => {
+  const { pcm, sampleRate } = audioData
+  const sampleCount = Math.floor(duration * sampleRate)
+  const truncatedPcm = Pcm(pcm.slice(0, sampleCount))
+  return { pcm: truncatedPcm, sampleRate }
 }

@@ -1,6 +1,5 @@
 import { expect, MountResult, test } from '@playwright/experimental-ct-react'
-import { Duration } from 'luxon'
-import { Path, Seconds, TestId, Volume } from '../../../utils/types/brandedTypes.ts'
+import { Path, Seconds, secondsToMillis, TestId, Volume } from '../../../utils/types/brandedTypes.ts'
 import { platform } from 'node:os'
 import { Option } from '../../../utils/types/Option.ts'
 import { Sound } from '../../../types/Sound.ts'
@@ -69,9 +68,9 @@ export abstract class PageObject {
       return deserialiseSounds(jsonString)
     })
 
-  wait = (duration: Duration): Promise<void> =>
-    this.step(`wait ${duration.toHuman()}`, () =>
-      this.page.evaluate((millis) => window.testHooks.clockTick(millis), duration.toMillis()),
+  wait = (duration: Seconds): Promise<void> =>
+    this.step(`wait ${duration}s`, () =>
+      this.page.evaluate((millis) => window.testHooks.clockTick(millis), secondsToMillis(duration)),
     )
 
   protected clockNext = (): Promise<void> => this.page.evaluate(() => window.testHooks.clockNext())
