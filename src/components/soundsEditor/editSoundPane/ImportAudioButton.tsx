@@ -7,11 +7,11 @@ import { SelectedFiles } from 'use-file-picker/types'
 import { useSoundActions } from '../../../sounds/soundHooks.ts'
 import { useAudioOperations } from '../../../audioOperations/audioOperationsHooks.ts'
 
-export interface ImportWavButtonProps {
+export interface ImportAudioButtonProps {
   soundId: SoundId
 }
 
-export const ImportWavButton = ({ soundId }: ImportWavButtonProps) => {
+export const ImportAudioButton = ({ soundId }: ImportAudioButtonProps) => {
   const soundActions = useSoundActions()
   const audioOperations = useAudioOperations()
   const handleFilesSuccessfullySelected = async ({ filesContent }: SelectedFiles<ArrayBuffer>): Promise<void> => {
@@ -22,18 +22,16 @@ export const ImportWavButton = ({ soundId }: ImportWavButtonProps) => {
 
   const { openFilePicker } = useFilePicker({
     readAs: 'ArrayBuffer',
-    accept: '.wav',
+    accept: ['.wav', '.mp3', '.ogg', '.aac', '.flac', '.m4a', '.weba'],
     onFilesSuccessfullySelected: handleFilesSuccessfullySelected,
   })
 
-  const handlePress = () => openFilePicker()
-
   return (
     <Button
-      testId={EditSoundPaneTestIds.importWavButton}
+      testId={EditSoundPaneTestIds.importAudioButton}
       icon={mdiFileImport}
-      label="Import WAV"
-      onPress={handlePress}
+      label="Import Audio"
+      onPress={openFilePicker}
     />
   )
 }

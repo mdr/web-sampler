@@ -1,11 +1,20 @@
 import { expect, test } from '@playwright/experimental-ct-react'
 import { launchApp } from '../pageObjects/launchApp.tsx'
-import { launchAndRecordNewSound, launchAndStartAudioCapture } from '../pageObjects/SoundsEditorPageObject.ts'
+import {
+  launchAndCreateNewSound,
+  launchAndRecordNewSound,
+  launchAndStartAudioCapture,
+} from '../pageObjects/SoundsEditorPageObject.ts'
 import { getFinishTime, getStartTime, getTotalAudioDuration } from '../../../types/SoundAudio.ts'
 import { assertSoundHasAudio, filesAreEqual } from '../testUtils.ts'
 import { Path, Seconds } from '../../../utils/types/brandedTypes.ts'
 
-export const EXPECTED_DOWNLOAD_PATH = Path('src/tests/playwright/data/expected-download.wav')
+export const DATA_DIRECTORY = Path('src/tests/playwright/data')
+export const EXPECTED_DOWNLOAD_PATH = Path(`${DATA_DIRECTORY}/expected-download.wav`)
+
+// Emma Freud, CC BY-SA 3.0 <https://creativecommons.org/licenses/by-sa/3.0>, via Wikimedia Commons
+// https://commons.wikimedia.org/wiki/File:Emma_Freud_voice.ogg
+export const TEST_AUDIO_FILE = Path(`${DATA_DIRECTORY}/test-audio-file.ogg`)
 
 test('sounds can be created and named', async ({ mount }) => {
   const soundsEditorPage = await launchApp(mount)
@@ -162,7 +171,7 @@ test('cropping a sound should modify the audio', async ({ mount }) => {
   expect(getFinishTime(croppedSound.audio)).toBe(Seconds(0.5))
 })
 
-test('can download a sound as a Wav file', async ({ mount }) => {
+test('can download a sound as a WAV file', async ({ mount }) => {
   const soundsEditorPage = await launchAndRecordNewSound(mount)
 
   const downloadedWavPath = await soundsEditorPage.pressDownloadWav()
@@ -171,6 +180,17 @@ test('can download a sound as a Wav file', async ({ mount }) => {
     await filesAreEqual(downloadedWavPath, EXPECTED_DOWNLOAD_PATH),
     'downloaded Wav file should have the correct contents',
   ).toBe(true)
+})
+
+test('can upload audio from an audio file', async ({ mount }) => {
+  const soundsEditorPage = await launchAndCreateNewSound(mount)
+
+  await soundsEditorPage.pressImportAudioButton(TEST_AUDIO_FILE)
+
+  await soundsEditorPage.expectAudioWaveformToBeShown()
+  const [sound] = await soundsEditorPage.getSounds()
+  assertSoundHasAudio(sound)
+  expect(getTotalAudioDuration(sound.audio)).toBeCloseTo(Seconds(7), 0)
 })
 
 test.skip('can export and import sounds', async ({ mount }) => {

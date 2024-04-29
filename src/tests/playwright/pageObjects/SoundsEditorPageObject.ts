@@ -105,6 +105,14 @@ export class SoundsEditorPageObject extends PageObject {
   pressCropAudio = (): Promise<void> =>
     this.step('pressCropAudio', () => this.press(EditSoundPaneTestIds.cropAudioButton))
 
+  pressImportAudioButton = (path: Path): Promise<void> =>
+    this.step('pressImportAudioButton', async () => {
+      const fileChooserPromise = this.page.waitForEvent('filechooser')
+      await this.press(EditSoundPaneTestIds.importAudioButton)
+      const fileChooser = await fileChooserPromise
+      await fileChooser.setFiles(path)
+    })
+
   pressDownloadWav = (): Promise<Path> =>
     this.step('pressDownloadWav', () => this.triggerDownload(() => this.press(EditSoundPaneTestIds.downloadWavButton)))
 
@@ -182,12 +190,20 @@ export class SoundsEditorPageObject extends PageObject {
     this.step('expectPlayButtonToBeShown', () => this.expectToBeVisible(EditSoundPaneTestIds.playButton))
 }
 
-export const launchAndStartAudioCapture = async (
+export const launchAndCreateNewSound = async (
   mount: MountFunction,
   props: TestAppProps = {},
 ): Promise<SoundsEditorPageObject> => {
   const soundsEditorPage = await launchApp(mount, props)
   await soundsEditorPage.sidebar.pressNewSound()
+  return soundsEditorPage
+}
+
+export const launchAndStartAudioCapture = async (
+  mount: MountFunction,
+  props: TestAppProps = {},
+): Promise<SoundsEditorPageObject> => {
+  const soundsEditorPage = await launchAndCreateNewSound(mount, props)
   await soundsEditorPage.pressCaptureAudio()
   return soundsEditorPage
 }
