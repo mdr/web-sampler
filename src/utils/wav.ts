@@ -3,8 +3,9 @@
 import { Hz } from './types/brandedTypes.ts'
 import { DEFAULT_SAMPLE_RATE } from '../types/soundConstants.ts'
 import { AUDIO_WAV } from './mediaTypes.ts'
+import { AudioData } from '../types/AudioData.ts'
 
-export const pcmToWavBlob = (pcm: Float32Array, sampleRate: Hz): Blob =>
+export const pcmToWavBlob = ({ pcm, sampleRate }: AudioData): Blob =>
   new Blob([pcmToWav(pcm, sampleRate)], { type: AUDIO_WAV })
 
 const pcmToWav = (pcm: Float32Array, sampleRate: Hz): ArrayBuffer => encodeWav(pcm, { sampleRate })

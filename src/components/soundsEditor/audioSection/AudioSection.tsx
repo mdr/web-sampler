@@ -59,7 +59,8 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
       audioPlayerActions.setUrl(undefined)
       return
     }
-    const blob = pcmToWavBlob(playablePcm, sampleRate)
+    const audioData = { pcm: playablePcm, sampleRate }
+    const blob = pcmToWavBlob(audioData)
     const objectUrl = Url(URL.createObjectURL(blob))
     audioPlayerActions.setUrl(objectUrl)
     if (stashedTime !== undefined) {

@@ -9,6 +9,7 @@ import { useHotkeys } from 'react-hotkeys-hook'
 import { getPlayRegionPcm } from '../../types/SoundAudio.ts'
 import clsx from 'clsx'
 import { pcmToWavBlob } from '../../utils/wav.ts'
+import { Url } from '../../utils/types/brandedTypes.ts'
 
 export interface SoundButtonProps {
   sound: SoundWithDefiniteAudio
@@ -17,14 +18,15 @@ export interface SoundButtonProps {
 
 export const SoundButton = ({ sound, hotkey }: SoundButtonProps) => {
   const { audio } = sound
-  const [url, setUrl] = useState<Option<string>>(undefined)
+  const [url, setUrl] = useState<Option<Url>>(undefined)
   const [isPlaying, setIsPlaying] = useState(false)
 
   const audioRef = useRef<HTMLAudioElement>(null)
 
   useEffect(() => {
-    const blob = pcmToWavBlob(getPlayRegionPcm(audio), audio.sampleRate)
-    const objectUrl = URL.createObjectURL(blob)
+    const audioData = { pcm: getPlayRegionPcm(audio), sampleRate: audio.sampleRate }
+    const blob = pcmToWavBlob(audioData)
+    const objectUrl = Url(URL.createObjectURL(blob))
     setUrl(objectUrl)
     return () => {
       URL.revokeObjectURL(objectUrl)
