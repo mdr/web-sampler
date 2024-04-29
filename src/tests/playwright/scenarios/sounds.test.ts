@@ -7,21 +7,14 @@ import {
 } from '../pageObjects/SoundsEditorPageObject.ts'
 import { getFinishTime, getStartTime, getTotalAudioDuration } from '../../../types/SoundAudio.ts'
 import { assertSoundHasAudio, filesAreEqual } from '../testUtils.ts'
-import { Path, Seconds } from '../../../utils/types/brandedTypes.ts'
+import { Seconds } from '../../../utils/types/brandedTypes.ts'
 import { MAX_RECORDING_DURATION } from '../../../components/soundsEditor/recordingConstants.ts'
-
-export const DATA_DIRECTORY = Path('src/tests/playwright/data')
-export const EXPECTED_DOWNLOAD_PATH = Path(`${DATA_DIRECTORY}/expected-download.wav`)
-
-// Emma Freud, CC BY-SA 3.0 <https://creativecommons.org/licenses/by-sa/3.0>, via Wikimedia Commons
-// https://commons.wikimedia.org/wiki/File:Emma_Freud_voice.ogg
-export const TEST_AUDIO_FILE = Path(`${DATA_DIRECTORY}/test-audio-file.ogg`)
-
-// BBC, CC BY 3.0 <https://creativecommons.org/licenses/by/3.0>, via Wikimedia Commons
-// https://commons.wikimedia.org/wiki/File:Angela_Gallop_-_Life_Scientific_-_27_March_2012.flac
-export const LONG_AUDIO_FILE = Path(`${DATA_DIRECTORY}/long-audio-file.flac`)
-
-export const INVALID_AUDIO_FILE = Path(`${DATA_DIRECTORY}/invalid-audio-file.ogg`)
+import {
+  EXPECTED_DOWNLOAD_PATH,
+  INVALID_AUDIO_FILE,
+  LONG_AUDIO_FILE,
+  TEST_AUDIO_FILE,
+} from '../data/testFiles.testSupport.ts'
 
 test('sounds can be created and named', async ({ mount }) => {
   const soundsEditorPage = await launchApp(mount)
@@ -103,8 +96,7 @@ test('undo/redo should handle sound creation and name editing', async ({ mount }
 })
 
 test('undo/redo should handle sound deletion', async ({ mount }) => {
-  const soundsEditorPage = await launchApp(mount)
-  await soundsEditorPage.sidebar.pressNewSound()
+  const soundsEditorPage = await launchAndCreateNewSound(mount)
   await soundsEditorPage.enterSoundName('A')
   await soundsEditorPage.pressDelete()
   await soundsEditorPage.sidebar.expectSoundNamesToBe([])
@@ -117,8 +109,7 @@ test('undo/redo should handle sound deletion', async ({ mount }) => {
 })
 
 test('keyboard shortcuts should work for undo/redo', async ({ mount }) => {
-  const soundsEditorPage = await launchApp(mount)
-  await soundsEditorPage.sidebar.pressNewSound()
+  const soundsEditorPage = await launchAndCreateNewSound(mount)
   await soundsEditorPage.enterSoundName('A')
 
   await soundsEditorPage.shortcuts.undo()

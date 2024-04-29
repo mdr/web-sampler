@@ -112,7 +112,10 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPaneProps) => {
         <DuplicateSoundButton soundId={soundId} />
       </div>
       <h2 className="text-xl" data-testid={EditSoundPaneTestIds.audioHeading}>
-        Audio{audio !== undefined && <> ({getPlayRegionDurationFriendly(audio)})</>}
+        Audio
+        {audio !== undefined && audioRecorderState === AudioRecorderState.IDLE && (
+          <> ({getPlayRegionDurationFriendly(audio)})</>
+        )}
       </h2>
       {audioRecorderState === AudioRecorderState.IDLE && (
         <>
