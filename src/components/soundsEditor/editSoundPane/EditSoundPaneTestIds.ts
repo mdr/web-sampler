@@ -3,6 +3,7 @@ import { TestId } from '../../../utils/types/brandedTypes.ts'
 export const EditSoundPaneTestIds = {
   soundNameInput: TestId('EditSoundPane.soundNameInput'),
   captureAudioButton: TestId('EditSoundPane.captureAudioButton'),
+  importWavButton: TestId('EditSoundPane.importWavButton'),
   downloadWavButton: TestId('EditSoundPane.downloadWavButton'),
   cropAudioButton: TestId('EditSoundPane.cropAudioButton'),
   stopButton: TestId('EditSoundPane.stopButton'),

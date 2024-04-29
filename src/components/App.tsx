@@ -12,16 +12,18 @@ import { AppConfig } from '../config/AppConfig.ts'
 import reactArrayToTree from 'react-array-to-tree'
 import { ExclusiveTab } from './misc/ExclusiveTab.tsx'
 import { AlreadyOpenInAnotherTabPage } from './misc/AlreadyOpenInAnotherTabPage.tsx'
+import { AudioOperationsContext } from '../audioOperations/AudioOperationsContext.ts'
 
 export interface AppProps {
   config: AppConfig
 }
 
 const nestProviders = (config: AppConfig) => {
-  const { audioRecorder, audioPlayer, soundLibrary, storageManager } = config
+  const { audioRecorder, audioPlayer, soundLibrary, storageManager, audioOperations } = config
   return reactArrayToTree([
     <AudioRecorderContext.Provider value={audioRecorder} />,
     <AudioPlayerContext.Provider value={audioPlayer} />,
+    <AudioOperationsContext.Provider value={audioOperations} />,
     <SoundLibraryContext.Provider value={soundLibrary} />,
     <StorageManagerContext.Provider value={storageManager} />,
   ])

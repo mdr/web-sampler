@@ -3,9 +3,18 @@ import { LazyAudioContextProvider } from '../audioRecorder/AudioContextProvider.
 import { WebAudioRecorder } from '../audioRecorder/WebAudioRecorder.ts'
 import { AppConfig, makeAppConfig } from '../config/AppConfig.ts'
 import { WebStorageManager } from '../storage/WebStorageManager.tsx'
+import { AudioOperations } from '../audioOperations/AudioOperations.ts'
 
-const makeProdAppConfig = (): AppConfig =>
-  makeAppConfig(new WebAudioRecorder(new LazyAudioContextProvider()), new Audio(), new WebStorageManager())
+const makeProdAppConfig = (): AppConfig => {
+  const audioContextProvider = new LazyAudioContextProvider()
+  const audioOperations = new AudioOperations(audioContextProvider)
+  return makeAppConfig(
+    new WebAudioRecorder(audioContextProvider),
+    new Audio(),
+    new WebStorageManager(),
+    audioOperations,
+  )
+}
 
 export const ProdApp = () => {
   const config = makeProdAppConfig()

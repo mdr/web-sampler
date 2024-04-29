@@ -28,6 +28,7 @@ import humanizeDuration from 'humanize-duration'
 import { DuplicateSoundButton } from './DuplicateSoundButton.tsx'
 import { isChromiumBasedBrowser } from '../../../utils/browserUtils.ts'
 import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
+import { ImportWavButton } from './ImportWavButton.tsx'
 
 const durationHumanizer = humanizeDuration.humanizer({
   units: ['s'],
@@ -112,7 +113,7 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPaneProps) => {
       <SoundNameTextField name={sound.name} setName={setSoundName} />
       <div className="flex space-x-2">
         <DeleteButton onPress={handleDeleteButtonPressed} />
-        <DuplicateSoundButton soundId={sound.id} />
+        <DuplicateSoundButton soundId={soundId} />
       </div>
       <h2 className="text-xl" data-testid={EditSoundPaneTestIds.audioHeading}>
         Audio
@@ -122,8 +123,9 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPaneProps) => {
         <>
           <div className="flex space-x-2">
             <CaptureAudioButton onPress={handleCaptureAudioButtonPressed} />
+            <ImportWavButton soundId={soundId} />
             {soundHasAudio(sound) && getPlayRegionDuration(sound.audio) > 0 && <DownloadWavButton sound={sound} />}
-            {audio !== undefined && <CropButton soundId={sound.id} />}
+            {audio !== undefined && <CropButton soundId={soundId} />}
           </div>
           {soundHasAudio(sound) && <AudioSection sound={sound} />}
         </>

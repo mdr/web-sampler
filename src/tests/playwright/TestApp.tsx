@@ -7,6 +7,8 @@ import { castPartial, MockAudioElement } from './mocks/MockAudioElement.ts'
 import { AppConfig, makeAppConfig } from '../../config/AppConfig.ts'
 import { FakeStorageManager } from '../../storage/FakeStorageManager.tsx'
 import { AttemptToMakeStoragePersistentResult } from '../../storage/StorageManager.tsx'
+import { AudioOperations } from '../../audioOperations/AudioOperations.ts'
+import { LazyAudioContextProvider } from '../../audioRecorder/AudioContextProvider.ts'
 
 export interface TestAppProps {
   useFakeTimers?: boolean
@@ -44,5 +46,7 @@ const makeTestAppConfig = (
 ): AppConfig => {
   const storageManager = new FakeStorageManager(isStoragePersistent, attemptToMakeStoragePersistentResult)
   const audioElement = castPartial<HTMLAudioElement>(mockAudioElement)
-  return makeAppConfig(audioRecorder, audioElement, storageManager)
+  const audioContextProvider = new LazyAudioContextProvider()
+  const audioOperations = new AudioOperations(audioContextProvider)
+  return makeAppConfig(audioRecorder, audioElement, storageManager, audioOperations)
 }
