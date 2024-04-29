@@ -23,18 +23,12 @@ import { useNavigate } from 'react-router-dom'
 import { secondsToMillis } from '../../../utils/types/brandedTypes.ts'
 import { DownloadWavButton } from '../audioSection/DownloadWavButton.tsx'
 import { CropButton } from '../audioSection/CropButton.tsx'
-import { getPlayRegionDuration } from '../../../types/SoundAudio.ts'
-import humanizeDuration from 'humanize-duration'
+import { getPlayRegionDuration, getPlayRegionDurationFriendly } from '../../../types/SoundAudio.ts'
 import { DuplicateSoundButton } from './DuplicateSoundButton.tsx'
 import { isChromiumBasedBrowser } from '../../../utils/browserUtils.ts'
 import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
 import { ImportAudioButton } from './ImportAudioButton.tsx'
 import { AudioData } from '../../../types/AudioData.ts'
-
-const durationHumanizer = humanizeDuration.humanizer({
-  units: ['s'],
-  maxDecimalPoints: 1,
-})
 
 export interface EditSoundPaneProps {
   soundId: SoundId
@@ -118,8 +112,7 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPaneProps) => {
         <DuplicateSoundButton soundId={soundId} />
       </div>
       <h2 className="text-xl" data-testid={EditSoundPaneTestIds.audioHeading}>
-        Audio
-        {audio !== undefined && <> ({durationHumanizer(secondsToMillis(getPlayRegionDuration(audio)))})</>}
+        Audio{audio !== undefined && <> ({getPlayRegionDurationFriendly(audio)})</>}
       </h2>
       {audioRecorderState === AudioRecorderState.IDLE && (
         <>

@@ -8,6 +8,7 @@ import {
 import { getFinishTime, getStartTime, getTotalAudioDuration } from '../../../types/SoundAudio.ts'
 import { assertSoundHasAudio, filesAreEqual } from '../testUtils.ts'
 import { Path, Seconds } from '../../../utils/types/brandedTypes.ts'
+import { MAX_RECORDING_DURATION } from '../../../components/soundsEditor/recordingConstants.ts'
 
 export const DATA_DIRECTORY = Path('src/tests/playwright/data')
 export const EXPECTED_DOWNLOAD_PATH = Path(`${DATA_DIRECTORY}/expected-download.wav`)
@@ -15,6 +16,10 @@ export const EXPECTED_DOWNLOAD_PATH = Path(`${DATA_DIRECTORY}/expected-download.
 // Emma Freud, CC BY-SA 3.0 <https://creativecommons.org/licenses/by-sa/3.0>, via Wikimedia Commons
 // https://commons.wikimedia.org/wiki/File:Emma_Freud_voice.ogg
 export const TEST_AUDIO_FILE = Path(`${DATA_DIRECTORY}/test-audio-file.ogg`)
+
+// BBC, CC BY 3.0 <https://creativecommons.org/licenses/by/3.0>, via Wikimedia Commons
+// https://commons.wikimedia.org/wiki/File:Angela_Gallop_-_Life_Scientific_-_27_March_2012.flac
+export const LONG_AUDIO_FILE = Path(`${DATA_DIRECTORY}/long-audio-file.flac`)
 
 export const INVALID_AUDIO_FILE = Path(`${DATA_DIRECTORY}/invalid-audio-file.ogg`)
 
@@ -201,6 +206,17 @@ test('handling of invalid audio file', async ({ mount }) => {
   await soundsEditorPage.pressImportAudioButton(INVALID_AUDIO_FILE)
 
   await soundsEditorPage.expectToastToBeShown('Error importing audio.')
+})
+
+test('truncation of a long imported audio file', async ({ mount }) => {
+  const soundsEditorPage = await launchAndCreateNewSound(mount)
+
+  await soundsEditorPage.pressImportAudioButton(LONG_AUDIO_FILE)
+
+  await soundsEditorPage.expectToastToBeShown(`Audio was truncated to ${MAX_RECORDING_DURATION} seconds.`)
+  const [sound] = await soundsEditorPage.getSounds()
+  assertSoundHasAudio(sound)
+  expect(getTotalAudioDuration(sound.audio)).toBe(Seconds(30))
 })
 
 test.skip('can export and import sounds', async ({ mount }) => {

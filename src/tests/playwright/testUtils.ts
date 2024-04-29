@@ -3,7 +3,7 @@ import { expect } from '@playwright/experimental-ct-react'
 import * as fs from 'fs/promises'
 
 export function assertSoundHasAudio(sound: Sound): asserts sound is SoundWithDefiniteAudio {
-  expect(soundHasAudio(sound)).toBe(true)
+  expect(soundHasAudio(sound), 'Expected sound to have audio, but it did not').toBe(true)
 }
 
 export const filesAreEqual = async (path1: string, path2: string): Promise<boolean> => {

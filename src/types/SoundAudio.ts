@@ -1,7 +1,8 @@
-import { Hz, MAX_VOLUME, Pcm, Samples, Seconds, Volume } from '../utils/types/brandedTypes.ts'
+import { Hz, MAX_VOLUME, Pcm, Samples, Seconds, secondsToMillis, Volume } from '../utils/types/brandedTypes.ts'
 import { pcmLength, pcmSlice } from '../utils/pcmUtils.ts'
 import { samplesToSeconds } from './soundConstants.ts'
 import { AudioData } from './AudioData.ts'
+import humanizeDuration from 'humanize-duration'
 
 export interface SoundAudio {
   readonly pcm: Pcm
@@ -32,6 +33,14 @@ export const getTotalAudioDuration = (audio: SoundAudio): Seconds =>
  */
 export const getPlayRegionDuration = (audio: SoundAudio): Seconds =>
   samplesToSeconds(Samples(audio.finish - audio.start), audio.sampleRate)
+
+const durationHumanizer = humanizeDuration.humanizer({
+  units: ['s'],
+  maxDecimalPoints: 1,
+})
+
+export const getPlayRegionDurationFriendly = (audio: SoundAudio): string =>
+  durationHumanizer(secondsToMillis(getPlayRegionDuration(audio)))
 
 export const getPlayRegionPcm = (audio: SoundAudio): Pcm => pcmSlice(audio.pcm, audio.start, audio.finish)
 

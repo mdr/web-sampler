@@ -31,7 +31,11 @@ export const ImportAudioButton = ({ soundId }: ImportAudioButtonProps) => {
       toast.error('Error importing audio.')
     }
     if (audioData !== undefined) {
-      soundActions.setAudioPcm(soundId, truncateAudioData(audioData, MAX_RECORDING_DURATION))
+      const truncatedAudioData = truncateAudioData(audioData, MAX_RECORDING_DURATION)
+      soundActions.setAudioPcm(soundId, truncatedAudioData)
+      if (audioData.pcm.length > truncatedAudioData.pcm.length) {
+        toast.warning(`Audio was truncated to ${MAX_RECORDING_DURATION} seconds.`)
+      }
     }
   }
 
