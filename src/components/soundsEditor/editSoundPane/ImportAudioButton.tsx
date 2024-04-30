@@ -11,12 +11,21 @@ import { Option } from '../../../utils/types/Option.ts'
 import { AudioData } from '../../../types/AudioData.ts'
 import { Pcm, Seconds } from '../../../utils/types/brandedTypes.ts'
 import { MAX_RECORDING_DURATION } from '../recordingConstants.ts'
+import Bowser from 'bowser'
+import _ from 'lodash'
 
 export interface ImportAudioButtonProps {
   soundId: SoundId
 }
 
-export const SUPPORTED_AUDIO_EXTENSIONS = ['.wav', '.mp3', '.ogg', '.aac', '.flac', '.m4a', '.weba']
+const getSupportedAudioExtensionsForBrowser = (): string[] => {
+  const extensions = ['.wav', '.mp3', '.ogg', '.aac', '.flac', '.m4a', '.weba']
+  // OGG container not supported on Safari: https://caniuse.com/ogg-vorbis
+  if (Bowser.getParser(window.navigator.userAgent).getEngineName() === 'WebKit') {
+    _.remove(extensions, (ext) => ext === '.ogg')
+  }
+  return extensions
+}
 
 export const ImportAudioButton = ({ soundId }: ImportAudioButtonProps) => {
   const soundActions = useSoundActions()
@@ -41,7 +50,7 @@ export const ImportAudioButton = ({ soundId }: ImportAudioButtonProps) => {
 
   const { openFilePicker } = useFilePicker({
     readAs: 'ArrayBuffer',
-    accept: SUPPORTED_AUDIO_EXTENSIONS,
+    accept: getSupportedAudioExtensionsForBrowser(),
     onFilesSuccessfullySelected: handleFilesSuccessfullySelected,
   })
 
