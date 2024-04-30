@@ -114,7 +114,9 @@ export class SoundsEditorPageObject extends PageObject {
     })
 
   pressDownloadWav = (): Promise<Path> =>
-    this.step('pressDownloadWav', () => this.triggerDownload(() => this.press(EditSoundPaneTestIds.downloadWavButton)))
+    this.step('pressDownloadWav', async () =>
+      this.triggerDownload(() => this.press(EditSoundPaneTestIds.downloadWavButton)),
+    )
 
   pressPlayButton = (): Promise<void> => this.step('pressPlayButton', () => this.press(EditSoundPaneTestIds.playButton))
 

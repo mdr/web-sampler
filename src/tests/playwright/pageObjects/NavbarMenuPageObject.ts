@@ -7,7 +7,11 @@ export class NavbarMenuPageObject extends PageObject {
 
   pressExportAllSounds = (): Promise<Path> =>
     this.step('pressExportAllSounds', () =>
-      this.triggerDownload(() => this.press(NavbarTestIds.exportAllSoundsMenuItem)),
+      this.triggerDownload(async () => {
+        await this.press(NavbarTestIds.exportAllSoundsMenuItem)
+        // check needed to make sure download has occurred:
+        await this.expectToastToBeShown('All sounds exported.')
+      }),
     )
 
   pressImportSounds = (path: Path): Promise<void> =>

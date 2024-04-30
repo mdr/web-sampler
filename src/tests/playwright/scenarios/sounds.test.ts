@@ -210,7 +210,7 @@ test('truncation of a long imported audio file', async ({ mount }) => {
   expect(getTotalAudioDuration(sound.audio)).toBe(Seconds(30))
 })
 
-test.skip('can export and import sounds', async ({ mount }) => {
+test('can export and import sounds', async ({ mount }) => {
   const soundsEditorPage = await launchAndRecordNewSound(mount)
   await soundsEditorPage.enterSoundName('Sound 1')
 
