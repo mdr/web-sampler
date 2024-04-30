@@ -4455,10 +4455,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"effect@npm:^3.0.7":
-  version: 3.0.7
-  resolution: "effect@npm:3.0.7"
-  checksum: d503173485ffa986ddef35f299fb01b866d2e39935a9b31eb9c32203fe3e6d5c08259df4845a1011c16777390602ca6ccd46098966a4dcec6c89e09d97f2fbb1
+"effect@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "effect@npm:3.1.0"
+  checksum: 3c46331f073e44703ca049a6bd628ad602210f934fb1444c92548a38bf624b791ff44fc60b61ec5293bd656d92a48e1dd9d146dfe80fed76201d5a83ba432684
   languageName: node
   linkType: hard
 
@@ -8411,7 +8411,7 @@ __metadata:
     bowser: "npm:^2.11.0"
     clsx: "npm:^2.1.1"
     dexie: "npm:^4.0.4"
-    effect: "npm:^3.0.7"
+    effect: "npm:^3.1.0"
     eslint: "npm:^8.57.0"
     eslint-plugin-react-hooks: "npm:^4.6.2"
     eslint-plugin-react-refresh: "npm:^0.4.6"
@@ -8448,7 +8448,7 @@ __metadata:
     vite: "npm:^5.2.10"
     vite-plugin-checker: "npm:^0.6.4"
     vitest: "npm:^1.5.2"
-    zod: "npm:^3.23.4"
+    zod: "npm:^3.23.5"
   languageName: unknown
   linkType: soft
 
@@ -8619,9 +8619,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:^3.23.4":
-  version: 3.23.4
-  resolution: "zod@npm:3.23.4"
-  checksum: 7fb99f05bd5b86dcde06e202285a5d102b2e26d46f5119403a17618d0048e488e074cdcdf3fbba2bdcb77ff8141ddd85112b6d86d7a2fbefc9ffc983997b970e
+"zod@npm:^3.23.5":
+  version: 3.23.5
+  resolution: "zod@npm:3.23.5"
+  checksum: 5c74aefe2c0bc2f00d79c5a8724dae863054653bbad640964fdb009c52573349366fa70533f0dfcb912b007421294d437f063d466f9692eb77a2b620640c2794
   languageName: node
   linkType: hard
