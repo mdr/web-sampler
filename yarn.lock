@@ -4455,10 +4455,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"effect@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "effect@npm:3.1.0"
-  checksum: 3c46331f073e44703ca049a6bd628ad602210f934fb1444c92548a38bf624b791ff44fc60b61ec5293bd656d92a48e1dd9d146dfe80fed76201d5a83ba432684
+"effect@npm:^3.1.2":
+  version: 3.1.2
+  resolution: "effect@npm:3.1.2"
+  checksum: a2d8f5f3d26b9c26818e0632d61f1eb39252fb021a9bb7f1980dc190763bc744c1ed39cbaf3e2037294fd500b78f4781e82759b4f646df982ca1782f58d9ffbf
   languageName: node
   linkType: hard
 
@@ -8411,7 +8411,7 @@ __metadata:
     bowser: "npm:^2.11.0"
     clsx: "npm:^2.1.1"
     dexie: "npm:^4.0.4"
-    effect: "npm:^3.1.0"
+    effect: "npm:^3.1.2"
     eslint: "npm:^8.57.0"
     eslint-plugin-react-hooks: "npm:^4.6.2"
     eslint-plugin-react-refresh: "npm:^0.4.6"
