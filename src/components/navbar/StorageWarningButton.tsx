@@ -1,5 +1,5 @@
-import { DialogTrigger } from 'react-aria-components'
 import { mdiAlert } from '@mdi/js'
+import { DialogTrigger } from 'react-aria-components'
 import { StorageWarningDialog } from './StorageWarningDialog.tsx'
 import { NavbarTestIds } from './NavbarTestIds.ts'
 import { NavbarIconButton } from './NavbarIconButton.tsx'

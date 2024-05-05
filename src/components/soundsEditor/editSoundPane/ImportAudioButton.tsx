@@ -13,6 +13,9 @@ import { Pcm, Seconds } from '../../../utils/types/brandedTypes.ts'
 import { MAX_RECORDING_DURATION } from '../recordingConstants.ts'
 import Bowser from 'bowser'
 import _ from 'lodash'
+import { Dialog, Heading } from 'react-aria-components'
+import { useState } from 'react'
+import { Modal } from '../../shared/Modal.tsx'
 
 export interface ImportAudioButtonProps {
   soundId: SoundId
@@ -28,9 +31,11 @@ const getSupportedAudioExtensionsForBrowser = (): string[] => {
 }
 
 export const ImportAudioButton = ({ soundId }: ImportAudioButtonProps) => {
+  const [isImporting, setIsImporting] = useState(false)
   const soundActions = useSoundActions()
   const audioOperations = useAudioOperations()
   const handleFilesSuccessfullySelected = async ({ filesContent }: SelectedFiles<ArrayBuffer>): Promise<void> => {
+    setIsImporting(true)
     const arrayBuffer = filesContent[0].content
     let audioData: Option<AudioData>
     try {
@@ -39,6 +44,7 @@ export const ImportAudioButton = ({ soundId }: ImportAudioButtonProps) => {
       console.error('Error importing audio', e)
       toast.error('Error importing audio.')
     }
+
     if (audioData !== undefined) {
       const truncatedAudioData = truncateAudioData(audioData, MAX_RECORDING_DURATION)
       soundActions.setAudioPcm(soundId, truncatedAudioData)
@@ -46,21 +52,36 @@ export const ImportAudioButton = ({ soundId }: ImportAudioButtonProps) => {
         toast.warning(`Audio was truncated to ${MAX_RECORDING_DURATION} seconds.`)
       }
     }
+    setIsImporting(false)
   }
 
-  const { openFilePicker } = useFilePicker({
+  const { openFilePicker, loading } = useFilePicker({
     readAs: 'ArrayBuffer',
     accept: getSupportedAudioExtensionsForBrowser(),
     onFilesSuccessfullySelected: handleFilesSuccessfullySelected,
   })
 
+  const handleButtonPress = () => {
+    openFilePicker()
+  }
+
   return (
-    <Button
-      testId={EditSoundPaneTestIds.importAudioButton}
-      icon={mdiFileImport}
-      label="Import Audio"
-      onPress={openFilePicker}
-    />
+    <>
+      <Button
+        testId={EditSoundPaneTestIds.importAudioButton}
+        icon={mdiFileImport}
+        label="Import Audio"
+        onPress={handleButtonPress}
+      />
+      <Modal isOpen={loading || isImporting}>
+        <Dialog className="relative outline-none">
+          <Heading slot="title" className="my-0 text-lg font-semibold leading-6 text-slate-700">
+            Import Audio
+          </Heading>
+          <p className="mt-3 text-slate-500">Importing audio from file. This may take a few seconds.</p>
+        </Dialog>
+      </Modal>
+    </>
   )
 }
 
