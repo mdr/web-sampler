@@ -13,9 +13,9 @@ import { Pcm, Seconds } from '../../../utils/types/brandedTypes.ts'
 import { MAX_RECORDING_DURATION } from '../recordingConstants.ts'
 import Bowser from 'bowser'
 import _ from 'lodash'
-import { Dialog, Heading } from 'react-aria-components'
 import { useState } from 'react'
 import { Modal } from '../../shared/Modal.tsx'
+import { ImportingAudioDialog } from './ImportingAudioDialog.tsx'
 
 export interface ImportAudioButtonProps {
   soundId: SoundId
@@ -74,12 +74,7 @@ export const ImportAudioButton = ({ soundId }: ImportAudioButtonProps) => {
         onPress={handleButtonPress}
       />
       <Modal isOpen={loading || isImporting}>
-        <Dialog className="relative outline-none">
-          <Heading slot="title" className="my-0 text-lg font-semibold leading-6 text-slate-700">
-            Import Audio
-          </Heading>
-          <p className="mt-3 text-slate-500">Importing audio from file. This may take a few seconds.</p>
-        </Dialog>
+        <ImportingAudioDialog />
       </Modal>
     </>
   )
