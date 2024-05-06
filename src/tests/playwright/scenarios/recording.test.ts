@@ -20,6 +20,8 @@ test('a volume meter should indicate audio level during recording', async ({ mou
   await soundsEditorPage.simulateAudioRecordingVolume(Volume(0.25))
   await soundsEditorPage.expectVolumeMeterToShowLevel(Volume(0.25))
 
+  await soundsEditorPage.checkScreenshot('capturing-audio')
+
   await soundsEditorPage.simulateAudioRecordingVolume(Volume(0.5))
   await soundsEditorPage.expectVolumeMeterToShowLevel(Volume(0.5))
 })
