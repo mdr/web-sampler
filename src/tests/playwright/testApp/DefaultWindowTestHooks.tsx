@@ -53,4 +53,8 @@ export class DefaultWindowTestHooks implements WindowTestHooks {
   }
 
   getSoundsJson = (): string => serialiseSounds(this.soundLibrary.sounds)
+
+  visitNotFoundPage = () => {
+    window.location.hash = '#/not-found'
+  }
 }

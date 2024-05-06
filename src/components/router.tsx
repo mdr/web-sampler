@@ -6,6 +6,7 @@ import { Option } from '../utils/types/Option.ts'
 import { SoundboardPage } from './soundboard/SoundboardPage.tsx'
 import { SoundboardId } from '../types/Soundboard.ts'
 import { SoundboardsEditorPage } from './soundboardsEditor/SoundboardsEditorPage.tsx'
+import { NotFoundPage } from './misc/NotFoundPage.tsx'
 
 export const router = createHashRouter([
   {
@@ -32,6 +33,10 @@ export const router = createHashRouter([
     path: '/soundboard/:soundboardId',
     element: <SoundboardsEditorPage />,
     errorElement: <ErrorFallback />,
+  },
+  {
+    path: '*',
+    element: <NotFoundPage />,
   },
 ])
 

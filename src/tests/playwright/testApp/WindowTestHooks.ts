@@ -21,4 +21,6 @@ export interface WindowTestHooks {
   // Clock
   clockNext: () => void
   clockTick: (millis: number) => void
+
+  visitNotFoundPage: () => void
 }
