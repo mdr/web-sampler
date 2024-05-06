@@ -13,10 +13,10 @@ export const SoundTestConstants = {
   name: 'SoundTestConstants.name',
   oldName: 'SoundTestConstants.oldName',
   newName: 'SoundTestConstants.newName',
-  startTime: Samples(5),
-  finishTime: Samples(10),
+  start: Samples(5),
+  finish: Samples(10),
   volume: Volume(0.5),
-  pcm: makePcmOfDuration(Seconds(20)),
+  pcm: makePcm(Samples(100)),
   emptyPcm: makePcmOfDuration(Seconds(0)),
 }
 
@@ -33,8 +33,8 @@ export const makeSound = ({
 export const makeSoundAudio = ({
   pcm = SoundTestConstants.pcm,
   sampleRate = DEFAULT_SAMPLE_RATE,
-  start = SoundTestConstants.startTime,
-  finish = SoundTestConstants.finishTime,
+  start = SoundTestConstants.start,
+  finish = SoundTestConstants.finish,
   volume = SoundTestConstants.volume,
 }: Partial<SoundAudio> = {}): SoundAudio => ({
   pcm,
