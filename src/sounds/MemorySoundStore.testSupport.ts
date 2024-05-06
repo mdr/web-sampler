@@ -1,4 +1,4 @@
-import { Sound } from '../types/Sound.ts'
+import { Sound, SoundId } from '../types/Sound.ts'
 import { SoundStore } from './SoundStore.ts'
 import _ from 'lodash'
 import { SoundState } from './SoundState.ts'
@@ -12,6 +12,14 @@ export class MemorySoundStore implements SoundStore {
   constructor(initialSounds: readonly Sound[] = [], initialSoundboards: readonly Soundboard[] = []) {
     this.sounds = [...initialSounds]
     this.soundboards = [...initialSoundboards]
+  }
+
+  getSound = (soundId: SoundId): Sound => {
+    const sound = this.sounds.find((sound) => sound.id === soundId)
+    if (sound === undefined) {
+      throw new Error(`Sound with id ${soundId} does not exist`)
+    }
+    return sound
   }
 
   getSoundState = async (): Promise<SoundState> => ({ sounds: [...this.sounds], soundboards: [...this.soundboards] })

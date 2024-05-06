@@ -2,13 +2,7 @@ import { describe, expect, it, test } from 'vitest'
 import { SoundLibrary, SoundLibraryUpdatedListener } from './SoundLibrary.ts'
 import { MemorySoundStore } from './MemorySoundStore.testSupport.ts'
 import flushPromises from 'flush-promises'
-import {
-  makePcm,
-  makeSound,
-  makeSoundAudio,
-  makeSoundWithAudio,
-  SoundTestConstants,
-} from '../types/sound.testSupport.ts'
+import { makePcm, makeSound, makeSoundWithAudio, SoundTestConstants } from '../types/sound.testSupport.ts'
 import { newSoundId, Sound } from '../types/Sound.ts'
 import { SoundStore } from './SoundStore.ts'
 import { mockFunction } from '../utils/mockUtils.testSupport.ts'
@@ -16,6 +10,7 @@ import { Samples, Volume } from '../utils/types/brandedTypes.ts'
 import { makeSoundboard, SoundboardTestConstants } from '../types/soundboard.testSupport.ts'
 import { Soundboard } from '../types/Soundboard.ts'
 import { pcmSlice } from '../utils/pcmUtils.ts'
+import { SoundAudio } from '../types/SoundAudio.ts'
 
 describe('SoundLibrary', () => {
   it('should load sounds from the store on creation', async () => {
@@ -99,10 +94,9 @@ describe('SoundLibrary', () => {
     library.setName(sound.id, SoundTestConstants.newName)
 
     expect(listener).toHaveBeenCalledTimes(1)
-    const expectedUpdatedSounds = [{ ...sound, name: SoundTestConstants.newName }]
-    expect(library.sounds).toEqual(expectedUpdatedSounds)
+    expect(library.getSound(sound.id).name).toEqual(SoundTestConstants.newName)
     await flushPromises()
-    expect(soundStore.sounds).toEqual(expectedUpdatedSounds)
+    expect(soundStore.getSound(sound.id).name).toEqual(SoundTestConstants.newName)
   })
 
   it('should allow sounds to be imported', async () => {
@@ -125,10 +119,9 @@ describe('SoundLibrary', () => {
     library.setVolume(sound.id, Volume(0.5))
 
     expect(listener).toHaveBeenCalledTimes(1)
-    const expectedUpdatedSounds = [{ ...sound, audio: makeSoundAudio({ volume: Volume(0.5) }) }]
-    expect(library.sounds).toEqual(expectedUpdatedSounds)
+    expect(library.getSound(sound.id).audio?.volume).toEqual(Volume(0.5))
     await flushPromises()
-    expect(soundStore.sounds).toEqual(expectedUpdatedSounds)
+    expect(soundStore.getSound(sound.id).audio?.volume).toEqual(Volume(0.5))
   })
 
   it('should allow the audio of a sound to be cropped', async () => {
@@ -139,19 +132,14 @@ describe('SoundLibrary', () => {
     library.cropAudio(sound.id)
 
     expect(listener).toHaveBeenCalledTimes(1)
-    const expectedUpdatedSounds = [
-      {
-        ...sound,
-        audio: makeSoundAudio({
-          pcm: pcmSlice(pcm, Samples(10), Samples(90)),
-          start: Samples(0),
-          finish: Samples(80),
-        }),
-      },
-    ]
-    expect(library.sounds).toEqual(expectedUpdatedSounds)
+    const expectedSoundAudio = {
+      pcm: pcmSlice(pcm, Samples(10), Samples(90)),
+      start: Samples(0),
+      finish: Samples(80),
+    } satisfies Partial<SoundAudio>
+    expect(library.getSound(sound.id).audio).toMatchObject(expectedSoundAudio)
     await flushPromises()
-    expect(soundStore.sounds).toEqual(expectedUpdatedSounds)
+    expect(soundStore.getSound(sound.id).audio).toMatchObject(expectedSoundAudio)
   })
 
   it('should allow a sound start time to be updated', async () => {
@@ -162,6 +150,8 @@ describe('SoundLibrary', () => {
 
     expect(listener).toHaveBeenCalledTimes(1)
     expect(library.getSound(sound.id).audio?.start).toEqual(Samples(15))
+    await flushPromises()
+    expect(library.getSound(sound.id).audio?.start).toEqual(Samples(15))
   })
 
   it('should allow a sound finish time to be updated', async () => {
@@ -171,6 +161,8 @@ describe('SoundLibrary', () => {
     library.setAudioFinish(sound.id, Samples(15))
 
     expect(listener).toHaveBeenCalledTimes(1)
+    expect(library.getSound(sound.id).audio?.finish).toEqual(Samples(15))
+    await flushPromises()
     expect(library.getSound(sound.id).audio?.finish).toEqual(Samples(15))
   })
 
