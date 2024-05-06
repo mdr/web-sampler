@@ -2,7 +2,13 @@ import { describe, expect, it, test } from 'vitest'
 import { SoundLibrary, SoundLibraryUpdatedListener } from './SoundLibrary.ts'
 import { MemorySoundStore } from './MemorySoundStore.testSupport.ts'
 import flushPromises from 'flush-promises'
-import { makePcm, makeSound, makeSoundAudio, SoundTestConstants } from '../types/sound.testSupport.ts'
+import {
+  makePcm,
+  makeSound,
+  makeSoundAudio,
+  makeSoundWithAudio,
+  SoundTestConstants,
+} from '../types/sound.testSupport.ts'
 import { newSoundId, Sound } from '../types/Sound.ts'
 import { SoundStore } from './SoundStore.ts'
 import { mockFunction } from '../utils/mockUtils.testSupport.ts'
@@ -113,7 +119,7 @@ describe('SoundLibrary', () => {
   })
 
   it('should allow the volume of a sound to be set', async () => {
-    const sound = makeSound({ audio: makeSoundAudio({ volume: Volume(1) }) })
+    const sound = makeSoundWithAudio({ volume: Volume(1) })
     const { library, soundStore, listener } = await setUpTest([sound])
 
     library.setVolume(sound.id, Volume(0.5))
@@ -127,13 +133,7 @@ describe('SoundLibrary', () => {
 
   it('should allow the audio of a sound to be cropped', async () => {
     const pcm = makePcm(Samples(100))
-    const sound = makeSound({
-      audio: makeSoundAudio({
-        pcm,
-        start: Samples(10),
-        finish: Samples(90),
-      }),
-    })
+    const sound = makeSoundWithAudio({ pcm, start: Samples(10), finish: Samples(90) })
     const { library, soundStore, listener } = await setUpTest([sound])
 
     library.cropAudio(sound.id)
@@ -155,7 +155,7 @@ describe('SoundLibrary', () => {
   })
 
   it('should allow a sound start time to be updated', async () => {
-    const sound = makeSound({ audio: makeSoundAudio({ start: Samples(10), finish: Samples(20) }) })
+    const sound = makeSoundWithAudio({ start: Samples(10), finish: Samples(20) })
     const { library, listener } = await setUpTest([sound])
 
     library.setAudioStart(sound.id, Samples(15))
@@ -165,7 +165,7 @@ describe('SoundLibrary', () => {
   })
 
   it('should allow a sound finish time to be updated', async () => {
-    const sound = makeSound({ audio: makeSoundAudio({ start: Samples(10), finish: Samples(20) }) })
+    const sound = makeSoundWithAudio({ start: Samples(10), finish: Samples(20) })
     const { library, listener } = await setUpTest([sound])
 
     library.setAudioFinish(sound.id, Samples(15))

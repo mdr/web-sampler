@@ -43,3 +43,18 @@ export const makeSoundAudio = ({
   finish,
   volume,
 })
+
+export const makeSoundWithAudio = ({
+  id = newSoundId(),
+  name = SoundTestConstants.name,
+  pcm = SoundTestConstants.pcm,
+  sampleRate = DEFAULT_SAMPLE_RATE,
+  start = SoundTestConstants.start,
+  finish = SoundTestConstants.finish,
+  volume = SoundTestConstants.volume,
+}: Partial<Sound & SoundAudio> = {}): Sound =>
+  makeSound({
+    id,
+    name,
+    audio: makeSoundAudio({ pcm, sampleRate, start, finish, volume }),
+  })
