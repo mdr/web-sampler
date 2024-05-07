@@ -4,21 +4,39 @@ tasks:
   default:
     cmds:
       - task --list
+  run:
+    cmds:
+      - yarn
+      - yarn dev
   update-screenshots:
     aliases:
       - us
-    desc: Update screenshots using Docker
+    desc: Update screenshots by running the Playwright component tests (in Docker)
+    vars:
+      PLAYWRIGHT_VERSION:
+        sh: jq -r '.devDependencies."@playwright/experimental-ct-react" | sub("^\\^"; "")' package.json
     cmds:
-      - docker run -it --rm -p 9323:9323 -v $(pwd):$(pwd) mcr.microsoft.com/playwright:v1.43.1-jammy sh -c "cd $(pwd) && yarn && yarn test-ct --update-snapshots"
+      - >-
+        docker run -it --rm 
+        -p 9323:9323 
+        -v $(pwd):$(pwd) 
+        mcr.microsoft.com/playwright:v{{.PLAYWRIGHT_VERSION}}-jammy 
+        sh -c "cd $(pwd) && yarn && yarn test-ct --update-snapshots"
   check-all:
     aliases:
       - ca
     desc: Run CI checks locally
     cmds:
-      - yarn && yarn lint && yarn tsc && yarn test --run && yarn playwright install && yarn test-ct
+      - yarn
+      - yarn lint
+      - yarn tsc
+      - yarn test --run
+      - yarn playwright install
+      - yarn test-ct
   run-component-tests:
     aliases:
       - ct
     desc: Run component tests (with UI)
     cmds:
-      - yarn && yarn test-ct --ui
+      - yarn
+      - yarn test-ct --ui
