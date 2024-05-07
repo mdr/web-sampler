@@ -6,7 +6,8 @@ module.exports = {
     'plugin:@typescript-eslint/strict',
     // enable for type-checked rules:
     // 'plugin:@typescript-eslint/strict-type-checked'
-    'plugin:react-hooks/recommended'
+    'plugin:react-hooks/recommended',
+    'plugin:storybook/recommended'
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',

@@ -5,7 +5,7 @@ import { AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorde
 import { MockAudioElement } from '../mocks/MockAudioElement.ts'
 import { SoundLibrary } from '../../../sounds/SoundLibrary.ts'
 import { serialiseSounds } from './soundsSerialisation.ts'
-import { Seconds, Volume } from '../../../utils/types/brandedTypes.ts'
+import { Millis, Seconds, Volume } from '../../../utils/types/brandedTypes.ts'
 import { Option } from '../../../utils/types/Option.ts'
 
 export class DefaultWindowTestHooks implements WindowTestHooks {
@@ -48,13 +48,17 @@ export class DefaultWindowTestHooks implements WindowTestHooks {
 
   clockNext = () => this.clock?.next()
 
-  clockTick = (millis: number): void => {
+  clockTick = (millis: Millis): void => {
     this.clock?.tick(millis)
   }
 
   getSoundsJson = (): string => serialiseSounds(this.soundLibrary.sounds)
 
-  visitNotFoundPage = () => {
+  visitNotFoundPage = (): boolean => {
+    if (window.testHooks === undefined) {
+      return false
+    }
     window.location.hash = '#/not-found'
+    return true
   }
 }

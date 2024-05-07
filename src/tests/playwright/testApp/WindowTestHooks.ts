@@ -1,5 +1,5 @@
 import { AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
-import { Seconds, Volume } from '../../../utils/types/brandedTypes.ts'
+import { Millis, Seconds, Volume } from '../../../utils/types/brandedTypes.ts'
 
 export interface WindowTestHooks {
   // Recording
@@ -20,7 +20,7 @@ export interface WindowTestHooks {
 
   // Clock
   clockNext: () => void
-  clockTick: (millis: number) => void
+  clockTick: (millis: Millis) => void
 
-  visitNotFoundPage: () => void
+  visitNotFoundPage: () => boolean
 }
