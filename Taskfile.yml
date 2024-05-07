@@ -5,6 +5,7 @@ tasks:
     cmds:
       - task --list
   run:
+    desc: Run the app in development mode
     cmds:
       - yarn
       - yarn dev
