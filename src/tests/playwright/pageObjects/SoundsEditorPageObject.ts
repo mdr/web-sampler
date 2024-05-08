@@ -91,14 +91,12 @@ export class SoundsEditorPageObject extends PageObject {
     primedOutcome = StartRecordingOutcome.SUCCESS,
   }: Partial<{ primedOutcome: StartRecordingOutcome }> = {}): Promise<void> =>
     this.step(`pressCaptureAudio primedOutcome=${primedOutcome}`, async () => {
-      await this.page.evaluate((outcome) => window.testHooks.primeStartRecordingOutcome(outcome), primedOutcome)
+      await this.testHooks.primeStartRecordingOutcome(primedOutcome)
       await this.press(EditSoundPaneTestIds.captureAudioButton)
     })
 
   primeNoAudioOnStopRecording = (): Promise<void> =>
-    this.step('primeNoAudioOnStopRecording', () =>
-      this.page.evaluate(() => window.testHooks.primeNoAudioOnStopRecording()),
-    )
+    this.step('primeNoAudioOnStopRecording', () => this.testHooks.primeNoAudioOnStopRecording())
 
   pressStop = (): Promise<void> => this.step('pressStop', () => this.press(EditSoundPaneTestIds.stopButton))
 
@@ -146,17 +144,14 @@ export class SoundsEditorPageObject extends PageObject {
 
   simulateAudioRecordingVolume = (volume: Volume): Promise<void> =>
     this.step(`simulateAudioRecordingVolume ${volume}`, async () => {
-      await this.page.evaluate((volume) => window.testHooks.simulateAudioRecordingVolume(volume), volume)
+      await this.testHooks.simulateAudioRecordingVolume(volume)
       await this.clockNext()
     })
 
   simulateAudioPlaybackComplete = (): Promise<void> =>
-    this.step('simulateAudioPlaybackComplete', () =>
-      this.page.evaluate(() => window.testHooks.simulateAudioPlaybackComplete()),
-    )
+    this.step('simulateAudioPlaybackComplete', () => this.testHooks.simulateAudioPlaybackComplete())
 
-  getAudioRecorderState = (): Promise<AudioRecorderState> =>
-    this.page.evaluate(() => window.testHooks.getAudioRecorderState())
+  getAudioRecorderState = (): Promise<AudioRecorderState> => this.testHooks.getAudioRecorderState()
 
   expectAudioRecorderStateToBe = (state: AudioRecorderState): Promise<void> =>
     this.step(`expectAudioRecorderStateToBe ${state}`, async () => {

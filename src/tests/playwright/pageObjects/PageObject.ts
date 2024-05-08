@@ -34,7 +34,7 @@ export abstract class PageObject {
       expect(await this.isAudioPlaying()).toBe(playing)
     })
 
-  private get testHooks(): ProxyWindowTestHooks {
+  protected get testHooks(): ProxyWindowTestHooks {
     return new ProxyWindowTestHooks(this.mountResult)
   }
 
@@ -69,16 +69,14 @@ export abstract class PageObject {
 
   getSounds = (): Promise<Sound[]> =>
     this.step('getSounds', async () => {
-      const jsonString = await this.page.evaluate(() => window.testHooks.getSoundsJson())
+      const jsonString = await this.testHooks.getSoundsJson()
       return deserialiseSounds(jsonString)
     })
 
   wait = (duration: Seconds): Promise<void> =>
-    this.step(`wait ${duration}s`, () =>
-      this.page.evaluate((millis) => window.testHooks.clockTick(millis), secondsToMillis(duration)),
-    )
+    this.step(`wait ${duration}s`, () => this.testHooks.clockTick(secondsToMillis(duration)))
 
-  protected clockNext = (): Promise<void> => this.page.evaluate(() => window.testHooks.clockNext())
+  protected clockNext = (): Promise<void> => this.testHooks.clockNext()
 
   checkScreenshot = async (name: string, testId: Option<TestId> = undefined): Promise<void> => {
     if (platform() !== 'linux') {
