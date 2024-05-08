@@ -3,6 +3,7 @@ import { expect, MountResult, test } from '@playwright/experimental-ct-react'
 import { TestApp, TestAppProps } from '../TestApp.tsx'
 import { SoundsEditorPageObject } from './SoundsEditorPageObject.ts'
 import { NotFoundPageObject } from './NotFoundPageObject.ts'
+import { ProxyWindowTestHooks } from '../testApp/ProxyWindowTestHooks.ts'
 
 const areTestHooksInstalled = (mountResult: MountResult): Promise<boolean> =>
   mountResult.page().evaluate(() => window.testHooks.visitNotFoundPage !== undefined)
@@ -25,6 +26,6 @@ export const launchApp = (mount: MountFunction, props: TestAppProps = {}): Promi
 export const launchNotFoundPage = (mount: MountFunction, props: TestAppProps = {}): Promise<NotFoundPageObject> =>
   test.step('launchNotFoundPage', async () => {
     const mountResult = await mountAppAndWaitForTestHooks(mount, props)
-    await mountResult.page().evaluate(() => window.testHooks.visitNotFoundPage())
+    await new ProxyWindowTestHooks(mountResult).visitNotFoundPage()
     return await NotFoundPageObject.verifyIsShown(mountResult)
   })

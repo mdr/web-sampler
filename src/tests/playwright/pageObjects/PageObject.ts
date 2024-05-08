@@ -5,6 +5,7 @@ import { Option } from '../../../utils/types/Option.ts'
 import { Sound } from '../../../types/Sound.ts'
 import { deserialiseSounds } from '../testApp/soundsSerialisation.ts'
 import tmp from 'tmp'
+import { ProxyWindowTestHooks } from '../testApp/ProxyWindowTestHooks.ts'
 
 export abstract class PageObject {
   protected constructor(protected readonly mountResult: MountResult) {}
@@ -33,7 +34,11 @@ export abstract class PageObject {
       expect(await this.isAudioPlaying()).toBe(playing)
     })
 
-  private isAudioPlaying = (): Promise<boolean> => this.page.evaluate(() => window.testHooks.isAudioPlaying)
+  private get testHooks(): ProxyWindowTestHooks {
+    return new ProxyWindowTestHooks(this.mountResult)
+  }
+
+  private isAudioPlaying = (): Promise<boolean> => this.testHooks.isAudioPlaying()
 
   expectAudioPositionToBe = async (
     expectedPosition: Seconds,
@@ -52,7 +57,7 @@ export abstract class PageObject {
       }
     })
 
-  private getAudioPosition = (): Promise<Seconds> => this.page.evaluate(() => window.testHooks.audioPosition)
+  private getAudioPosition = (): Promise<Seconds> => this.testHooks.getAudioPosition()
 
   expectAudioPlaybackVolumeToBe = async (expectedVolume: Volume): Promise<void> =>
     this.step(`expectAudioVolumeToBe ${expectedVolume}`, async () => {
@@ -60,7 +65,7 @@ export abstract class PageObject {
       expect(actualVolume).toBe(expectedVolume)
     })
 
-  private getAudioPlaybackVolume = (): Promise<Volume> => this.page.evaluate(() => window.testHooks.audioPlaybackVolume)
+  private getAudioPlaybackVolume = (): Promise<Volume> => this.testHooks.getAudioPlaybackVolume()
 
   getSounds = (): Promise<Sound[]> =>
     this.step('getSounds', async () => {

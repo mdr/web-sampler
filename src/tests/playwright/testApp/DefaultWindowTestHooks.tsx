@@ -34,17 +34,11 @@ export class DefaultWindowTestHooks implements WindowTestHooks {
     this.audioElement.completePlayback()
   }
 
-  get isAudioPlaying(): boolean {
-    return !this.audioElement.paused
-  }
+  isAudioPlaying = (): boolean => !this.audioElement.paused
 
-  get audioPosition(): Seconds {
-    return Seconds(this.audioElement.currentTime)
-  }
+  getAudioPosition = (): Seconds => Seconds(this.audioElement.currentTime)
 
-  get audioPlaybackVolume(): Volume {
-    return Volume(this.audioElement.volume)
-  }
+  getAudioPlaybackVolume = (): Volume => Volume(this.audioElement.volume)
 
   clockNext = () => this.clock?.next()
 

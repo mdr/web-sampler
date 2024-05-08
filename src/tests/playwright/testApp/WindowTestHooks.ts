@@ -14,9 +14,11 @@ export interface WindowTestHooks {
   // Playback
   simulateAudioPlaybackComplete(): void
 
-  isAudioPlaying: boolean
-  audioPosition: Seconds
-  audioPlaybackVolume: Volume
+  isAudioPlaying(): boolean
+
+  getAudioPosition(): Seconds
+
+  getAudioPlaybackVolume(): Volume
 
   // Sounds
   getSoundsJson(): string
@@ -26,5 +28,6 @@ export interface WindowTestHooks {
 
   clockTick(millis: Millis): void
 
+  // Misc
   visitNotFoundPage(): void
 }
