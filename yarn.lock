@@ -2186,16 +2186,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@chromatic-com/storybook@npm:^1.3.3":
-  version: 1.3.3
-  resolution: "@chromatic-com/storybook@npm:1.3.3"
+"@chromatic-com/storybook@npm:^1.3.4":
+  version: 1.3.4
+  resolution: "@chromatic-com/storybook@npm:1.3.4"
   dependencies:
-    chromatic: "npm:^11.3.0"
+    chromatic: "npm:^11.3.1"
     filesize: "npm:^10.0.12"
     jsonfile: "npm:^6.1.0"
     react-confetti: "npm:^6.1.0"
     strip-ansi: "npm:^7.1.0"
-  checksum: 7667b76f693132ca184a5abd97d8922e5017f398c6f51ea83ed89d751d1ec70df508704624981ce020d87722af660d55d473bc4bc6fa386563bacf869518a9d8
+  checksum: 2255e8bc0fa723403e176ed962f1908bedf7312a461cb6ba28e6e357d5dfe39585b1ebe93e05133e495b6a230110bd27a7e13568ce6b63d3e3083a38dbc30bb7
   languageName: node
   linkType: hard
 
@@ -5698,9 +5698,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/react@npm:^15.0.6":
-  version: 15.0.6
-  resolution: "@testing-library/react@npm:15.0.6"
+"@testing-library/react@npm:^15.0.7":
+  version: 15.0.7
+  resolution: "@testing-library/react@npm:15.0.7"
   dependencies:
     "@babel/runtime": "npm:^7.12.5"
     "@testing-library/dom": "npm:^10.0.0"
@@ -5712,7 +5712,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 3705a2272f929f2f848f5d7e6ac9829bf7ecc1725a35733ffae7e7a261d4bdab470b080558e8544edb1f9ba25db9fbc4232527df9b4ec6ab6ae4462a902a7f95
+  checksum: ac8ee8968e81949ecb35f7ee34741c2c043f73dd7fee2247d56f6de6a30de4742af94f25264356863974e54387485b46c9448ecf3f6ca41cf4339011c369f2d4
   languageName: node
   linkType: hard
 
@@ -5977,7 +5977,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^20.12.10":
+"@types/node@npm:*":
   version: 20.12.10
   resolution: "@types/node@npm:20.12.10"
   dependencies:
@@ -5992,6 +5992,15 @@ __metadata:
   dependencies:
     undici-types: "npm:~5.26.4"
   checksum: 29d60ddd83a8216daf90d4bf101a6eff7fcf034b24bb89da90291017ec54c33b5ce30e7c125aef3f23f756037f0c382d15ebd434ad9c4536c8db8f1fb129f0ce
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^20.12.11":
+  version: 20.12.11
+  resolution: "@types/node@npm:20.12.11"
+  dependencies:
+    undici-types: "npm:~5.26.4"
+  checksum: efaa7b08c50ba6e6982ac7d531ba08d5935539ba76e954807df1ff9382a319ead7e003ccaca5ad7cf33ecf53f212507f7c1f2794bd2ff52df6365fef21f6e1fb
   languageName: node
   linkType: hard
 
@@ -7270,9 +7279,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chromatic@npm:^11.3.0":
-  version: 11.3.0
-  resolution: "chromatic@npm:11.3.0"
+"chromatic@npm:^11.3.1":
+  version: 11.3.1
+  resolution: "chromatic@npm:11.3.1"
   peerDependencies:
     "@chromatic-com/cypress": ^0.*.* || ^1.0.0
     "@chromatic-com/playwright": ^0.*.* || ^1.0.0
@@ -7285,7 +7294,7 @@ __metadata:
     chroma: dist/bin.js
     chromatic: dist/bin.js
     chromatic-cli: dist/bin.js
-  checksum: e977ef43a43ebb0250ec8fc46f5751c8cb9b798f75fcf9ec52485c1127caf9d6cef0346a9dd1660a8967faf1a7cde579571a0ac130cfaf475d6f22e4929003b6
+  checksum: aa1a05a883b8f0b6db4d4a0dbe1d519ec3fe41ec88661790c3da032d6397f11512c24cbb229f8a5b1d240632004c3ee255aeaa54863652bde41734f63290e36b
   languageName: node
   linkType: hard
 
@@ -14326,7 +14335,7 @@ __metadata:
   resolution: "web-sampler@workspace:."
   dependencies:
     "@atlaskit/inline-edit": "npm:^13.2.1"
-    "@chromatic-com/storybook": "npm:^1.3.3"
+    "@chromatic-com/storybook": "npm:^1.3.4"
     "@mdi/js": "npm:^7.4.47"
     "@mdi/react": "npm:^1.6.1"
     "@playwright/experimental-ct-react": "npm:^1.44.0"
@@ -14340,14 +14349,14 @@ __metadata:
     "@storybook/react-vite": "npm:^8.0.10"
     "@storybook/test": "npm:^8.0.10"
     "@testing-library/jest-dom": "npm:^6.4.5"
-    "@testing-library/react": "npm:^15.0.6"
+    "@testing-library/react": "npm:^15.0.7"
     "@testing-library/react-hooks": "npm:^8.0.1"
     "@testing-library/user-event": "npm:^14.5.2"
     "@types/async-lock": "npm:^1.4.2"
     "@types/file-saver": "npm:^2.0.7"
     "@types/humanize-duration": "npm:^3.27.4"
     "@types/lodash": "npm:^4.17.1"
-    "@types/node": "npm:^20.12.10"
+    "@types/node": "npm:^20.12.11"
     "@types/react": "npm:^18.3.1"
     "@types/react-dom": "npm:^18.3.0"
     "@types/sinonjs__fake-timers": "npm:^8.1.5"
@@ -14406,7 +14415,7 @@ __metadata:
     vite: "npm:^5.2.11"
     vite-plugin-checker: "npm:^0.6.4"
     vitest: "npm:^1.6.0"
-    zod: "npm:^3.23.6"
+    zod: "npm:^3.23.8"
   languageName: unknown
   linkType: soft
 
@@ -14686,9 +14695,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:^3.23.6":
-  version: 3.23.6
-  resolution: "zod@npm:3.23.6"
-  checksum: 9181606c656235cf6454c60ded6ec783226acafc0206844e9729b4d3c1c6ade411b195fa2590e882d3368c82580a44869567f7aebab005bf8d8476db6186d43f
+"zod@npm:^3.23.8":
+  version: 3.23.8
+  resolution: "zod@npm:3.23.8"
+  checksum: 8f14c87d6b1b53c944c25ce7a28616896319d95bc46a9660fe441adc0ed0a81253b02b5abdaeffedbeb23bdd25a0bf1c29d2c12dd919aef6447652dd295e3e69
   languageName: node
   linkType: hard

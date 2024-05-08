@@ -9,6 +9,11 @@ tasks:
     cmds:
       - yarn
       - yarn dev
+  run-test-app:
+    desc: Run the TestApp (used in component tests)
+    cmds:
+      - yarn
+      - VITE_USE_TEST_APP=true yarn dev
   update-screenshots:
     aliases:
       - us

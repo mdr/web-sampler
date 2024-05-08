@@ -3,14 +3,17 @@ import { Millis, Seconds, Volume } from '../../../utils/types/brandedTypes.ts'
 
 export interface WindowTestHooks {
   // Recording
-  simulateAudioRecordingVolume: (volume: Volume) => void
-  primeStartRecordingOutcome: (outcome: StartRecordingOutcome) => void
-  primeNoAudioOnStopRecording: () => void
+  simulateAudioRecordingVolume(volume: Volume): void
+
+  primeStartRecordingOutcome(outcome: StartRecordingOutcome): void
+
+  primeNoAudioOnStopRecording(): void
 
   getAudioRecorderState(): AudioRecorderState
 
   // Playback
-  simulateAudioPlaybackComplete: () => void
+  simulateAudioPlaybackComplete(): void
+
   isAudioPlaying: boolean
   audioPosition: Seconds
   audioPlaybackVolume: Volume
@@ -19,8 +22,9 @@ export interface WindowTestHooks {
   getSoundsJson(): string
 
   // Clock
-  clockNext: () => void
-  clockTick: (millis: Millis) => void
+  clockNext(): void
 
-  visitNotFoundPage: () => boolean
+  clockTick(millis: Millis): void
+
+  visitNotFoundPage(): void
 }
