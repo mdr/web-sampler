@@ -83,7 +83,7 @@
     "blob-polyfill": "^7.0.20220408",
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.2",
-    "eslint-plugin-react-refresh": "^0.4.6",
+    "eslint-plugin-react-refresh": "^0.4.7",
     "eslint-plugin-storybook": "^0.8.0",
     "fake-indexeddb": "^5.0.2",
     "flush-promises": "^1.0.2",
