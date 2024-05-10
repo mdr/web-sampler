@@ -33,7 +33,7 @@ jobs:
         run: yarn test
 
       - name: Install Playwright Browsers 🌐
-        run: yarn playwright install
+        run: yarn playwright install chromium
 
       - name: Run component tests 🎭
         run: yarn test-ct
@@ -49,6 +49,7 @@ jobs:
         run: yarn build
 
       - name: Deploy 🚀
+        if: github.ref == 'refs/heads/main'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: dist
