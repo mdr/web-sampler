@@ -1,6 +1,7 @@
 import { Input, TextField } from 'react-aria-components'
 import { EditSoundboardPaneTestIds } from './editSoundboardPane/EditSoundboardPaneTestIds.ts'
 import InlineEdit from '@atlaskit/inline-edit'
+import { soundboardNameAsDisplayName } from '../../types/Soundboard.ts'
 
 export interface SoundboardNameTextFieldProps {
   name: string
@@ -13,9 +14,9 @@ export const SoundboardNameTextField = ({ name, setName }: SoundboardNameTextFie
     defaultValue={name}
     editView={({ value, onChange }) => (
       // my-[2px] - to avoid jitter when switching from read to edit view
-      <TextField className="my-[2px] flex flex-col space-y-2">
+      <TextField aria-label="Soundboard name" className="my-[2px] flex flex-col space-y-2">
         <Input
-          data-testid={EditSoundboardPaneTestIds.soundNameInput}
+          data-testid={EditSoundboardPaneTestIds.soundboardNameInput}
           className="block w-full rounded-md border border-gray-300 px-3 text-2xl shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
           value={value}
           autoFocus
@@ -25,7 +26,11 @@ export const SoundboardNameTextField = ({ name, setName }: SoundboardNameTextFie
         />
       </TextField>
     )}
-    readView={() => <h1 className="text-2xl">{name}</h1>}
+    readView={() => (
+      <h1 data-testid={EditSoundboardPaneTestIds.soundboardNameInput} className="text-2xl">
+        {soundboardNameAsDisplayName(name)}
+      </h1>
+    )}
     onConfirm={setName}
   />
 )

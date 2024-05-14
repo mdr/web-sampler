@@ -2,7 +2,7 @@ import { useSoundboards } from '../../../sounds/soundHooks.ts'
 import { Link } from 'react-router-dom'
 import { editSoundboardRoute, useSoundboardIdParam } from '../../router.tsx'
 import { SoundboardsSidebarTestIds } from './SoundboardsSidebarTestIds.ts'
-import { getDisplayName, sortSoundboardsByDisplayName } from '../../../types/Soundboard.ts'
+import { getSoundboardDisplayName, sortSoundboardsByDisplayName } from '../../../types/Soundboard.ts'
 import { NewSoundboardButton } from '../NewSoundboardButton.tsx'
 
 export const SoundboardsSidebar = () => {
@@ -24,7 +24,7 @@ export const SoundboardsSidebar = () => {
                   draggable={false}
                   data-testid={SoundboardsSidebarTestIds.soundboardName}
                 >
-                  {getDisplayName(soundboard)}
+                  {getSoundboardDisplayName(soundboard)}
                 </Link>
               </div>
             </li>

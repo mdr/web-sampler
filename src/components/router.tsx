@@ -55,3 +55,5 @@ export const editSoundRoute = (soundId: SoundId): string => `/sound/${soundId}`
 export const editSoundboardRoute = (soundboardId: SoundboardId): string => `/soundboard/${soundboardId}`
 
 export const playSoundboardRoute = (): string => '/play'
+
+export const soundboardsRoute = (): string => '/soundboards'

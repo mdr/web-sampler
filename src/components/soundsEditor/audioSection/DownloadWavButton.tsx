@@ -1,5 +1,5 @@
 import { mdiDownload } from '@mdi/js'
-import { getDisplayName, SoundWithDefiniteAudio } from '../../../types/Sound.ts'
+import { getSoundDisplayName, SoundWithDefiniteAudio } from '../../../types/Sound.ts'
 import { Button } from '../../shared/Button.tsx'
 import { getPlayRegionPcm } from '../../../types/SoundAudio.ts'
 import FileSaver from 'file-saver'
@@ -14,7 +14,7 @@ export const DownloadWavButton = ({ sound }: DownloadWavButtonProps) => {
   const doDownload = () => {
     const audioData = { pcm: getPlayRegionPcm(sound.audio), sampleRate: sound.audio.sampleRate }
     const audioBlob = pcmToWavBlob(audioData)
-    FileSaver.saveAs(audioBlob, `${getDisplayName(sound)}.wav`)
+    FileSaver.saveAs(audioBlob, `${getSoundDisplayName(sound)}.wav`)
   }
   return (
     <Button

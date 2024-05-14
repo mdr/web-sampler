@@ -2,6 +2,7 @@ import { TestId } from '../../utils/types/brandedTypes.ts'
 
 export const NavbarTestIds = {
   homeLink: TestId('Navbar.homeLink'),
+  soundboardsLink: TestId('Navbar.soundboardsLink'),
   undoButton: TestId('Navbar.undoButton'),
   redoButton: TestId('Navbar.redoButton'),
   menuButton: TestId('Navbar.menuButton'),

@@ -1,15 +1,15 @@
 import { useSounds } from '../../../sounds/soundHooks.ts'
 import { Link } from 'react-router-dom'
 import { NewSoundButton } from '../NewSoundButton.tsx'
-import { getDisplayName, sortSoundsByDisplayName } from '../../../types/Sound.ts'
+import { getSoundDisplayName, sortSoundsByDisplayName } from '../../../types/Sound.ts'
 import { editSoundRoute, useSoundIdParam } from '../../router.tsx'
-import { SoundSidebarTestIds } from './SoundSidebarTestIds.ts'
+import { SoundsSidebarTestIds } from './SoundsSidebarTestIds.ts'
 
 export const SoundsSidebar = () => {
   const currentSoundId = useSoundIdParam()
   const sounds = sortSoundsByDisplayName(useSounds())
   return (
-    <div data-testid={SoundSidebarTestIds.sidebar} className="flex h-full flex-col">
+    <div data-testid={SoundsSidebarTestIds.sidebar} className="flex h-full flex-col">
       <div className="flex-grow overflow-auto">
         <ul>
           {sounds.map((sound) => (
@@ -22,9 +22,9 @@ export const SoundsSidebar = () => {
                   to={editSoundRoute(sound.id)}
                   className="block w-full p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
                   draggable={false}
-                  data-testid={SoundSidebarTestIds.soundName}
+                  data-testid={SoundsSidebarTestIds.soundName}
                 >
-                  {getDisplayName(sound)}
+                  {getSoundDisplayName(sound)}
                 </Link>
               </div>
             </li>
@@ -32,7 +32,7 @@ export const SoundsSidebar = () => {
         </ul>
       </div>
       <div className="flex justify-center px-4 py-4">
-        <NewSoundButton testId={SoundSidebarTestIds.newSoundButton} />
+        <NewSoundButton testId={SoundsSidebarTestIds.newSoundButton} />
       </div>
     </div>
   )

@@ -2,7 +2,7 @@ import { Input, TextField } from 'react-aria-components'
 import InlineEdit from '@atlaskit/inline-edit'
 
 import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
-import { getDisplayNameText } from '../../../types/Sound.ts'
+import { soundNameAsDisplayName } from '../../../types/Sound.ts'
 
 export interface SoundNameTextFieldProps {
   name: string
@@ -12,7 +12,6 @@ export interface SoundNameTextFieldProps {
 export const SoundNameTextField = ({ name, setName }: SoundNameTextFieldProps) => (
   <InlineEdit
     readViewFitContainerWidth
-    // keepEditViewOpenOnBlur
     defaultValue={name}
     editView={({ value, onChange }) => (
       // my-[2px] - to avoid jitter when switching from read to edit view
@@ -30,7 +29,7 @@ export const SoundNameTextField = ({ name, setName }: SoundNameTextFieldProps) =
     )}
     readView={() => (
       <h1 data-testid={EditSoundPaneTestIds.soundNameInput} className="text-2xl">
-        {getDisplayNameText(name)}
+        {soundNameAsDisplayName(name)}
       </h1>
     )}
     onConfirm={setName}

@@ -12,7 +12,7 @@ import {
 import { EditSoundboardPaneTestIds } from './EditSoundboardPaneTestIds.ts'
 import { Button, ButtonVariant } from '../../shared/Button.tsx'
 import { useSounds } from '../../../sounds/soundHooks.ts'
-import { getDisplayName } from '../../../types/Sound.ts'
+import { getSoundDisplayName } from '../../../types/Sound.ts'
 
 export const AddSoundDialog = () => {
   const sounds = useSounds()
@@ -39,7 +39,7 @@ export const AddSoundDialog = () => {
                       key={sound.id}
                       className="hover:bg-highlight-background hover:text-highlight-foreground px-4 py-2"
                     >
-                      {getDisplayName(sound)}
+                      {getSoundDisplayName(sound)}
                     </ListBoxItem>
                   ))}
                 </ListBox>

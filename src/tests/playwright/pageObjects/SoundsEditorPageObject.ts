@@ -4,10 +4,10 @@ import { PageObject } from './PageObject.ts'
 import { AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
 import { NavbarTestIds } from '../../../components/navbar/NavbarTestIds.ts'
 import { launchApp } from './launchApp.tsx'
-import { SoundSidebarPageObject } from './SoundSidebarPageObject.ts'
+import { SoundsSidebarPageObject } from './SoundsSidebarPageObject.ts'
 import { platform } from 'node:os'
 import { NavbarPageObject } from './NavbarPageObject.ts'
-import { SoundSidebarTestIds } from '../../../components/soundsEditor/sidebar/SoundSidebarTestIds.ts'
+import { SoundsSidebarTestIds } from '../../../components/soundsEditor/sidebar/SoundsSidebarTestIds.ts'
 import { EditSoundPaneTestIds } from '../../../components/soundsEditor/editSoundPane/EditSoundPaneTestIds.ts'
 import { TestAppProps } from '../TestApp.tsx'
 import { Path, Volume } from '../../../utils/types/brandedTypes.ts'
@@ -64,12 +64,12 @@ export class SoundsEditorPageObject extends PageObject {
   protected readonly name = 'SoundsEditorPage'
 
   static verifyIsShown = async (mountResult: MountResult): Promise<SoundsEditorPageObject> => {
-    await expect(mountResult.getByTestId(SoundSidebarTestIds.sidebar)).toBeVisible()
+    await expect(mountResult.getByTestId(SoundsSidebarTestIds.sidebar)).toBeVisible()
     return new SoundsEditorPageObject(mountResult)
   }
 
   get sidebar() {
-    return new SoundSidebarPageObject(this.mountResult)
+    return new SoundsSidebarPageObject(this.mountResult)
   }
 
   get navbar() {

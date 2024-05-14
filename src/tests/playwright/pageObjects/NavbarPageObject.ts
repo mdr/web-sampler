@@ -3,9 +3,16 @@ import { NavbarTestIds } from '../../../components/navbar/NavbarTestIds.ts'
 import { NavbarMenuPageObject } from './NavbarMenuPageObject.ts'
 import { StorageWarningDialogPageObject } from './StorageWarningDialogPageObject.ts'
 import { StorageWarningDialogTestIds } from '../../../components/navbar/StorageWarningDialogTestIds.ts'
+import { SoundboardsEditorPageObject } from './SoundboardsEditorPageObject.ts'
 
 export class NavbarPageObject extends PageObject {
   protected readonly name = 'Navbar'
+
+  pressSoundboardsLink = (): Promise<SoundboardsEditorPageObject> =>
+    this.step('pressSoundboardsLink', async () => {
+      await this.press(NavbarTestIds.soundboardsLink)
+      return SoundboardsEditorPageObject.verifyIsShown(this.mountResult)
+    })
 
   pressUndo = (): Promise<void> => this.step('pressUndo', () => this.press(NavbarTestIds.undoButton))
 

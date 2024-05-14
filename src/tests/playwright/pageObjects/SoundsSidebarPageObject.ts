@@ -1,17 +1,16 @@
 import { PageObject } from './PageObject.ts'
 import { expect } from '@playwright/experimental-ct-react'
+import { SoundsSidebarTestIds } from '../../../components/soundsEditor/sidebar/SoundsSidebarTestIds.ts'
 
-import { SoundSidebarTestIds } from '../../../components/soundsEditor/sidebar/SoundSidebarTestIds.ts'
+export class SoundsSidebarPageObject extends PageObject {
+  protected readonly name = 'SoundsSidebar'
 
-export class SoundSidebarPageObject extends PageObject {
-  protected readonly name = 'SoundSidebar'
-
-  pressNewSound = (): Promise<void> => this.step('pressNewSound', () => this.press(SoundSidebarTestIds.newSoundButton))
+  pressNewSound = (): Promise<void> => this.step('pressNewSound', () => this.press(SoundsSidebarTestIds.newSoundButton))
 
   expectSoundNamesToBe = (expectedNamesInOrder: string[]) =>
     this.step(`expectSoundNamesToBe [${expectedNamesInOrder.join(', ')}]`, () =>
       expect(async () => {
-        const soundNames = this.page.getByTestId(SoundSidebarTestIds.soundName)
+        const soundNames = this.page.getByTestId(SoundsSidebarTestIds.soundName)
         const textContents = await soundNames.evaluateAll((nodes) =>
           nodes.map((node) => (node as HTMLElement).innerText),
         )
@@ -21,6 +20,6 @@ export class SoundSidebarPageObject extends PageObject {
 
   pickSound = (name: string): Promise<void> =>
     this.step(`pickSound ${name}`, () =>
-      this.mountResult.getByTestId(SoundSidebarTestIds.sidebar).getByText(name).click(),
+      this.mountResult.getByTestId(SoundsSidebarTestIds.sidebar).getByText(name).click(),
     )
 }

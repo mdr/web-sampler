@@ -15,7 +15,7 @@ import {
   useAudioRecordingComplete,
 } from '../../../audioRecorder/audioRecorderHooks.ts'
 import { useSound, useSoundActions } from '../../../sounds/soundHooks.ts'
-import { getDisplayName, soundHasAudio, SoundId } from '../../../types/Sound.ts'
+import { getSoundDisplayName, soundHasAudio, SoundId } from '../../../types/Sound.ts'
 import { fireAndForget } from '../../../utils/utils.ts'
 import { AudioSection } from '../audioSection/AudioSection.tsx'
 import { DeleteButton } from './DeleteButton.tsx'
@@ -99,7 +99,7 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPaneProps) => {
   const handleDeleteButtonPressed = () => {
     soundActions.deleteSound(soundId)
     navigate('/')
-    toast.info(`Deleted sound ${getDisplayName(sound)}`)
+    toast.info(`Deleted sound ${getSoundDisplayName(sound)}`)
   }
 
   const audio = sound.audio

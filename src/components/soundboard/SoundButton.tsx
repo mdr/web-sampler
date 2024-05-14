@@ -1,7 +1,7 @@
 import { Button } from 'react-aria-components'
 import Icon from '@mdi/react'
 import { mdiPlay } from '@mdi/js'
-import { getDisplayName, SoundWithDefiniteAudio } from '../../types/Sound.ts'
+import { getSoundDisplayName, SoundWithDefiniteAudio } from '../../types/Sound.ts'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { unawaited } from '../../utils/utils.ts'
 import { Option } from '../../utils/types/Option.ts'
@@ -88,7 +88,7 @@ export const SoundButton = ({ sound, hotkey }: SoundButtonProps) => {
         onPress={handlePress}
       >
         <span className="relative z-10 block h-[100px] overflow-hidden text-sm">
-          {getDisplayName(sound)}
+          {getSoundDisplayName(sound)}
           <span className="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-gray-50 to-transparent group-hover:from-gray-100"></span>
         </span>{' '}
         <kbd className="absolute right-1 top-1 rounded bg-gray-200 p-1">{hotkey}</kbd>

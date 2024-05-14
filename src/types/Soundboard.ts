@@ -17,8 +17,11 @@ export interface Soundboard {
 
 export const newSoundboard = (): Soundboard => ({ id: newSoundboardId(), name: '', sounds: [] })
 
-export const getDisplayName = (soundboard: Soundboard): string =>
-  soundboard.name.trim() === '' ? 'Untitled Soundboard' : soundboard.name
+export const getSoundboardDisplayName = (soundboard: Soundboard): string => soundboardNameAsDisplayName(soundboard.name)
+
+export const soundboardNameAsDisplayName = (name: string): string => (name.trim() === '' ? 'Untitled Soundboard' : name)
 
 export const sortSoundboardsByDisplayName = (soundsboards: readonly Soundboard[]): Soundboard[] =>
-  [...soundsboards].sort((board1, board2) => displayCollator.compare(getDisplayName(board1), getDisplayName(board2)))
+  [...soundsboards].sort((board1, board2) =>
+    displayCollator.compare(getSoundboardDisplayName(board1), getSoundboardDisplayName(board2)),
+  )
