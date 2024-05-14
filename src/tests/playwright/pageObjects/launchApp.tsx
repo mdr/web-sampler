@@ -6,7 +6,7 @@ import { NotFoundPageObject } from './NotFoundPageObject.ts'
 import { ProxyWindowTestHooks } from '../testApp/ProxyWindowTestHooks.ts'
 
 const areTestHooksInstalled = (mountResult: MountResult): Promise<boolean> =>
-  mountResult.page().evaluate(() => window.testHooks.visitNotFoundPage !== undefined)
+  mountResult.page().evaluate(() => window.testHooks?.visitNotFoundPage !== undefined)
 
 const waitForTestHooksToBeInstalled = (mountResult: MountResult): Promise<void> =>
   expect.poll(() => areTestHooksInstalled(mountResult), { message: 'Wait for test hooks to be ready' }).toBe(true)
