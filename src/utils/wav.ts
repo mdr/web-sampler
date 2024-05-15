@@ -1,14 +1,10 @@
 // Adapted from https://github.com/Experience-Monks/audiobuffer-to-wav (MIT License)
 // itself adapted from https://github.com/mattdiamond/Recorderjs (MIT License)
 import { Hz } from './types/brandedTypes.ts'
-import { DEFAULT_SAMPLE_RATE } from '../types/soundConstants.ts'
 import { AUDIO_WAV } from './mediaTypes.ts'
 import { AudioData } from '../types/AudioData.ts'
 
-export const pcmToWavBlob = ({ pcm, sampleRate }: AudioData): Blob =>
-  new Blob([pcmToWav(pcm, sampleRate)], { type: AUDIO_WAV })
-
-const pcmToWav = (pcm: Float32Array, sampleRate: Hz): ArrayBuffer => encodeWav(pcm, { sampleRate })
+export const pcmToWavBlob = (audioData: AudioData): Blob => new Blob([encodeWav(audioData)], { type: AUDIO_WAV })
 
 interface EncodeWavOptions {
   readonly format?: 1 | 3
@@ -18,17 +14,17 @@ interface EncodeWavOptions {
 }
 
 const encodeWav = (
-  samples: Float32Array,
-  { format = 1, sampleRate = DEFAULT_SAMPLE_RATE, numChannels = 1, bitDepth = 16 }: EncodeWavOptions = {},
+  { pcm, sampleRate }: AudioData,
+  { format = 1, numChannels = 1, bitDepth = 16 }: EncodeWavOptions = {},
 ): ArrayBuffer => {
   const bytesPerSample = bitDepth / 8
   const blockAlign = numChannels * bytesPerSample
 
-  const buffer = new ArrayBuffer(44 + samples.length * bytesPerSample)
+  const buffer = new ArrayBuffer(44 + pcm.length * bytesPerSample)
   const view = new DataView(buffer)
 
   writeString(view, 0, 'RIFF')
-  view.setUint32(4, 36 + samples.length * bytesPerSample, true)
+  view.setUint32(4, 36 + pcm.length * bytesPerSample, true)
   writeString(view, 8, 'WAVE')
   writeString(view, 12, 'fmt ')
   view.setUint32(16, 16, true)
@@ -39,11 +35,11 @@ const encodeWav = (
   view.setUint16(32, blockAlign, true)
   view.setUint16(34, bitDepth, true)
   writeString(view, 36, 'data')
-  view.setUint32(40, samples.length * bytesPerSample, true)
+  view.setUint32(40, pcm.length * bytesPerSample, true)
   if (format === 1) {
-    floatTo16BitPCM(view, 44, samples)
+    floatTo16BitPCM(view, 44, pcm)
   } else {
-    writeFloat32(view, 44, samples)
+    writeFloat32(view, 44, pcm)
   }
 
   return buffer
