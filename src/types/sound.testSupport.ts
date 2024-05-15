@@ -1,10 +1,8 @@
 import { newSoundId, Sound, SoundId } from './Sound.ts'
-import { Pcm, Samples, Seconds, Volume } from '../utils/types/brandedTypes.ts'
+import { Hz, Pcm, Samples, Volume } from '../utils/types/brandedTypes.ts'
 import { SoundAudio } from './SoundAudio.ts'
-import { DEFAULT_SAMPLE_RATE, secondsToSamples } from './soundConstants.ts'
 
 export const makePcm = (samples: Samples): Pcm => Pcm(new Float32Array(samples))
-export const makePcmOfDuration = (seconds: Seconds): Pcm => makePcm(secondsToSamples(seconds, DEFAULT_SAMPLE_RATE))
 
 export const SoundTestConstants = {
   id: SoundId('SoundTestConstants.id'),
@@ -17,7 +15,8 @@ export const SoundTestConstants = {
   finish: Samples(10),
   volume: Volume(0.5),
   pcm: makePcm(Samples(100)),
-  emptyPcm: makePcmOfDuration(Seconds(0)),
+  sampleRate: Hz(48000),
+  emptyPcm: makePcm(Samples(0)),
 }
 
 export const makeSound = ({
@@ -32,7 +31,7 @@ export const makeSound = ({
 
 export const makeSoundAudio = ({
   pcm = SoundTestConstants.pcm,
-  sampleRate = DEFAULT_SAMPLE_RATE,
+  sampleRate = SoundTestConstants.sampleRate,
   start = SoundTestConstants.start,
   finish = SoundTestConstants.finish,
   volume = SoundTestConstants.volume,
@@ -48,7 +47,7 @@ export const makeSoundWithAudio = ({
   id = newSoundId(),
   name = SoundTestConstants.name,
   pcm = SoundTestConstants.pcm,
-  sampleRate = DEFAULT_SAMPLE_RATE,
+  sampleRate = SoundTestConstants.sampleRate,
   start = SoundTestConstants.start,
   finish = SoundTestConstants.finish,
   volume = SoundTestConstants.volume,

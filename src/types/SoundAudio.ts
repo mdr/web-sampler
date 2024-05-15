@@ -1,6 +1,6 @@
 import { Hz, MAX_VOLUME, Pcm, Samples, Seconds, secondsToMillis, Volume } from '../utils/types/brandedTypes.ts'
 import { pcmLength, pcmSlice } from '../utils/pcmUtils.ts'
-import { samplesToSeconds } from './soundConstants.ts'
+import { samplesToSeconds } from './sampleConversions.ts'
 import { AudioData } from './AudioData.ts'
 import humanizeDuration from 'humanize-duration'
 

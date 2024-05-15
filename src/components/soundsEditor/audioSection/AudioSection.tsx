@@ -19,7 +19,7 @@ import { EditSoundPaneTestIds } from '../editSoundPane/EditSoundPaneTestIds.ts'
 import { pcmToWavBlob } from '../../../utils/wav.ts'
 import { VolumeSlider } from './VolumeSlider.tsx'
 import { pcmSlice } from '../../../utils/pcmUtils.ts'
-import { samplesToSeconds, secondsToSamples } from '../../../types/soundConstants.ts'
+import { samplesToSeconds, secondsToSamples } from '../../../types/sampleConversions.ts'
 
 const BIG_SEEK_JUMP = Seconds(0.5)
 const SMALL_SEEK_JUMP = Seconds(0.1)
