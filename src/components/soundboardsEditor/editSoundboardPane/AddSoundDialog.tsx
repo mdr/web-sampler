@@ -11,10 +11,12 @@ import {
 import { EditSoundboardPaneTestIds } from './EditSoundboardPaneTestIds.ts'
 import { Button, ButtonVariant } from '../../shared/Button.tsx'
 import { useSounds } from '../../../sounds/soundHooks.ts'
-import { getSoundDisplayName } from '../../../types/Sound.ts'
+import { getSoundDisplayName, sortSoundsByDisplayName } from '../../../types/Sound.ts'
+import Icon from '@mdi/react'
+import { mdiCheck } from '@mdi/js'
 
 export const AddSoundDialog = () => {
-  const sounds = useSounds()
+  const sounds = sortSoundsByDisplayName(useSounds())
   return (
     <Dialog data-testid={EditSoundboardPaneTestIds.chooseSoundDialog} className="relative outline-none">
       {({ close }) => {
@@ -33,9 +35,21 @@ export const AddSoundDialog = () => {
                   {sounds.map((sound) => (
                     <ListBoxItem
                       key={sound.id}
-                      className="selected:bg-blue-300 selected:text-white cursor-pointer px-4 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white focus:outline-none"
+                      textValue={getSoundDisplayName(sound)}
+                      className="flex cursor-pointer items-center justify-between px-4 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white focus:outline-none"
                     >
-                      {getSoundDisplayName(sound)}
+                      {({ isSelected }) => (
+                        <>
+                          <span className="group-selected:font-medium flex flex-1 items-center gap-3 truncate font-normal">
+                            {getSoundDisplayName(sound)}
+                          </span>
+                          {isSelected && (
+                            <span className="flex items-center text-sky-600 group-focus:text-white">
+                              <Icon path={mdiCheck} size={1} />
+                            </span>
+                          )}
+                        </>
+                      )}
                     </ListBoxItem>
                   ))}
                 </ListBox>
