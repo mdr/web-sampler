@@ -25,15 +25,15 @@ export const AddSoundDialog = () => {
             </Heading>
             <ComboBox aria-label="Sound">
               <div className="mt-2 flex items-center">
-                <Input className="flex-grow rounded-l-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                <Input className="flex-grow rounded-l-md rounded-r-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
                 <RacButton className="-ml-10 bg-transparent px-3 py-2 text-gray-700">▼</RacButton>
               </div>
-              <Popover className="mt-2 w-64 rounded-md bg-white bg-opacity-90 shadow-lg">
+              <Popover className="entering:animate-in entering:fade-in exiting:animate-out exiting:fade-out mt-2 w-[--trigger-width] rounded-md bg-white shadow-lg">
                 <ListBox className="max-h-60 overflow-y-auto rounded-md border border-gray-300">
                   {sounds.map((sound) => (
                     <ListBoxItem
                       key={sound.id}
-                      className="cursor-pointer px-4 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white focus:outline-none"
+                      className="selected:bg-blue-300 selected:text-white cursor-pointer px-4 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white focus:outline-none"
                     >
                       {getSoundDisplayName(sound)}
                     </ListBoxItem>
