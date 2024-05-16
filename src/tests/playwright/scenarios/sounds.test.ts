@@ -10,7 +10,8 @@ import { assertSoundHasAudio, filesAreEqual } from '../testUtils.ts'
 import { Seconds } from '../../../utils/types/brandedTypes.ts'
 import { MAX_RECORDING_DURATION } from '../../../components/soundsEditor/recordingConstants.ts'
 import {
-  EXPECTED_DOWNLOAD_PATH,
+  EXPECTED_MP3_DOWNLOAD_PATH,
+  EXPECTED_WAV_DOWNLOAD_PATH,
   INVALID_AUDIO_FILE,
   LONG_AUDIO_FILE,
   TEST_AUDIO_FILE,
@@ -172,11 +173,22 @@ test('cropping a sound should modify the audio', async ({ mount }) => {
 test('can download a sound as a WAV file', async ({ mount }) => {
   const soundsEditorPage = await launchAndRecordNewSound(mount)
 
-  const downloadedWavPath = await soundsEditorPage.pressDownloadWav()
+  const downloadedFilePath = await soundsEditorPage.pressDownloadWav()
 
   expect(
-    await filesAreEqual(downloadedWavPath, EXPECTED_DOWNLOAD_PATH),
-    'downloaded Wav file should have the correct contents',
+    await filesAreEqual(downloadedFilePath, EXPECTED_WAV_DOWNLOAD_PATH),
+    'downloaded WAV file should have the correct contents',
+  ).toBe(true)
+})
+
+test('can download a sound as an MP3 file', async ({ mount }) => {
+  const soundsEditorPage = await launchAndRecordNewSound(mount)
+
+  const downloadedFilePath = await soundsEditorPage.pressDownloadMp3()
+  console.log(downloadedFilePath)
+  expect(
+    await filesAreEqual(downloadedFilePath, EXPECTED_MP3_DOWNLOAD_PATH),
+    'downloaded MP3 file should have the correct contents',
   ).toBe(true)
 })
 
