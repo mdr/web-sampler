@@ -29,6 +29,7 @@ import { isChromiumBasedBrowser } from '../../../utils/browserUtils.ts'
 import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
 import { ImportAudioButton } from './ImportAudioButton.tsx'
 import { AudioData } from '../../../types/AudioData.ts'
+import { DownloadMp3Button } from '../audioSection/DownloadMp3Button.tsx'
 
 export interface EditSoundPaneProps {
   soundId: SoundId
@@ -123,6 +124,7 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPaneProps) => {
             <CaptureAudioButton onPress={handleCaptureAudioButtonPressed} />
             <ImportAudioButton soundId={soundId} />
             {soundHasAudio(sound) && getPlayRegionDuration(sound.audio) > 0 && <DownloadWavButton sound={sound} />}
+            {soundHasAudio(sound) && getPlayRegionDuration(sound.audio) > 0 && <DownloadMp3Button sound={sound} />}
             {audio !== undefined && <CropButton soundId={soundId} />}
           </div>
           {soundHasAudio(sound) && <AudioSection sound={sound} />}

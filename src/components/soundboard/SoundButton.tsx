@@ -6,7 +6,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { unawaited } from '../../utils/utils.ts'
 import { Option } from '../../utils/types/Option.ts'
 import { useHotkeys } from 'react-hotkeys-hook'
-import { getPlayRegionPcm } from '../../types/SoundAudio.ts'
+import { getPlayRegionAudioData } from '../../types/SoundAudio.ts'
 import clsx from 'clsx'
 import { pcmToWavBlob } from '../../utils/wav.ts'
 import { Url } from '../../utils/types/brandedTypes.ts'
@@ -24,7 +24,7 @@ export const SoundButton = ({ sound, hotkey }: SoundButtonProps) => {
   const audioRef = useRef<HTMLAudioElement>(null)
 
   useEffect(() => {
-    const audioData = { pcm: getPlayRegionPcm(audio), sampleRate: audio.sampleRate }
+    const audioData = getPlayRegionAudioData(audio)
     const blob = pcmToWavBlob(audioData)
     const objectUrl = Url(URL.createObjectURL(blob))
     setUrl(objectUrl)

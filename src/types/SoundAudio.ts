@@ -44,6 +44,11 @@ export const getPlayRegionDurationFriendly = (audio: SoundAudio): string =>
 
 export const getPlayRegionPcm = (audio: SoundAudio): Pcm => pcmSlice(audio.pcm, audio.start, audio.finish)
 
+export const getPlayRegionAudioData = (audio: SoundAudio): AudioData => ({
+  pcm: getPlayRegionPcm(audio),
+  sampleRate: audio.sampleRate,
+})
+
 export const getStartTime = (audio: SoundAudio): Seconds => samplesToSeconds(audio.start, audio.sampleRate)
 
 export const getFinishTime = (audio: SoundAudio): Seconds => samplesToSeconds(audio.finish, audio.sampleRate)
