@@ -75,13 +75,14 @@ export class MockAudioElement implements PartialAudioElement {
     return this._ended
   }
 
-  play = async (): Promise<void> => {
+  play = (): Promise<void> => {
     if (this.currentTime >= this.duration) {
       this.currentTime = 0
     }
     this._paused = false
     this._ended = false
     this.firePlayListeners()
+    return Promise.resolve()
   }
 
   pause(): void {

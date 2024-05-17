@@ -3,12 +3,7 @@ import Icon from '@mdi/react'
 
 import { TestId } from '../../utils/types/brandedTypes.ts'
 import clsx from 'clsx'
-
-export enum ButtonVariant {
-  ORDINARY = 'ORDINARY',
-  PRIMARY = 'PRIMARY',
-  DANGEROUS = 'DANGEROUS',
-}
+import { ButtonVariant } from './ButtonVariant.tsx'
 
 export interface ButtonProps {
   testId?: TestId
@@ -42,10 +37,10 @@ export const Button = ({
       className={clsx(
         'whitespace-nowrap rounded py-2 text-white focus:outline-none focus:ring-2',
         variant === ButtonVariant.PRIMARY
-          ? 'bg-blue-500 hover:bg-blue-700 focus:ring-blue-300 active:bg-blue-800'
+          ? 'bg-blue-500 active:bg-blue-800 hover:bg-blue-700 focus:ring-blue-300'
           : variant === ButtonVariant.DANGEROUS
-            ? 'bg-red-500 hover:bg-red-700 focus:ring-red-300 active:bg-red-800'
-            : 'bg-gray-500 hover:bg-gray-700 focus:ring-gray-300 active:bg-gray-800',
+            ? 'bg-red-500 active:bg-red-800 hover:bg-red-700 focus:ring-red-300'
+            : 'bg-gray-500 active:bg-gray-800 hover:bg-gray-700 focus:ring-gray-300',
         iconOnly ? 'px-2' : 'px-4',
       )}
       onPress={onPress}

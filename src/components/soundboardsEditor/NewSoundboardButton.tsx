@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import { editSoundboardRoute } from '../router.tsx'
 
 import { TestId } from '../../utils/types/brandedTypes.ts'
-import { Button, ButtonVariant } from '../shared/Button.tsx'
+import { Button } from '../shared/Button.tsx'
+import { ButtonVariant } from '../shared/ButtonVariant.tsx'
 
 export interface NewSoundboardButtonProps {
   testId?: TestId

@@ -40,7 +40,7 @@ export const Navbar = () => {
             icon={mdiUndo}
             testId={NavbarTestIds.undoButton}
             disabled={!canUndo}
-            onPress={soundActions.undo}
+            onPress={() => soundActions.undo()}
           />
         </li>
         <li className="flex">
@@ -49,7 +49,7 @@ export const Navbar = () => {
             icon={mdiRedo}
             testId={NavbarTestIds.redoButton}
             disabled={!canRedo}
-            onPress={soundActions.redo}
+            onPress={() => soundActions.redo()}
           />
         </li>
         <div className="flex-grow" />

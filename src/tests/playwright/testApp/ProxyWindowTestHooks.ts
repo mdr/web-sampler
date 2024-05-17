@@ -10,36 +10,43 @@ type Asyncify<T> = {
 export class ProxyWindowTestHooks implements Asyncify<WindowTestHooks> {
   constructor(private readonly mountResult: MountResult) {}
 
+  private get testHooks(): WindowTestHooks {
+    if (window.testHooks === undefined) {
+      throw new Error('Test hooks not installed')
+    }
+    return window.testHooks
+  }
+
   simulateAudioRecordingVolume = (volume: Volume): Promise<void> =>
-    this.mountResult.page().evaluate((volume: Volume) => window.testHooks.simulateAudioRecordingVolume(volume), volume)
+    this.mountResult.page().evaluate((volume: Volume) => this.testHooks.simulateAudioRecordingVolume(volume), volume)
 
   primeStartRecordingOutcome = (outcome: StartRecordingOutcome): Promise<void> =>
     this.mountResult
       .page()
-      .evaluate((outcome: StartRecordingOutcome) => window.testHooks.primeStartRecordingOutcome(outcome), outcome)
+      .evaluate((outcome: StartRecordingOutcome) => this.testHooks.primeStartRecordingOutcome(outcome), outcome)
 
   primeNoAudioOnStopRecording = (): Promise<void> =>
-    this.mountResult.page().evaluate(() => window.testHooks.primeNoAudioOnStopRecording())
+    this.mountResult.page().evaluate(() => this.testHooks.primeNoAudioOnStopRecording())
 
   getAudioRecorderState = (): Promise<AudioRecorderState> =>
-    this.mountResult.page().evaluate(() => window.testHooks.getAudioRecorderState())
+    this.mountResult.page().evaluate(() => this.testHooks.getAudioRecorderState())
 
   simulateAudioPlaybackComplete = (): Promise<void> =>
-    this.mountResult.page().evaluate(() => window.testHooks.simulateAudioPlaybackComplete())
+    this.mountResult.page().evaluate(() => this.testHooks.simulateAudioPlaybackComplete())
 
-  isAudioPlaying = (): Promise<boolean> => this.mountResult.page().evaluate(() => window.testHooks.isAudioPlaying())
+  isAudioPlaying = (): Promise<boolean> => this.mountResult.page().evaluate(() => this.testHooks.isAudioPlaying())
 
-  getAudioPosition = (): Promise<Seconds> => this.mountResult.page().evaluate(() => window.testHooks.getAudioPosition())
+  getAudioPosition = (): Promise<Seconds> => this.mountResult.page().evaluate(() => this.testHooks.getAudioPosition())
 
   getAudioPlaybackVolume = (): Promise<Volume> =>
-    this.mountResult.page().evaluate(() => window.testHooks.getAudioPlaybackVolume())
+    this.mountResult.page().evaluate(() => this.testHooks.getAudioPlaybackVolume())
 
-  getSoundsJson = (): Promise<string> => this.mountResult.page().evaluate(() => window.testHooks.getSoundsJson())
+  getSoundsJson = (): Promise<string> => this.mountResult.page().evaluate(() => this.testHooks.getSoundsJson())
 
-  clockNext = (): Promise<void> => this.mountResult.page().evaluate(() => window.testHooks.clockNext())
+  clockNext = (): Promise<void> => this.mountResult.page().evaluate(() => this.testHooks.clockNext())
 
   clockTick = (millis: Millis): Promise<void> =>
-    this.mountResult.page().evaluate((millis: Millis) => window.testHooks.clockTick(millis), millis)
+    this.mountResult.page().evaluate((millis: Millis) => this.testHooks.clockTick(millis), millis)
 
-  visitNotFoundPage = (): Promise<void> => this.mountResult.page().evaluate(() => window.testHooks.visitNotFoundPage())
+  visitNotFoundPage = (): Promise<void> => this.mountResult.page().evaluate(() => this.testHooks.visitNotFoundPage())
 }

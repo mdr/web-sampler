@@ -3,11 +3,12 @@ import { toast } from 'react-toastify'
 import { Dialog, Heading } from 'react-aria-components'
 import Icon from '@mdi/react'
 import { mdiAlert, mdiDatabaseLock } from '@mdi/js'
-import { Button, ButtonVariant } from '../shared/Button.tsx'
+import { Button } from '../shared/Button.tsx'
 import { useStorageManagerActions } from '../../storage/storageManagerHooks.ts'
 import { isChromiumBasedBrowser } from '../../utils/browserUtils.ts'
 import { StorageWarningDialogTestIds } from './StorageWarningDialogTestIds.ts'
 import { AttemptToMakeStoragePersistentResult } from '../../storage/StorageManager.tsx'
+import { ButtonVariant } from '../shared/ButtonVariant.tsx'
 
 export const StorageWarningDialog = () => {
   const storageManagerActions = useStorageManagerActions()

@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
-import { Button, ButtonVariant } from '../../shared/Button.tsx'
+import { Button } from '../../shared/Button.tsx'
+import { ButtonVariant } from '../../shared/ButtonVariant.tsx'
 
 export const SoundNotFound = () => {
   const navigate = useNavigate()

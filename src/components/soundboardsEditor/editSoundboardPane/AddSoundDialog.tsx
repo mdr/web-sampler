@@ -9,11 +9,12 @@ import {
   Popover,
 } from 'react-aria-components'
 import { EditSoundboardPaneTestIds } from './EditSoundboardPaneTestIds.ts'
-import { Button, ButtonVariant } from '../../shared/Button.tsx'
+import { Button } from '../../shared/Button.tsx'
 import { useSounds } from '../../../sounds/soundHooks.ts'
 import { getSoundDisplayName, sortSoundsByDisplayName } from '../../../types/Sound.ts'
 import Icon from '@mdi/react'
 import { mdiCheck } from '@mdi/js'
+import { ButtonVariant } from '../../shared/ButtonVariant.tsx'
 
 export const AddSoundDialog = () => {
   const sounds = sortSoundsByDisplayName(useSounds())
@@ -40,7 +41,7 @@ export const AddSoundDialog = () => {
                     >
                       {({ isSelected }) => (
                         <>
-                          <span className="group-selected:font-medium flex flex-1 items-center gap-3 truncate font-normal">
+                          <span className="flex flex-1 items-center gap-3 truncate font-normal group-selected:font-medium">
                             {getSoundDisplayName(sound)}
                           </span>
                           {isSelected && (

@@ -30,7 +30,7 @@ export class DefaultAudioPlayer implements AudioPlayer {
       }
     })
 
-  pause = () => unawaited(this.lock.acquire('lock', async () => this.audioElement.pause()))
+  pause = () => unawaited(this.lock.acquire('lock', () => this.audioElement.pause()))
 
   seek = (time: Seconds) => {
     if (time < 0) {

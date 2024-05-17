@@ -26,12 +26,11 @@ const asSoundAudio = (exportedSoundAudio: ExportedSoundAudio, pcm: Pcm): SoundAu
   volume: exportedSoundAudio.volume,
 })
 
-const getData = async <Type>(entry: Entry, writer: Writer<Type> | WritableWriter): Promise<Type> => {
-  const getData = entry.getData
-  if (getData === undefined) {
-    throw new Error('getData is undefined')
+const getData = <Type>(entry: Entry, writer: Writer<Type> | WritableWriter): Promise<Type> => {
+  if (entry.getData === undefined) {
+    throw new Error('getData is not defined on the entry')
   }
-  return getData(writer)
+  return entry.getData(writer)
 }
 
 const buildSoundIdToPcmMap = async (entries: Entry[]): Promise<Map<SoundId, Pcm>> => {

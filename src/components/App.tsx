@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropsWithChildren } from 'react'
 import { RouterProvider } from 'react-router-dom'
 import { AudioRecorderContext } from '../audioRecorder/AudioRecorderContext.ts'
 import { ToastContainer } from 'react-toastify'
@@ -18,7 +18,7 @@ export interface AppProps {
   config: AppConfig
 }
 
-const nestProviders = (config: AppConfig) => {
+const nestProviders = (config: AppConfig): React.FC<PropsWithChildren> => {
   const { audioRecorder, audioPlayer, soundLibrary, storageManager, audioOperations } = config
   return reactArrayToTree([
     <AudioRecorderContext.Provider value={audioRecorder} />,
@@ -36,7 +36,7 @@ export const App = ({ config }: AppProps) => {
       <ErrorBoundary fallback={<ErrorFallback />}>
         <ExclusiveTab fallback={<AlreadyOpenInAnotherTabPage />}>
           <ToastContainer position="top-center" hideProgressBar closeOnClick closeButton={false} />
-          <AllProviders config={config}>
+          <AllProviders>
             <RouterProvider router={router} />
           </AllProviders>
         </ExclusiveTab>

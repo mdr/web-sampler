@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { fn } from '@storybook/test'
-import { Button, ButtonVariant } from '../components/shared/Button.tsx'
+import { Button } from '../components/shared/Button.tsx'
 import { mdiTrashCan } from '@mdi/js'
+import { ButtonVariant } from '../components/shared/ButtonVariant.tsx'
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {

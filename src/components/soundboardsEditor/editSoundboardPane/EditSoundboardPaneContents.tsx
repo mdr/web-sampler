@@ -1,12 +1,13 @@
 import { useSoundActions, useSoundboard } from '../../../sounds/soundHooks.ts'
 import { SoundboardId } from '../../../types/Soundboard.ts'
 import { SoundboardNameTextField } from '../SoundboardNameTextField.tsx'
-import { Button, ButtonVariant } from '../../shared/Button.tsx'
+import { Button } from '../../shared/Button.tsx'
 import { mdiViewGridPlusOutline } from '@mdi/js'
 import { EditSoundboardPaneTestIds } from './EditSoundboardPaneTestIds.ts'
 import { DialogTrigger } from 'react-aria-components'
 import { Modal } from '../../shared/Modal.tsx'
 import { AddSoundDialog } from './AddSoundDialog.tsx'
+import { ButtonVariant } from '../../shared/ButtonVariant.tsx'
 
 export interface EditSoundboardPaneProps {
   soundboardId: SoundboardId

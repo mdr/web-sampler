@@ -12,10 +12,10 @@ export class FakeStorageManager extends AbstractStorageManager implements Storag
     this.isStoragePersistent = isStoragePersistent
   }
 
-  attemptToMakeStoragePersistent = async (): Promise<AttemptToMakeStoragePersistentResult> => {
+  attemptToMakeStoragePersistent = (): Promise<AttemptToMakeStoragePersistentResult> => {
     if (this.result === AttemptToMakeStoragePersistentResult.SUCCESSFUL) {
       this.isStoragePersistent = true
     }
-    return this.result
+    return Promise.resolve(this.result)
   }
 }

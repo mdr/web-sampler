@@ -22,9 +22,13 @@ export class MemorySoundStore implements SoundStore {
     return sound
   }
 
-  getSoundState = async (): Promise<SoundState> => ({ sounds: [...this.sounds], soundboards: [...this.soundboards] })
+  getSoundState = (): Promise<SoundState> =>
+    Promise.resolve({
+      sounds: [...this.sounds],
+      soundboards: [...this.soundboards],
+    })
 
-  bulkUpdate = async ({
+  bulkUpdate = ({
     soundsToUpsert,
     soundIdsToDelete,
     soundboardsToUpsert,
@@ -34,5 +38,6 @@ export class MemorySoundStore implements SoundStore {
     _.remove(this.sounds, (sound) => soundIdsToDelete.includes(sound.id))
     this.soundboards = _.unionBy(soundboardsToUpsert, this.soundboards, 'id')
     _.remove(this.soundboards, (soundboard) => soundboardIdsToDelete.includes(soundboard.id))
+    return Promise.resolve()
   }
 }
