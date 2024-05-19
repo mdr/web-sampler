@@ -237,3 +237,11 @@ test('can export and import sounds', async ({ mount }) => {
 
   await soundsEditorPage.sidebar.expectSoundNamesToBe(['Sound 1'])
 })
+
+test('display of shortcuts dialog', async ({ mount }) => {
+  const soundsEditorPage = await launchAndCreateNewSound(mount)
+
+  await soundsEditorPage.pressShortcutsButton()
+  
+  await soundsEditorPage.checkScreenshot('shortcuts-dialog')
+})

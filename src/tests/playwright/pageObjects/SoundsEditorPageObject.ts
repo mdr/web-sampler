@@ -128,6 +128,9 @@ export class SoundsEditorPageObject extends PageObject {
 
   pressDelete = (): Promise<void> => this.step('pressDelete', () => this.press(EditSoundPaneTestIds.deleteButton))
 
+  pressShortcutsButton = (): Promise<void> =>
+    this.step('pressShortcutsButton', () => this.press(EditSoundPaneTestIds.shortcutsButton))
+
   pressDuplicateSound = (): Promise<void> =>
     this.step('pressDuplicateSound', () => this.press(EditSoundPaneTestIds.duplicateButton))
 
