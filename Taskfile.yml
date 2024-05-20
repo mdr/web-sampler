@@ -46,3 +46,7 @@ tasks:
     cmds:
       - yarn
       - yarn test-ct --ui
+  update-yarn:
+    desc: Update yarn to the latest version
+    cmds:
+      - yarn set version latest
