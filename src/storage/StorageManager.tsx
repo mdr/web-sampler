@@ -16,4 +16,6 @@ export interface StorageManager extends StorageManagerState, StorageManagerActio
   addListener(listener: () => void): void
 
   removeListener(listener: () => void): void
+
+  checkIfStorageIsPersistent(): Promise<void>
 }

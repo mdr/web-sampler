@@ -13,6 +13,8 @@ import reactArrayToTree from 'react-array-to-tree'
 import { ExclusiveTab } from './misc/ExclusiveTab.tsx'
 import { AlreadyOpenInAnotherTabPage } from './misc/AlreadyOpenInAnotherTabPage.tsx'
 import { AudioOperationsContext } from '../audioOperations/AudioOperationsContext.ts'
+import useDidMount from 'beautiful-react-hooks/useDidMount'
+import { unawaited } from '../utils/utils.ts'
 
 export interface AppProps {
   config: AppConfig
@@ -31,6 +33,9 @@ const nestProviders = (config: AppConfig): React.FC<PropsWithChildren> => {
 
 export const App = ({ config }: AppProps) => {
   const AllProviders = nestProviders(config)
+  useDidMount(() => {
+    unawaited(config.storageManager.checkIfStorageIsPersistent())
+  })
   return (
     <React.StrictMode>
       <ErrorBoundary fallback={<ErrorFallback />}>

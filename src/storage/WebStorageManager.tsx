@@ -3,15 +3,9 @@ import { isChromiumBasedBrowser } from '../utils/browserUtils.ts'
 import { AttemptToMakeStoragePersistentResult, StorageManager } from './StorageManager.tsx'
 
 export class WebStorageManager extends AbstractStorageManager implements StorageManager {
-  private _isStoragePersistent = false
-
-  private setIsStoragePersistent = (isStoragePersistent: boolean): void => {
-    this._isStoragePersistent = isStoragePersistent
-    this.fireListeners()
-  }
-
-  get isStoragePersistent(): boolean {
-    return this._isStoragePersistent
+  checkIfStorageIsPersistent = async (): Promise<void> => {
+    const isStoragePersistent = await navigator.storage.persisted()
+    this.setIsStoragePersistent(isStoragePersistent)
   }
 
   attemptToMakeStoragePersistent = async (): Promise<AttemptToMakeStoragePersistentResult> => {

@@ -185,7 +185,7 @@ test('can download a sound as an MP3 file', async ({ mount }) => {
   const soundsEditorPage = await launchAndRecordNewSound(mount)
 
   const downloadedFilePath = await soundsEditorPage.pressDownloadMp3()
-  console.log(downloadedFilePath)
+
   expect(
     await filesAreEqual(downloadedFilePath, EXPECTED_MP3_DOWNLOAD_PATH),
     'downloaded MP3 file should have the correct contents',
@@ -242,6 +242,6 @@ test('display of shortcuts dialog', async ({ mount }) => {
   const soundsEditorPage = await launchAndCreateNewSound(mount)
 
   await soundsEditorPage.pressShortcutsButton()
-  
+
   await soundsEditorPage.checkScreenshot('shortcuts-dialog')
 })
