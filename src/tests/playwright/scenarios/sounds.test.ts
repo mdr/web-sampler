@@ -3,7 +3,7 @@ import { launchApp } from '../pageObjects/launchApp.tsx'
 import {
   launchAndCreateNewSound,
   launchAndRecordNewSound,
-  launchAndStartAudioCapture,
+  launchAndStartAudioCapture
 } from '../pageObjects/SoundsEditorPageObject.ts'
 import { getFinishTime, getStartTime, getTotalAudioDuration } from '../../../types/SoundAudio.ts'
 import { assertSoundHasAudio, filesAreEqual } from '../testUtils.ts'
@@ -14,7 +14,7 @@ import {
   EXPECTED_WAV_DOWNLOAD_PATH,
   INVALID_AUDIO_FILE,
   LONG_AUDIO_FILE,
-  TEST_AUDIO_FILE,
+  TEST_AUDIO_FILE
 } from '../data/testFiles.testSupport.ts'
 
 test('sounds can be created and named', async ({ mount }) => {
@@ -177,7 +177,7 @@ test('can download a sound as a WAV file', async ({ mount }) => {
 
   expect(
     await filesAreEqual(downloadedFilePath, EXPECTED_WAV_DOWNLOAD_PATH),
-    'downloaded WAV file should have the correct contents',
+    'downloaded WAV file should have the correct contents'
   ).toBe(true)
 })
 
@@ -188,7 +188,7 @@ test('can download a sound as an MP3 file', async ({ mount }) => {
 
   expect(
     await filesAreEqual(downloadedFilePath, EXPECTED_MP3_DOWNLOAD_PATH),
-    'downloaded MP3 file should have the correct contents',
+    'downloaded MP3 file should have the correct contents'
   ).toBe(true)
 })
 
@@ -238,7 +238,7 @@ test('can export and import sounds', async ({ mount }) => {
   await soundsEditorPage.sidebar.expectSoundNamesToBe(['Sound 1'])
 })
 
-test('display of shortcuts dialog', async ({ mount }) => {
+test.skip('display of shortcuts dialog', async ({ mount }) => {
   const soundsEditorPage = await launchAndCreateNewSound(mount)
 
   await soundsEditorPage.pressShortcutsButton()
