@@ -7,7 +7,7 @@ module.exports = {
     // enable for type-checked rules:
     // 'plugin:@typescript-eslint/strict-type-checked',
     'plugin:react-hooks/recommended',
-    'plugin:storybook/recommended'
+    'plugin:storybook/recommended',
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
@@ -19,6 +19,6 @@ module.exports = {
     // for use with @typescript-eslint/strict-type-checked:
     // '@typescript-eslint/restrict-template-expressions': ['error', { 'allowNumber': true }],
     'object-shorthand': ['error', 'always'],
-    'react-refresh/only-export-components': 'warn'
-  }
+    'react-refresh/only-export-components': 'warn',
+  },
 }

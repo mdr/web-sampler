@@ -47,6 +47,6 @@ test('if storage cannot be made persistent, show an appropriate toast', async ({
 
 test('if storage is already persistent, no warning button is shown', async ({ mount }) => {
   const soundsEditorPage = await launchApp(mount, { isStoragePersistent: true })
-  
+
   await soundsEditorPage.navbar.expectStorageWarningButtonToNotBeShown()
 })

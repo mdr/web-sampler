@@ -30,7 +30,7 @@ export const VolumeSlider = ({ volume, onVolumeChange }: VolumeProps) => {
               />
               <SliderThumb
                 data-testid={EditSoundPaneTestIds.volumeSlider}
-                className="dragging:bg-gray-100 top-[50%] h-7 w-7 rounded-full border border-solid border-gray-800/75 bg-white outline-none ring-black transition focus-visible:ring-2"
+                className="top-[50%] h-7 w-7 rounded-full border border-solid border-gray-800/75 bg-white outline-none ring-black transition focus-visible:ring-2 dragging:bg-gray-100"
               />
             </>
           )}
