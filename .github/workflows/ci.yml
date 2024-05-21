@@ -21,6 +21,10 @@ jobs:
         with:
           node-version: '20.10.0'
           cache: 'yarn'
+      #      - name: Install Task
+      #        uses: arduino/setup-task@v2
+
+      - uses: asdf-vm/actions/install@v3
 
       - name: Install dependencies 📥
         run: yarn install
