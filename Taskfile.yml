@@ -54,3 +54,7 @@ tasks:
     desc: Run prettier on all applicable files
     cmds:
       - yarn prettier . --write
+  prettier-check:
+    desc: Check files conform to Prettier formatting
+    cmds:
+      - yarn prettier . --check
