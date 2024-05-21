@@ -30,6 +30,9 @@ jobs:
       - name: Lint 🧹
         run: yarn lint
 
+      - name: Check TypeScript types 🧪
+        run: yarn tsc
+
       - name: Check Prettier formatting 🧹
         run: task prettier-check
 

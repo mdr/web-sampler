@@ -1,9 +1,7 @@
 version: '3'
 
 tasks:
-  default:
-    cmds:
-      - task --list
+  default: task --list
   run:
     desc: Run the app in development mode
     cmds:
@@ -35,6 +33,7 @@ tasks:
     cmds:
       - yarn
       - yarn lint
+      - task: prettier-check
       - yarn tsc
       - yarn test --run
       - yarn playwright install
