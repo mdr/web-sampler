@@ -2,3 +2,4 @@ jq 1.7.1
 nodejs 20.13.1
 task 3.37.2
 yarn 1.22.19
+pre-commit 3.7.1
