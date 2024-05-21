@@ -187,7 +187,6 @@ export class SoundLibrary implements SoundActions {
   updateSoundboardPure = (id: SoundboardId, update: (soundboard: Soundboard) => Soundboard): void => {
     const currentSoundboard = this.getSoundboard(id)
     const updatedSoundboard = update(currentSoundboard)
-    // validateSoundboard(updatedSoundboard)
     if (_.isEqual(currentSoundboard, updatedSoundboard)) {
       return
     }

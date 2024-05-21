@@ -11,7 +11,7 @@ import {
 } from 'react-aria-components'
 import { EditSoundboardPaneTestIds } from './EditSoundboardPaneTestIds.ts'
 import { Button } from '../../shared/Button.tsx'
-import { useSoundActions, useSounds } from '../../../sounds/soundHooks.ts'
+import { useSoundActions, useSoundboard, useSounds } from '../../../sounds/soundHooks.ts'
 import { getSoundDisplayName, sortSoundsByDisplayName, Sound, SoundId } from '../../../types/Sound.ts'
 import Icon from '@mdi/react'
 import { mdiCheck } from '@mdi/js'
@@ -25,7 +25,8 @@ export interface ChooseSoundDialogProps {
 }
 
 export const ChooseSoundDialog = ({ soundboardId }: ChooseSoundDialogProps) => {
-  const sounds = sortSoundsByDisplayName(useSounds())
+  const soundboard = useSoundboard(soundboardId)
+  const availableSounds = sortSoundsByDisplayName(useSounds().filter((sound) => !soundboard.sounds.includes(sound.id)))
   const [selectedSoundId, setSelectedSoundId] = useState<Option<SoundId>>(undefined)
   const soundActions = useSoundActions()
 
@@ -51,7 +52,7 @@ export const ChooseSoundDialog = ({ soundboardId }: ChooseSoundDialogProps) => {
             <Heading slot="title" className="my-0 text-lg font-semibold leading-6 text-slate-700">
               Choose Sound
             </Heading>
-            <ComboBox aria-label="Sound" defaultItems={sounds} onSelectionChange={handleSelectionChange}>
+            <ComboBox aria-label="Sound" defaultItems={availableSounds} onSelectionChange={handleSelectionChange}>
               <div className="mt-2 flex items-center">
                 <Input className="flex-grow rounded-l-md rounded-r-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
                 <RacButton className="-ml-10 bg-transparent px-3 py-2 text-gray-700">▼</RacButton>
