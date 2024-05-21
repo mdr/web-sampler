@@ -2,6 +2,7 @@ import { Dialog } from 'react-aria-components'
 import { Button } from '../shared/Button.tsx'
 import { ButtonVariant } from '../shared/ButtonVariant.tsx'
 import { FC } from 'react'
+import { isMacOs } from '../../utils/browserUtils.ts'
 
 export interface ShortcutsWarningDialogProps {
   close: () => void
@@ -39,14 +40,14 @@ const TableRow: FC<TableRowProps> = ({ shortcut, action }) => {
 const ShortcutTable: FC = () => {
   const shortcuts = [
     { key: 'Space', action: 'Toggle play/pause' },
-    { key: 'Left Arrow', action: 'Large seek back' },
-    { key: 'Shift + Left Arrow', action: 'Small seek back' },
-    { key: 'Right Arrow', action: 'Large seek forward' },
-    { key: 'Shift + Right Arrow', action: 'Small seek forward' },
+    { key: '←', action: 'Large seek back' },
+    { key: '⇧ + ←', action: 'Small seek back' },
+    { key: '→', action: 'Large seek forward' },
+    { key: '⇧ + →', action: 'Small seek forward' },
     { key: 's', action: 'Mark start' },
     { key: 'f', action: 'Mark finish' },
-    { key: 'Cmd/Ctrl + Z', action: 'Undo' },
-    { key: 'Cmd + Shift + Z / Ctrl + Y', action: 'Redo' },
+    { key: isMacOs() ? '⌘ + Z' : '⌃ + Z', action: 'Undo' },
+    { key: isMacOs() ? '⌘ + ⇧ + Z' : '⌃ + Y', action: 'Redo' },
   ]
 
   return (
