@@ -192,6 +192,41 @@ describe('SoundLibrary', () => {
     expect(soundStore.soundboards).toEqual(updatedSoundboards)
   })
 
+  it('should allow a sound to be added to a soundboard', async () => {
+    const soundboard = makeSoundboard({ sounds: [] })
+    const sound = makeSound()
+    const { library, soundStore, listener } = await setUpTest([sound], [soundboard])
+
+    library.addSoundToSoundboard(soundboard.id, sound.id)
+
+    expect(listener).toHaveBeenCalledTimes(1)
+    const updatedSoundboards = [{ ...soundboard, sounds: [sound.id] }]
+    expect(library.soundboards).toEqual(updatedSoundboards)
+    await flushPromises()
+    expect(soundStore.soundboards).toEqual(updatedSoundboards)
+  })
+
+  it('should do nothing if a sound is already in a soundboard', async () => {
+    const sound = makeSound()
+    const soundboard = makeSoundboard({ sounds: [sound.id] })
+    const { library, soundStore, listener } = await setUpTest([sound], [soundboard])
+
+    library.addSoundToSoundboard(soundboard.id, sound.id)
+
+    expect(listener).not.toHaveBeenCalled()
+    expect(library.soundboards).toEqual([soundboard])
+    await flushPromises()
+    expect(soundStore.soundboards).toEqual([soundboard])
+  })
+
+  it('should throw an error of the sound ID is not valid', async () => {
+    const soundboard = makeSoundboard({ sounds: [] })
+    const sound = makeSound()
+    const { library } = await setUpTest([], [soundboard])
+
+    expect(() => library.addSoundToSoundboard(soundboard.id, sound.id)).toThrowError()
+  })
+
   it('should allow undo and redo', async () => {
     const sound = makeSound({ name: SoundTestConstants.oldName })
     const { library, soundStore, listener } = await setUpTest([sound])

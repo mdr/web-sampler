@@ -6,7 +6,7 @@ import { mdiViewGridPlusOutline } from '@mdi/js'
 import { EditSoundboardPaneTestIds } from './EditSoundboardPaneTestIds.ts'
 import { DialogTrigger } from 'react-aria-components'
 import { Modal } from '../../shared/Modal.tsx'
-import { AddSoundDialog } from './AddSoundDialog.tsx'
+import { ChooseSoundDialog } from './ChooseSoundDialog.tsx'
 import { ButtonVariant } from '../../shared/ButtonVariant.tsx'
 
 export interface EditSoundboardPaneProps {
@@ -21,13 +21,17 @@ export const EditSoundboardPaneContents = ({ soundboardId }: EditSoundboardPaneP
     <div className="flex flex-col space-y-4  px-4 pt-4">
       <SoundboardNameTextField name={soundboard.name} setName={setSoundboardName} />
       <div className="flex justify-center">
-        <AddSoundButton />
+        <AddSoundButton soundboardId={soundboardId} />
       </div>
     </div>
   )
 }
 
-export const AddSoundButton = () => {
+export interface AddSoundButtonProps {
+  soundboardId: SoundboardId
+}
+
+export const AddSoundButton = ({ soundboardId }: AddSoundButtonProps) => {
   const handlePress = () => {}
   return (
     <DialogTrigger>
@@ -39,7 +43,7 @@ export const AddSoundButton = () => {
         onPress={handlePress}
       />
       <Modal>
-        <AddSoundDialog />
+        <ChooseSoundDialog soundboardId={soundboardId} />
       </Modal>
     </DialogTrigger>
   )

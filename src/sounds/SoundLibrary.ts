@@ -86,6 +86,10 @@ export class SoundLibrary implements SoundActions {
     return sound
   }
 
+  private checkSoundExists = (id: SoundId): void => {
+    this.getSound(id)
+  }
+
   newSound = (): Sound => {
     const sound: Sound = newSound()
     validateSound(sound)
@@ -167,6 +171,14 @@ export class SoundLibrary implements SoundActions {
   setSoundboardName = (id: SoundboardId, name: string): void =>
     this.updateSoundboard(id, (soundboard) => {
       soundboard.name = name
+    })
+
+  addSoundToSoundboard = (soundboardId: SoundboardId, soundId: SoundId): void =>
+    this.updateSoundboard(soundboardId, (soundboard) => {
+      this.checkSoundExists(soundId)
+      if (!soundboard.sounds.includes(soundId)) {
+        soundboard.sounds.push(soundId)
+      }
     })
 
   updateSoundboard = (id: SoundboardId, update: (soundboard: Draft<Soundboard>) => void): void =>

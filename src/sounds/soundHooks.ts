@@ -98,6 +98,8 @@ export interface SoundActions {
 
   setSoundboardName(id: SoundboardId, name: string): void
 
+  addSoundToSoundboard(soundboardId: SoundboardId, soundId: SoundId): void
+
   undo(): void
 
   redo(): void
