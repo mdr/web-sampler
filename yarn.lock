@@ -3116,26 +3116,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/experimental-ct-core@npm:1.44.0":
-  version: 1.44.0
-  resolution: "@playwright/experimental-ct-core@npm:1.44.0"
+"@playwright/experimental-ct-core@npm:1.44.1":
+  version: 1.44.1
+  resolution: "@playwright/experimental-ct-core@npm:1.44.1"
   dependencies:
-    playwright: "npm:1.44.0"
-    playwright-core: "npm:1.44.0"
+    playwright: "npm:1.44.1"
+    playwright-core: "npm:1.44.1"
     vite: "npm:^5.2.8"
-  checksum: 10c0/abcb1f18434bac8b0d71580a57486132626eb1ed4043e3034bc6e246e61d1ba87813cee801dedc59e449f52b2d2b3f6c4c2f3e026c8f58d38bff2a1648c4cf9f
+  checksum: 10c0/1b6756d9a4ba7dc8c2247d5d20ed803849a813ef9809ee88968b7af15add2b92145fda81303289a317231e674d3f3306caa609919a132d5c02aade74ad8a6d3f
   languageName: node
   linkType: hard
 
-"@playwright/experimental-ct-react@npm:^1.44.0":
-  version: 1.44.0
-  resolution: "@playwright/experimental-ct-react@npm:1.44.0"
+"@playwright/experimental-ct-react@npm:^1.44.1":
+  version: 1.44.1
+  resolution: "@playwright/experimental-ct-react@npm:1.44.1"
   dependencies:
-    "@playwright/experimental-ct-core": "npm:1.44.0"
+    "@playwright/experimental-ct-core": "npm:1.44.1"
     "@vitejs/plugin-react": "npm:^4.2.1"
   bin:
     playwright: cli.js
-  checksum: 10c0/8354cd8bf7bb5d534b22cd75f1b8662e1d47bb3fd751cf9175cf2bb83f404ae8d9b4e8ae148479e1cefe272cfc7c13dea62beb49c5faf4ad656d1211b8d5c2e1
+  checksum: 10c0/d1231a10c7eeb533ef63fe9634113e381d0cbbda49c680e0299d722f19ebeabb31d71be2f855add7fd9fdba042f10ec329ae73676606ae77c9fa4602d8d611e0
   languageName: node
   linkType: hard
 
@@ -11865,27 +11865,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.44.0":
-  version: 1.44.0
-  resolution: "playwright-core@npm:1.44.0"
+"playwright-core@npm:1.44.1":
+  version: 1.44.1
+  resolution: "playwright-core@npm:1.44.1"
   bin:
     playwright-core: cli.js
-  checksum: 10c0/e1220371a76cdf145f6aaefb2dd6c5194531d1c1e2b67712c56dbc1d589dffb66fd4fc0168be60cd2115aca40660aa13c572e14be47674c0542bc879705b9fb3
+  checksum: 10c0/6ffa3a04822b3df86d7f47a97e4f20318c0c50868ba4311820e6626ecadaab1424fbd0a3d01f0b4228adc0c781115e44b801742a4970b88739f804d82f142d68
   languageName: node
   linkType: hard
 
-"playwright@npm:1.44.0":
-  version: 1.44.0
-  resolution: "playwright@npm:1.44.0"
+"playwright@npm:1.44.1":
+  version: 1.44.1
+  resolution: "playwright@npm:1.44.1"
   dependencies:
     fsevents: "npm:2.3.2"
-    playwright-core: "npm:1.44.0"
+    playwright-core: "npm:1.44.1"
   dependenciesMeta:
     fsevents:
       optional: true
   bin:
     playwright: cli.js
-  checksum: 10c0/dcbee9022623dd9e219e9867983789262e80339f0c3601219930883e5a304ce75e1397715c0f378a2bab0a799cf88a73ea4b58fe595cfd9058bd7a82f5d8e3b6
+  checksum: 10c0/de827d17746b18ae2ec67d510a640d8ceebf8ee8e3d8399bccffa83b76a967498ca377777e4e6a1daaef4b3c86cb2c44c7468de53d2d915acc61b3b89c032738
   languageName: node
   linkType: hard
 
@@ -14876,7 +14876,7 @@ __metadata:
     "@chromatic-com/storybook": "npm:^1.4.0"
     "@mdi/js": "npm:^7.4.47"
     "@mdi/react": "npm:^1.6.1"
-    "@playwright/experimental-ct-react": "npm:^1.44.0"
+    "@playwright/experimental-ct-react": "npm:^1.44.1"
     "@sinonjs/fake-timers": "npm:^11.2.2"
     "@storybook/addon-essentials": "npm:^8.1.1"
     "@storybook/addon-interactions": "npm:^8.1.1"
