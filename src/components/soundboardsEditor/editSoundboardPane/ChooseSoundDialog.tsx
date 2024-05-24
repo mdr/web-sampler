@@ -37,6 +37,7 @@ export const ChooseSoundDialog = ({ soundboardId }: ChooseSoundDialogProps) => {
     soundActions.addSoundToSoundboard(soundboardId, selectedSoundId)
     close()
   }
+
   const handleSelectionChange = (key: Key | null) => {
     if (typeof key === 'number') {
       throw new Error('Key cannot be a number')
@@ -44,6 +45,7 @@ export const ChooseSoundDialog = ({ soundboardId }: ChooseSoundDialogProps) => {
     const soundId = key === null ? undefined : SoundId(key)
     setSelectedSoundId(soundId)
   }
+
   return (
     <Dialog data-testid={EditSoundboardPaneTestIds.chooseSoundDialog} className="relative outline-none">
       {({ close }) => {
