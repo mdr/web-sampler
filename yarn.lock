@@ -5380,6 +5380,108 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sentry-internal/browser-utils@npm:8.4.0":
+  version: 8.4.0
+  resolution: "@sentry-internal/browser-utils@npm:8.4.0"
+  dependencies:
+    "@sentry/core": "npm:8.4.0"
+    "@sentry/types": "npm:8.4.0"
+    "@sentry/utils": "npm:8.4.0"
+  checksum: 10c0/9e6709100182f8586ef24d304632eedee1f0f257a588bd861df779dee41064cc97afce53b22a4b669e05581f25bc61d7fdae901d238f93569e7042e07d9fbf50
+  languageName: node
+  linkType: hard
+
+"@sentry-internal/feedback@npm:8.4.0":
+  version: 8.4.0
+  resolution: "@sentry-internal/feedback@npm:8.4.0"
+  dependencies:
+    "@sentry/core": "npm:8.4.0"
+    "@sentry/types": "npm:8.4.0"
+    "@sentry/utils": "npm:8.4.0"
+  checksum: 10c0/028eb28770eb85f1d09caa3ec98420cdb691d2de06be261106876efed572f7d83bfddf6d289468c0f1bbf551d5a75e7b01fe2c2bbac4b0da882c8e655a166b5c
+  languageName: node
+  linkType: hard
+
+"@sentry-internal/replay-canvas@npm:8.4.0":
+  version: 8.4.0
+  resolution: "@sentry-internal/replay-canvas@npm:8.4.0"
+  dependencies:
+    "@sentry-internal/replay": "npm:8.4.0"
+    "@sentry/core": "npm:8.4.0"
+    "@sentry/types": "npm:8.4.0"
+    "@sentry/utils": "npm:8.4.0"
+  checksum: 10c0/6e62557e88f1422f645b022c33c034eccf53469dcdea8e1fbdef34f087e8e986411f50bbf384b7d41f83298b1f339866c8a024456ecf74f1158811f9b91d225b
+  languageName: node
+  linkType: hard
+
+"@sentry-internal/replay@npm:8.4.0":
+  version: 8.4.0
+  resolution: "@sentry-internal/replay@npm:8.4.0"
+  dependencies:
+    "@sentry-internal/browser-utils": "npm:8.4.0"
+    "@sentry/core": "npm:8.4.0"
+    "@sentry/types": "npm:8.4.0"
+    "@sentry/utils": "npm:8.4.0"
+  checksum: 10c0/e9e6398eb3e245470bd464022a9e147038e6adc97212a8e0a28496093f8ed018f8c417bc0d73715f6e63a7506a2d199fadddd23a80246abc8c54d5875d8552c3
+  languageName: node
+  linkType: hard
+
+"@sentry/browser@npm:8.4.0":
+  version: 8.4.0
+  resolution: "@sentry/browser@npm:8.4.0"
+  dependencies:
+    "@sentry-internal/browser-utils": "npm:8.4.0"
+    "@sentry-internal/feedback": "npm:8.4.0"
+    "@sentry-internal/replay": "npm:8.4.0"
+    "@sentry-internal/replay-canvas": "npm:8.4.0"
+    "@sentry/core": "npm:8.4.0"
+    "@sentry/types": "npm:8.4.0"
+    "@sentry/utils": "npm:8.4.0"
+  checksum: 10c0/bd1162ad13f246c30c1af2d65b798d729cfd4c94c50cc08bdb848a95cd734cedae235c2c2554863c81bc4e639c3d9b8120b6d6988fe6e3437ca45f3dbcf67de6
+  languageName: node
+  linkType: hard
+
+"@sentry/core@npm:8.4.0":
+  version: 8.4.0
+  resolution: "@sentry/core@npm:8.4.0"
+  dependencies:
+    "@sentry/types": "npm:8.4.0"
+    "@sentry/utils": "npm:8.4.0"
+  checksum: 10c0/7c9ffc15a5cbc6cc9811b1444c2ea956dd42b576e63606e3064af0d617fd9c3d97b6ba878f14fc13818d2001a3cf07b73ecde648e31fdb8d9b7e316bd5549470
+  languageName: node
+  linkType: hard
+
+"@sentry/react@npm:^8.4.0":
+  version: 8.4.0
+  resolution: "@sentry/react@npm:8.4.0"
+  dependencies:
+    "@sentry/browser": "npm:8.4.0"
+    "@sentry/core": "npm:8.4.0"
+    "@sentry/types": "npm:8.4.0"
+    "@sentry/utils": "npm:8.4.0"
+    hoist-non-react-statics: "npm:^3.3.2"
+  peerDependencies:
+    react: 16.x || 17.x || 18.x
+  checksum: 10c0/ef0ffe3664d7a6610394d007f9c38e298c326fb315b8398992f10be640ab44589de9a8c489572ac0ce20438493633764a1d400b2f8718b6e3410ccef40ece952
+  languageName: node
+  linkType: hard
+
+"@sentry/types@npm:8.4.0":
+  version: 8.4.0
+  resolution: "@sentry/types@npm:8.4.0"
+  checksum: 10c0/0fd8790b8b6c353029feb47caf4b85f3a972f6a37f90ab6719f6d9425919c53069e9e15976da4690a4c738c2c0c3fbebd00749ae3568aaa719e02552c38e3feb
+  languageName: node
+  linkType: hard
+
+"@sentry/utils@npm:8.4.0":
+  version: 8.4.0
+  resolution: "@sentry/utils@npm:8.4.0"
+  dependencies:
+    "@sentry/types": "npm:8.4.0"
+  checksum: 10c0/3306ba659874344b63ca72dbf7172641b38f590abf8c15291c6f98b2752dcfa9569a209cf83f7a83601acd1c22bc4ab8ead4bb55f7698b9b9b6690cfa6e5ebb5
+  languageName: node
+  linkType: hard
+
 "@sinclair/typebox@npm:^0.27.8":
   version: 0.27.8
   resolution: "@sinclair/typebox@npm:0.27.8"
@@ -10351,7 +10453,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hoist-non-react-statics@npm:^3.3.1":
+"hoist-non-react-statics@npm:^3.3.1, hoist-non-react-statics@npm:^3.3.2":
   version: 3.3.2
   resolution: "hoist-non-react-statics@npm:3.3.2"
   dependencies:
@@ -15449,6 +15551,7 @@ __metadata:
     "@mdi/js": "npm:^7.4.47"
     "@mdi/react": "npm:^1.6.1"
     "@playwright/experimental-ct-react": "npm:^1.44.1"
+    "@sentry/react": "npm:^8.4.0"
     "@sinonjs/fake-timers": "npm:^11.2.2"
     "@storybook/addon-essentials": "npm:^8.1.1"
     "@storybook/addon-interactions": "npm:^8.1.3"

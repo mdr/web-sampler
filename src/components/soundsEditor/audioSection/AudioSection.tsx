@@ -100,6 +100,10 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
     [audioPlayerActions, sampleRate, sound.audio, startTime],
   )
 
+  useHotkeys('q', () => {
+    throw new Error('Test error')
+  })
+
   const seekBack = (amount: Seconds) => () => seek(Seconds(currentPosition - amount))
   useHotkeys('left', seekBack(BIG_SEEK_JUMP), [seekBack])
   useHotkeys('shift+left', seekBack(SMALL_SEEK_JUMP), [seekBack])
