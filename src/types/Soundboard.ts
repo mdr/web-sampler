@@ -25,3 +25,8 @@ export const sortSoundboardsByDisplayName = (soundsboards: readonly Soundboard[]
   [...soundsboards].sort((board1, board2) =>
     displayCollator.compare(getSoundboardDisplayName(board1), getSoundboardDisplayName(board2)),
   )
+
+export const removeSoundFromSoundboard = (soundboard: Soundboard, soundId: SoundId): Soundboard => ({
+  ...soundboard,
+  sounds: soundboard.sounds.filter((id) => soundId !== id),
+})

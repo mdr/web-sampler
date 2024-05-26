@@ -12,7 +12,7 @@ import { SoundSyncer } from './SoundSyncer.ts'
 import { UndoRedoManager } from './UndoRedoManager.ts'
 import { validateSound, validateSoundState } from './SoundStateValidator.ts'
 import { EMPTY_SOUND_STATE, SoundState } from './SoundState.ts'
-import { newSoundboard, Soundboard, SoundboardId } from '../types/Soundboard.ts'
+import { newSoundboard, removeSoundFromSoundboard, Soundboard, SoundboardId } from '../types/Soundboard.ts'
 import { AudioData } from '../types/AudioData.ts'
 
 export type SoundLibraryUpdatedListener = () => void
@@ -133,11 +133,7 @@ export class SoundLibrary implements SoundActions {
 
   deleteSound = (id: SoundId): void => {
     const updatedSounds = this.sounds.filter((sound) => sound.id !== id)
-    const removeSoundFromSoundboard = (soundboard: Soundboard): Soundboard => ({
-      ...soundboard,
-      sounds: soundboard.sounds.filter((soundId) => soundId !== id),
-    })
-    const updatedSoundboards = this.soundboards.map(removeSoundFromSoundboard)
+    const updatedSoundboards = this.soundboards.map((soundboard) => removeSoundFromSoundboard(soundboard, id))
     const newState = { sounds: updatedSounds, soundboards: updatedSoundboards }
     this.setState(newState)
   }

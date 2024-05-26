@@ -193,14 +193,15 @@ describe('SoundLibrary', () => {
   })
 
   it('should allow a sound to be added to a soundboard', async () => {
-    const soundboard = makeSoundboard({ sounds: [] })
-    const sound = makeSound()
-    const { library, soundStore, listener } = await setUpTest([sound], [soundboard])
+    const sound1 = makeSound()
+    const sound2 = makeSound()
+    const soundboard = makeSoundboard({ sounds: [sound1.id] })
+    const { library, soundStore, listener } = await setUpTest([sound1, sound2], [soundboard])
 
-    library.addSoundToSoundboard(soundboard.id, sound.id)
+    library.addSoundToSoundboard(soundboard.id, sound2.id)
 
     expect(listener).toHaveBeenCalledTimes(1)
-    const updatedSoundboards = [{ ...soundboard, sounds: [sound.id] }]
+    const updatedSoundboards = [{ ...soundboard, sounds: [sound1.id, sound2.id] }]
     expect(library.soundboards).toEqual(updatedSoundboards)
     await flushPromises()
     expect(soundStore.soundboards).toEqual(updatedSoundboards)
