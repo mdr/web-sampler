@@ -4,6 +4,7 @@ import { NavbarPageObject } from './NavbarPageObject.ts'
 import { SoundboardsSidebarTestIds } from '../../../components/soundboardsEditor/sidebar/SoundboardsSidebarTestIds.ts'
 import { SoundboardsSidebarPageObject } from './SoundboardsSidebarPageObject.ts'
 import { EditSoundboardPaneTestIds } from '../../../components/soundboardsEditor/editSoundboardPane/EditSoundboardPaneTestIds.ts'
+import { ChooseSoundDialogPageObject } from './ChooseSoundDialogPageObject.ts'
 
 export class SoundboardsEditorPageObject extends PageObject {
   protected readonly name = 'SoundboardsEditor'
@@ -26,5 +27,11 @@ export class SoundboardsEditorPageObject extends PageObject {
       await this.get(EditSoundboardPaneTestIds.soundboardNameInput).click()
       await this.get(EditSoundboardPaneTestIds.soundboardNameInput).fill(name)
       await this.page.keyboard.press('Enter')
+    })
+
+  pressAddSound = (): Promise<ChooseSoundDialogPageObject> =>
+    this.step('pressAddSound', async () => {
+      await this.get(EditSoundboardPaneTestIds.addSoundButton).click()
+      return await ChooseSoundDialogPageObject.verifyIsShown(this.mountResult)
     })
 }

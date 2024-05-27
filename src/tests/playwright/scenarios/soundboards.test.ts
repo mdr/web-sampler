@@ -40,3 +40,14 @@ test('soundboards can be renamed', async ({ mount }) => {
 
   await soundboardsEditorPage.sidebar.expectSoundboardNamesToBe(['Soundboard BBB', 'Soundboard CCC'])
 })
+
+test('a sound can be added to a soundboard', async ({ mount }) => {
+  const soundsEditorPage = await launchApp(mount)
+  await soundsEditorPage.createSound('XXX')
+  await soundsEditorPage.createSound('YYY')
+  await soundsEditorPage.createSound('ZZZ')
+  const soundboardsEditorPage = await soundsEditorPage.navbar.pressSoundboardsLink()
+  await soundboardsEditorPage.sidebar.pressNewSoundboard()
+  const chooseSoundDialog = await soundboardsEditorPage.pressAddSound()
+  await chooseSoundDialog.pickSound('YYY')
+})

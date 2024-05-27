@@ -87,6 +87,12 @@ export class SoundsEditorPageObject extends PageObject {
       await this.page.keyboard.press('Enter')
     })
 
+  createSound = async (name: string): Promise<void> =>
+    this.step(`createSound ${name}`, async () => {
+      await this.sidebar.pressNewSound()
+      await this.enterSoundName(name)
+    })
+
   pressCaptureAudio = ({
     primedOutcome = StartRecordingOutcome.SUCCESS,
   }: Partial<{ primedOutcome: StartRecordingOutcome }> = {}): Promise<void> =>

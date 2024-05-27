@@ -57,7 +57,12 @@ export const ChooseSoundDialog = ({ soundboardId }: ChooseSoundDialogProps) => {
             <ComboBox aria-label="Sound" defaultItems={availableSounds} onSelectionChange={handleSelectionChange}>
               <div className="mt-2 flex items-center">
                 <Input className="flex-grow rounded-l-md rounded-r-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                <RacButton className="-ml-10 bg-transparent px-3 py-2 text-gray-700">▼</RacButton>
+                <RacButton
+                  data-testid={EditSoundboardPaneTestIds.soundComboBoxDropdownButton}
+                  className="-ml-10 bg-transparent px-3 py-2 text-gray-700"
+                >
+                  ▼
+                </RacButton>
               </div>
               <Popover className="entering:animate-in entering:fade-in exiting:animate-out exiting:fade-out mt-2 w-[--trigger-width] rounded-md bg-white shadow-lg">
                 <ListBox className="max-h-60 overflow-y-auto rounded-md border border-gray-300">
