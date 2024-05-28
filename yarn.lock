@@ -14214,12 +14214,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss-react-aria-components@npm:^1.1.2":
-  version: 1.1.2
-  resolution: "tailwindcss-react-aria-components@npm:1.1.2"
+"tailwindcss-react-aria-components@npm:^1.1.3":
+  version: 1.1.3
+  resolution: "tailwindcss-react-aria-components@npm:1.1.3"
   peerDependencies:
     tailwindcss: "*"
-  checksum: 10c0/96dfe1f627e82b9887c1f413ca195e6d1f4158d460d9a7717cb23c79124757a61150e562bc264fd3943ddb23dcd8b86d71ae1037e3f98deffced0699b180ff9a
+  checksum: 10c0/bd4c225259e629f7ba618f83c642cfa9830add5fb1d0cfba64f33789aeaf36ddea8c00d20db628c438338a7a73671d03986d42998e56f23447fc8183b2dee67d
   languageName: node
   linkType: hard
 
@@ -15372,7 +15372,7 @@ __metadata:
     react-use: "npm:^17.5.0"
     storybook: "npm:^8.1.4"
     tailwindcss: "npm:^3.4.3"
-    tailwindcss-react-aria-components: "npm:^1.1.2"
+    tailwindcss-react-aria-components: "npm:^1.1.3"
     tmp: "npm:^0.2.3"
     typeface-roboto: "npm:^1.1.13"
     typescript: "npm:^5.4.5"
