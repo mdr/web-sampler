@@ -11245,10 +11245,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"konva@npm:^9.3.8":
-  version: 9.3.8
-  resolution: "konva@npm:9.3.8"
-  checksum: 10c0/c38c26cc958c6b5263c1bd0a0434f318ac9dc5a1319f9d0497e0f65ff36492c5aefef8712e2bb921fe2a0054118acb560e8b9ceb587cec3d34225d7b45ad9bcf
+"konva@npm:^9.3.11":
+  version: 9.3.11
+  resolution: "konva@npm:9.3.11"
+  checksum: 10c0/84ff2f545f0b0164ec8e836b1c2bfa114dd7e1fdaa80e67591e2e7feeb510ec717b03a1a9cd2e37705cbad2104320cc057d711bf114f87391bdc93ad6fcad5a1
   languageName: node
   linkType: hard
 
@@ -15515,7 +15515,7 @@ __metadata:
     immer: "npm:^10.1.1"
     jest-extended: "npm:^4.0.2"
     jsdom: "npm:^24.1.0"
-    konva: "npm:^9.3.8"
+    konva: "npm:^9.3.11"
     lodash: "npm:^4.17.21"
     postcss: "npm:^8.4.38"
     prettier: "npm:3.2.5"
