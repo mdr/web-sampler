@@ -30,7 +30,7 @@
     "dexie": "^4.0.7",
     "effect": "^3.2.5",
     "file-saver": "^2.0.5",
-    "humanize-duration": "^3.32.0",
+    "humanize-duration": "^3.32.1",
     "immer": "^10.1.1",
     "konva": "^9.3.11",
     "lodash": "^4.17.21",
