@@ -7295,10 +7295,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zip.js/zip.js@npm:^2.7.44":
-  version: 2.7.44
-  resolution: "@zip.js/zip.js@npm:2.7.44"
-  checksum: 10c0/72a8ec97c46babfbdb4850d96653c7d38a96cf7a8fceb9c1e5588d95295e425c04a75ec82fd74e5a1f166ff722b776f2ced97e2c022550c5fd4b4723d228804a
+"@zip.js/zip.js@npm:^2.7.45":
+  version: 2.7.45
+  resolution: "@zip.js/zip.js@npm:2.7.45"
+  checksum: 10c0/bc39b849d6e92d33b7d09ef1ae623e2011984b3c93004b559bdea2d024842406310b5112f825261664c331b04e4db49d08de6bba509cb9265adf3ae9c85569de
   languageName: node
   linkType: hard
 
@@ -15378,7 +15378,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:^7.10.0"
     "@ungap/structured-clone": "npm:^1.2.0"
     "@vitejs/plugin-react": "npm:^4.3.0"
-    "@zip.js/zip.js": "npm:^2.7.44"
+    "@zip.js/zip.js": "npm:^2.7.45"
     async-lock: "npm:^1.4.1"
     autoprefixer: "npm:^10.4.19"
     beautiful-react-hooks: "npm:^5.0.2"
