@@ -8656,10 +8656,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dexie@npm:^4.0.4":
-  version: 4.0.4
-  resolution: "dexie@npm:4.0.4"
-  checksum: 10c0/e278b4533112c0af1f90363c25eda3715c4f05bcdd13cee32f5124e1dadce4ea1996ba1f15d4d74d5aba8f7fa2be39c4a8968e3bea925ae16c76655b688bea2b
+"dexie@npm:^4.0.7":
+  version: 4.0.7
+  resolution: "dexie@npm:4.0.7"
+  checksum: 10c0/37029bdfaaf5ca863680a4d2e2166b86ee78ca970cfd53ae26df0e34e028a98383934437806176ebe7862afa53aabe71c82b5c13b59387e9756736e085aa59fc
   languageName: node
   linkType: hard
 
@@ -15385,7 +15385,7 @@ __metadata:
     blob-polyfill: "npm:^7.0.20220408"
     bowser: "npm:^2.11.0"
     clsx: "npm:^2.1.1"
-    dexie: "npm:^4.0.4"
+    dexie: "npm:^4.0.7"
     effect: "npm:^3.2.5"
     eslint: "npm:^8.57.0"
     eslint-plugin-react-hooks: "npm:^4.6.2"
