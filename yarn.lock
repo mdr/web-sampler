@@ -10290,10 +10290,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"humanize-duration@npm:^3.32.0":
-  version: 3.32.0
-  resolution: "humanize-duration@npm:3.32.0"
-  checksum: 10c0/baf27a35c1cd55da8a83ea9fce1b63b5bb09715e5652ef49bc321c6faf469a934291afe9bb7266c595c4cc8a70f918a6a78e589bd396d0e6e2c58e9d3ded032f
+"humanize-duration@npm:^3.32.1":
+  version: 3.32.1
+  resolution: "humanize-duration@npm:3.32.1"
+  checksum: 10c0/76cadedd4c5552912f04955a65e8776ce540da1c5e88bc8873a55fed20f312d0875d1642f13d4cd275dd837b19b8f10e460cbdddfc9e5596bf0dbcb383c11ec6
   languageName: node
   linkType: hard
 
@@ -15394,7 +15394,7 @@ __metadata:
     fake-indexeddb: "npm:^6.0.0"
     file-saver: "npm:^2.0.5"
     flush-promises: "npm:^1.0.2"
-    humanize-duration: "npm:^3.32.0"
+    humanize-duration: "npm:^3.32.1"
     immer: "npm:^10.1.1"
     jest-extended: "npm:^4.0.2"
     jsdom: "npm:^24.1.0"
