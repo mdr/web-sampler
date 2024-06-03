@@ -12287,7 +12287,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-fallback@npm:prettier@^3, prettier@npm:3.2.5, prettier@npm:^3.1.1":
+"prettier-fallback@npm:prettier@^3, prettier@npm:^3.1.1":
   version: 3.2.5
   resolution: "prettier@npm:3.2.5"
   bin:
@@ -12348,6 +12348,15 @@ __metadata:
     prettier-plugin-svelte:
       optional: true
   checksum: 10c0/9857873cb8cb0d9b7b895806e7f6265617a08805691125d282767dffb1cb3d2c4c662f2b9168ef391edc40dff1b81beb99eee488f96544e01b8924db694f2299
+  languageName: node
+  linkType: hard
+
+"prettier@npm:3.3.0":
+  version: 3.3.0
+  resolution: "prettier@npm:3.3.0"
+  bin:
+    prettier: bin/prettier.cjs
+  checksum: 10c0/d033c356320aa2e468bf29c931b094ac730d2f4defd5eb2989d8589313dec901d2fc866e3788f3d161e420b142ea4ec3dda535dbe0169ef4d0026397a68ba9cf
   languageName: node
   linkType: hard
 
@@ -15265,7 +15274,7 @@ __metadata:
     konva: "npm:^9.3.11"
     lodash: "npm:^4.17.21"
     postcss: "npm:^8.4.38"
-    prettier: "npm:3.2.5"
+    prettier: "npm:3.3.0"
     prettier-plugin-tailwindcss: "npm:^0.5.14"
     react: "npm:^18.3.1"
     react-aria-components: "npm:^1.2.1"
