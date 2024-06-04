@@ -93,7 +93,7 @@ export const SoundButton = ({ sound, hotkey }: SoundButtonProps) => {
         </span>{' '}
         <kbd className="absolute right-1 top-1 rounded bg-gray-200 p-1">{hotkey}</kbd>
         <div className="mt-2 flex items-center justify-center transition-opacity duration-300 ease-in-out">
-          <div className={clsx('rounded-full bg-gray-200 p-2 ', { 'animate-ping': isPlaying })}>
+          <div className={clsx('rounded-full bg-gray-200 p-2', { 'animate-ping': isPlaying })}>
             <Icon path={mdiPlay} size={1} color="gray" />
           </div>
         </div>

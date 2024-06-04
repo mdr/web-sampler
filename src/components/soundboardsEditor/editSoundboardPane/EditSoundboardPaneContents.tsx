@@ -18,7 +18,7 @@ export const EditSoundboardPaneContents = ({ soundboardId }: EditSoundboardPaneP
   const soundActions = useSoundActions()
   const setSoundboardName = (name: string) => soundActions.setSoundboardName(soundboard.id, name)
   return (
-    <div className="flex flex-col space-y-4  px-4 pt-4">
+    <div className="flex flex-col space-y-4 px-4 pt-4">
       <SoundboardNameTextField name={soundboard.name} setName={setSoundboardName} />
       <div className="flex justify-center">
         <AddSoundButton soundboardId={soundboardId} />
