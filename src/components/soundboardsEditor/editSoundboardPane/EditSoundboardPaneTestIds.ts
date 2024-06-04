@@ -10,4 +10,5 @@ export const ChooseSoundDialogTestIds = {
   comboBoxDropdownButton: TestId('ChooseSoundDialog.comboBoxDropdownButton'),
   comboBoxItems: TestId('ChooseSoundDialog.comboBoxItems'),
   addButton: TestId('ChooseSoundDialog.addButton'),
+  soundOption: TestId('ChooseSoundDialog.soundOption'),
 }

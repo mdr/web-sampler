@@ -41,14 +41,21 @@ test('soundboards can be renamed', async ({ mount }) => {
   await soundboardsEditorPage.sidebar.expectSoundboardNamesToBe(['Soundboard BBB', 'Soundboard CCC'])
 })
 
-test('a sound can be added to a soundboard', async ({ mount }) => {
+test('a sound can be added to a soundboard if not already present', async ({ mount }) => {
   const soundsEditorPage = await launchApp(mount)
+  await soundsEditorPage.createSound('ZZZ')
   await soundsEditorPage.createSound('XXX')
   await soundsEditorPage.createSound('YYY')
-  await soundsEditorPage.createSound('ZZZ')
   const soundboardsEditorPage = await soundsEditorPage.navbar.pressSoundboardsLink()
   await soundboardsEditorPage.sidebar.pressNewSoundboard()
-  const chooseSoundDialog = await soundboardsEditorPage.pressAddSound()
-  await chooseSoundDialog.pickSound('YYY')
+  let chooseSoundDialog = await soundboardsEditorPage.pressAddSound()
+  await chooseSoundDialog.pressDropdownButton()
+  await chooseSoundDialog.expectSoundOptionsToBe(['XXX', 'YYY', 'ZZZ'])
+
+  await chooseSoundDialog.selectSoundOption('YYY')
   await chooseSoundDialog.pressAddButton()
+
+  chooseSoundDialog = await soundboardsEditorPage.pressAddSound()
+  await chooseSoundDialog.pressDropdownButton()
+  await chooseSoundDialog.expectSoundOptionsToBe(['XXX', 'ZZZ'])
 })

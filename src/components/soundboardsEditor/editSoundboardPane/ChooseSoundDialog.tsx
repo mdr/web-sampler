@@ -30,7 +30,7 @@ export const ChooseSoundDialog = ({ soundboardId }: ChooseSoundDialogProps) => {
   const [selectedSoundId, setSelectedSoundId] = useState<Option<SoundId>>(undefined)
   const soundActions = useSoundActions()
 
-  const handleAddButtonPressed = () => {
+  const handleAddButtonPressed = (close: () => void) => () => {
     if (selectedSoundId === undefined) {
       throw new Error('selectedSoundId is undefined')
     }
@@ -77,7 +77,10 @@ export const ChooseSoundDialog = ({ soundboardId }: ChooseSoundDialogProps) => {
                     >
                       {({ isSelected }) => (
                         <>
-                          <span className="flex flex-1 items-center gap-3 truncate font-normal group-selected:font-medium">
+                          <span
+                            data-testid={ChooseSoundDialogTestIds.soundOption}
+                            className="flex flex-1 items-center gap-3 truncate font-normal group-selected:font-medium"
+                          >
                             {getSoundDisplayName(sound)}
                           </span>
                           {isSelected && (
@@ -98,7 +101,7 @@ export const ChooseSoundDialog = ({ soundboardId }: ChooseSoundDialogProps) => {
                   testId={ChooseSoundDialogTestIds.addButton}
                   variant={ButtonVariant.PRIMARY}
                   label="Add"
-                  onPress={handleAddButtonPressed}
+                  onPress={handleAddButtonPressed(close)}
                 />
               )}
               <Button label="Close" onPress={close} />
