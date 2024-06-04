@@ -23,6 +23,8 @@ export interface WindowTestHooks {
   // Sounds
   getSoundsJson(): string
 
+  getSoundboardsJson(): string
+
   // Clock
   clockNext(): void
 

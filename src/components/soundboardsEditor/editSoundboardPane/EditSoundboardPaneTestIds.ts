@@ -3,6 +3,11 @@ import { TestId } from '../../../utils/types/brandedTypes.ts'
 export const EditSoundboardPaneTestIds = {
   soundboardNameInput: TestId('EditSoundboardPane.soundboardNameInput'),
   addSoundButton: TestId('EditSoundboardPane.addSoundButton'),
-  chooseSoundDialog: TestId('EditSoundboardPane.chooseSoundDialog'),
-  soundComboBoxDropdownButton: TestId('EditSoundboardPane.soundComboBoxDropdownButton'),
+}
+
+export const ChooseSoundDialogTestIds = {
+  dialog: TestId('ChooseSoundDialog.dialog'),
+  comboBoxDropdownButton: TestId('ChooseSoundDialog.comboBoxDropdownButton'),
+  comboBoxItems: TestId('ChooseSoundDialog.comboBoxItems'),
+  addButton: TestId('ChooseSoundDialog.addButton'),
 }

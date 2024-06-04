@@ -9,7 +9,7 @@ import {
   ListBoxItem,
   Popover,
 } from 'react-aria-components'
-import { EditSoundboardPaneTestIds } from './EditSoundboardPaneTestIds.ts'
+import { ChooseSoundDialogTestIds } from './EditSoundboardPaneTestIds.ts'
 import { Button } from '../../shared/Button.tsx'
 import { useSoundActions, useSoundboard, useSounds } from '../../../sounds/soundHooks.ts'
 import { getSoundDisplayName, sortSoundsByDisplayName, Sound, SoundId } from '../../../types/Sound.ts'
@@ -47,7 +47,7 @@ export const ChooseSoundDialog = ({ soundboardId }: ChooseSoundDialogProps) => {
   }
 
   return (
-    <Dialog data-testid={EditSoundboardPaneTestIds.chooseSoundDialog} className="relative outline-none">
+    <Dialog data-testid={ChooseSoundDialogTestIds.dialog} className="relative outline-none">
       {({ close }) => {
         return (
           <>
@@ -58,14 +58,17 @@ export const ChooseSoundDialog = ({ soundboardId }: ChooseSoundDialogProps) => {
               <div className="mt-2 flex items-center">
                 <Input className="flex-grow rounded-l-md rounded-r-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
                 <RacButton
-                  data-testid={EditSoundboardPaneTestIds.soundComboBoxDropdownButton}
+                  data-testid={ChooseSoundDialogTestIds.comboBoxDropdownButton}
                   className="-ml-10 bg-transparent px-3 py-2 text-gray-700"
                 >
                   ▼
                 </RacButton>
               </div>
               <Popover className="entering:animate-in entering:fade-in exiting:animate-out exiting:fade-out mt-2 w-[--trigger-width] rounded-md bg-white shadow-lg">
-                <ListBox className="max-h-60 overflow-y-auto rounded-md border border-gray-300">
+                <ListBox
+                  data-testid={ChooseSoundDialogTestIds.comboBoxItems}
+                  className="max-h-60 overflow-y-auto rounded-md border border-gray-300"
+                >
                   {(sound: Sound) => (
                     <ListBoxItem
                       key={sound.id}
@@ -91,7 +94,12 @@ export const ChooseSoundDialog = ({ soundboardId }: ChooseSoundDialogProps) => {
             </ComboBox>
             <div className="mt-6 flex justify-end space-x-2">
               {selectedSoundId && (
-                <Button variant={ButtonVariant.PRIMARY} label="Add" onPress={handleAddButtonPressed} />
+                <Button
+                  testId={ChooseSoundDialogTestIds.addButton}
+                  variant={ButtonVariant.PRIMARY}
+                  label="Add"
+                  onPress={handleAddButtonPressed}
+                />
               )}
               <Button label="Close" onPress={close} />
             </div>

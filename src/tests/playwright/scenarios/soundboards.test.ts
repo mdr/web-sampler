@@ -50,4 +50,5 @@ test('a sound can be added to a soundboard', async ({ mount }) => {
   await soundboardsEditorPage.sidebar.pressNewSoundboard()
   const chooseSoundDialog = await soundboardsEditorPage.pressAddSound()
   await chooseSoundDialog.pickSound('YYY')
+  await chooseSoundDialog.pressAddButton()
 })

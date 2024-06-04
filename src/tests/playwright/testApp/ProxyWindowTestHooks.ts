@@ -43,6 +43,9 @@ export class ProxyWindowTestHooks implements Asyncify<WindowTestHooks> {
 
   getSoundsJson = (): Promise<string> => this.mountResult.page().evaluate(() => this.testHooks.getSoundsJson())
 
+  getSoundboardsJson = (): Promise<string> =>
+    this.mountResult.page().evaluate(() => this.testHooks.getSoundboardsJson())
+
   clockNext = (): Promise<void> => this.mountResult.page().evaluate(() => this.testHooks.clockNext())
 
   clockTick = (millis: Millis): Promise<void> =>
