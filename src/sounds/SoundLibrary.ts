@@ -177,6 +177,13 @@ export class SoundLibrary implements SoundActions {
       }
     })
 
+  moveSoundInSoundboard = (soundboardId: SoundboardId, sourceIndex: number, targetIndex: number): void =>
+    this.updateSoundboard(soundboardId, (soundboard) => {
+      const soundId = soundboard.sounds[sourceIndex]
+      soundboard.sounds.splice(sourceIndex, 1)
+      soundboard.sounds.splice(targetIndex, 0, soundId)
+    })
+
   updateSoundboard = (id: SoundboardId, update: (soundboard: Draft<Soundboard>) => void): void =>
     this.updateSoundboardPure(id, (soundboard) => produce(soundboard, update))
 

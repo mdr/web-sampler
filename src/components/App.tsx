@@ -15,6 +15,7 @@ import { AlreadyOpenInAnotherTabPage } from './misc/AlreadyOpenInAnotherTabPage.
 import { AudioOperationsContext } from '../audioOperations/AudioOperationsContext.ts'
 import useDidMount from 'beautiful-react-hooks/useDidMount'
 import { unawaited } from '../utils/utils.ts'
+import ConditionalWrap from 'conditional-wrap'
 
 export interface AppProps {
   config: AppConfig
@@ -30,14 +31,13 @@ const nestProviders = (config: AppConfig): React.FC<PropsWithChildren> => {
     <StorageManagerContext.Provider value={storageManager} />,
   ])
 }
-
 export const App = ({ config }: AppProps) => {
   const AllProviders = nestProviders(config)
   useDidMount(() => {
     unawaited(config.storageManager.checkIfStorageIsPersistent())
   })
   return (
-    <React.StrictMode>
+    <ConditionalWrap condition={false} wrap={(children) => <React.StrictMode>{children}</React.StrictMode>}>
       <ErrorBoundary fallback={<ErrorFallback />}>
         <ExclusiveTab fallback={<AlreadyOpenInAnotherTabPage />}>
           <ToastContainer position="top-center" hideProgressBar closeOnClick closeButton={false} />
@@ -46,6 +46,6 @@ export const App = ({ config }: AppProps) => {
           </AllProviders>
         </ExclusiveTab>
       </ErrorBoundary>
-    </React.StrictMode>
+    </ConditionalWrap>
   )
 }

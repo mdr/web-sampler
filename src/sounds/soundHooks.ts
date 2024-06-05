@@ -100,6 +100,8 @@ export interface SoundActions {
 
   addSoundToSoundboard(soundboardId: SoundboardId, soundId: SoundId): void
 
+  moveSoundInSoundboard(soundboardId: SoundboardId, sourceIndex: number, targetIndex: number): void
+
   undo(): void
 
   redo(): void

@@ -220,6 +220,21 @@ describe('SoundLibrary', () => {
     expect(soundStore.soundboards).toEqual([soundboard])
   })
 
+  it('should allow sounds to be moved within a soundboard', async () => {
+    const sound1 = makeSound()
+    const sound2 = makeSound()
+    const soundboard = makeSoundboard({ sounds: [sound1.id, sound2.id] })
+    const { library, soundStore, listener } = await setUpTest([sound1, sound2], [soundboard])
+
+    library.moveSoundInSoundboard(soundboard.id, 0, 1)
+
+    expect(listener).toHaveBeenCalledTimes(1)
+    const updatedSoundboards = [{ ...soundboard, sounds: [sound2.id, sound1.id] }]
+    expect(library.soundboards).toEqual(updatedSoundboards)
+    await flushPromises()
+    expect(soundStore.soundboards).toEqual(updatedSoundboards)
+  })
+
   it('should throw an error of the sound ID is not valid', async () => {
     const soundboard = makeSoundboard({ sounds: [] })
     const sound = makeSound()
