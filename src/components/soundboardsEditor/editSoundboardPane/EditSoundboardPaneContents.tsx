@@ -21,9 +21,9 @@ export const EditSoundboardPaneContents = ({ soundboardId }: EditSoundboardPaneC
   const allSounds = useSounds()
   const sounds = soundboard.sounds.map((soundId) => allSounds.find((sound) => sound.id === soundId) as Sound)
   const onChange = (_: string, sourceIndex: number, targetIndex: number) => {
-    if (sourceIndex !== undefined && targetIndex !== undefined) {
-      soundActions.moveSoundInSoundboard(soundboardId, sourceIndex, targetIndex)
-    }
+    // Account for dragging past the last item in the list
+    const actualTargetIndex = Math.min(targetIndex, sounds.length - 1)
+    soundActions.moveSoundInSoundboard(soundboardId, sourceIndex, actualTargetIndex)
   }
   const setSoundboardName = (name: string) => soundActions.setSoundboardName(soundboard.id, name)
   return (

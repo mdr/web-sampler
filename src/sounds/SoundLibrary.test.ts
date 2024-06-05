@@ -35,8 +35,12 @@ describe('SoundLibrary', () => {
     const library = new SoundLibrary(soundStore)
     expect(library.isLoading).toBe(true)
 
-    expect(library.newSound).toThrowError()
-    expect(() => library.deleteSound(sound.id)).toThrowError()
+    expect(library.newSound).toThrowErrorMatchingInlineSnapshot(
+      `[Error: Cannot manipulate sounds yet as they are still loading]`,
+    )
+    expect(() => library.deleteSound(sound.id)).toThrowErrorMatchingInlineSnapshot(
+      `[Error: Cannot manipulate sounds yet as they are still loading]`,
+    )
     expect(() => library.setName(sound.id, SoundTestConstants.name)).toThrowError()
   })
 
@@ -61,30 +65,32 @@ describe('SoundLibrary', () => {
     expect(soundStore.sounds).toEqual([sound])
   })
 
-  it('should allow a sound to be deleted', async () => {
-    const sound = makeSound()
-    const { library, soundStore, listener } = await setUpTest([sound])
+  describe('deleteSound', () => {
+    it('should allow a sound to be deleted', async () => {
+      const sound = makeSound()
+      const { library, soundStore, listener } = await setUpTest([sound])
 
-    library.deleteSound(sound.id)
+      library.deleteSound(sound.id)
 
-    expect(listener).toHaveBeenCalledTimes(1)
-    expect(library.sounds).toEqual([])
-    await flushPromises()
-    expect(soundStore.sounds).toEqual([])
-  })
+      expect(listener).toHaveBeenCalledTimes(1)
+      expect(library.sounds).toEqual([])
+      await flushPromises()
+      expect(soundStore.sounds).toEqual([])
+    })
 
-  it('should remove a sound from any soundboard it is in when deleted', async () => {
-    const sound1 = makeSound()
-    const sound2 = makeSound()
-    const soundboard = makeSoundboard({ sounds: [sound1.id, sound2.id] })
-    const { library, soundStore } = await setUpTest([sound1, sound2], [soundboard])
+    it('should remove a sound from any soundboard it is in when deleted', async () => {
+      const sound1 = makeSound()
+      const sound2 = makeSound()
+      const soundboard = makeSoundboard({ sounds: [sound1.id, sound2.id] })
+      const { library, soundStore } = await setUpTest([sound1, sound2], [soundboard])
 
-    library.deleteSound(sound1.id)
+      library.deleteSound(sound1.id)
 
-    const expectedSoundboard = { ...soundboard, sounds: [sound2.id] }
-    expect(library.soundboards).toEqual([expectedSoundboard])
-    await flushPromises()
-    expect(soundStore.soundboards).toEqual([expectedSoundboard])
+      const expectedSoundboard = { ...soundboard, sounds: [sound2.id] }
+      expect(library.soundboards).toEqual([expectedSoundboard])
+      await flushPromises()
+      expect(soundStore.soundboards).toEqual([expectedSoundboard])
+    })
   })
 
   it('should allow a sound name to be changed', async () => {
@@ -192,104 +198,159 @@ describe('SoundLibrary', () => {
     expect(soundStore.soundboards).toEqual(updatedSoundboards)
   })
 
-  it('should allow a sound to be added to a soundboard', async () => {
-    const sound1 = makeSound()
-    const sound2 = makeSound()
-    const soundboard = makeSoundboard({ sounds: [sound1.id] })
-    const { library, soundStore, listener } = await setUpTest([sound1, sound2], [soundboard])
+  describe('addSoundToSoundboard', () => {
+    it('should allow a sound to be added to a soundboard', async () => {
+      const sound1 = makeSound()
+      const sound2 = makeSound()
+      const soundboard = makeSoundboard({ sounds: [sound1.id] })
+      const { library, soundStore, listener } = await setUpTest([sound1, sound2], [soundboard])
 
-    library.addSoundToSoundboard(soundboard.id, sound2.id)
+      library.addSoundToSoundboard(soundboard.id, sound2.id)
 
-    expect(listener).toHaveBeenCalledTimes(1)
-    const updatedSoundboards = [{ ...soundboard, sounds: [sound1.id, sound2.id] }]
-    expect(library.soundboards).toEqual(updatedSoundboards)
-    await flushPromises()
-    expect(soundStore.soundboards).toEqual(updatedSoundboards)
+      expect(listener).toHaveBeenCalledTimes(1)
+      const updatedSoundboards = [{ ...soundboard, sounds: [sound1.id, sound2.id] }]
+      expect(library.soundboards).toEqual(updatedSoundboards)
+      await flushPromises()
+      expect(soundStore.soundboards).toEqual(updatedSoundboards)
+    })
+
+    it('should do nothing if a sound is already in the soundboard', async () => {
+      const sound = makeSound()
+      const soundboard = makeSoundboard({ sounds: [sound.id] })
+      const { library, soundStore, listener } = await setUpTest([sound], [soundboard])
+
+      library.addSoundToSoundboard(soundboard.id, sound.id)
+
+      expect(listener).not.toHaveBeenCalled()
+      expect(library.soundboards).toEqual([soundboard])
+      await flushPromises()
+      expect(soundStore.soundboards).toEqual([soundboard])
+    })
+
+    it('should throw an error of the sound ID is not valid', async () => {
+      const soundboard = makeSoundboard({ sounds: [] })
+      const sound = makeSound({ id: SoundTestConstants.id })
+      const { library } = await setUpTest([], [soundboard])
+
+      expect(() => library.addSoundToSoundboard(soundboard.id, sound.id)).toThrowErrorMatchingInlineSnapshot(
+        `[Error: Sound with id SoundTestConstants.id does not exist]`,
+      )
+    })
   })
 
-  it('should do nothing if a sound is already in a soundboard', async () => {
-    const sound = makeSound()
-    const soundboard = makeSoundboard({ sounds: [sound.id] })
-    const { library, soundStore, listener } = await setUpTest([sound], [soundboard])
+  describe('moveSoundInSoundboard', () => {
+    it('should allow sounds to be moved within a soundboard', async () => {
+      const sound1 = makeSound()
+      const sound2 = makeSound()
+      const soundboard = makeSoundboard({ sounds: [sound1.id, sound2.id] })
+      const { library, soundStore, listener } = await setUpTest([sound1, sound2], [soundboard])
 
-    library.addSoundToSoundboard(soundboard.id, sound.id)
+      library.moveSoundInSoundboard(soundboard.id, 0, 1)
 
-    expect(listener).not.toHaveBeenCalled()
-    expect(library.soundboards).toEqual([soundboard])
-    await flushPromises()
-    expect(soundStore.soundboards).toEqual([soundboard])
+      expect(listener).toHaveBeenCalledTimes(1)
+      const updatedSoundboards = [{ ...soundboard, sounds: [sound2.id, sound1.id] }]
+      expect(library.soundboards).toEqual(updatedSoundboards)
+      await flushPromises()
+      expect(soundStore.soundboards).toEqual(updatedSoundboards)
+    })
+
+    it('should throw an error if the soundboard ID is not valid', async () => {
+      const { library } = await setUpTest()
+
+      expect(() => library.moveSoundInSoundboard(SoundboardTestConstants.id, 0, 0)).toThrowErrorMatchingInlineSnapshot(
+        `[Error: Soundboard with id SoundboardTestConstants.id does not exist]`,
+      )
+    })
+
+    it('should throw an error if the source index is out of bounds', async () => {
+      const sound = makeSound()
+      const soundboard = makeSoundboard({ sounds: [sound.id] })
+      const { library } = await setUpTest([sound], [soundboard])
+
+      expect(() => library.moveSoundInSoundboard(soundboard.id, 1, 0)).toThrowErrorMatchingInlineSnapshot(
+        `[Error: Invalid source index 1]`,
+      )
+      expect(() => library.moveSoundInSoundboard(soundboard.id, -1, 0)).toThrowErrorMatchingInlineSnapshot(
+        `[Error: Invalid source index -1]`,
+      )
+    })
+
+    it('should throw an error if the target index is out of bounds', async () => {
+      const sound = makeSound()
+      const soundboard = makeSoundboard({ sounds: [sound.id] })
+      const { library } = await setUpTest([sound], [soundboard])
+
+      expect(() => library.moveSoundInSoundboard(soundboard.id, 0, 1)).toThrowErrorMatchingInlineSnapshot(
+        `[Error: Invalid target index 1]`,
+      )
+      expect(() => library.moveSoundInSoundboard(soundboard.id, 0, -1)).toThrowErrorMatchingInlineSnapshot(
+        `[Error: Invalid target index -1]`,
+      )
+    })
+
+    it('should do nothing if the source and target indices are the same', async () => {
+      const sound = makeSound()
+      const soundboard = makeSoundboard({ sounds: [sound.id] })
+      const { library, soundStore, listener } = await setUpTest([sound], [soundboard])
+
+      library.moveSoundInSoundboard(soundboard.id, 0, 0)
+
+      expect(listener).not.toHaveBeenCalled()
+      expect(library.soundboards).toEqual([soundboard])
+      await flushPromises()
+      expect(soundStore.soundboards).toEqual([soundboard])
+    })
   })
 
-  it('should allow sounds to be moved within a soundboard', async () => {
-    const sound1 = makeSound()
-    const sound2 = makeSound()
-    const soundboard = makeSoundboard({ sounds: [sound1.id, sound2.id] })
-    const { library, soundStore, listener } = await setUpTest([sound1, sound2], [soundboard])
+  describe('undo/redo', () => {
+    it('should support undo and redo', async () => {
+      const sound = makeSound({ name: SoundTestConstants.oldName })
+      const { library, soundStore, listener } = await setUpTest([sound])
+      expect(library).toMatchObject({ canUndo: false, canRedo: false })
 
-    library.moveSoundInSoundboard(soundboard.id, 0, 1)
+      library.setName(sound.id, SoundTestConstants.newName)
 
-    expect(listener).toHaveBeenCalledTimes(1)
-    const updatedSoundboards = [{ ...soundboard, sounds: [sound2.id, sound1.id] }]
-    expect(library.soundboards).toEqual(updatedSoundboards)
-    await flushPromises()
-    expect(soundStore.soundboards).toEqual(updatedSoundboards)
-  })
+      expect(listener).toHaveBeenCalledTimes(1)
+      expect(library.sounds).toEqual([{ ...sound, name: SoundTestConstants.newName }])
+      await flushPromises()
+      expect(soundStore.sounds).toEqual([{ ...sound, name: SoundTestConstants.newName }])
+      expect(library).toMatchObject({ canUndo: true, canRedo: false })
 
-  it('should throw an error of the sound ID is not valid', async () => {
-    const soundboard = makeSoundboard({ sounds: [] })
-    const sound = makeSound()
-    const { library } = await setUpTest([], [soundboard])
+      library.undo()
 
-    expect(() => library.addSoundToSoundboard(soundboard.id, sound.id)).toThrowError()
-  })
+      expect(listener).toHaveBeenCalledTimes(2)
+      expect(library.sounds).toEqual([sound])
+      await flushPromises()
+      expect(soundStore.sounds).toEqual([sound])
+      expect(library).toMatchObject({ canUndo: false, canRedo: true })
 
-  it('should allow undo and redo', async () => {
-    const sound = makeSound({ name: SoundTestConstants.oldName })
-    const { library, soundStore, listener } = await setUpTest([sound])
-    expect(library).toMatchObject({ canUndo: false, canRedo: false })
+      library.redo()
 
-    library.setName(sound.id, SoundTestConstants.newName)
+      expect(listener).toHaveBeenCalledTimes(3)
+      expect(library.sounds).toEqual([{ ...sound, name: SoundTestConstants.newName }])
+      await flushPromises()
+      expect(soundStore.sounds).toEqual([{ ...sound, name: SoundTestConstants.newName }])
+    })
 
-    expect(listener).toHaveBeenCalledTimes(1)
-    expect(library.sounds).toEqual([{ ...sound, name: SoundTestConstants.newName }])
-    await flushPromises()
-    expect(soundStore.sounds).toEqual([{ ...sound, name: SoundTestConstants.newName }])
-    expect(library).toMatchObject({ canUndo: true, canRedo: false })
+    test('redo stack should be cleared when a new action is performed', async () => {
+      const sound = makeSound({ name: 'Name 1' })
+      const { library } = await setUpTest([sound])
 
-    library.undo()
+      library.setName(sound.id, 'Name 2')
+      expect(library.sounds).toEqual([{ ...sound, name: 'Name 2' }])
+      expect(library).toMatchObject({ canUndo: true, canRedo: false })
 
-    expect(listener).toHaveBeenCalledTimes(2)
-    expect(library.sounds).toEqual([sound])
-    await flushPromises()
-    expect(soundStore.sounds).toEqual([sound])
-    expect(library).toMatchObject({ canUndo: false, canRedo: true })
+      library.undo()
+      expect(library.sounds).toEqual([sound])
+      expect(library).toMatchObject({ canUndo: false, canRedo: true })
 
-    library.redo()
+      library.setName(sound.id, 'Name 3')
+      expect(library.sounds).toEqual([{ ...sound, name: 'Name 3' }])
+      expect(library).toMatchObject({ canUndo: true, canRedo: false })
 
-    expect(listener).toHaveBeenCalledTimes(3)
-    expect(library.sounds).toEqual([{ ...sound, name: SoundTestConstants.newName }])
-    await flushPromises()
-    expect(soundStore.sounds).toEqual([{ ...sound, name: SoundTestConstants.newName }])
-  })
-
-  test('redo stack should be cleared when a new action is performed', async () => {
-    const sound = makeSound({ name: 'Name 1' })
-    const { library } = await setUpTest([sound])
-
-    library.setName(sound.id, 'Name 2')
-    expect(library.sounds).toEqual([{ ...sound, name: 'Name 2' }])
-    expect(library).toMatchObject({ canUndo: true, canRedo: false })
-
-    library.undo()
-    expect(library.sounds).toEqual([sound])
-    expect(library).toMatchObject({ canUndo: false, canRedo: true })
-
-    library.setName(sound.id, 'Name 3')
-    expect(library.sounds).toEqual([{ ...sound, name: 'Name 3' }])
-    expect(library).toMatchObject({ canUndo: true, canRedo: false })
-
-    library.redo()
-    expect(library.sounds).toEqual([{ ...sound, name: 'Name 3' }])
+      library.redo()
+      expect(library.sounds).toEqual([{ ...sound, name: 'Name 3' }])
+    })
   })
 })
 

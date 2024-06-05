@@ -179,6 +179,12 @@ export class SoundLibrary implements SoundActions {
 
   moveSoundInSoundboard = (soundboardId: SoundboardId, sourceIndex: number, targetIndex: number): void =>
     this.updateSoundboard(soundboardId, (soundboard) => {
+      if (sourceIndex < 0 || sourceIndex >= soundboard.sounds.length) {
+        throw new Error(`Invalid source index ${sourceIndex}`)
+      }
+      if (targetIndex < 0 || targetIndex >= soundboard.sounds.length) {
+        throw new Error(`Invalid target index ${targetIndex}`)
+      }
       const soundId = soundboard.sounds[sourceIndex]
       soundboard.sounds.splice(sourceIndex, 1)
       soundboard.sounds.splice(targetIndex, 0, soundId)
