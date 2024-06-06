@@ -7,10 +7,12 @@ import './main.css'
 import { getDocumentRoot } from './utils/domUtils.ts'
 import * as Sentry from '@sentry/react'
 
-Sentry.init({
-  dsn: 'https://76652947461f95b8b088d6f7a87117bf@o4507312909123584.ingest.de.sentry.io/4507312913580112',
-  environment: import.meta.env.DEV ? 'development' : 'production',
-})
+if (import.meta.env.PROD) {
+  Sentry.init({
+    dsn: 'https://76652947461f95b8b088d6f7a87117bf@o4507312909123584.ingest.de.sentry.io/4507312913580112',
+    environment: 'production',
+  })
+}
 
 // Set to try the TestApp (used in component tests) when running with yarn dev
 const useTestApp: boolean = import.meta.env.VITE_USE_TEST_APP === 'true'
