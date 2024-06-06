@@ -105,17 +105,30 @@ describe('SoundLibrary', () => {
     expect(soundStore.getSound(sound.id).name).toEqual(SoundTestConstants.newName)
   })
 
-  it('should allow sounds to be imported', async () => {
-    const oldSounds = [makeSound()]
-    const { library, soundStore, listener } = await setUpTest(oldSounds)
-    const newSounds = [makeSound()]
+  describe('importSounds', () => {
+    it('should allow sounds to be imported', async () => {
+      const oldSounds = [makeSound()]
+      const { library, soundStore, listener } = await setUpTest(oldSounds)
+      const newSounds = [makeSound()]
 
-    library.importSounds(newSounds)
+      library.importSounds(newSounds)
 
-    expect(listener).toHaveBeenCalledTimes(1)
-    expect(library.sounds).toEqual(newSounds)
-    await flushPromises()
-    expect(soundStore.sounds).toEqual(newSounds)
+      expect(listener).toHaveBeenCalledTimes(1)
+      expect(library.sounds).toEqual(newSounds)
+      await flushPromises()
+      expect(soundStore.sounds).toEqual(newSounds)
+    })
+
+    it('should clear soundboards when importing sounds', async () => {
+      const sound = makeSound()
+      const soundboard = makeSoundboard({ sounds: [sound.id] })
+      const { library } = await setUpTest([sound], [soundboard])
+      const newSounds = [makeSound()]
+
+      library.importSounds(newSounds)
+
+      expect(library.soundboards).toEqual([])
+    })
   })
 
   it('should allow the volume of a sound to be set', async () => {

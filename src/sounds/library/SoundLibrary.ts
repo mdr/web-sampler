@@ -203,7 +203,7 @@ export class SoundLibrary implements SoundActions {
   }
 
   importSounds = (sounds: readonly Sound[]) => {
-    // TODO: handle soundboards
+    this.setSoundboards([])
     this.setSounds(sounds)
   }
 
