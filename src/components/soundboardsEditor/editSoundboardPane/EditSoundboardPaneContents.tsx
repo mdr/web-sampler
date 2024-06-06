@@ -17,7 +17,6 @@ export const EditSoundboardPaneContents = ({ soundboardId }: EditSoundboardPaneC
     const actualTargetIndex = Math.min(targetIndex, sounds.length - 1)
     soundActions.moveSoundInSoundboard(soundboardId, sourceIndex, actualTargetIndex)
   }
-  //               <div className="ml-2 flex items-center justify-center overflow-hidden rounded-md border border-gray-200 bg-gray-50 shadow-md hover:bg-gray-100">
   const setSoundboardName = (name: string) => soundActions.setSoundboardName(soundboard.id, name)
   return (
     <div className="flex flex-col space-y-4 px-4 pt-4">
