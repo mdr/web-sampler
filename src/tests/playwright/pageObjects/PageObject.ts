@@ -6,7 +6,8 @@ import { Sound } from '../../../types/Sound.ts'
 import { deserialiseSounds } from '../testApp/soundsSerialisation.ts'
 import tmp from 'tmp'
 import { ProxyWindowTestHooks } from '../testApp/ProxyWindowTestHooks.ts'
-import { Soundboard } from '../../../types/Soundboard.ts'
+import { Soundboard, soundboardSchema } from '../../../types/Soundboard.ts'
+import { z } from 'zod'
 
 export abstract class PageObject {
   protected constructor(protected readonly mountResult: MountResult) {}
@@ -77,7 +78,7 @@ export abstract class PageObject {
   getSoundboards = (): Promise<Soundboard[]> =>
     this.step('getSoundboards', async () => {
       const jsonString = await this.testHooks.getSoundboardsJson()
-      return JSON.parse(jsonString)
+      return z.array(soundboardSchema).parse(jsonString)
     })
 
   wait = (duration: Seconds): Promise<void> =>

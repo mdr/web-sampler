@@ -72,7 +72,7 @@ const getExportedSoundsLibrary = async (entries: Entry[]): Promise<ExportedSound
     throw new Error(`${SOUNDS_JSON_FILE_NAME} not found in zip file`)
   }
   const jsonString = await getData(soundsEntry, new TextWriter())
-  const json = JSON.parse(jsonString)
+  const json = JSON.parse(jsonString) as { version: number }
   if (json.version !== VERSION_NUMBER) {
     throw new Error(`Unexpected version: ${json.version}`)
   }

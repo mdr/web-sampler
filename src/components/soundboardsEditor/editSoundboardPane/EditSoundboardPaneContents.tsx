@@ -27,7 +27,7 @@ export const EditSoundboardPaneContents = ({ soundboardId }: EditSoundboardPaneC
       <GridContextProvider onChange={onChange}>
         <GridDropZone id="items" boxesPerRow={5} rowHeight={100} className="h-64">
           {sounds.map((sound) => (
-            <GridItem key={sound?.id}>
+            <GridItem key={sound.id}>
               <div className="flex h-full w-full items-center justify-center rounded-md border border-gray-200 bg-gray-50 shadow-md hover:bg-gray-100">
                 {getSoundDisplayName(sound)}
               </div>
