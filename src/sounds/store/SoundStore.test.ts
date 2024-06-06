@@ -6,6 +6,7 @@ import { DexieSoundStore } from './DexieSoundStore.ts'
 import { AppDb } from './AppDb.ts'
 import { SoundStateDiff } from '../SoundStateDiff.ts'
 import { makeSoundboard, SoundboardTestConstants } from '../../types/soundboard.testSupport.ts'
+import { Sound } from '../../types/Sound.ts'
 
 const makeSoundsDiff = ({
   soundsToUpsert = [],
@@ -57,5 +58,12 @@ describe.each([
     const change3 = makeSoundsDiff({ soundboardsToUpsert: [], soundboardIdsToDelete: [updatedSoundboard.id] })
     await store.bulkUpdate(change3)
     expect((await store.getSoundState()).soundboards).toEqual([])
+  })
+
+  it('should validate data shape on reading from the store', async () => {
+    const badSound = {} as Sound
+    await store.bulkUpdate(makeSoundsDiff({ soundsToUpsert: [badSound] }))
+
+    await expect(store.getSoundState()).rejects.toThrowError()
   })
 })

@@ -1,4 +1,4 @@
-import { SoundState } from './SoundState.ts'
+import { SoundState, soundStateSchema } from './SoundState.ts'
 import { Sound, SoundId } from '../types/Sound.ts'
 import { getTotalNumberOfSamples, SoundAudio } from '../types/SoundAudio.ts'
 import { Soundboard } from '../types/Soundboard.ts'
@@ -10,6 +10,7 @@ class SoundStateValidator {
   constructor(private readonly soundState: SoundState) {}
 
   validate = () => {
+    soundStateSchema.parse(this.soundState)
     this.soundState.sounds.forEach(validateSound)
     this.soundState.soundboards.forEach(this.validateSoundboard)
   }

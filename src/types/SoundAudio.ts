@@ -3,6 +3,8 @@ import { pcmLength, pcmSlice } from '../utils/pcmUtils.ts'
 import { samplesToSeconds } from './sampleConversions.ts'
 import { AudioData } from './AudioData.ts'
 import humanizeDuration from 'humanize-duration'
+import { z } from 'zod'
+import { assert, Equals } from 'tsafe'
 
 export interface SoundAudio {
   readonly pcm: Pcm
@@ -12,6 +14,18 @@ export interface SoundAudio {
   readonly volume: Volume
 }
 
+export const soundAudioSchema = z
+  .object({
+    pcm: z.instanceof(Float32Array).transform(Pcm),
+    sampleRate: z.number().transform(Hz),
+    start: z.number().transform(Samples),
+    finish: z.number().transform(Samples),
+    volume: z.number().transform(Volume),
+  })
+  .readonly()
+
+assert<Equals<SoundAudio, z.infer<typeof soundAudioSchema>>>()
+
 export const newSoundAudio = ({ pcm, sampleRate }: AudioData): SoundAudio => ({
   pcm,
   sampleRate,
@@ -19,6 +33,10 @@ export const newSoundAudio = ({ pcm, sampleRate }: AudioData): SoundAudio => ({
   finish: pcmLength(pcm),
   volume: MAX_VOLUME,
 })
+
+export const soundAudio: SoundAudio = soundAudioSchema.parse(
+  newSoundAudio({ pcm: Pcm(new Float32Array(0)), sampleRate: Hz(0) }),
+)
 
 export const getTotalNumberOfSamples = (audio: SoundAudio): Samples => pcmLength(audio.pcm)
 

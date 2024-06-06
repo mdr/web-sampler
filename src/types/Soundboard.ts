@@ -2,6 +2,8 @@ import { Brand } from 'effect'
 import { SoundId } from './Sound.ts'
 import * as uuid from 'uuid'
 import { displayCollator } from '../utils/sortUtils.ts'
+import { z } from 'zod'
+import { assert, Equals } from 'tsafe'
 
 export type SoundboardId = string & Brand.Brand<'SoundboardId'>
 
@@ -14,6 +16,16 @@ export interface Soundboard {
   readonly name: string
   readonly sounds: SoundId[]
 }
+
+export const soundboardSchema = z
+  .object({
+    id: z.string().transform(SoundboardId),
+    name: z.string(),
+    sounds: z.array(z.string().transform(SoundId)),
+  })
+  .readonly()
+
+assert<Equals<Soundboard, z.infer<typeof soundboardSchema>>>()
 
 export const newSoundboard = (): Soundboard => ({ id: newSoundboardId(), name: '', sounds: [] })
 

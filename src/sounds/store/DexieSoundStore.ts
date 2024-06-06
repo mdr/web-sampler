@@ -2,7 +2,7 @@ import { AppDb } from './AppDb.ts'
 import { Sound, SoundId } from '../../types/Sound.ts'
 import { Table } from 'dexie'
 import { SoundStore } from './SoundStore.ts'
-import { SoundState } from '../SoundState.ts'
+import { SoundState, soundStateSchema } from '../SoundState.ts'
 import { Soundboard, SoundboardId } from '../../types/Soundboard.ts'
 import { SoundStateDiff } from '../SoundStateDiff.ts'
 
@@ -12,7 +12,8 @@ export class DexieSoundStore implements SoundStore {
   getSoundState = async (): Promise<SoundState> => {
     const sounds = await this.sounds.toArray()
     const soundboards = await this.soundboards.toArray()
-    return { sounds, soundboards }
+    const soundState = { sounds, soundboards }
+    return soundStateSchema.parse(soundState)
   }
 
   bulkUpdate = ({

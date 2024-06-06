@@ -49,7 +49,7 @@ tasks:
     desc: Update yarn to the latest version
     cmds:
       - yarn set version latest
-  prettier:
+  prettier-fix:
     desc: Run prettier on all applicable files
     cmds:
       - yarn prettier . --write

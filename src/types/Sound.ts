@@ -1,7 +1,9 @@
 import { Brand } from 'effect'
 import * as uuid from 'uuid'
-import { SoundAudio } from './SoundAudio.ts'
+import { SoundAudio, soundAudioSchema } from './SoundAudio.ts'
 import { displayCollator } from '../utils/sortUtils.ts'
+import { z } from 'zod'
+import { assert, Equals } from 'tsafe'
 
 export type SoundId = string & Brand.Brand<'SoundId'>
 
@@ -12,6 +14,16 @@ export interface Sound {
   readonly name: string
   readonly audio?: SoundAudio
 }
+
+export const soundSchema = z
+  .object({
+    id: z.string().transform(SoundId),
+    name: z.string(),
+    audio: soundAudioSchema.optional(),
+  })
+  .readonly()
+
+assert<Equals<Sound, z.infer<typeof soundSchema>>>()
 
 export type SoundWithDefiniteAudio = Sound & { readonly audio: SoundAudio }
 

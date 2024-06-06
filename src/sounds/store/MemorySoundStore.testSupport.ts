@@ -1,7 +1,7 @@
 import { Sound, SoundId } from '../../types/Sound.ts'
 import { SoundStore } from './SoundStore.ts'
 import _ from 'lodash'
-import { SoundState } from '../SoundState.ts'
+import { SoundState, soundStateSchema } from '../SoundState.ts'
 import { Soundboard } from '../../types/Soundboard.ts'
 import { SoundStateDiff } from '../SoundStateDiff.ts'
 
@@ -22,8 +22,8 @@ export class MemorySoundStore implements SoundStore {
     return sound
   }
 
-  getSoundState = (): Promise<SoundState> =>
-    Promise.resolve({
+  getSoundState = async (): Promise<SoundState> =>
+    soundStateSchema.parse({
       sounds: [...this.sounds],
       soundboards: [...this.soundboards],
     })

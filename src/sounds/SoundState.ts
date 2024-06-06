@@ -1,9 +1,20 @@
-import { Sound } from '../types/Sound.ts'
-import { Soundboard } from '../types/Soundboard.ts'
+import { Sound, soundSchema } from '../types/Sound.ts'
+import { Soundboard, soundboardSchema } from '../types/Soundboard.ts'
+import { z } from 'zod'
+import { assert, Equals } from 'tsafe'
 
 export interface SoundState {
   readonly soundboards: readonly Soundboard[]
   readonly sounds: readonly Sound[]
 }
+
+export const soundStateSchema = z
+  .object({
+    soundboards: z.array(soundboardSchema).readonly(),
+    sounds: z.array(soundSchema).readonly(),
+  })
+  .readonly()
+
+assert<Equals<SoundState, z.infer<typeof soundStateSchema>>>()
 
 export const EMPTY_SOUND_STATE: SoundState = { soundboards: [], sounds: [] }
