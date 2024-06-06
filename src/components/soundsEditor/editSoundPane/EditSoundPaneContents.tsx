@@ -14,7 +14,7 @@ import {
   useAudioRecorderState,
   useAudioRecordingComplete,
 } from '../../../audioRecorder/audioRecorderHooks.ts'
-import { useSound, useSoundActions } from '../../../sounds/soundHooks.ts'
+import { useSound, useSoundActions } from '../../../sounds/library/soundHooks.ts'
 import { getSoundDisplayName, soundHasAudio, SoundId } from '../../../types/Sound.ts'
 import { fireAndForget } from '../../../utils/utils.ts'
 import { AudioSection } from '../audioSection/AudioSection.tsx'

@@ -1,11 +1,11 @@
-import { Sound, SoundId } from '../types/Sound.ts'
+import { Sound, SoundId } from '../../types/Sound.ts'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { SoundLibraryContext } from './SoundLibraryContext.ts'
-import { Option } from '../utils/types/Option.ts'
+import { Option } from '../../utils/types/Option.ts'
 import { SoundLibrary } from './SoundLibrary.ts'
-import { Samples, Volume } from '../utils/types/brandedTypes.ts'
-import { Soundboard, SoundboardId } from '../types/Soundboard.ts'
-import { AudioData } from '../types/AudioData.ts'
+import { Samples, Volume } from '../../utils/types/brandedTypes.ts'
+import { Soundboard, SoundboardId } from '../../types/Soundboard.ts'
+import { AudioData } from '../../types/AudioData.ts'
 
 const useSoundLibrary = (): SoundLibrary => {
   const soundLibrary = useContext(SoundLibraryContext)

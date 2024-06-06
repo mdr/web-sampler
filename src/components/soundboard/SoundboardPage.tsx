@@ -1,4 +1,4 @@
-import { useSounds } from '../../sounds/soundHooks.ts'
+import { useSounds } from '../../sounds/library/soundHooks.ts'
 import { SoundButton } from './SoundButton.tsx'
 import { sortSoundsByDisplayName, soundHasAudio } from '../../types/Sound.ts'
 

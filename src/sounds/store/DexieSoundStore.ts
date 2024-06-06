@@ -1,10 +1,10 @@
 import { AppDb } from './AppDb.ts'
-import { Sound, SoundId } from '../types/Sound.ts'
+import { Sound, SoundId } from '../../types/Sound.ts'
 import { Table } from 'dexie'
 import { SoundStore } from './SoundStore.ts'
-import { SoundState } from './SoundState.ts'
-import { Soundboard, SoundboardId } from '../types/Soundboard.ts'
-import { SoundsDiff } from './SoundsDiff.ts'
+import { SoundState } from '../SoundState.ts'
+import { Soundboard, SoundboardId } from '../../types/Soundboard.ts'
+import { SoundsDiff } from '../SoundsDiff.ts'
 
 export class DexieSoundStore implements SoundStore {
   constructor(private readonly db: AppDb) {}

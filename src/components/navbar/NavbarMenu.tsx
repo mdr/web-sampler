@@ -1,5 +1,5 @@
 import { Key, Menu, MenuItem } from 'react-aria-components'
-import { useSoundActions, useSounds } from '../../sounds/soundHooks.ts'
+import { useSoundActions, useSounds } from '../../sounds/library/soundHooks.ts'
 import { fireAndForget } from '../../utils/utils.ts'
 import { zipSounds } from './importExport/exportSounds.ts'
 import FileSaver from 'file-saver'

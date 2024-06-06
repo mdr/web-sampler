@@ -1,4 +1,4 @@
-import { useIsLoading, useSoundboards } from '../../sounds/soundHooks.ts'
+import { useIsLoading, useSoundboards } from '../../sounds/library/soundHooks.ts'
 import React from 'react'
 import { useSoundboardIdParam } from '../router.tsx'
 import { SoundboardsEditorPageLayout } from './SoundboardsEditorPageLayout.tsx'

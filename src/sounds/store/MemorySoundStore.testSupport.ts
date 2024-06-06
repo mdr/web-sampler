@@ -1,9 +1,9 @@
-import { Sound, SoundId } from '../types/Sound.ts'
+import { Sound, SoundId } from '../../types/Sound.ts'
 import { SoundStore } from './SoundStore.ts'
 import _ from 'lodash'
-import { SoundState } from './SoundState.ts'
-import { Soundboard } from '../types/Soundboard.ts'
-import { SoundsDiff } from './SoundsDiff.ts'
+import { SoundState } from '../SoundState.ts'
+import { Soundboard } from '../../types/Soundboard.ts'
+import { SoundsDiff } from '../SoundsDiff.ts'
 
 export class MemorySoundStore implements SoundStore {
   sounds: Sound[] = []

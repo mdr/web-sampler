@@ -1,4 +1,4 @@
-import { useIsLoading, useMaybeSoundboard } from '../../../sounds/soundHooks.ts'
+import { useIsLoading, useMaybeSoundboard } from '../../../sounds/library/soundHooks.ts'
 import { SoundboardId } from '../../../types/Soundboard.ts'
 import { EditSoundboardPaneContents } from './EditSoundboardPaneContents.tsx'
 import { SoundboardNotFound } from './SoundboardNotFound.tsx'

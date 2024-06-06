@@ -1,4 +1,4 @@
-import { useSounds } from '../../../sounds/soundHooks.ts'
+import { useSounds } from '../../../sounds/library/soundHooks.ts'
 import { Link } from 'react-router-dom'
 import { NewSoundButton } from '../NewSoundButton.tsx'
 import { getSoundDisplayName, sortSoundsByDisplayName } from '../../../types/Sound.ts'

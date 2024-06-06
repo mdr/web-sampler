@@ -1,8 +1,8 @@
 import { SoundStore } from './SoundStore.ts'
-import { fireAndForget } from '../utils/utils.ts'
-import { Option } from '../utils/types/Option.ts'
-import { compareSoundStates, isDiffEmpty } from './SoundsDiff.ts'
-import { SoundState } from './SoundState.ts'
+import { fireAndForget } from '../../utils/utils.ts'
+import { Option } from '../../utils/types/Option.ts'
+import { compareSoundStates, isDiffEmpty } from '../SoundsDiff.ts'
+import { SoundState } from '../SoundState.ts'
 
 /**
  * Write-behind sync for persisting changes to in-memory sounds into a SoundStore.

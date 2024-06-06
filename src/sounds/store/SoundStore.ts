@@ -1,5 +1,5 @@
-import { SoundState } from './SoundState.ts'
-import { SoundsDiff } from './SoundsDiff.ts'
+import { SoundState } from '../SoundState.ts'
+import { SoundsDiff } from '../SoundsDiff.ts'
 
 /**
  * Persistent storage for sounds in the app.

@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { mdiMenu, mdiRedo, mdiUndo, mdiViewGridOutline } from '@mdi/js'
-import { useCanRedo, useCanUndo, useSoundActions } from '../../sounds/soundHooks.ts'
+import { useCanRedo, useCanUndo, useSoundActions } from '../../sounds/library/soundHooks.ts'
 import { NavbarTestIds } from './NavbarTestIds.ts'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { StorageWarningButton } from './StorageWarningButton.tsx'

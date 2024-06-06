@@ -1,4 +1,4 @@
-import { useSoundboards } from '../../../sounds/soundHooks.ts'
+import { useSoundboards } from '../../../sounds/library/soundHooks.ts'
 import { Link } from 'react-router-dom'
 import { editSoundboardRoute, useSoundboardIdParam } from '../../router.tsx'
 import { SoundboardsSidebarTestIds } from './SoundboardsSidebarTestIds.ts'

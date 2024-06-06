@@ -11,7 +11,7 @@ import {
 } from 'react-aria-components'
 import { ChooseSoundDialogTestIds } from './EditSoundboardPaneTestIds.ts'
 import { Button } from '../../shared/Button.tsx'
-import { useSoundActions, useSoundboard, useSounds } from '../../../sounds/soundHooks.ts'
+import { useSoundActions, useSoundboard, useSounds } from '../../../sounds/library/soundHooks.ts'
 import { getSoundDisplayName, sortSoundsByDisplayName, Sound, SoundId } from '../../../types/Sound.ts'
 import Icon from '@mdi/react'
 import { mdiCheck } from '@mdi/js'

@@ -8,7 +8,7 @@ import {
   useAudioPlayerIsPlaying,
 } from '../../../audioPlayer/audioPlayerHooks.ts'
 import { SoundWithDefiniteAudio } from '../../../types/Sound.ts'
-import { useSoundActions } from '../../../sounds/soundHooks.ts'
+import { useSoundActions } from '../../../sounds/library/soundHooks.ts'
 import { Button } from '../../shared/Button.tsx'
 import { WaveformVisualiser } from './WaveformVisualiser.tsx'
 import { useHotkeys } from 'react-hotkeys-hook'

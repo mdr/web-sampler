@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { SoundSyncer } from './SoundSyncer.ts'
-import { makeSound, SoundTestConstants } from '../types/sound.testSupport.ts'
+import { makeSound, SoundTestConstants } from '../../types/sound.testSupport.ts'
 import { MemorySoundStore } from './MemorySoundStore.testSupport.ts'
 import flushPromises from 'flush-promises'
 

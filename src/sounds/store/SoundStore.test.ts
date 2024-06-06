@@ -1,11 +1,11 @@
 import 'fake-indexeddb/auto'
 import { describe, expect, it } from 'vitest'
-import { makeSound, SoundTestConstants } from '../types/sound.testSupport.ts'
+import { makeSound, SoundTestConstants } from '../../types/sound.testSupport.ts'
 import { MemorySoundStore } from './MemorySoundStore.testSupport.ts'
 import { DexieSoundStore } from './DexieSoundStore.ts'
 import { AppDb } from './AppDb.ts'
-import { SoundsDiff } from './SoundsDiff.ts'
-import { makeSoundboard, SoundboardTestConstants } from '../types/soundboard.testSupport.ts'
+import { SoundsDiff } from '../SoundsDiff.ts'
+import { makeSoundboard, SoundboardTestConstants } from '../../types/soundboard.testSupport.ts'
 
 const makeSoundsDiff = ({
   soundsToUpsert = [],

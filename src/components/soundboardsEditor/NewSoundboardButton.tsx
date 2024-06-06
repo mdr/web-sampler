@@ -1,5 +1,5 @@
 import { mdiPlus } from '@mdi/js'
-import { useSoundActions } from '../../sounds/soundHooks.ts'
+import { useSoundActions } from '../../sounds/library/soundHooks.ts'
 import { useNavigate } from 'react-router-dom'
 import { editSoundboardRoute } from '../router.tsx'
 
