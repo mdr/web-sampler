@@ -61,7 +61,7 @@ describe.each([
   })
 
   it('should validate data shape on reading from the store', async () => {
-    const badSound = {} as Sound
+    const badSound = { ...makeSound(), foo: 42 } as Sound
     await store.bulkUpdate(makeSoundsDiff({ soundsToUpsert: [badSound] }))
 
     await expect(store.getSoundState()).rejects.toThrowError()

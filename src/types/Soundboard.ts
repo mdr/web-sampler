@@ -18,7 +18,7 @@ export interface Soundboard {
 }
 
 export const soundboardSchema = z
-  .object({
+  .strictObject({
     id: z.string().transform(SoundboardId),
     name: z.string(),
     sounds: z.array(z.string().transform(SoundId)),

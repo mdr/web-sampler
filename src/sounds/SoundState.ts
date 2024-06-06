@@ -9,7 +9,7 @@ export interface SoundState {
 }
 
 export const soundStateSchema = z
-  .object({
+  .strictObject({
     soundboards: z.array(soundboardSchema).readonly(),
     sounds: z.array(soundSchema).readonly(),
   })

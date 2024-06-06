@@ -16,7 +16,7 @@ export interface Sound {
 }
 
 export const soundSchema = z
-  .object({
+  .strictObject({
     id: z.string().transform(SoundId),
     name: z.string(),
     audio: soundAudioSchema.optional(),

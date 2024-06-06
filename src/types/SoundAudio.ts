@@ -15,7 +15,7 @@ export interface SoundAudio {
 }
 
 export const soundAudioSchema = z
-  .object({
+  .strictObject({
     pcm: z.instanceof(Float32Array).transform(Pcm),
     sampleRate: z.number().transform(Hz),
     start: z.number().transform(Samples),
