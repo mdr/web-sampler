@@ -6,9 +6,6 @@ import { MAX_VOLUME, MIN_VOLUME } from '../utils/types/brandedTypes.ts'
 
 export const validateSoundState = (soundState: SoundState): void => new SoundStateValidator(soundState).validate()
 
-export const validateSoundboard = (soundState: SoundState, soundboard: Soundboard): void =>
-  new SoundStateValidator(soundState).validateSoundboard(soundboard)
-
 class SoundStateValidator {
   constructor(private readonly soundState: SoundState) {}
 
@@ -17,22 +14,22 @@ class SoundStateValidator {
     this.soundState.soundboards.forEach(this.validateSoundboard)
   }
 
-  validateSoundboard = (soundboard: Soundboard) => {
+  private validateSoundboard = (soundboard: Soundboard) => {
     const sounds = this.soundState.sounds
     const seenSoundIds = new Set<SoundId>()
     for (const soundId of soundboard.sounds) {
       if (!sounds.some((sound) => sound.id === soundId)) {
-        throw new SoundValidationError(`Soundboard ${soundboard.id} references missing sound: ${soundId}`)
+        throw new SoundboardValidationError(`Soundboard ${soundboard.id} references missing sound: ${soundId}`)
       }
       if (seenSoundIds.has(soundId)) {
-        throw new SoundValidationError(`Soundboard ${soundboard.id} contains duplicate sound ID: ${soundId}`)
+        throw new SoundboardValidationError(`Soundboard ${soundboard.id} contains duplicate sound ID: ${soundId}`)
       }
       seenSoundIds.add(soundId)
     }
   }
 }
 
-export const validateSound = (sound: Sound): void => {
+const validateSound = (sound: Sound): void => {
   const audio = sound.audio
   if (audio !== undefined) {
     validateSoundAudio(sound.id, audio)
@@ -79,5 +76,12 @@ class SoundValidationError extends Error {
   constructor(message: string) {
     super(message)
     this.name = 'SoundValidationError'
+  }
+}
+
+class SoundboardValidationError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = 'SoundboardValidationError'
   }
 }

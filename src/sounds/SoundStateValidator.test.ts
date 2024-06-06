@@ -25,7 +25,7 @@ describe('validateSoundState', () => {
     const soundState: SoundState = { sounds: [], soundboards: [soundboard] }
 
     expect(() => validateSoundState(soundState)).toThrowErrorMatchingInlineSnapshot(
-      `[SoundValidationError: Soundboard SoundboardTestConstants.id references missing sound: SoundTestConstants.id]`,
+      `[SoundboardValidationError: Soundboard SoundboardTestConstants.id references missing sound: SoundTestConstants.id]`,
     )
   })
 
@@ -35,7 +35,7 @@ describe('validateSoundState', () => {
     const soundState = { sounds: [sound], soundboards: [soundboard] }
 
     expect(() => validateSoundState(soundState)).toThrowErrorMatchingInlineSnapshot(
-      `[SoundValidationError: Soundboard SoundboardTestConstants.id contains duplicate sound ID: SoundTestConstants.id]`,
+      `[SoundboardValidationError: Soundboard SoundboardTestConstants.id contains duplicate sound ID: SoundTestConstants.id]`,
     )
   })
 })
