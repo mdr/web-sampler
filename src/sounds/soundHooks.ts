@@ -67,6 +67,13 @@ export const useSoundboard = (id: SoundboardId): Soundboard => {
   return soundboard
 }
 
+export const useSoundboardAndSounds = (soundboardId: SoundboardId) => {
+  const soundboard = useSoundboard(soundboardId)
+  const allSounds = useSounds()
+  const sounds = soundboard.sounds.map((soundId) => allSounds.find((sound) => sound.id === soundId) as Sound)
+  return { soundboard, sounds }
+}
+
 export const useIsLoading = (): boolean => useSoundLibraryState().isLoading
 
 export const useCanUndo = (): boolean => useSoundLibraryState().canUndo

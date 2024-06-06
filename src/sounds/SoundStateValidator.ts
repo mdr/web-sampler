@@ -6,6 +6,9 @@ import { MAX_VOLUME, MIN_VOLUME } from '../utils/types/brandedTypes.ts'
 
 export const validateSoundState = (soundState: SoundState): void => new SoundStateValidator(soundState).validate()
 
+export const validateSoundboard = (soundState: SoundState, soundboard: Soundboard): void =>
+  new SoundStateValidator(soundState).validateSoundboard(soundboard)
+
 class SoundStateValidator {
   constructor(private readonly soundState: SoundState) {}
 
@@ -14,7 +17,7 @@ class SoundStateValidator {
     this.soundState.soundboards.forEach(this.validateSoundboard)
   }
 
-  private validateSoundboard = (soundboard: Soundboard) => {
+  validateSoundboard = (soundboard: Soundboard) => {
     const sounds = this.soundState.sounds
     const seenSoundIds = new Set<SoundId>()
     for (const soundId of soundboard.sounds) {

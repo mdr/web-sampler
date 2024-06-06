@@ -10,7 +10,7 @@ import { newSoundAudio, SoundAudio } from '../types/SoundAudio.ts'
 import { SoundStore } from './SoundStore.ts'
 import { SoundSyncer } from './SoundSyncer.ts'
 import { UndoRedoManager } from './UndoRedoManager.ts'
-import { validateSound, validateSoundState } from './SoundStateValidator.ts'
+import { validateSound, validateSoundboard, validateSoundState } from './SoundStateValidator.ts'
 import { EMPTY_SOUND_STATE, SoundState } from './SoundState.ts'
 import { newSoundboard, removeSoundFromSoundboard, Soundboard, SoundboardId } from '../types/Soundboard.ts'
 import { AudioData } from '../types/AudioData.ts'
@@ -158,7 +158,7 @@ export class SoundLibrary implements SoundActions {
 
   newSoundboard = (): Soundboard => {
     const soundboard: Soundboard = newSoundboard()
-    // validateSoundboard
+    validateSoundboard(this.soundState, soundboard)
     const updatedSoundboards = [...this.soundboards, soundboard]
     this.setSoundboards(updatedSoundboards)
     return soundboard
@@ -199,6 +199,7 @@ export class SoundLibrary implements SoundActions {
     if (_.isEqual(currentSoundboard, updatedSoundboard)) {
       return
     }
+    validateSoundboard(this.soundState, updatedSoundboard)
     const updatedSoundboards = this.soundboards.map((soundboard) =>
       soundboard.id === id ? updatedSoundboard : soundboard,
     )
@@ -207,6 +208,7 @@ export class SoundLibrary implements SoundActions {
 
   importSounds = (sounds: readonly Sound[]) => {
     sounds.forEach(validateSound)
+    // TODO: handle soundboards
     this.setSounds(sounds)
   }
 
@@ -265,6 +267,7 @@ export class SoundLibrary implements SoundActions {
 
   private setState = (state: SoundState): void => {
     this.checkNotLoading()
+    validateSoundState(state)
     this.undoRedoManager.change(state)
     this.soundSyncer.soundsUpdated(state)
     this.notifyListeners()
