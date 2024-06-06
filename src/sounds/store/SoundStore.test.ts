@@ -8,12 +8,12 @@ import { SoundStateDiff } from '../SoundStateDiff.ts'
 import { makeSoundboard, SoundboardTestConstants } from '../../types/soundboard.testSupport.ts'
 import { Sound } from '../../types/Sound.ts'
 
-const makeSoundsDiff = ({
+const makeSoundStateDiff = ({
   soundsToUpsert = [],
   soundIdsToDelete = [],
   soundboardsToUpsert = [],
   soundboardIdsToDelete = [],
-}: Partial<SoundStateDiff> = {}) => ({
+}: Partial<SoundStateDiff> = {}): SoundStateDiff => ({
   soundsToUpsert,
   soundIdsToDelete,
   soundboardsToUpsert,
@@ -28,16 +28,16 @@ describe.each([
     expect((await store.getSoundState()).sounds).toEqual([])
 
     const sound = makeSound()
-    const change1 = makeSoundsDiff({ soundsToUpsert: [sound], soundIdsToDelete: [] })
+    const change1 = makeSoundStateDiff({ soundsToUpsert: [sound], soundIdsToDelete: [] })
     await store.bulkUpdate(change1)
     expect((await store.getSoundState()).sounds).toEqual([sound])
 
     const updatedSound = { ...sound, name: SoundTestConstants.newName }
-    const change2 = makeSoundsDiff({ soundsToUpsert: [updatedSound], soundIdsToDelete: [] })
+    const change2 = makeSoundStateDiff({ soundsToUpsert: [updatedSound], soundIdsToDelete: [] })
     await store.bulkUpdate(change2)
     expect((await store.getSoundState()).sounds).toEqual([updatedSound])
 
-    const change3 = makeSoundsDiff({ soundsToUpsert: [], soundIdsToDelete: [updatedSound.id] })
+    const change3 = makeSoundStateDiff({ soundsToUpsert: [], soundIdsToDelete: [updatedSound.id] })
     await store.bulkUpdate(change3)
     expect((await store.getSoundState()).sounds).toEqual([])
   })
@@ -46,23 +46,23 @@ describe.each([
     expect((await store.getSoundState()).soundboards).toEqual([])
 
     const soundboard = makeSoundboard()
-    const change1 = makeSoundsDiff({ soundboardsToUpsert: [soundboard], soundboardIdsToDelete: [] })
+    const change1 = makeSoundStateDiff({ soundboardsToUpsert: [soundboard], soundboardIdsToDelete: [] })
     await store.bulkUpdate(change1)
     expect((await store.getSoundState()).soundboards).toEqual([soundboard])
 
     const updatedSoundboard = { ...soundboard, name: SoundboardTestConstants.newName }
-    const change2 = makeSoundsDiff({ soundboardsToUpsert: [updatedSoundboard], soundboardIdsToDelete: [] })
+    const change2 = makeSoundStateDiff({ soundboardsToUpsert: [updatedSoundboard], soundboardIdsToDelete: [] })
     await store.bulkUpdate(change2)
     expect((await store.getSoundState()).soundboards).toEqual([updatedSoundboard])
 
-    const change3 = makeSoundsDiff({ soundboardsToUpsert: [], soundboardIdsToDelete: [updatedSoundboard.id] })
+    const change3 = makeSoundStateDiff({ soundboardsToUpsert: [], soundboardIdsToDelete: [updatedSoundboard.id] })
     await store.bulkUpdate(change3)
     expect((await store.getSoundState()).soundboards).toEqual([])
   })
 
   it('should validate data shape on reading from the store', async () => {
     const badSound = { ...makeSound(), foo: 42 } as Sound
-    await store.bulkUpdate(makeSoundsDiff({ soundsToUpsert: [badSound] }))
+    await store.bulkUpdate(makeSoundStateDiff({ soundsToUpsert: [badSound] }))
 
     await expect(store.getSoundState()).rejects.toThrowError()
   })
