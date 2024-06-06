@@ -3,14 +3,14 @@ import _ from 'lodash'
 import { SoundState } from './SoundState.ts'
 import { Soundboard, SoundboardId } from '../types/Soundboard.ts'
 
-export interface SoundsDiff {
+export interface SoundStateDiff {
   soundsToUpsert: readonly Sound[]
   soundIdsToDelete: readonly SoundId[]
   soundboardsToUpsert: readonly Soundboard[]
   soundboardIdsToDelete: readonly SoundboardId[]
 }
 
-export const isDiffEmpty = (diff: SoundsDiff): boolean =>
+export const isDiffEmpty = (diff: SoundStateDiff): boolean =>
   diff.soundsToUpsert.length === 0 &&
   diff.soundIdsToDelete.length === 0 &&
   diff.soundboardsToUpsert.length === 0 &&
@@ -31,7 +31,7 @@ const compareItems = <Id, T extends { id: Id }>(
   return { itemsToUpsert, itemIdsToDelete }
 }
 
-export const compareSoundStates = (oldState: SoundState, newState: SoundState): SoundsDiff => {
+export const compareSoundStates = (oldState: SoundState, newState: SoundState): SoundStateDiff => {
   const { sounds: oldSounds, soundboards: oldSoundboards } = oldState
   const { sounds: newSounds, soundboards: newSoundboards } = newState
 

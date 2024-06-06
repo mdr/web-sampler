@@ -1,10 +1,10 @@
 import { SoundState } from '../SoundState.ts'
-import { SoundsDiff } from '../SoundsDiff.ts'
+import { SoundStateDiff } from '../SoundStateDiff.ts'
 
 /**
  * Persistent storage for sounds in the app.
  */
 export interface SoundStore {
   getSoundState: () => Promise<SoundState>
-  bulkUpdate: (update: SoundsDiff) => Promise<void>
+  bulkUpdate: (update: SoundStateDiff) => Promise<void>
 }

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { Sound } from '../types/Sound'
-import { compareSoundStates } from './SoundsDiff.ts'
+import { compareSoundStates } from './SoundStateDiff.ts'
 import { makeSound, SoundTestConstants } from '../types/sound.testSupport.ts'
 import { makeSoundboard, SoundboardTestConstants } from '../types/soundboard.testSupport.ts'
 import { SoundState } from './SoundState.ts'

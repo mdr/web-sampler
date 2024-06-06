@@ -3,7 +3,7 @@ import { SoundStore } from './SoundStore.ts'
 import _ from 'lodash'
 import { SoundState } from '../SoundState.ts'
 import { Soundboard } from '../../types/Soundboard.ts'
-import { SoundsDiff } from '../SoundsDiff.ts'
+import { SoundStateDiff } from '../SoundStateDiff.ts'
 
 export class MemorySoundStore implements SoundStore {
   sounds: Sound[] = []
@@ -33,7 +33,7 @@ export class MemorySoundStore implements SoundStore {
     soundIdsToDelete,
     soundboardsToUpsert,
     soundboardIdsToDelete,
-  }: SoundsDiff): Promise<void> => {
+  }: SoundStateDiff): Promise<void> => {
     this.sounds = _.unionBy(soundsToUpsert, this.sounds, 'id')
     _.remove(this.sounds, (sound) => soundIdsToDelete.includes(sound.id))
     this.soundboards = _.unionBy(soundboardsToUpsert, this.soundboards, 'id')
