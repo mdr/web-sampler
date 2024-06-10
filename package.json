@@ -51,7 +51,7 @@
     "react-toastify": "^10.0.5",
     "react-use": "^17.5.0",
     "tailwindcss-react-aria-components": "^1.1.3",
-    "tsafe": "^1.6.6",
+    "tsafe": "^1.7.2",
     "typeface-roboto": "^1.1.13",
     "use-file-picker": "^2.1.2",
     "uuid": "^10.0.0",
