@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import React, { PropsWithChildren } from 'react'
 import { RouterProvider } from 'react-router-dom'
 import { AudioRecorderContext } from '../audioRecorder/AudioRecorderContext.ts'
@@ -31,6 +32,7 @@ const nestProviders = (config: AppConfig): React.FC<PropsWithChildren> => {
     <StorageManagerContext.Provider value={storageManager} />,
   ])
 }
+
 export const App = ({ config }: AppProps) => {
   const AllProviders = nestProviders(config)
   useDidMount(() => {

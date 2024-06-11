@@ -4,6 +4,7 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/strict',
+    'plugin:react/recommended',
     // enable for type-checked rules:
     // 'plugin:@typescript-eslint/strict-type-checked',
     'plugin:react-hooks/recommended',
@@ -14,11 +15,19 @@ module.exports = {
   // for use with @typescript-eslint/strict-type-checked:
   // parserOptions: { project: './tsconfig.json' },
   plugins: ['react-refresh'],
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
   rules: {
     '@typescript-eslint/no-confusing-void-expression': 'off',
     // for use with @typescript-eslint/strict-type-checked:
     // '@typescript-eslint/restrict-template-expressions': ['error', { 'allowNumber': true }],
     'object-shorthand': ['error', 'always'],
     'react-refresh/only-export-components': 'warn',
+    'react/react-in-jsx-scope': 'off',
+    'react/prop-types': 'off',
+    'react/no-unescaped-entities': 'off',
   },
 }
