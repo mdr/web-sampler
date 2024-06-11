@@ -125,3 +125,5 @@ export const WaveformVisualiser: FC<WaveformVisualiserProps> = memo(
     )
   },
 )
+
+WaveformVisualiser.displayName = 'WaveformVisualiser'
