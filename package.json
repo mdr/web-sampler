@@ -15,7 +15,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "@atlaskit/inline-edit": "^13.4.0",
+    "@atlaskit/inline-edit": "^13.4.1",
     "@breezystack/lamejs": "^1.2.7",
     "@mdi/js": "^7.4.47",
     "@mdi/react": "^1.6.1",
