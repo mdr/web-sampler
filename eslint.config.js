@@ -10,9 +10,7 @@ const limitFiles = (config) => ({
   ignores: ['.yarn', 'playwright/.cache', '**/*.js'],
 })
 
-console.log(fixupConfigRules(pluginReactConfig))
-
-export default [
+const configs = [
   { languageOptions: { globals: globals.browser } },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
@@ -26,3 +24,5 @@ export default [
     },
   },
 ].map(limitFiles)
+console.log(configs)
+export default configs
