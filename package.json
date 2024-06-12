@@ -45,7 +45,7 @@
     "react-hotkeys-hook": "^4.5.0",
     "react-konva": "^18.2.10",
     "react-resizable-panels": "^2.0.19",
-    "react-resize-detector": "^10.0.1",
+    "react-resize-detector": "^11.0.1",
     "react-router-dom": "^6.23.1",
     "react-spinners": "^0.13.8",
     "react-toastify": "^10.0.5",
