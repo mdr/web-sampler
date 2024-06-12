@@ -6271,6 +6271,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@storybook/instrumenter@npm:8.1.7":
+  version: 8.1.7
+  resolution: "@storybook/instrumenter@npm:8.1.7"
+  dependencies:
+    "@storybook/channels": "npm:8.1.7"
+    "@storybook/client-logger": "npm:8.1.7"
+    "@storybook/core-events": "npm:8.1.7"
+    "@storybook/global": "npm:^5.0.0"
+    "@storybook/preview-api": "npm:8.1.7"
+    "@vitest/utils": "npm:^1.3.1"
+    util: "npm:^0.12.4"
+  checksum: 10c0/29a5d88be59aadefcc7d13473e64ea7b654012f96ac72abf7ffd74e03cac003deb440ffd66d1651137f1fa7c44999b323187bcd06a81e8faaccff8178899c29d
+  languageName: node
+  linkType: hard
+
 "@storybook/manager-api@npm:8.1.6":
   version: 8.1.6
   resolution: "@storybook/manager-api@npm:8.1.6"
@@ -6506,7 +6521,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/test@npm:8.1.6, @storybook/test@npm:^8.1.6":
+"@storybook/test@npm:8.1.6":
   version: 8.1.6
   resolution: "@storybook/test@npm:8.1.6"
   dependencies:
@@ -6521,6 +6536,24 @@ __metadata:
     "@vitest/spy": "npm:^1.3.1"
     util: "npm:^0.12.4"
   checksum: 10c0/a3db0ef52c3614868886fff54f0dda61d83a5593877536d195af631564c81fd4c1bf09f84d85289c81aab693d0d1d97244784ff5479c58ac4adcc5a4eeae5d81
+  languageName: node
+  linkType: hard
+
+"@storybook/test@npm:^8.1.7":
+  version: 8.1.7
+  resolution: "@storybook/test@npm:8.1.7"
+  dependencies:
+    "@storybook/client-logger": "npm:8.1.7"
+    "@storybook/core-events": "npm:8.1.7"
+    "@storybook/instrumenter": "npm:8.1.7"
+    "@storybook/preview-api": "npm:8.1.7"
+    "@testing-library/dom": "npm:^9.3.4"
+    "@testing-library/jest-dom": "npm:^6.4.2"
+    "@testing-library/user-event": "npm:^14.5.2"
+    "@vitest/expect": "npm:1.3.1"
+    "@vitest/spy": "npm:^1.3.1"
+    util: "npm:^0.12.4"
+  checksum: 10c0/a2b5387b21b3db01af5cb5e445e89cb14f2f3daa1fd97b38866161c4b154c9a116bc75ce5293c2c478e96552419ce6ce34e2ee0602e1066e9d7754bad2cadd76
   languageName: node
   linkType: hard
 
@@ -16279,7 +16312,7 @@ __metadata:
     "@storybook/blocks": "npm:^8.1.6"
     "@storybook/react": "npm:^8.1.6"
     "@storybook/react-vite": "npm:^8.1.6"
-    "@storybook/test": "npm:^8.1.6"
+    "@storybook/test": "npm:^8.1.7"
     "@testing-library/jest-dom": "npm:^6.4.6"
     "@testing-library/react": "npm:^16.0.0"
     "@testing-library/react-hooks": "npm:^8.0.1"
