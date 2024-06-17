@@ -8,6 +8,8 @@ import tsParser from '@typescript-eslint/parser'
 
 const tsFilePatterns = ['src/**/*.ts', 'src/**/*.tsx']
 
+const restrictToTsFiles = (config) => ({ files: tsFilePatterns, ...config })
+
 const configs = [
   {
     plugins: {
@@ -40,9 +42,9 @@ const configs = [
   },
   { languageOptions: { globals: globals.browser } },
   pluginJs.configs.recommended,
+  ...tseslint.configs.stylisticTypeChecked.map(restrictToTsFiles),
   ...tseslint.configs.strict,
-  ...tseslint.configs.stylisticTypeChecked.map((config) => ({ files: tsFilePatterns, ...config })),
-  // ...tseslint.configs.strictTypeChecked.map((config) => ({ files: tsFilePatterns, ...config })),
+  // ...tseslint.configs.strictTypeChecked.map(restrictToTsFiles),
   ...fixupConfigRules({ ...pluginReactConfig, settings: { react: { version: 'detect' } } }),
   {
     files: tsFilePatterns,

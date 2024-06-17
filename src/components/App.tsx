@@ -30,7 +30,7 @@ const nestProviders = (config: AppConfig): React.FC<PropsWithChildren> => {
     <AudioOperationsContext.Provider value={audioOperations} />,
     <SoundLibraryContext.Provider value={soundLibrary} />,
     <StorageManagerContext.Provider value={storageManager} />,
-  ])
+  ]) as React.FC<PropsWithChildren>
 }
 
 export const App = ({ config }: AppProps) => {

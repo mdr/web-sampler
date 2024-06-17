@@ -10,20 +10,25 @@ export interface CaseProps {
   condition?: boolean
 }
 
+const hasCondition = (props: unknown): props is { condition: boolean } => {
+  return typeof props === 'object' && props !== null && 'condition' in props
+}
+
 export const Switch: React.FC<SwitchProps> = ({ children }) => {
   let match: Option<ReactElement> = undefined
   let defaultCase: Option<ReactElement> = undefined
-
-  React.Children.forEach(children, (child) => {
+  for (const child of React.Children.toArray(children)) {
     if (React.isValidElement(child)) {
-      if ('condition' in child.props && child.props.condition) {
-        match = child
-      } else if (!('condition' in child.props)) {
+      const childProps: unknown = child.props
+      if (hasCondition(childProps)) {
+        if (childProps.condition) {
+          match = child
+        }
+      } else {
         defaultCase = child
       }
     }
-  })
-
+  }
   return match === undefined ? defaultCase : React.cloneElement(match)
 }
 
