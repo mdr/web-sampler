@@ -7,9 +7,11 @@ export class SchemaCheckedTable<T, TKey> {
     private readonly schema: ZodTypeAny,
   ) {}
 
+  private parse = (item: unknown): T => this.schema.parse(item) as T
+
   toArray = async (): Promise<T[]> => {
     const items = await this.dexieTable.toArray()
-    return items.map((item) => this.schema.parse(item))
+    return items.map(this.parse)
   }
 
   bulkPut = async (items: T[]): Promise<void> => {

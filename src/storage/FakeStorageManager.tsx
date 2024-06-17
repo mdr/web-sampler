@@ -9,6 +9,7 @@ export class FakeStorageManager extends AbstractStorageManager implements Storag
     super()
   }
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   checkIfStorageIsPersistent = async (): Promise<void> => {
     this.setIsStoragePersistent(this.initiallyIsPersistent)
   }

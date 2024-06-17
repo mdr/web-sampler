@@ -22,6 +22,7 @@ export class MemorySoundStore implements SoundStore {
     return sound
   }
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   getSoundState = async (): Promise<SoundState> =>
     soundStateSchema.parse({
       sounds: [...this.sounds],

@@ -43,8 +43,7 @@ const configs = [
   { languageOptions: { globals: globals.browser } },
   pluginJs.configs.recommended,
   ...tseslint.configs.stylisticTypeChecked.map(restrictToTsFiles),
-  ...tseslint.configs.strict,
-  // ...tseslint.configs.strictTypeChecked.map(restrictToTsFiles),
+  ...tseslint.configs.strictTypeChecked.map(restrictToTsFiles),
   ...fixupConfigRules({ ...pluginReactConfig, settings: { react: { version: 'detect' } } }),
   {
     files: tsFilePatterns,

@@ -1,4 +1,4 @@
-import { deserialize, serialize } from '@ungap/structured-clone'
+import { deserialize, serialize, SerializedRecord } from '@ungap/structured-clone'
 import { Sound } from '../../../types/Sound.ts'
 
 export const serialiseSounds = (sounds: readonly Sound[]): string => {
@@ -8,6 +8,6 @@ export const serialiseSounds = (sounds: readonly Sound[]): string => {
 }
 
 export const deserialiseSounds = (jsonString: string): Sound[] => {
-  const serialisedSounds = JSON.parse(jsonString)
-  return deserialize(serialisedSounds)
+  const serialisedSounds = JSON.parse(jsonString) as SerializedRecord
+  return deserialize(serialisedSounds) as Sound[]
 }
