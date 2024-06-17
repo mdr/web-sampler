@@ -39,6 +39,7 @@ const configs = [
   { languageOptions: { globals: globals.browser } },
   pluginJs.configs.recommended,
   ...tseslint.configs.strict,
+  ...tseslint.configs.stylistic,
   // ...tseslint.configs.strictTypeChecked.map((config) => ({ files: ['src/**/*.ts*'], ...config })),
   ...fixupConfigRules({ ...pluginReactConfig, settings: { react: { version: 'detect' } } }),
   {
@@ -46,6 +47,7 @@ const configs = [
     rules: {
       '@typescript-eslint/no-confusing-void-expression': 'off',
       '@typescript-eslint/restrict-template-expressions': ['error', { allowNumber: true }],
+      '@typescript-eslint/no-inferrable-types': 'off',
       'object-shorthand': ['error', 'always'],
       'react-refresh/only-export-components': 'warn',
       'react/no-unescaped-entities': 'off',
