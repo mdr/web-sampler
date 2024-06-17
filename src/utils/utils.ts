@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { Option } from './types/Option.ts'
 
 export const unawaited = <T>(promise: Promise<T>): void => void promise
 
@@ -18,3 +19,6 @@ export const concatenateFloat32Arrays = (arrays: Float32Array[]): Float32Array =
   })
   return combinedBuffer
 }
+
+export const mapNotUndefined = <T, U>(items: T[], f: (t: T) => Option<U>): U[] =>
+  items.map(f).filter((item): item is U => item !== undefined)

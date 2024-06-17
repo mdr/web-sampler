@@ -6,6 +6,7 @@ import { SoundLibrary } from './SoundLibrary.ts'
 import { Samples, Volume } from '../../utils/types/brandedTypes.ts'
 import { Soundboard, SoundboardId } from '../../types/Soundboard.ts'
 import { AudioData } from '../../types/AudioData.ts'
+import { mapNotUndefined } from '../../utils/utils.ts'
 
 const useSoundLibrary = (): SoundLibrary => {
   const soundLibrary = useContext(SoundLibraryContext)
@@ -67,10 +68,15 @@ export const useSoundboard = (id: SoundboardId): Soundboard => {
   return soundboard
 }
 
-export const useSoundboardAndSounds = (soundboardId: SoundboardId) => {
+export interface SoundboardAndSounds {
+  soundboard: Soundboard
+  sounds: readonly Sound[]
+}
+
+export const useSoundboardAndSounds = (soundboardId: SoundboardId): SoundboardAndSounds => {
   const soundboard = useSoundboard(soundboardId)
   const allSounds = useSounds()
-  const sounds = soundboard.sounds.map((soundId) => allSounds.find((sound) => sound.id === soundId) as Sound)
+  const sounds = mapNotUndefined(soundboard.sounds, (soundId) => allSounds.find((sound) => sound.id === soundId))
   return { soundboard, sounds }
 }
 

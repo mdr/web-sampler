@@ -6,6 +6,8 @@ import { fixupConfigRules } from '@eslint/compat'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tsParser from '@typescript-eslint/parser'
 
+const tsFilePatterns = ['src/**/*.ts', 'src/**/*.tsx']
+
 const configs = [
   {
     plugins: {
@@ -39,11 +41,11 @@ const configs = [
   { languageOptions: { globals: globals.browser } },
   pluginJs.configs.recommended,
   ...tseslint.configs.strict,
-  ...tseslint.configs.stylistic,
-  // ...tseslint.configs.strictTypeChecked.map((config) => ({ files: ['src/**/*.ts*'], ...config })),
+  ...tseslint.configs.stylisticTypeChecked.map((config) => ({ files: tsFilePatterns, ...config })),
+  // ...tseslint.configs.strictTypeChecked.map((config) => ({ files: tsFilePatterns, ...config })),
   ...fixupConfigRules({ ...pluginReactConfig, settings: { react: { version: 'detect' } } }),
   {
-    files: ['src/**/*.ts*'],
+    files: tsFilePatterns,
     rules: {
       '@typescript-eslint/no-confusing-void-expression': 'off',
       '@typescript-eslint/restrict-template-expressions': ['error', { allowNumber: true }],
