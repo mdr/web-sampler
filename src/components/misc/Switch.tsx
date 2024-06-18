@@ -23,6 +23,7 @@ export const Switch: React.FC<SwitchProps> = ({ children }) => {
       if (hasCondition(childProps)) {
         if (childProps.condition) {
           match = child
+          break
         }
       } else {
         defaultCase = child
