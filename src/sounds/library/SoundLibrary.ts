@@ -102,7 +102,7 @@ export class SoundLibrary implements SoundActions {
       sound.name = name
     })
 
-  setAudioPcm = (id: SoundId, audioData: AudioData) =>
+  setAudioData = (id: SoundId, audioData: AudioData) =>
     this.updateSound(id, (sound) => {
       sound.audio = newSoundAudio(audioData)
     })

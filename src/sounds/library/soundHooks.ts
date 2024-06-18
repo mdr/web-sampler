@@ -91,7 +91,7 @@ export interface SoundActions {
 
   setName(id: SoundId, name: string): void
 
-  setAudioPcm(id: SoundId, audioData: AudioData): void
+  setAudioData(id: SoundId, audioData: AudioData): void
 
   deleteSound(id: SoundId): void
 

@@ -58,7 +58,7 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPaneProps) => {
       if (audioData === undefined) {
         toast.error('No audio captured')
       } else {
-        soundActions.setAudioPcm(sound.id, audioData)
+        soundActions.setAudioData(sound.id, audioData)
       }
       if (timerIdRef.current) {
         clearTimeout(timerIdRef.current)

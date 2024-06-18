@@ -3,7 +3,7 @@ import { SoundLibrary, SoundLibraryUpdatedListener } from './SoundLibrary.ts'
 import { MemorySoundStore } from '../store/MemorySoundStore.testSupport.ts'
 import flushPromises from 'flush-promises'
 import { makePcm, makeSound, makeSoundWithAudio, SoundTestConstants } from '../../types/sound.testSupport.ts'
-import { newSoundId, Sound } from '../../types/Sound.ts'
+import { newSoundId, Sound, SoundId } from '../../types/Sound.ts'
 import { SoundStore } from '../store/SoundStore.ts'
 import { mockFunction } from '../../utils/mockUtils.testSupport.ts'
 import { Samples, Volume } from '../../utils/types/brandedTypes.ts'
@@ -209,6 +209,31 @@ describe('SoundLibrary', () => {
     expect(library.soundboards).toEqual(updatedSoundboards)
     await flushPromises()
     expect(soundStore.soundboards).toEqual(updatedSoundboards)
+  })
+
+  it('should allow a sound to be duplicated', async () => {
+    const sound = makeSound()
+    const { library, soundStore, listener } = await setUpTest([sound])
+
+    library.duplicateSound(sound.id)
+
+    expect(listener).toHaveBeenCalledTimes(1)
+    expect(library.sounds).toIncludeSameMembers([sound, { ...sound, id: expect.anything() as SoundId }])
+    await flushPromises()
+    expect(soundStore.sounds).toIncludeSameMembers([sound, { ...sound, id: expect.anything() as SoundId }])
+  })
+
+  it('should allow audio data to be set', async () => {
+    const sound = makeSound()
+    const audioData = { pcm: makePcm(Samples(100)), sampleRate: SoundTestConstants.sampleRate }
+    const { library, soundStore, listener } = await setUpTest([sound])
+
+    library.setAudioData(sound.id, audioData)
+
+    expect(listener).toHaveBeenCalledTimes(1)
+    expect(library.getSound(sound.id).audio).toMatchObject(audioData)
+    await flushPromises()
+    expect(soundStore.getSound(sound.id).audio).toMatchObject(audioData)
   })
 
   describe('addSoundToSoundboard', () => {

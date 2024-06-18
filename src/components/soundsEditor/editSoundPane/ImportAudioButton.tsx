@@ -47,7 +47,7 @@ export const ImportAudioButton = ({ soundId }: ImportAudioButtonProps) => {
 
     if (audioData !== undefined) {
       const truncatedAudioData = truncateAudioData(audioData, MAX_RECORDING_DURATION)
-      soundActions.setAudioPcm(soundId, truncatedAudioData)
+      soundActions.setAudioData(soundId, truncatedAudioData)
       if (audioData.pcm.length > truncatedAudioData.pcm.length) {
         toast.warning(`Audio was truncated to ${MAX_RECORDING_DURATION} seconds.`)
       }
