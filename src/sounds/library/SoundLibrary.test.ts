@@ -65,6 +65,16 @@ describe('SoundLibrary', () => {
     expect(soundStore.sounds).toEqual([sound])
   })
 
+  it('should support removing listeners', async () => {
+    const sound = makeSound()
+    const { library, listener } = await setUpTest([sound])
+
+    library.removeListener(listener)
+
+    library.setName(sound.id, SoundTestConstants.newName)
+    expect(listener).not.toHaveBeenCalled()
+  })
+
   describe('deleteSound', () => {
     it('should allow a sound to be deleted', async () => {
       const sound = makeSound()
