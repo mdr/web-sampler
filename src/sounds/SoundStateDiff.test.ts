@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { Sound } from '../types/Sound'
-import { compareSoundStates } from './SoundStateDiff.ts'
+import { compareSoundStates, isDiffEmpty, makeSoundStateDiff } from './SoundStateDiff.ts'
 import { makeSound, SoundTestConstants } from '../types/sound.testSupport.ts'
 import { makeSoundboard, SoundboardTestConstants } from '../types/soundboard.testSupport.ts'
 
@@ -40,5 +40,25 @@ describe('compareSoundStates', () => {
 
     expect(diff.soundboardsToUpsert).toIncludeSameMembers([soundboard2Version2, soundboard3])
     expect(diff.soundboardIdsToDelete).toEqual([soundboard1.id])
+  })
+})
+
+describe('isDiffEmpty', () => {
+  it('returns true when all fields are empty', () => {
+    expect(
+      isDiffEmpty({
+        soundsToUpsert: [],
+        soundIdsToDelete: [],
+        soundboardsToUpsert: [],
+        soundboardIdsToDelete: [],
+      }),
+    ).toBeTrue()
+  })
+
+  it('returns false when any field is not empty', () => {
+    expect(isDiffEmpty(makeSoundStateDiff({ soundsToUpsert: [makeSound()] }))).toBeFalse()
+    expect(isDiffEmpty(makeSoundStateDiff({ soundIdsToDelete: [SoundTestConstants.id] }))).toBeFalse()
+    expect(isDiffEmpty(makeSoundStateDiff({ soundboardsToUpsert: [makeSoundboard()] }))).toBeFalse()
+    expect(isDiffEmpty(makeSoundStateDiff({ soundboardIdsToDelete: [SoundboardTestConstants.id] }))).toBeFalse()
   })
 })

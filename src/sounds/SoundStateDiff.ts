@@ -10,6 +10,18 @@ export interface SoundStateDiff {
   soundboardIdsToDelete: readonly SoundboardId[]
 }
 
+export const makeSoundStateDiff = ({
+  soundsToUpsert = [],
+  soundIdsToDelete = [],
+  soundboardsToUpsert = [],
+  soundboardIdsToDelete = [],
+}: Partial<SoundStateDiff> = {}): SoundStateDiff => ({
+  soundsToUpsert,
+  soundIdsToDelete,
+  soundboardsToUpsert,
+  soundboardIdsToDelete,
+})
+
 export const isDiffEmpty = (diff: SoundStateDiff): boolean =>
   diff.soundsToUpsert.length === 0 &&
   diff.soundIdsToDelete.length === 0 &&

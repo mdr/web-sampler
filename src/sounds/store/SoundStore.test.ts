@@ -4,21 +4,9 @@ import { makeSound, SoundTestConstants } from '../../types/sound.testSupport.ts'
 import { MemorySoundStore } from './MemorySoundStore.testSupport.ts'
 import { DexieSoundStore } from './DexieSoundStore.ts'
 import { AppDb } from './AppDb.ts'
-import { SoundStateDiff } from '../SoundStateDiff.ts'
 import { makeSoundboard, SoundboardTestConstants } from '../../types/soundboard.testSupport.ts'
 import { Sound } from '../../types/Sound.ts'
-
-const makeSoundStateDiff = ({
-  soundsToUpsert = [],
-  soundIdsToDelete = [],
-  soundboardsToUpsert = [],
-  soundboardIdsToDelete = [],
-}: Partial<SoundStateDiff> = {}): SoundStateDiff => ({
-  soundsToUpsert,
-  soundIdsToDelete,
-  soundboardsToUpsert,
-  soundboardIdsToDelete,
-})
+import { makeSoundStateDiff } from '../SoundStateDiff.ts'
 
 describe.each([
   { name: 'MemorySoundStore', store: new MemorySoundStore() },
