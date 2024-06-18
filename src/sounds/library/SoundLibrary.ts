@@ -11,7 +11,7 @@ import { SoundStore } from '../store/SoundStore.ts'
 import { SoundSyncer } from '../store/SoundSyncer.ts'
 import { UndoRedoManager } from '../UndoRedoManager.ts'
 import { validateSoundState } from '../SoundStateValidator.ts'
-import { EMPTY_SOUND_STATE, SoundState } from '../SoundState.ts'
+import { EMPTY_SOUND_STATE, makeSoundState, SoundState } from '../SoundState.ts'
 import { newSoundboard, removeSoundFromSoundboard, Soundboard, SoundboardId } from '../../types/Soundboard.ts'
 import { AudioData } from '../../types/AudioData.ts'
 
@@ -203,7 +203,7 @@ export class SoundLibrary implements SoundActions {
   }
 
   importSounds = (sounds: readonly Sound[]) => {
-    this.setState({ sounds, soundboards: [] })
+    this.setState(makeSoundState({ sounds }))
   }
 
   undo = (): void => {

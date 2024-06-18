@@ -3,12 +3,8 @@ import { Sound } from '../types/Sound'
 import { compareSoundStates } from './SoundStateDiff.ts'
 import { makeSound, SoundTestConstants } from '../types/sound.testSupport.ts'
 import { makeSoundboard, SoundboardTestConstants } from '../types/soundboard.testSupport.ts'
-import { SoundState } from './SoundState.ts'
 
-const makeSoundState = ({ sounds = [], soundboards = [] }: Partial<SoundState> = {}): SoundState => ({
-  sounds,
-  soundboards,
-})
+import { makeSoundState } from './SoundState.ts'
 
 describe('compareSoundStates', () => {
   it('correctly identifies sounds to upsert and delete', () => {

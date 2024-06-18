@@ -1,4 +1,4 @@
-import { doNothing, mapNotUndefined } from './utils.ts'
+import { concatenateFloat32Arrays, doNothing, mapNotUndefined } from './utils.ts'
 import { describe, expect, it } from 'vitest'
 import { Option } from './types/Option.ts'
 
@@ -13,5 +13,21 @@ describe('mapNotUndefined', () => {
     const items = [1, 2, 3, 4, 5]
     const f = (n: number): Option<number> => (n % 2 === 0 ? n : undefined)
     expect(mapNotUndefined(items, f)).toEqual([2, 4])
+  })
+})
+
+describe('concatenateFloat32Arrays', () => {
+  it('should concatenate arrays', () => {
+    const array1 = new Float32Array([1, 2, 3])
+    const array2 = new Float32Array([4, 5, 6])
+    const array3 = new Float32Array([7, 8, 9])
+
+    const combined = concatenateFloat32Arrays([array1, array2, array3])
+
+    expect(combined).toEqual(new Float32Array([1, 2, 3, 4, 5, 6, 7, 8, 9]))
+  })
+
+  it('should handle an empty array of arrays', () => {
+    expect(concatenateFloat32Arrays([])).toEqual(new Float32Array([]))
   })
 })

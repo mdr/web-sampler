@@ -18,3 +18,8 @@ export const soundStateSchema = z
 assert<Equals<SoundState, z.infer<typeof soundStateSchema>>>()
 
 export const EMPTY_SOUND_STATE: SoundState = { soundboards: [], sounds: [] }
+
+export const makeSoundState = ({ sounds = [], soundboards = [] }: Partial<SoundState> = {}): SoundState => ({
+  sounds,
+  soundboards,
+})
