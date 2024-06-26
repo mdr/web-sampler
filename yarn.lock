@@ -228,6 +228,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@atlaskit/icon@npm:^22.5.0":
+  version: 22.5.0
+  resolution: "@atlaskit/icon@npm:22.5.0"
+  dependencies:
+    "@atlaskit/platform-feature-flags": "npm:^0.2.0"
+    "@atlaskit/tokens": "npm:^1.53.0"
+    "@babel/runtime": "npm:^7.0.0"
+    "@emotion/react": "npm:^11.7.1"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ~18.2.0
+  checksum: 10c0/391d8a6fc489e5bde5d6dc6f03705b7ab9f2280c121a6d6c77cdea8b2187ff4914c35e88120533d32d7538adb46fde2f2bef41c8c00cd3becb9081e8c17b6177
+  languageName: node
+  linkType: hard
+
 "@atlaskit/inline-dialog@npm:^14.2.0":
   version: 14.2.0
   resolution: "@atlaskit/inline-dialog@npm:14.2.0"
@@ -249,26 +263,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/inline-edit@npm:^13.5.4":
-  version: 13.5.4
-  resolution: "@atlaskit/inline-edit@npm:13.5.4"
+"@atlaskit/inline-edit@npm:^13.5.5":
+  version: 13.5.5
+  resolution: "@atlaskit/inline-edit@npm:13.5.5"
   dependencies:
     "@atlaskit/analytics-next": "npm:^9.3.0"
     "@atlaskit/button": "npm:^18.0.0"
     "@atlaskit/codemod-utils": "npm:^4.2.0"
     "@atlaskit/form": "npm:^10.4.0"
-    "@atlaskit/icon": "npm:^22.4.0"
+    "@atlaskit/icon": "npm:^22.5.0"
     "@atlaskit/inline-dialog": "npm:^14.2.0"
-    "@atlaskit/primitives": "npm:^8.0.0"
+    "@atlaskit/primitives": "npm:^9.0.0"
     "@atlaskit/textfield": "npm:^6.4.0"
     "@atlaskit/theme": "npm:^12.11.0"
-    "@atlaskit/tokens": "npm:^1.52.0"
+    "@atlaskit/tokens": "npm:^1.53.0"
     "@atlaskit/visually-hidden": "npm:^1.4.0"
     "@babel/runtime": "npm:^7.0.0"
     "@emotion/react": "npm:^11.7.1"
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ~18.2.0
-  checksum: 10c0/faf63f45ce6bafa360aedaff48c9ab7099544cceca5d15b130c37b4cce74a0907419c7eb3ff2b39a73acbb69ab9bed9efb78eda619dceb53f5de671af8784064
+  checksum: 10c0/8d3817049be256a95d4c2b624f3a2ae753c1fa459a5e59e488f3a43aaba19ed59f443edc8edb32741969695d27c28ad5d82e1d32495aeaf4d308cdaaf54f4a18
   languageName: node
   linkType: hard
 
@@ -404,6 +418,29 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@atlaskit/primitives@npm:^9.0.0":
+  version: 9.0.0
+  resolution: "@atlaskit/primitives@npm:9.0.0"
+  dependencies:
+    "@atlaskit/analytics-next": "npm:^9.3.0"
+    "@atlaskit/app-provider": "npm:^1.3.0"
+    "@atlaskit/css": "npm:^0.3.0"
+    "@atlaskit/ds-lib": "npm:^2.3.0"
+    "@atlaskit/interaction-context": "npm:^2.1.0"
+    "@atlaskit/tokens": "npm:^1.53.0"
+    "@atlaskit/visually-hidden": "npm:^1.4.0"
+    "@babel/runtime": "npm:^7.0.0"
+    "@emotion/react": "npm:^11.7.1"
+    "@emotion/serialize": "npm:^1.1.0"
+    bind-event-listener: "npm:^3.0.0"
+    react-uid: "npm:^2.2.0"
+    tiny-invariant: "npm:^1.2.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 10c0/98e8b1d36f7e55dc84b348eaa6270ffc9e2ae67976336818f97375c798f968a520beba18729b293b90b231efa462d8d60607c2619c82cfff9dbc083c9b0750cb
+  languageName: node
+  linkType: hard
+
 "@atlaskit/spinner@npm:^16.2.0":
   version: 16.2.0
   resolution: "@atlaskit/spinner@npm:16.2.0"
@@ -508,7 +545,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/tokens@npm:^1.52.0":
+"@atlaskit/tokens@npm:^1.52.0, @atlaskit/tokens@npm:^1.53.0":
   version: 1.53.0
   resolution: "@atlaskit/tokens@npm:1.53.0"
   dependencies:
@@ -16471,7 +16508,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "web-sampler@workspace:."
   dependencies:
-    "@atlaskit/inline-edit": "npm:^13.5.4"
+    "@atlaskit/inline-edit": "npm:^13.5.5"
     "@breezystack/lamejs": "npm:^1.2.7"
     "@chromatic-com/storybook": "npm:^1.5.0"
     "@eslint/compat": "npm:^1.1.0"
