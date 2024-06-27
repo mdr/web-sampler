@@ -21,7 +21,7 @@
     "@breezystack/lamejs": "^1.2.7",
     "@mdi/js": "^7.4.47",
     "@mdi/react": "^1.6.1",
-    "@sentry/react": "^8.12.0",
+    "@sentry/react": "^8.13.0",
     "@sinonjs/fake-timers": "^11.2.2",
     "@ungap/structured-clone": "^1.2.0",
     "@zip.js/zip.js": "^2.7.45",
