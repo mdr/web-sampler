@@ -5891,9 +5891,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-links@npm:^8.1.10":
-  version: 8.1.10
-  resolution: "@storybook/addon-links@npm:8.1.10"
+"@storybook/addon-links@npm:^8.1.11":
+  version: 8.1.11
+  resolution: "@storybook/addon-links@npm:8.1.11"
   dependencies:
     "@storybook/csf": "npm:^0.1.7"
     "@storybook/global": "npm:^5.0.0"
@@ -5903,7 +5903,7 @@ __metadata:
   peerDependenciesMeta:
     react:
       optional: true
-  checksum: 10c0/b75d32a6f7ae4ad824324dd876fbdfd83393f08ef293dcf33c8a54b6b45f68906f65e8057a068e0b70b01ab968083532b6c8f13663f6a6883858842321f4f3b7
+  checksum: 10c0/d6a6ed95ecacd0bf7b13b0247c99e75bceec03d314cd8e2f4b9115efb49e5d3f4e12bfa50aa3d8d2ab4e48a11fd6249335c6965d3faa8cd36caca0a523613e31
   languageName: node
   linkType: hard
 
@@ -16877,7 +16877,7 @@ __metadata:
     "@sinonjs/fake-timers": "npm:^11.2.2"
     "@storybook/addon-essentials": "npm:^8.1.10"
     "@storybook/addon-interactions": "npm:^8.1.11"
-    "@storybook/addon-links": "npm:^8.1.10"
+    "@storybook/addon-links": "npm:^8.1.11"
     "@storybook/addon-onboarding": "npm:^8.1.11"
     "@storybook/blocks": "npm:^8.1.11"
     "@storybook/react": "npm:^8.1.11"
