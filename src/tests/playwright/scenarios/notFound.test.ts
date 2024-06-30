@@ -1,5 +1,5 @@
-import { test } from '@playwright/experimental-ct-react'
 import { launchNotFoundPage } from '../pageObjects/launchApp.tsx'
+import { test } from '../fixtures.ts'
 
 test('not found page is shown for an unknown page', async ({ mount }) => {
   const notFoundPage = await launchNotFoundPage(mount)

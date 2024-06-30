@@ -1,4 +1,4 @@
-import { test } from '@playwright/experimental-ct-react'
+import { test } from '../fixtures.ts'
 import { launchAndRecordNewSound } from '../pageObjects/SoundsEditorPageObject.ts'
 import { Seconds, Volume } from '../../../utils/types/brandedTypes.ts'
 

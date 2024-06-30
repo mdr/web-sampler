@@ -28,11 +28,12 @@ const configs = [
     ignores: [
       '.yarn',
       'coverage',
-      'playwright/.cache',
-      'storybook-static',
       'dist',
-      'tailwind.config.js',
       'playwright-report',
+      'playwright/.cache',
+      'report',
+      'storybook-static',
+      'tailwind.config.js',
     ],
   },
   // Suppress type-checking checks on files not covered by TSConfig:

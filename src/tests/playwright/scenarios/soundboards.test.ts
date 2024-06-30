@@ -1,4 +1,4 @@
-import { test } from '@playwright/experimental-ct-react'
+import { test } from '../fixtures.ts'
 import { launchApp } from '../pageObjects/launchApp.tsx'
 
 test('soundboards can be created and named', async ({ mount }) => {

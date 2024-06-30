@@ -44,6 +44,7 @@ tasks:
     desc: Run component tests (with UI)
     cmds:
       - yarn
+      - yarn playwright install
       - yarn test-ct --ui
   update-yarn:
     desc: Update yarn to the latest version

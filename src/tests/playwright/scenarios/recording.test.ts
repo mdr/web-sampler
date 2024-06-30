@@ -1,4 +1,4 @@
-import { test } from '@playwright/experimental-ct-react'
+import { test } from '../fixtures.ts'
 import { launchApp } from '../pageObjects/launchApp.tsx'
 import { MAX_RECORDING_DURATION } from '../../../components/soundsEditor/recordingConstants.ts'
 import { AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
