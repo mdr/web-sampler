@@ -65,3 +65,10 @@ tasks:
       - yarn
       - yarn coverage
       - open coverage/index.html
+  coverage-ct:
+    desc: Run component tests and generate coverage report
+    cmds:
+      - yarn
+      - yarn playwright install
+      - yarn test-ct
+      - open report/coverage/index.html

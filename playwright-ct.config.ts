@@ -24,7 +24,9 @@ export default defineConfig({
         outputFile: 'report/index.html',
         // logging: 'debug',
         coverage: {
-          sourceFilter: (sourcePath) => sourcePath.search(/src\//) !== -1 && sourcePath.search(/node_modules/) === -1,
+          sourceFilter: (sourcePath) =>
+            !(sourcePath.startsWith('node_modules/') || sourcePath === '__vite-browser-external'),
+
           sourcePath: (sp) => {
             const list = sp.split('/')
 
