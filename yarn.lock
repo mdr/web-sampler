@@ -263,9 +263,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/inline-edit@npm:^13.5.6":
-  version: 13.5.6
-  resolution: "@atlaskit/inline-edit@npm:13.5.6"
+"@atlaskit/inline-edit@npm:^13.5.7":
+  version: 13.5.7
+  resolution: "@atlaskit/inline-edit@npm:13.5.7"
   dependencies:
     "@atlaskit/analytics-next": "npm:^9.3.0"
     "@atlaskit/button": "npm:^18.0.0"
@@ -282,7 +282,7 @@ __metadata:
     "@emotion/react": "npm:^11.7.1"
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ~18.2.0
-  checksum: 10c0/edd5c74abc33af383c06fa5fb8ac352b28a3cdd177a71191f5300e2f889945f4093502d51a5822acc2cc7340f4ae044a8d1f94dc87f5ec6b65297debfaa8a2f8
+  checksum: 10c0/05d6fa28870fe943455bfb84f6cc49dbf22cd8b02e346977c2a7380b39860901b36516e89a8570f50c0173146f2ebf6a74c48850a5efa1a1764367da523fa1af
   languageName: node
   linkType: hard
 
@@ -16705,7 +16705,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "web-sampler@workspace:."
   dependencies:
-    "@atlaskit/inline-edit": "npm:^13.5.6"
+    "@atlaskit/inline-edit": "npm:^13.5.7"
     "@breezystack/lamejs": "npm:^1.2.7"
     "@chromatic-com/storybook": "npm:^1.6.0"
     "@eslint/compat": "npm:^1.1.0"
