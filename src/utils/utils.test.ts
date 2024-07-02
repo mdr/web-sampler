@@ -1,4 +1,4 @@
-import { concatenateFloat32Arrays, doNothing, mapNotUndefined } from './utils.ts'
+import { average, concatenateFloat32Arrays, doNothing, mapNotUndefined } from './utils.ts'
 import { describe, expect, it } from 'vitest'
 import { Option } from './types/Option.ts'
 
@@ -29,5 +29,15 @@ describe('concatenateFloat32Arrays', () => {
 
   it('should handle an empty array of arrays', () => {
     expect(concatenateFloat32Arrays([])).toEqual(new Float32Array([]))
+  })
+})
+
+describe('average', () => {
+  it('should work on non-empty arrays', () => {
+    expect(average([1, 2, 3])).toEqual(2)
+  })
+  it('should return undefined on empty arrays', () => {
+    const items: number[] = []
+    expect(average(items)).toBeUndefined()
   })
 })

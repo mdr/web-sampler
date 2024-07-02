@@ -3,8 +3,7 @@ import { Option } from '../utils/types/Option.ts'
 import { CAPTURING_AUDIO_WORKLET_NAME, STOP_MESSAGE } from './CapturingAudioWorkletConstants.ts'
 import { AudioContextProvider } from './AudioContextProvider.ts'
 import { AbstractAudioRecorder } from './AbstractAudioRecorder.ts'
-import { concatenateFloat32Arrays } from '../utils/utils.ts'
-import _ from 'lodash'
+import { average, concatenateFloat32Arrays } from '../utils/utils.ts'
 
 import workletUrl from './CapturingAudioWorkletProcessor?worker&url'
 import { Hz, Pcm, Volume } from '../utils/types/brandedTypes.ts'
@@ -113,11 +112,4 @@ export class WebAudioRecorder extends AbstractAudioRecorder implements AudioReco
 
     this.getVolume = undefined
   }
-}
-
-const average = (array: Uint8Array): Option<number> => {
-  if (array.length === 0) {
-    return undefined
-  }
-  return _.sum(array) / array.length
 }

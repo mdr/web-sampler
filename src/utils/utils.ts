@@ -20,5 +20,12 @@ export const concatenateFloat32Arrays = (arrays: Float32Array[]): Float32Array =
   return combinedBuffer
 }
 
-export const mapNotUndefined = <T, U>(items: T[], f: (t: T) => Option<U>): U[] =>
+export const mapNotUndefined = <T, U>(items: T[], f: (item: T) => Option<U>): U[] =>
   items.map(f).filter((item): item is U => item !== undefined)
+
+export const average = (array: ArrayLike<number>): Option<number> => {
+  if (array.length === 0) {
+    return undefined
+  }
+  return _.sum(array) / array.length
+}
