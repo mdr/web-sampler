@@ -167,6 +167,18 @@ export class SoundsEditorPageObject extends PageObject {
 
   getAudioRecorderState = (): Promise<AudioRecorderState> => this.testHooks.getAudioRecorderState()
 
+  get waveformCanvas() {
+    return this.get(EditSoundPaneTestIds.waveformCanvas)
+  }
+
+  dragStartTimeHandleRight = (): Promise<void> =>
+    this.step('dragStartHandle', () =>
+      this.waveformCanvas.dragTo(this.waveformCanvas, {
+        sourcePosition: { x: 2, y: 2 },
+        targetPosition: { x: 100, y: 5 },
+      }),
+    )
+
   expectAudioRecorderStateToBe = (state: AudioRecorderState): Promise<void> =>
     this.step(`expectAudioRecorderStateToBe ${state}`, async () => {
       expect(await this.getAudioRecorderState()).toBe(state)

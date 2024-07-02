@@ -75,6 +75,14 @@ export abstract class PageObject {
       return deserialiseSounds(jsonString)
     })
 
+  getOnlySound = async (): Promise<Sound> => {
+    const sounds = await this.getSounds()
+    if (sounds.length !== 1) {
+      throw new Error(`Expected exactly one sound, but got ${sounds.length}`)
+    }
+    return sounds[0]
+  }
+
   getSoundboards = (): Promise<Soundboard[]> =>
     this.step('getSoundboards', async () => {
       const jsonString = await this.testHooks.getSoundboardsJson()

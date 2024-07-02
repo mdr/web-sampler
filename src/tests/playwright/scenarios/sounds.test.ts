@@ -148,6 +148,19 @@ test('adjusting the start and finish times of a sound via keyboard shortcuts', a
   await soundsEditorPage.checkScreenshot('constrained-audio')
 })
 
+test('adjusting the start time of a sound via mouse drag', async ({ mount }) => {
+  const soundsEditorPage = await launchAndStartAudioCapture(mount)
+  await soundsEditorPage.pressStop()
+  await soundsEditorPage.expectAudioWaveformToBeShown()
+  const initialSound = await soundsEditorPage.getOnlySound()
+  expect(initialSound.audio?.start).toBe(0)
+
+  await soundsEditorPage.dragStartTimeHandleRight()
+
+  const updatedSound = await soundsEditorPage.getOnlySound()
+  expect(updatedSound.audio?.start).toBeGreaterThan(0)
+})
+
 test('cropping a sound should modify the audio', async ({ mount }) => {
   const soundsEditorPage = await launchAndRecordNewSound(mount)
   await soundsEditorPage.shortcuts.seekRight()
