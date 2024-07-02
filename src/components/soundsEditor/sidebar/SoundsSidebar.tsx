@@ -2,8 +2,9 @@ import { useSounds } from '../../../sounds/library/soundHooks.ts'
 import { Link } from 'react-router-dom'
 import { NewSoundButton } from '../NewSoundButton.tsx'
 import { getSoundDisplayName, sortSoundsByDisplayName } from '../../../types/Sound.ts'
-import { editSoundRoute, useSoundIdParam } from '../../router.tsx'
 import { SoundsSidebarTestIds } from './SoundsSidebarTestIds.ts'
+import { editSoundRoute } from '../../routes.ts'
+import { useSoundIdParam } from '../../routeHooks.ts'
 
 export const SoundsSidebar = () => {
   const currentSoundId = useSoundIdParam()

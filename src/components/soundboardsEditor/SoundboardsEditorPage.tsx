@@ -1,10 +1,10 @@
 import { useIsLoading, useSoundboards } from '../../sounds/library/soundHooks.ts'
 import React from 'react'
-import { useSoundboardIdParam } from '../router.tsx'
 import { SoundboardsEditorPageLayout } from './SoundboardsEditorPageLayout.tsx'
 import { NoSoundboardsMessage } from './NoSoundboardsMessage.tsx'
 import { EditOrCreateSoundboardMessage } from './EditOrCreateSoundboardMessage.tsx'
 import { EditSoundboardPane } from './editSoundboardPane/EditSoundboardPane.tsx'
+import { useSoundboardIdParam } from '../routeHooks.ts'
 
 export const SoundboardsEditorPage: React.FC = () => {
   const soundboardId = useSoundboardIdParam()

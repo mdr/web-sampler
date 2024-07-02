@@ -5449,7 +5449,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/pluginutils@npm:^5.0.2":
+"@rollup/pluginutils@npm:^5.0.2, @rollup/pluginutils@npm:^5.1.0":
   version: 5.1.0
   resolution: "@rollup/pluginutils@npm:5.1.0"
   dependencies:
@@ -16468,6 +16468,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"vite-plugin-circular-dependency@npm:^0.4.1":
+  version: 0.4.1
+  resolution: "vite-plugin-circular-dependency@npm:0.4.1"
+  dependencies:
+    "@rollup/pluginutils": "npm:^5.1.0"
+    chalk: "npm:^4.1.2"
+  checksum: 10c0/aefc55957eae60b2d55b12222a814fd242d7258ef5455b2b9b927f040726854284e1cb7094d560aee1765c171852b299b8d0dcf9a3d07773d53d846b6a10df0a
+  languageName: node
+  linkType: hard
+
 "vite@npm:^5.0.0":
   version: 5.0.12
   resolution: "vite@npm:5.0.12"
@@ -16835,6 +16845,7 @@ __metadata:
     uuid: "npm:^10.0.0"
     vite: "npm:^5.3.2"
     vite-plugin-checker: "npm:^0.7.0"
+    vite-plugin-circular-dependency: "npm:^0.4.1"
     vitest: "npm:^1.6.0"
     zod: "npm:^3.23.8"
   languageName: unknown

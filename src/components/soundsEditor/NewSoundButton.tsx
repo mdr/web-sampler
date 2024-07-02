@@ -1,11 +1,11 @@
 import { mdiPlus } from '@mdi/js'
 import { useSoundActions } from '../../sounds/library/soundHooks.ts'
 import { useNavigate } from 'react-router-dom'
-import { editSoundRoute } from '../router.tsx'
 
 import { TestId } from '../../utils/types/brandedTypes.ts'
 import { Button } from '../shared/Button.tsx'
 import { ButtonVariant } from '../shared/ButtonVariant.tsx'
+import { editSoundRoute } from '../routes.ts'
 
 export interface NewSoundButtonProps {
   testId?: TestId

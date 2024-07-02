@@ -9,7 +9,7 @@ import { NavbarIconButton } from './NavbarIconButton.tsx'
 import { MenuTrigger, Popover } from 'react-aria-components'
 import { NavbarMenu } from './NavbarMenu.tsx'
 import Icon from '@mdi/react'
-import { soundboardsRoute } from '../router.tsx'
+import { soundboardsRoute } from '../routes.ts'
 
 export const Navbar = () => {
   const soundActions = useSoundActions()
