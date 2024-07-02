@@ -11,6 +11,7 @@ import { SoundsSidebarTestIds } from '../../../components/soundsEditor/sidebar/S
 import { EditSoundPaneTestIds } from '../../../components/soundsEditor/editSoundPane/EditSoundPaneTestIds.ts'
 import { TestAppProps } from '../TestApp.tsx'
 import { Path, Volume } from '../../../utils/types/brandedTypes.ts'
+import { Locator } from 'playwright'
 
 class SoundsEditorKeyboardShortcutsPageObject extends PageObject {
   protected readonly name = 'SoundsEditorPage.shortcuts'
@@ -167,7 +168,7 @@ export class SoundsEditorPageObject extends PageObject {
 
   getAudioRecorderState = (): Promise<AudioRecorderState> => this.testHooks.getAudioRecorderState()
 
-  get waveformCanvas() {
+  get waveformCanvas(): Locator {
     return this.get(EditSoundPaneTestIds.waveformCanvas)
   }
 

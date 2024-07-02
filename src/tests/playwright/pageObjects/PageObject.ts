@@ -8,11 +8,13 @@ import tmp from 'tmp'
 import { ProxyWindowTestHooks } from '../testApp/ProxyWindowTestHooks.ts'
 import { Soundboard, soundboardSchema } from '../../../types/Soundboard.ts'
 import { z } from 'zod'
+import { Locator } from 'playwright'
+import { Page } from 'playwright-core'
 
 export abstract class PageObject {
   protected constructor(protected readonly mountResult: MountResult) {}
 
-  protected get page() {
+  protected get page(): Page {
     return this.mountResult.page()
   }
 
@@ -20,7 +22,7 @@ export abstract class PageObject {
 
   protected step = <T>(name: string, body: () => T | Promise<T>): Promise<T> => test.step(`${this.name}.${name}`, body)
 
-  protected get = (testId: TestId) => this.mountResult.page().getByTestId(testId)
+  protected get = (testId: TestId): Locator => this.mountResult.page().getByTestId(testId)
 
   protected press = (testId: TestId): Promise<void> => this.get(testId).click()
 
@@ -61,7 +63,7 @@ export abstract class PageObject {
 
   private getAudioPosition = (): Promise<Seconds> => this.testHooks.getAudioPosition()
 
-  expectAudioPlaybackVolumeToBe = async (expectedVolume: Volume): Promise<void> =>
+  expectAudioPlaybackVolumeToBe = (expectedVolume: Volume): Promise<void> =>
     this.step(`expectAudioVolumeToBe ${expectedVolume}`, async () => {
       const actualVolume = await this.getAudioPlaybackVolume()
       expect(actualVolume).toBe(expectedVolume)

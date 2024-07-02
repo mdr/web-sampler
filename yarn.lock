@@ -13379,7 +13379,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright@npm:1.45.0":
+"playwright@npm:1.45.0, playwright@npm:^1.45.0":
   version: 1.45.0
   resolution: "playwright@npm:1.45.0"
   dependencies:
@@ -16804,6 +16804,7 @@ __metadata:
     konva: "npm:^9.3.12"
     lodash: "npm:^4.17.21"
     monocart-reporter: "npm:^2.5.2"
+    playwright: "npm:^1.45.0"
     postcss: "npm:^8.4.39"
     prettier: "npm:3.3.2"
     prettier-plugin-tailwindcss: "npm:^0.6.5"

@@ -105,6 +105,7 @@
     "jest-extended": "^4.0.2",
     "jsdom": "^24.1.0",
     "monocart-reporter": "^2.5.2",
+    "playwright": "^1.45.0",
     "postcss": "^8.4.39",
     "prettier": "3.3.2",
     "prettier-plugin-tailwindcss": "^0.6.5",
