@@ -46,7 +46,7 @@
     "react-grid-dnd": "^2.1.2",
     "react-hotkeys-hook": "^4.5.0",
     "react-konva": "^18.2.10",
-    "react-resizable-panels": "^2.0.19",
+    "react-resizable-panels": "^2.0.20",
     "react-resize-detector": "^11.0.1",
     "react-router-dom": "^6.24.0",
     "react-spinners": "^0.14.1",
