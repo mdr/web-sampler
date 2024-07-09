@@ -7598,33 +7598,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@volar/language-core@npm:2.3.4":
-  version: 2.3.4
-  resolution: "@volar/language-core@npm:2.3.4"
-  dependencies:
-    "@volar/source-map": "npm:2.3.4"
-  checksum: 10c0/3bfd6f039788aa6365e1c69fc695305abdb00d3e75fdce2958eb41d1f9fb03b7a300075303430f039c027f62dbd7377c0c266bca52615b4eedd0df9c8aa14de0
-  languageName: node
-  linkType: hard
-
-"@volar/source-map@npm:2.3.4":
-  version: 2.3.4
-  resolution: "@volar/source-map@npm:2.3.4"
-  checksum: 10c0/04e12088cd79671e2104ee0f5e8cfb5b52a5d2a1499472db243cd0cfa5557c993c08854af9fb183b1cf32ecd122706ad27e6438a7669215c6fc12dd3fc7544d7
-  languageName: node
-  linkType: hard
-
-"@volar/typescript@npm:^2.3.0":
-  version: 2.3.4
-  resolution: "@volar/typescript@npm:2.3.4"
-  dependencies:
-    "@volar/language-core": "npm:2.3.4"
-    path-browserify: "npm:^1.0.1"
-    vscode-uri: "npm:^3.0.8"
-  checksum: 10c0/d2738db314bffade831e0db75abce269a533aa91e0311a889fd31a83390480db33a06b06418c81dfc291c40ca344c8a687d1970d5ff2c366d0506080d12143bb
-  languageName: node
-  linkType: hard
-
 "@xobotyi/scrollbar-width@npm:^1.9.5":
   version: 1.9.5
   resolution: "@xobotyi/scrollbar-width@npm:1.9.5"
@@ -13267,13 +13240,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"path-browserify@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "path-browserify@npm:1.0.1"
-  checksum: 10c0/8b8c3fd5c66bd340272180590ae4ff139769e9ab79522e2eb82e3d571a89b8117c04147f65ad066dccfb42fcad902e5b7d794b3d35e0fd840491a8ddbedf8c66
-  languageName: node
-  linkType: hard
-
 "path-exists@npm:^3.0.0":
   version: 3.0.0
   resolution: "path-exists@npm:3.0.0"
@@ -16510,12 +16476,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-checker@npm:^0.7.0":
-  version: 0.7.0
-  resolution: "vite-plugin-checker@npm:0.7.0"
+"vite-plugin-checker@npm:^0.7.1":
+  version: 0.7.1
+  resolution: "vite-plugin-checker@npm:0.7.1"
   dependencies:
     "@babel/code-frame": "npm:^7.12.13"
-    "@volar/typescript": "npm:^2.3.0"
     ansi-escapes: "npm:^4.3.0"
     chalk: "npm:^4.1.1"
     chokidar: "npm:^3.5.1"
@@ -16556,7 +16521,7 @@ __metadata:
       optional: true
     vue-tsc:
       optional: true
-  checksum: 10c0/6032d8a10442cccfca0dca3d75a19f57bad8cf6bf46552e0207594d44de351b7248bfd7cdd04ef1ff32a3898b1e767b9ac24f402d3a5a24db34807b42e4d126f
+  checksum: 10c0/99508fde2085296a2246df53eb42ffe108993af2361eda9422249cb88f61e5b86ff7a6a6fe5461d05d4a6ee0d6dc7d72a7a983288a0f9c992513296385bb64cf
   languageName: node
   linkType: hard
 
@@ -16793,7 +16758,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vscode-uri@npm:^3.0.2, vscode-uri@npm:^3.0.8":
+"vscode-uri@npm:^3.0.2":
   version: 3.0.8
   resolution: "vscode-uri@npm:3.0.8"
   checksum: 10c0/f7f217f526bf109589969fe6e66b71e70b937de1385a1d7bb577ca3ee7c5e820d3856a86e9ff2fa9b7a0bc56a3dd8c3a9a557d3fedd7df414bc618d5e6b567f9
@@ -16936,7 +16901,7 @@ __metadata:
     use-file-picker: "npm:^2.1.2"
     uuid: "npm:^10.0.0"
     vite: "npm:^5.3.3"
-    vite-plugin-checker: "npm:^0.7.0"
+    vite-plugin-checker: "npm:^0.7.1"
     vite-plugin-circular-dependency: "npm:^0.4.1"
     vitest: "npm:^1.6.0"
     zod: "npm:^3.23.8"
