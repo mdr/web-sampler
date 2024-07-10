@@ -8248,10 +8248,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"blob-polyfill@npm:^7.0.20220408":
-  version: 7.0.20220408
-  resolution: "blob-polyfill@npm:7.0.20220408"
-  checksum: 10c0/f45c5c66574d69a7701006e2522d813479ce475847ecf9347edeefe11455a5dfbe8fcc7975491b9676ab87c4e8ad64666db37d6d09d6160f7ef2a2067dab0f00
+"blob-polyfill@npm:^9.0.20240710":
+  version: 9.0.20240710
+  resolution: "blob-polyfill@npm:9.0.20240710"
+  checksum: 10c0/eb28a475aa43c62bb855ec5404e3382772d1778852b827d6f21a73e499e3eafb3a4f81e9add68f87df336bc23db857ac357767fbb2b4a373f23dc9da872bcfda
   languageName: node
   linkType: hard
 
@@ -16927,7 +16927,7 @@ __metadata:
     async-lock: "npm:^1.4.1"
     autoprefixer: "npm:^10.4.19"
     beautiful-react-hooks: "npm:^5.0.2"
-    blob-polyfill: "npm:^7.0.20220408"
+    blob-polyfill: "npm:^9.0.20240710"
     bowser: "npm:^2.11.0"
     clsx: "npm:^2.1.1"
     conditional-wrap: "npm:^1.0.2"
