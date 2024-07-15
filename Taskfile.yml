@@ -32,9 +32,9 @@ tasks:
     desc: Run CI checks locally
     cmds:
       - yarn
+      - yarn tsc
       - yarn lint
       - task: prettier-check
-      - yarn tsc
       - yarn test --run
       - yarn playwright install
       - yarn test-ct
