@@ -63,7 +63,7 @@
     "@chromatic-com/storybook": "^1.6.1",
     "@eslint/compat": "^1.1.1",
     "@eslint/js": "^9.7.0",
-    "@playwright/experimental-ct-react": "^1.45.0",
+    "@playwright/experimental-ct-react": "^1.45.1",
     "@storybook/addon-essentials": "^8.2.1",
     "@storybook/addon-interactions": "^8.2.1",
     "@storybook/addon-links": "^8.1.11",
