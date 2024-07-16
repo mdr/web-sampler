@@ -13,10 +13,9 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
-  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
-    ['html'],
-    ['list'],
+    ['list', { printSteps: true }],
+    ['html', { open: 'never' }],
     [
       'monocart-reporter',
       {
@@ -43,12 +42,11 @@ export default defineConfig({
       },
     ],
   ],
-  /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
-    /* Port to use for Playwright component endpoint. */
     ctPort: 3100,
+    video: 'on', // 'retain-on-failure',
   },
 
   projects: [

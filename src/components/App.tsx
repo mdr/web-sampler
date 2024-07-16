@@ -22,7 +22,7 @@ export interface AppProps {
   config: AppConfig
 }
 
-const nestProviders = (config: AppConfig): React.FC => {
+const nestProviders = (config: AppConfig): React.FC<PropsWithChildren> => {
   const { audioRecorder, audioPlayer, soundLibrary, storageManager, audioOperations } = config
   return reactArrayToTree([
     <AudioRecorderContext.Provider value={audioRecorder} />,
@@ -30,7 +30,7 @@ const nestProviders = (config: AppConfig): React.FC => {
     <AudioOperationsContext.Provider value={audioOperations} />,
     <SoundLibraryContext.Provider value={soundLibrary} />,
     <StorageManagerContext.Provider value={storageManager} />,
-  ]) as React.FC
+  ]) as React.FC<PropsWithChildren>
 }
 
 export const App = ({ config }: AppProps) => {
