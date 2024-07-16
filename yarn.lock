@@ -2406,15 +2406,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.3.1":
-  version: 7.24.6
-  resolution: "@babel/runtime@npm:7.24.6"
-  dependencies:
-    regenerator-runtime: "npm:^0.14.0"
-  checksum: 10c0/224ad205de33ea28979baaec89eea4c4d4e9482000dd87d15b97859365511cdd4d06517712504024f5d33a5fb9412f9b91c96f1d923974adf9359e1575cde049
-  languageName: node
-  linkType: hard
-
 "@babel/template@npm:^7.22.15":
   version: 7.22.15
   resolution: "@babel/template@npm:7.22.15"
@@ -6327,15 +6318,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^16.8.3":
-  version: 16.9.24
-  resolution: "@types/react-dom@npm:16.9.24"
-  dependencies:
-    "@types/react": "npm:^16"
-  checksum: 10c0/987ee2ba06e49064cbc498d6631c14634628558cf90c2efee4b53b0df96c24f54e5dc8a7794d28a92ef47ade39c6ac4fa79329dc8807cb508c6bbb3ab62b852d
-  languageName: node
-  linkType: hard
-
 "@types/react-dom@npm:^18.3.0":
   version: 18.3.0
   resolution: "@types/react-dom@npm:18.3.0"
@@ -6362,17 +6344,6 @@ __metadata:
     "@types/scheduler": "npm:*"
     csstype: "npm:^3.0.2"
   checksum: 10c0/e98ea1827fe60636d0f7ce206397159a29fc30613fae43e349e32c10ad3c0b7e0ed2ded2f3239e07bd5a3cba8736b6114ba196acccc39905ca4a06f56a8d2841
-  languageName: node
-  linkType: hard
-
-"@types/react@npm:^16, @types/react@npm:^16.8.10":
-  version: 16.14.60
-  resolution: "@types/react@npm:16.14.60"
-  dependencies:
-    "@types/prop-types": "npm:*"
-    "@types/scheduler": "npm:^0.16"
-    csstype: "npm:^3.0.2"
-  checksum: 10c0/4cb5d42c00dea95d530ad6a7a72c645aeb06ce6d4773cedfbb9632e53834ee13e8c53c9335202d82060ea4beb1247453dd65d721aaf447e273bd32fb8c524511
   languageName: node
   linkType: hard
 
@@ -6403,7 +6374,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/scheduler@npm:*, @types/scheduler@npm:^0.16":
+"@types/scheduler@npm:*":
   version: 0.16.8
   resolution: "@types/scheduler@npm:0.16.8"
   checksum: 10c0/f86de504945b8fc41b1f391f847444d542e2e4067cf7e5d9bfeb5d2d2393d3203b1161bc0ef3b1e104d828dabfb60baf06e8d2c27e27ff7e8258e6e618d8c4ec
@@ -12474,7 +12445,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.5.10, prop-types@npm:^15.5.8, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.5.10, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -12745,37 +12716,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-gesture-responder@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "react-gesture-responder@npm:2.1.0"
-  dependencies:
-    "@types/react": "npm:^16.8.10"
-    "@types/react-dom": "npm:^16.8.3"
-    tslib: "npm:^1.9.3"
-  peerDependencies:
-    react: ^16.8.6
-    react-dom: ^16.8.6
-  checksum: 10c0/d494759bb2a790080b6bb9cd8d7e28ea73a52fae1be78c07dcc61bad28759724dc77eb0767fad3f6c354d486d811a6246dd3254f7eef86307da22019f3d76c96
-  languageName: node
-  linkType: hard
-
-"react-grid-dnd@npm:^2.1.2":
-  version: 2.1.2
-  resolution: "react-grid-dnd@npm:2.1.2"
-  dependencies:
-    "@types/react": "npm:^16.8.10"
-    "@types/react-dom": "npm:^16.8.3"
-    react-spring: "npm:9.0.0-beta.8"
-    resize-observer-polyfill: "npm:^1.5.1"
-    tslib: "npm:^1.9.3"
-  peerDependencies:
-    react: ^16.8.6
-    react-dom: ^16.8.6
-    react-gesture-responder: ^2.1.0
-  checksum: 10c0/b8c74338af1313af525c199b1bfa0f76a676fa447b0cdb8a35a951bedc7bc6d98d5da93a030517a964dedf1fee0085d14caaa2bbe4973566ff7cdaba3753848f
-  languageName: node
-  linkType: hard
-
 "react-hotkeys-hook@npm:^4.5.0":
   version: 4.5.0
   resolution: "react-hotkeys-hook@npm:4.5.0"
@@ -12930,19 +12870,6 @@ __metadata:
     react: ^16.0.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0
   checksum: 10c0/5b3c101f789716331a0b6afad156293fb9aa05620e65494753001afcdb611788057f379b5979b34d570d527fa978003293266b59db505bf2d243ebab899ceeda
-  languageName: node
-  linkType: hard
-
-"react-spring@npm:9.0.0-beta.8":
-  version: 9.0.0-beta.8
-  resolution: "react-spring@npm:9.0.0-beta.8"
-  dependencies:
-    "@babel/runtime": "npm:^7.3.1"
-    prop-types: "npm:^15.5.8"
-  peerDependencies:
-    react: ">= 16.8.0"
-    react-dom: ">= 16.8.0"
-  checksum: 10c0/bc56561189fe05e3909091c612c19b57bdb5a3e896d4190414e763694e0eeddace2f0a151a5633aa9d8b8375b33e8357e6201b6c66fddc45999dd3a06cc3ccaa
   languageName: node
   linkType: hard
 
@@ -14475,7 +14402,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^1.13.0, tslib@npm:^1.8.1, tslib@npm:^1.9.3":
+"tslib@npm:^1.13.0, tslib@npm:^1.8.1":
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
   checksum: 10c0/69ae09c49eea644bc5ebe1bca4fa4cc2c82b7b3e02f43b84bd891504edf66dbc6b2ec0eef31a957042de2269139e4acff911e6d186a258fb14069cd7f6febce2
@@ -15349,8 +15276,6 @@ __metadata:
     react-array-to-tree: "npm:^2.0.1"
     react-dom: "npm:^18.3.1"
     react-error-boundary: "npm:^4.0.13"
-    react-gesture-responder: "npm:^2.1.0"
-    react-grid-dnd: "npm:^2.1.2"
     react-hotkeys-hook: "npm:^4.5.0"
     react-konva: "npm:^18.2.10"
     react-resizable-panels: "npm:^2.0.20"

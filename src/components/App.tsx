@@ -22,7 +22,7 @@ export interface AppProps {
   config: AppConfig
 }
 
-const nestProviders = (config: AppConfig): React.FC<PropsWithChildren> => {
+const nestProviders = (config: AppConfig): React.FC => {
   const { audioRecorder, audioPlayer, soundLibrary, storageManager, audioOperations } = config
   return reactArrayToTree([
     <AudioRecorderContext.Provider value={audioRecorder} />,
@@ -30,7 +30,7 @@ const nestProviders = (config: AppConfig): React.FC<PropsWithChildren> => {
     <AudioOperationsContext.Provider value={audioOperations} />,
     <SoundLibraryContext.Provider value={soundLibrary} />,
     <StorageManagerContext.Provider value={storageManager} />,
-  ]) as React.FC<PropsWithChildren>
+  ]) as React.FC
 }
 
 export const App = ({ config }: AppProps) => {
@@ -39,7 +39,7 @@ export const App = ({ config }: AppProps) => {
     unawaited(config.storageManager.checkIfStorageIsPersistent())
   })
   return (
-    <ConditionalWrap condition={false} wrap={(children) => <React.StrictMode>{children}</React.StrictMode>}>
+    <ConditionalWrap condition={true} wrap={(children) => <React.StrictMode>{children}</React.StrictMode>}>
       <ErrorBoundary fallback={<ErrorFallback />}>
         <ExclusiveTab fallback={<AlreadyOpenInAnotherTabPage />}>
           <ToastContainer position="top-center" hideProgressBar closeOnClick closeButton={false} />
