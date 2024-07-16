@@ -8,4 +8,4 @@ repos:
     hooks:
       - id: prettier
         additional_dependencies:
-          - prettier@3.2.5 # SEE: https://github.com/pre-commit/pre-commit/issues/3133
+          - prettier@3.3.3 # SEE: https://github.com/pre-commit/pre-commit/issues/3133
