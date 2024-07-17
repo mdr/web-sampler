@@ -10979,10 +10979,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"konva@npm:^9.3.13":
-  version: 9.3.13
-  resolution: "konva@npm:9.3.13"
-  checksum: 10c0/c7c2b29ea8d8147ec0d4eac73c5b79eb27d53e5fad958c7a042862725d7c024e3cefdc05b05b00ab38ffc01c48001c15429d52ba65f3f431f741a91de9fdf2d8
+"konva@npm:^9.3.14":
+  version: 9.3.14
+  resolution: "konva@npm:9.3.14"
+  checksum: 10c0/25dff311409d3a921e7bfadd7092c22ef14665da1bef3c763ba05ca8f9ad3829dd017a60c5a7f55d2beceea860f3fe6a1b0c34d35f7396a0d7a32e69f483dea9
   languageName: node
   linkType: hard
 
@@ -15304,7 +15304,7 @@ __metadata:
     immer: "npm:^10.1.1"
     jest-extended: "npm:^4.0.2"
     jsdom: "npm:^24.1.0"
-    konva: "npm:^9.3.13"
+    konva: "npm:^9.3.14"
     lodash: "npm:^4.17.21"
     monocart-reporter: "npm:^2.6.1"
     playwright: "npm:^1.45.2"
