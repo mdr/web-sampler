@@ -46,7 +46,7 @@
     "react-konva": "^18.2.10",
     "react-resizable-panels": "^2.0.20",
     "react-resize-detector": "^11.0.1",
-    "react-router-dom": "^6.25.0",
+    "react-router-dom": "^6.25.1",
     "react-spinners": "^0.14.1",
     "react-toastify": "^10.0.5",
     "react-use": "^17.5.0",
