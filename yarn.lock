@@ -5568,18 +5568,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-interactions@npm:^8.2.4":
-  version: 8.2.4
-  resolution: "@storybook/addon-interactions@npm:8.2.4"
+"@storybook/addon-interactions@npm:^8.2.5":
+  version: 8.2.5
+  resolution: "@storybook/addon-interactions@npm:8.2.5"
   dependencies:
     "@storybook/global": "npm:^5.0.0"
-    "@storybook/instrumenter": "npm:8.2.4"
-    "@storybook/test": "npm:8.2.4"
+    "@storybook/instrumenter": "npm:8.2.5"
+    "@storybook/test": "npm:8.2.5"
     polished: "npm:^4.2.2"
     ts-dedent: "npm:^2.2.0"
   peerDependencies:
-    storybook: ^8.2.4
-  checksum: 10c0/bd2f45104aaa2260221f3a560b8d43a5033a4bf2d4da62495fcab671e83c02c3096abc92e38bd7408061bfb1c1209bcde6938a3694a86f990739d6aa6666d5c6
+    storybook: ^8.2.5
+  checksum: 10c0/c4670655e8816131a1cce72eca172d662b089610e4795f9ed5931e1824693a11ec5b82737ae315cce1a4d1b3a9c3b785e1c6babd58add077f3637f4568e2decb
   languageName: node
   linkType: hard
 
@@ -5864,6 +5864,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@storybook/instrumenter@npm:8.2.5":
+  version: 8.2.5
+  resolution: "@storybook/instrumenter@npm:8.2.5"
+  dependencies:
+    "@storybook/global": "npm:^5.0.0"
+    "@vitest/utils": "npm:^1.3.1"
+    util: "npm:^0.12.4"
+  peerDependencies:
+    storybook: ^8.2.5
+  checksum: 10c0/0cc5feca3c761568efc1d49d6f734b391186979f3f1819b334a2b0691d0c3e4d78113b1dbc63199aca4b7b8be39f5bcd295a749be0ac469ae352fdf94e9c0254
+  languageName: node
+  linkType: hard
+
 "@storybook/manager-api@npm:^8.2.4":
   version: 8.2.4
   resolution: "@storybook/manager-api@npm:8.2.4"
@@ -6018,7 +6031,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/test@npm:8.2.4, @storybook/test@npm:^8.2.4":
+"@storybook/test@npm:8.2.5":
+  version: 8.2.5
+  resolution: "@storybook/test@npm:8.2.5"
+  dependencies:
+    "@storybook/csf": "npm:0.1.11"
+    "@storybook/instrumenter": "npm:8.2.5"
+    "@testing-library/dom": "npm:10.1.0"
+    "@testing-library/jest-dom": "npm:6.4.5"
+    "@testing-library/user-event": "npm:14.5.2"
+    "@vitest/expect": "npm:1.6.0"
+    "@vitest/spy": "npm:1.6.0"
+    util: "npm:^0.12.4"
+  peerDependencies:
+    storybook: ^8.2.5
+  checksum: 10c0/bad422717ad46820ca978b130e17b50da1ebae8b1d0b551bbd3d8f8aeb4e202cdff60645506cc26efa75bf8f8c8f941c2e4ca2a9be02cf4edef1b5d64b4c7df7
+  languageName: node
+  linkType: hard
+
+"@storybook/test@npm:^8.2.4":
   version: 8.2.4
   resolution: "@storybook/test@npm:8.2.4"
   dependencies:
@@ -15506,7 +15537,7 @@ __metadata:
     "@sentry/react": "npm:^8.19.0"
     "@sinonjs/fake-timers": "npm:^11.2.2"
     "@storybook/addon-essentials": "npm:^8.2.4"
-    "@storybook/addon-interactions": "npm:^8.2.4"
+    "@storybook/addon-interactions": "npm:^8.2.5"
     "@storybook/addon-links": "npm:^8.2.4"
     "@storybook/addon-onboarding": "npm:^8.2.5"
     "@storybook/blocks": "npm:^8.2.5"
