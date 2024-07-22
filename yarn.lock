@@ -5612,14 +5612,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-onboarding@npm:^8.2.4":
-  version: 8.2.4
-  resolution: "@storybook/addon-onboarding@npm:8.2.4"
+"@storybook/addon-onboarding@npm:^8.2.5":
+  version: 8.2.5
+  resolution: "@storybook/addon-onboarding@npm:8.2.5"
   dependencies:
     react-confetti: "npm:^6.1.0"
   peerDependencies:
-    storybook: ^8.2.4
-  checksum: 10c0/510bc696919764856b63a5a4164fd57a97149b7c690cff079572225285bcc221dc7717ef77a2d3ce3a07aa414b2f7faab5059c8f5ed8f065cd5c6efff69dfbeb
+    storybook: ^8.2.5
+  checksum: 10c0/d7b862a9127d2715512d52b5bc954e8a0c267a4fa009b3990631f1fe21170e3f7872edca7e697bcf75ebfdc9f40cf280f687b7162558df07b89604655faccb52
   languageName: node
   linkType: hard
 
@@ -15271,7 +15271,7 @@ __metadata:
     "@storybook/addon-essentials": "npm:^8.2.4"
     "@storybook/addon-interactions": "npm:^8.2.4"
     "@storybook/addon-links": "npm:^8.2.4"
-    "@storybook/addon-onboarding": "npm:^8.2.4"
+    "@storybook/addon-onboarding": "npm:^8.2.5"
     "@storybook/blocks": "npm:^8.2.4"
     "@storybook/react": "npm:^8.2.4"
     "@storybook/react-vite": "npm:^8.2.4"
