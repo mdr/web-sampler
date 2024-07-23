@@ -187,37 +187,24 @@ export class SoundLibrary implements SoundActions {
       soundboard.sounds.splice(targetIndex, 0, soundId)
     })
 
-  moveSoundInSoundboard2 = (soundboardId: SoundboardId, sourceSound: SoundId, targetSound: SoundId): void => {
-    const soundboard = this.getSoundboard(soundboardId)
-    const sourceIndex = soundboard.sounds.indexOf(sourceSound)
-    if (sourceIndex === -1) {
-      throw new Error(`Sound ${sourceSound} not found in soundboard ${soundboardId}`)
-    }
-    const targetIndex = soundboard.sounds.indexOf(targetSound)
-    if (targetIndex === -1) {
-      throw new Error(`Sound ${targetSound} not found in soundboard ${soundboardId}`)
-    }
-    this.moveSoundInSoundboard(soundboardId, sourceIndex, targetIndex)
-  }
-
-  moveSoundInSoundboard3 = (soundboardId: SoundboardId, sourceSound: SoundId, targetSound: SoundId): void => {
-    // move source sound to just before target sound:
-    const soundboard = this.getSoundboard(soundboardId)
-    const sourceIndex = soundboard.sounds.indexOf(sourceSound)
-    if (sourceIndex === -1) {
-      throw new Error(`Sound ${sourceSound} not found in soundboard ${soundboardId}`)
-    }
-    const newSounds = [...soundboard.sounds]
-    newSounds.splice(sourceIndex, 1)
-    const targetIndex = newSounds.indexOf(targetSound)
-    if (targetIndex === -1) {
-      throw new Error(`Sound ${targetSound} not found in soundboard ${soundboardId}`)
-    }
-    newSounds.splice(targetIndex, 0, sourceSound)
+  moveSoundInSoundboard2 = (soundboardId: SoundboardId, sourceSound: SoundId, targetSound: Option<SoundId>): void =>
     this.updateSoundboard(soundboardId, (soundboard) => {
-      soundboard.sounds = newSounds
+      const sounds = soundboard.sounds
+      const sourceIndex = sounds.indexOf(sourceSound)
+      if (sourceIndex === -1) {
+        throw new Error(`Sound ${sourceSound} not found in soundboard ${soundboardId}`)
+      }
+      sounds.splice(sourceIndex, 1)
+      if (targetSound === undefined) {
+        sounds.push(sourceSound)
+      } else {
+        const targetIndex = sounds.indexOf(targetSound)
+        if (targetIndex === -1) {
+          throw new Error(`Sound ${targetSound} not found in soundboard ${soundboardId}`)
+        }
+        sounds.splice(targetIndex, 0, sourceSound)
+      }
     })
-  }
 
   updateSoundboard = (id: SoundboardId, update: (soundboard: Draft<Soundboard>) => void): void =>
     this.updateSoundboardPure(id, (soundboard) => produce(soundboard, update))

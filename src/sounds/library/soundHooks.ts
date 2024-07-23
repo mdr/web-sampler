@@ -115,9 +115,7 @@ export interface SoundActions {
 
   moveSoundInSoundboard(soundboardId: SoundboardId, sourceIndex: number, targetIndex: number): void
 
-  moveSoundInSoundboard2(soundboardId: SoundboardId, sourceSound: SoundId, targetSound: SoundId): void
-
-  moveSoundInSoundboard3(soundboardId: SoundboardId, sourceSound: SoundId, targetSound: SoundId): void
+  moveSoundInSoundboard2(soundboardId: SoundboardId, sourceSound: SoundId, targetSound: Option<SoundId>): void
 
   undo(): void
 

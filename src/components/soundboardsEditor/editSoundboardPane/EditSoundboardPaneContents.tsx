@@ -11,6 +11,7 @@ import { DndContext, DragOverEvent, DragOverlay, DragStartEvent, useDraggable, u
 import { CSS } from '@dnd-kit/utilities'
 import clsx from 'clsx'
 import { Option } from '../../../utils/types/Option.ts'
+import { PlaceholderTile } from './PlaceholderTile.tsx'
 
 const SOUND_ITEM_SIZE = Pixels(100)
 
@@ -71,9 +72,14 @@ export const EditSoundboardPaneContents = ({ soundboardId }: EditSoundboardPaneC
   }
 
   const handleDragEnd = () => {
-    if (sourceSoundId !== undefined && targetSoundId !== undefined) {
-      soundActions.moveSoundInSoundboard3(soundboard.id, sourceSoundId, targetSoundId)
+    if (sourceSoundId !== undefined) {
+      soundActions.moveSoundInSoundboard2(soundboard.id, sourceSoundId, targetSoundId)
     }
+    setSourceSoundId(undefined)
+    setTargetSoundId(undefined)
+  }
+
+  const handleDragCancel = () => {
     setSourceSoundId(undefined)
     setTargetSoundId(undefined)
   }
@@ -90,7 +96,12 @@ export const EditSoundboardPaneContents = ({ soundboardId }: EditSoundboardPaneC
   const sourceSound = sounds.find((sound) => sound.id === sourceSoundId)
   const setSoundboardName = (name: string) => soundActions.setSoundboardName(soundboard.id, name)
   return (
-    <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd} onDragOver={handleDragOver}>
+    <DndContext
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
+      onDragOver={handleDragOver}
+      onDragCancel={handleDragCancel}
+    >
       <div className="flex flex-col space-y-4 px-4 pt-4">
         <SoundboardNameTextField name={soundboard.name} setName={setSoundboardName} />
         <div className="flex justify-center">
@@ -114,5 +125,3 @@ export const EditSoundboardPaneContents = ({ soundboardId }: EditSoundboardPaneC
     </DndContext>
   )
 }
-
-const PlaceholderTile = () => <div className="h-24 w-24 border-2 border-dashed border-gray-400 bg-blue-50"></div>
