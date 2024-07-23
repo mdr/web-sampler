@@ -2,7 +2,7 @@ import { useSoundActions, useSoundboardAndSounds } from '../../../sounds/library
 import { SoundboardId } from '../../../types/Soundboard.ts'
 import { SoundboardNameTextField } from '../SoundboardNameTextField.tsx'
 import { AddSoundButton } from './AddSoundButton.tsx'
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import { useResizeDetector } from 'react-resize-detector'
 import { ResizePayload } from 'react-resize-detector/build/types/types'
 import { getSoundDisplayName, Sound, SoundId } from '../../../types/Sound.ts'
@@ -10,7 +10,6 @@ import { Pixels } from '../../../utils/types/brandedTypes.ts'
 import { DndContext, DragOverEvent, DragOverlay, DragStartEvent, useDraggable, useDroppable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 import clsx from 'clsx'
-import type { DragEndEvent } from '@dnd-kit/core/dist/types'
 import { Option } from '../../../utils/types/Option.ts'
 
 const SOUND_ITEM_SIZE = Pixels(100)
@@ -42,8 +41,7 @@ const SoundTile = ({ sound }: { sound: Sound }) => {
       {...listeners}
       {...attributes}
       className={clsx(
-        'flex aspect-square h-24 w-24 flex-col items-center justify-center rounded-md border hover:bg-gray-100',
-        'border-gray-200 bg-gray-50 shadow-md',
+        'flex aspect-square h-24 w-24 flex-col items-center justify-center rounded-md border border-gray-200 bg-gray-50 shadow-md hover:bg-gray-100',
       )}
     >
       <div className="text-center">{getSoundDisplayName(sound)}</div>
@@ -72,11 +70,8 @@ export const EditSoundboardPaneContents = ({ soundboardId }: EditSoundboardPaneC
     setSourceSoundId(sourceSoundId)
   }
 
-  const handleDragEnd = (event: DragEndEvent) => {
-    if (event.over) {
-      const sourceSoundId = event.active.id as SoundId
-      const targetSoundId = event.over.id as SoundId
-      console.log({ sounds: soundboard.sounds, sourceSoundId, targetSoundId })
+  const handleDragEnd = () => {
+    if (sourceSoundId !== undefined && targetSoundId !== undefined) {
       soundActions.moveSoundInSoundboard3(soundboard.id, sourceSoundId, targetSoundId)
     }
     setSourceSoundId(undefined)
@@ -91,8 +86,7 @@ export const EditSoundboardPaneContents = ({ soundboardId }: EditSoundboardPaneC
       setTargetSoundId(undefined)
     }
   }
-  // const sourceIndex = sounds.findIndex((sound) => sound.id === sourceSoundId)
-  // const targetIndex = sounds.findIndex((sound) => sound.id === targetSoundId)
+
   const sourceSound = sounds.find((sound) => sound.id === sourceSoundId)
   const setSoundboardName = (name: string) => soundActions.setSoundboardName(soundboard.id, name)
   return (
@@ -108,19 +102,17 @@ export const EditSoundboardPaneContents = ({ soundboardId }: EditSoundboardPaneC
           style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}
         >
           {sounds.map((sound) => (
-            <>
-              {targetSoundId === sound.id && (
-                <div key={`placeholder-${sound.id}`} className="h-24 w-24 border-2 border-dashed border-gray-400" />
-              )}
-              {sound.id !== sourceSoundId && <SoundTile sound={sound} key={sound.id} />}
-              {/*{targetIndex > sourceIndex && targetSoundId === sound.id && (*/}
-              {/*  <div key={`placeholder-${sound.id}`} className="h-24 w-24 border-2 border-dashed border-gray-400" />*/}
-              {/*)}*/}
-            </>
+            <Fragment key={sound.id}>
+              {targetSoundId === sound.id && <PlaceholderTile />}
+              {sound.id !== sourceSoundId && <SoundTile sound={sound} />}
+            </Fragment>
           ))}
+          {targetSoundId === undefined && sourceSoundId !== undefined && <PlaceholderTile />}
         </div>
       </div>
-      <DragOverlay>{sourceSound ? <SoundTile sound={sourceSound} key={sourceSound.id} /> : null}</DragOverlay>
+      <DragOverlay>{sourceSound ? <SoundTile sound={sourceSound} /> : undefined}</DragOverlay>
     </DndContext>
   )
 }
+
+const PlaceholderTile = () => <div className="h-24 w-24 border-2 border-dashed border-gray-400 bg-blue-50"></div>
