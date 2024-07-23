@@ -187,6 +187,19 @@ export class SoundLibrary implements SoundActions {
       soundboard.sounds.splice(targetIndex, 0, soundId)
     })
 
+  moveSoundInSoundboard2 = (soundboardId: SoundboardId, sourceSound: SoundId, targetSound: SoundId): void => {
+    const soundboard = this.getSoundboard(soundboardId)
+    const sourceIndex = soundboard.sounds.indexOf(sourceSound)
+    if (sourceIndex === -1) {
+      throw new Error(`Sound ${sourceSound} not found in soundboard ${soundboardId}`)
+    }
+    const targetIndex = soundboard.sounds.indexOf(targetSound)
+    if (targetIndex === -1) {
+      throw new Error(`Sound ${targetSound} not found in soundboard ${soundboardId}`)
+    }
+    this.moveSoundInSoundboard(soundboardId, sourceIndex, targetIndex)
+  }
+
   updateSoundboard = (id: SoundboardId, update: (soundboard: Draft<Soundboard>) => void): void =>
     this.updateSoundboardPure(id, (soundboard) => produce(soundboard, update))
 

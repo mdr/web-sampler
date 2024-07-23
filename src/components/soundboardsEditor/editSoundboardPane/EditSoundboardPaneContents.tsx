@@ -5,13 +5,50 @@ import { AddSoundButton } from './AddSoundButton.tsx'
 import { useState } from 'react'
 import { useResizeDetector } from 'react-resize-detector'
 import { ResizePayload } from 'react-resize-detector/build/types/types'
-import { getSoundDisplayName } from '../../../types/Sound.ts'
+import { getSoundDisplayName, Sound, SoundId } from '../../../types/Sound.ts'
 import { Pixels } from '../../../utils/types/brandedTypes.ts'
+import { DndContext, useDraggable, useDroppable } from '@dnd-kit/core'
+import { CSS } from '@dnd-kit/utilities'
+import clsx from 'clsx'
+import type { DragEndEvent } from '@dnd-kit/core/dist/types'
 
 const SOUND_ITEM_SIZE = Pixels(100)
 
 export interface EditSoundboardPaneContentsProps {
   soundboardId: SoundboardId
+}
+
+const SoundTile = ({ sound }: { sound: Sound }) => {
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id: sound.id,
+  })
+  const { isOver, setNodeRef: setNodeRef2 } = useDroppable({
+    id: sound.id,
+  })
+  const style = transform
+    ? {
+        transform: CSS.Translate.toString(transform),
+      }
+    : undefined
+  const setRef = (element: HTMLElement | null) => {
+    setNodeRef(element)
+    setNodeRef2(element)
+  }
+  return (
+    <div
+      ref={setRef}
+      style={style}
+      {...listeners}
+      {...attributes}
+      className={clsx(
+        'flex aspect-square h-24 w-24 flex-col items-center justify-center rounded-md border border-gray-200 bg-gray-50 shadow-md hover:bg-gray-100',
+        isOver && 'z-0 border-blue-300 bg-blue-100 shadow-lg',
+        transform && 'z-10',
+      )}
+    >
+      <div className="text-center">{getSoundDisplayName(sound)}</div>
+    </div>
+  )
 }
 
 export const EditSoundboardPaneContents = ({ soundboardId }: EditSoundboardPaneContentsProps) => {
@@ -20,7 +57,6 @@ export const EditSoundboardPaneContents = ({ soundboardId }: EditSoundboardPaneC
   const [columns, setColumns] = useState(1)
 
   const onResize = ({ width }: ResizePayload) => {
-    console.log(onResize)
     if (width) {
       const newColumns = Math.floor(width / SOUND_ITEM_SIZE)
       setColumns(newColumns > 0 ? newColumns : 1)
@@ -29,27 +65,32 @@ export const EditSoundboardPaneContents = ({ soundboardId }: EditSoundboardPaneC
 
   const { ref } = useResizeDetector({ onResize })
 
+  const handleDragEnd = (event: DragEndEvent) => {
+    if (event.over) {
+      const sourceSoundId = event.active.id as SoundId
+      const targetSoundId = event.over.id as SoundId
+      soundActions.moveSoundInSoundboard2(soundboard.id, sourceSoundId, targetSoundId)
+    }
+  }
+
   const setSoundboardName = (name: string) => soundActions.setSoundboardName(soundboard.id, name)
   return (
-    <div className="flex flex-col space-y-4 px-4 pt-4">
-      <SoundboardNameTextField name={soundboard.name} setName={setSoundboardName} />
-      <div className="flex justify-center">
-        <AddSoundButton soundboardId={soundboardId} />
+    <DndContext onDragEnd={handleDragEnd}>
+      <div className="flex flex-col space-y-4 px-4 pt-4">
+        <SoundboardNameTextField name={soundboard.name} setName={setSoundboardName} />
+        <div className="flex justify-center">
+          <AddSoundButton soundboardId={soundboardId} />
+        </div>
+        <div
+          ref={ref}
+          className="grid gap-x-4 gap-y-4"
+          style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}
+        >
+          {sounds.map((sound) => (
+            <SoundTile sound={sound} key={sound.id} />
+          ))}
+        </div>
       </div>
-      <div
-        ref={ref}
-        className="grid gap-x-4 gap-y-4"
-        style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}
-      >
-        {sounds.map((sound) => (
-          <div
-            key={sound.id}
-            className="flex aspect-square h-24 w-24 flex-col items-center justify-center rounded-md border border-gray-200 bg-gray-50 shadow-md hover:bg-gray-100"
-          >
-            <div className="text-center">{getSoundDisplayName(sound)}</div>
-          </div>
-        ))}
-      </div>
-    </div>
+    </DndContext>
   )
 }
