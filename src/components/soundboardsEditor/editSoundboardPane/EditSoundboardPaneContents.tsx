@@ -7,7 +7,7 @@ import { useResizeDetector } from 'react-resize-detector'
 import { ResizePayload } from 'react-resize-detector/build/types/types'
 import { getSoundDisplayName, Sound, SoundId } from '../../../types/Sound.ts'
 import { Pixels } from '../../../utils/types/brandedTypes.ts'
-import { DndContext, DragOverEvent, DragStartEvent, useDraggable, useDroppable } from '@dnd-kit/core'
+import { DndContext, DragOverEvent, DragOverlay, DragStartEvent, useDraggable, useDroppable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 import clsx from 'clsx'
 import type { DragEndEvent } from '@dnd-kit/core/dist/types'
@@ -44,7 +44,7 @@ const SoundTile = ({ sound }: { sound: Sound }) => {
       className={clsx(
         'flex aspect-square h-24 w-24 flex-col items-center justify-center rounded-md border hover:bg-gray-100',
         !isOver && 'border-gray-200 bg-gray-50 shadow-md',
-        isOver && 'border-blue-300 bg-blue-100 shadow-lg',
+        // isOver && 'border-blue-300 bg-blue-100 shadow-lg',
       )}
     >
       <div className="text-center">{getSoundDisplayName(sound)}</div>
@@ -93,6 +93,7 @@ export const EditSoundboardPaneContents = ({ soundboardId }: EditSoundboardPaneC
   }
   const sourceIndex = sounds.findIndex((sound) => sound.id === sourceSoundId)
   const targetIndex = sounds.findIndex((sound) => sound.id === targetSoundId)
+  const sourceSound = sounds.find((sound) => sound.id === sourceSoundId)
   const setSoundboardName = (name: string) => soundActions.setSoundboardName(soundboard.id, name)
   return (
     <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd} onDragOver={handleDragOver}>
@@ -111,7 +112,7 @@ export const EditSoundboardPaneContents = ({ soundboardId }: EditSoundboardPaneC
               {targetIndex < sourceIndex && targetSoundId === sound.id && (
                 <div key={`placeholder-${sound.id}`} className="h-24 w-24 border-2 border-dashed border-gray-400" />
               )}
-              {<SoundTile sound={sound} key={sound.id} />}
+              {sound.id !== sourceSoundId && <SoundTile sound={sound} key={sound.id} />}
               {targetIndex > sourceIndex && targetSoundId === sound.id && (
                 <div key={`placeholder-${sound.id}`} className="h-24 w-24 border-2 border-dashed border-gray-400" />
               )}
@@ -119,6 +120,7 @@ export const EditSoundboardPaneContents = ({ soundboardId }: EditSoundboardPaneC
           ))}
         </div>
       </div>
+      <DragOverlay>{sourceSound ? <SoundTile sound={sourceSound} key={sourceSound.id} /> : null}</DragOverlay>
     </DndContext>
   )
 }
