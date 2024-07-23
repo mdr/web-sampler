@@ -62,7 +62,7 @@
     "@eslint/compat": "^1.1.1",
     "@eslint/js": "^9.7.0",
     "@playwright/experimental-ct-react": "^1.45.2",
-    "@storybook/addon-essentials": "^8.2.4",
+    "@storybook/addon-essentials": "^8.2.5",
     "@storybook/addon-interactions": "^8.2.5",
     "@storybook/addon-links": "^8.2.4",
     "@storybook/addon-onboarding": "^8.2.5",
