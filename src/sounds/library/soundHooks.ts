@@ -115,6 +115,10 @@ export interface SoundActions {
 
   moveSoundInSoundboard(soundboardId: SoundboardId, sourceIndex: number, targetIndex: number): void
 
+  /**
+   * Move a sound in a soundboard to a new position.
+   * The sourceSound is moved to before the targetSound, or to the end of the soundboard if targetSound is undefined.
+   */
   moveSoundInSoundboard2(soundboardId: SoundboardId, sourceSound: SoundId, targetSound: Option<SoundId>): void
 
   undo(): void

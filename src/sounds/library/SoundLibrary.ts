@@ -189,6 +189,9 @@ export class SoundLibrary implements SoundActions {
 
   moveSoundInSoundboard2 = (soundboardId: SoundboardId, sourceSound: SoundId, targetSound: Option<SoundId>): void =>
     this.updateSoundboard(soundboardId, (soundboard) => {
+      if (sourceSound === targetSound) {
+        return
+      }
       const sounds = soundboard.sounds
       const sourceIndex = sounds.indexOf(sourceSound)
       if (sourceIndex === -1) {
