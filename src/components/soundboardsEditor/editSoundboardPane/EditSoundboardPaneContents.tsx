@@ -23,7 +23,7 @@ const SoundTile = ({ sound }: { sound: Sound }) => {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: sound.id,
   })
-  const { isOver, setNodeRef: setNodeRef2 } = useDroppable({
+  const { setNodeRef: setNodeRef2 } = useDroppable({
     id: sound.id,
   })
   const style = transform
@@ -43,8 +43,7 @@ const SoundTile = ({ sound }: { sound: Sound }) => {
       {...attributes}
       className={clsx(
         'flex aspect-square h-24 w-24 flex-col items-center justify-center rounded-md border hover:bg-gray-100',
-        !isOver && 'border-gray-200 bg-gray-50 shadow-md',
-        // isOver && 'border-blue-300 bg-blue-100 shadow-lg',
+        'border-gray-200 bg-gray-50 shadow-md',
       )}
     >
       <div className="text-center">{getSoundDisplayName(sound)}</div>
@@ -77,7 +76,8 @@ export const EditSoundboardPaneContents = ({ soundboardId }: EditSoundboardPaneC
     if (event.over) {
       const sourceSoundId = event.active.id as SoundId
       const targetSoundId = event.over.id as SoundId
-      soundActions.moveSoundInSoundboard2(soundboard.id, sourceSoundId, targetSoundId)
+      console.log({ sounds: soundboard.sounds, sourceSoundId, targetSoundId })
+      soundActions.moveSoundInSoundboard3(soundboard.id, sourceSoundId, targetSoundId)
     }
     setSourceSoundId(undefined)
     setTargetSoundId(undefined)
@@ -91,8 +91,8 @@ export const EditSoundboardPaneContents = ({ soundboardId }: EditSoundboardPaneC
       setTargetSoundId(undefined)
     }
   }
-  const sourceIndex = sounds.findIndex((sound) => sound.id === sourceSoundId)
-  const targetIndex = sounds.findIndex((sound) => sound.id === targetSoundId)
+  // const sourceIndex = sounds.findIndex((sound) => sound.id === sourceSoundId)
+  // const targetIndex = sounds.findIndex((sound) => sound.id === targetSoundId)
   const sourceSound = sounds.find((sound) => sound.id === sourceSoundId)
   const setSoundboardName = (name: string) => soundActions.setSoundboardName(soundboard.id, name)
   return (
@@ -109,13 +109,13 @@ export const EditSoundboardPaneContents = ({ soundboardId }: EditSoundboardPaneC
         >
           {sounds.map((sound) => (
             <>
-              {targetIndex < sourceIndex && targetSoundId === sound.id && (
+              {targetSoundId === sound.id && (
                 <div key={`placeholder-${sound.id}`} className="h-24 w-24 border-2 border-dashed border-gray-400" />
               )}
               {sound.id !== sourceSoundId && <SoundTile sound={sound} key={sound.id} />}
-              {targetIndex > sourceIndex && targetSoundId === sound.id && (
-                <div key={`placeholder-${sound.id}`} className="h-24 w-24 border-2 border-dashed border-gray-400" />
-              )}
+              {/*{targetIndex > sourceIndex && targetSoundId === sound.id && (*/}
+              {/*  <div key={`placeholder-${sound.id}`} className="h-24 w-24 border-2 border-dashed border-gray-400" />*/}
+              {/*)}*/}
             </>
           ))}
         </div>
