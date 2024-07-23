@@ -41,9 +41,9 @@ const SoundTile = ({ sound }: { sound: Sound }) => {
       {...listeners}
       {...attributes}
       className={clsx(
-        'flex aspect-square h-24 w-24 flex-col items-center justify-center rounded-md border border-gray-200 bg-gray-50 shadow-md hover:bg-gray-100',
-        isOver && 'z-0 border-blue-300 bg-blue-100 shadow-lg',
-        transform && 'z-10',
+        'flex aspect-square h-24 w-24 flex-col items-center justify-center rounded-md border hover:bg-gray-100',
+        !isOver && 'border-gray-200 bg-gray-50 shadow-md',
+        isOver && 'border-blue-300 bg-blue-100 shadow-lg',
       )}
     >
       <div className="text-center">{getSoundDisplayName(sound)}</div>
