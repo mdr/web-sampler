@@ -1,6 +1,7 @@
 import { getSoundDisplayName, Sound } from '../../../types/Sound.ts'
 import { useDraggable, useDroppable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
+import { EditSoundboardPaneTestIds } from './EditSoundboardPaneTestIds.ts'
 
 export interface SoundTileProps {
   sound: Sound
@@ -18,6 +19,7 @@ export const SoundTile = ({ sound }: SoundTileProps) => {
   }
   return (
     <div
+      data-testid={EditSoundboardPaneTestIds.soundTile}
       ref={setRef}
       style={style}
       {...listeners}

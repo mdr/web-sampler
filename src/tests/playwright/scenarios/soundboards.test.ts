@@ -59,3 +59,23 @@ test('a sound can be added to a soundboard if not already present', async ({ mou
   await chooseSoundDialog.pressDropdownButton()
   await chooseSoundDialog.expectSoundOptionsToBe(['XXX', 'ZZZ'])
 })
+
+test('sounds can be rearranged by dragging', async ({ mount }) => {
+  const soundsEditorPage = await launchApp(mount)
+  await soundsEditorPage.createSound('A')
+  await soundsEditorPage.createSound('B')
+  await soundsEditorPage.createSound('C')
+  const soundboardsEditorPage = await soundsEditorPage.navbar.pressSoundboardsLink()
+  await soundboardsEditorPage.sidebar.pressNewSoundboard()
+  for (const sound of ['A', 'B', 'C']) {
+    const chooseSoundDialog = await soundboardsEditorPage.pressAddSound()
+    await chooseSoundDialog.pressDropdownButton()
+    await chooseSoundDialog.selectSoundOption(sound)
+    await chooseSoundDialog.pressAddButton()
+  }
+  await soundboardsEditorPage.expectSoundTilesToBe(['A', 'B', 'C'])
+
+  await soundboardsEditorPage.dragSound({ fromSoundName: 'C', toSoundName: 'A' })
+
+  await soundboardsEditorPage.expectSoundTilesToBe(['C', 'A', 'B'])
+})
