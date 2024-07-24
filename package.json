@@ -65,7 +65,7 @@
     "@playwright/experimental-ct-react": "^1.45.3",
     "@storybook/addon-essentials": "^8.2.5",
     "@storybook/addon-interactions": "^8.2.5",
-    "@storybook/addon-links": "^8.2.5",
+    "@storybook/addon-links": "^8.2.6",
     "@storybook/addon-onboarding": "^8.2.5",
     "@storybook/blocks": "^8.2.5",
     "@storybook/react": "^8.2.5",
