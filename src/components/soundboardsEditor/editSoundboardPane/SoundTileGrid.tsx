@@ -7,14 +7,12 @@ import { useResizeDetector } from 'react-resize-detector'
 import { DndContext, DragOverEvent, DragOverlay, DragStartEvent } from '@dnd-kit/core'
 import { PlaceholderTile } from './PlaceholderTile.tsx'
 import { SoundboardId } from '../../../types/Soundboard.ts'
-import { Pixels } from '../../../utils/types/brandedTypes.ts'
 import { SoundTile } from './SoundTile.tsx'
+import { SOUND_TILE_GAP, SOUND_TILE_SIZE } from './soundTileConstants.ts'
 
 export interface SoundTileGridContentsProps {
   soundboardId: SoundboardId
 }
-
-const SOUND_ITEM_SIZE = Pixels(100)
 
 export const SoundTileGrid = ({ soundboardId }: SoundTileGridContentsProps) => {
   const soundActions = useSoundActions()
@@ -25,7 +23,7 @@ export const SoundTileGrid = ({ soundboardId }: SoundTileGridContentsProps) => {
 
   const onResize = ({ width }: ResizePayload) => {
     if (width) {
-      const newColumns = Math.floor(width / SOUND_ITEM_SIZE)
+      const newColumns = Math.floor((width + SOUND_TILE_GAP) / (SOUND_TILE_SIZE + SOUND_TILE_GAP))
       setColumns(newColumns > 0 ? newColumns : 1)
     }
   }
@@ -69,8 +67,12 @@ export const SoundTileGrid = ({ soundboardId }: SoundTileGridContentsProps) => {
     >
       <div
         ref={ref}
-        className="grid gap-x-4 gap-y-4"
-        style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}
+        className="grid"
+        style={{
+          gridTemplateColumns: `repeat(${columns}, ${SOUND_TILE_SIZE}px)`,
+          columnGap: `${SOUND_TILE_GAP}px`,
+          rowGap: `${SOUND_TILE_GAP}px`,
+        }}
       >
         {sounds.map((sound) => (
           <Fragment key={sound.id}>
@@ -78,7 +80,9 @@ export const SoundTileGrid = ({ soundboardId }: SoundTileGridContentsProps) => {
             {sound.id !== sourceSoundId && <SoundTile sound={sound} />}
           </Fragment>
         ))}
-        {targetSoundId === undefined && sourceSoundId !== undefined && <PlaceholderTile />}
+        {targetSoundId === undefined && sourceSoundId !== undefined && (
+          <PlaceholderTile fudgeHeight={sounds.length % columns === 1} />
+        )}
       </div>
       <DragOverlay>{sourceSound ? <SoundTile sound={sourceSound} /> : undefined}</DragOverlay>
     </DndContext>

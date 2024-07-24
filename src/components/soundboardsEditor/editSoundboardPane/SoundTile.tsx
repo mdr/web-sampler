@@ -24,9 +24,10 @@ export const SoundTile = ({ sound }: SoundTileProps) => {
       style={style}
       {...listeners}
       {...attributes}
-      className="flex aspect-square h-24 w-24 flex-col items-center justify-center rounded-md border border-gray-200 bg-gray-50 shadow-md hover:bg-gray-100"
+      className="flex aspect-square flex-col items-center justify-center rounded-md border border-gray-200 bg-gray-50 shadow-md hover:bg-gray-100"
     >
       <div className="text-center">{getSoundDisplayName(sound)}</div>
+      {/*<Button icon={mdiDotsVertical} iconOnly label={'Options'} />*/}
     </div>
   )
 }
