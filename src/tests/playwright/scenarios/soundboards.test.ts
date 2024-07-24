@@ -68,14 +68,24 @@ test('sounds can be rearranged by dragging', async ({ mount }) => {
   const soundboardsEditorPage = await soundsEditorPage.navbar.pressSoundboardsLink()
   await soundboardsEditorPage.sidebar.pressNewSoundboard()
   for (const sound of ['A', 'B', 'C']) {
-    const chooseSoundDialog = await soundboardsEditorPage.pressAddSound()
-    await chooseSoundDialog.pressDropdownButton()
-    await chooseSoundDialog.selectSoundOption(sound)
-    await chooseSoundDialog.pressAddButton()
+    await soundboardsEditorPage.addSound(sound)
   }
   await soundboardsEditorPage.expectSoundTilesToBe(['A', 'B', 'C'])
 
   await soundboardsEditorPage.dragSound({ fromSoundName: 'C', toSoundName: 'A' })
 
   await soundboardsEditorPage.expectSoundTilesToBe(['C', 'A', 'B'])
+})
+
+test.skip('sounds can be deleted from a soundboard', async ({ mount }) => {
+  const soundsEditorPage = await launchApp(mount)
+  await soundsEditorPage.createSound('AAA')
+  const soundboardsEditorPage = await soundsEditorPage.navbar.pressSoundboardsLink()
+  await soundboardsEditorPage.sidebar.pressNewSoundboard()
+  await soundboardsEditorPage.addSound('AAA')
+  await soundboardsEditorPage.expectSoundTilesToBe(['AAA'])
+
+  await soundboardsEditorPage.deleteSound('AAA')
+
+  await soundboardsEditorPage.expectSoundTilesToBe([])
 })

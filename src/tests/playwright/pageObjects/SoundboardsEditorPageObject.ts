@@ -5,6 +5,7 @@ import { SoundboardsSidebarTestIds } from '../../../components/soundboardsEditor
 import { SoundboardsSidebarPageObject } from './SoundboardsSidebarPageObject.ts'
 import { EditSoundboardPaneTestIds } from '../../../components/soundboardsEditor/editSoundboardPane/EditSoundboardPaneTestIds.ts'
 import { ChooseSoundDialogPageObject } from './ChooseSoundDialogPageObject.ts'
+import { Locator } from 'playwright'
 
 export class SoundboardsEditorPageObject extends PageObject {
   protected readonly name = 'SoundboardsEditor'
@@ -35,11 +36,28 @@ export class SoundboardsEditorPageObject extends PageObject {
       return await ChooseSoundDialogPageObject.verifyIsShown(this.mountResult)
     })
 
-  dragSound = async ({ fromSoundName, toSoundName }: { fromSoundName: string; toSoundName: string }): Promise<void> =>
+  addSound = async (soundName: string): Promise<void> => {
+    const chooseSoundDialog = await this.pressAddSound()
+    await chooseSoundDialog.pressDropdownButton()
+    await chooseSoundDialog.selectSoundOption(soundName)
+    await chooseSoundDialog.pressAddButton()
+  }
+
+  private getSoundTile = (soundName: string): Locator =>
+    this.get(EditSoundboardPaneTestIds.soundTile).locator(`:has-text("${soundName}")`)
+
+  dragSound = ({ fromSoundName, toSoundName }: { fromSoundName: string; toSoundName: string }): Promise<void> =>
     this.step(`dragSound ${fromSoundName} to ${toSoundName}`, async () => {
-      const fromSound = this.get(EditSoundboardPaneTestIds.soundTile).locator('text=' + fromSoundName)
-      const toSound = this.get(EditSoundboardPaneTestIds.soundTile).locator('text=' + toSoundName)
+      const fromSound = this.getSoundTile(fromSoundName)
+      const toSound = this.getSoundTile(toSoundName)
       await fromSound.dragTo(toSound)
+    })
+
+  deleteSound = (soundName: string): Promise<void> =>
+    this.step(`deleteSound ${soundName}`, async () => {
+      // await this.getSoundTile(soundName).getByTestId(EditSoundboardPaneTestIds.deleteSoundButton).click()
+      await this.get(EditSoundboardPaneTestIds.deleteSoundButton).hover()
+      await this.get(EditSoundboardPaneTestIds.deleteSoundButton).click()
     })
 
   expectSoundTilesToBe = async (expectedSoundNames: string[]): Promise<void> =>

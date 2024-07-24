@@ -4,6 +4,9 @@ export const EditSoundboardPaneTestIds = {
   soundboardNameInput: TestId('EditSoundboardPane.soundboardNameInput'),
   addSoundButton: TestId('EditSoundboardPane.addSoundButton'),
   soundTile: TestId('EditSoundboardPane.soundTile'),
+  playSoundButton: TestId('EditSoundboardPane.playSoundButton'),
+  editSoundButton: TestId('EditSoundboardPane.editSoundButton'),
+  deleteSoundButton: TestId('EditSoundboardPane.deleteSoundButton'),
 }
 
 export const ChooseSoundDialogTestIds = {

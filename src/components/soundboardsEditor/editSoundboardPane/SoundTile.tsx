@@ -45,12 +45,14 @@ export const SoundTile = ({ sound }: SoundTileProps) => {
       <div className="flex w-full justify-center bg-blue-200 pb-1 pt-2">
         <Toolbar>
           <Button
+            data-testid={EditSoundboardPaneTestIds.playSoundButton}
             className="rounded px-1 py-1 hover:bg-blue-300 focus:bg-blue-400"
             aria-label={`Play sound ${getSoundDisplayName(sound)}`}
           >
             <Icon path={mdiPlay} size={1} />
           </Button>
           <Button
+            data-testid={EditSoundboardPaneTestIds.editSoundButton}
             className="rounded px-1 py-1 hover:bg-blue-300 focus:bg-blue-400"
             onPress={handleEdit}
             aria-label={`Edit sound ${getSoundDisplayName(sound)}`}
@@ -58,6 +60,7 @@ export const SoundTile = ({ sound }: SoundTileProps) => {
             <Icon path={mdiPencil} size={1} />
           </Button>
           <Button
+            data-testid={EditSoundboardPaneTestIds.deleteSoundButton}
             className="rounded px-1 py-1 hover:bg-blue-300 focus:bg-blue-400"
             onPress={handleDelete}
             aria-label={`Delete sound ${getSoundDisplayName(sound)}`}
