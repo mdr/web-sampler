@@ -4,7 +4,17 @@ import { Option } from '../../../utils/types/Option.ts'
 import { SoundId } from '../../../types/Sound.ts'
 import { ResizePayload } from 'react-resize-detector/build/types/types'
 import { useResizeDetector } from 'react-resize-detector'
-import { DndContext, DragOverEvent, DragOverlay, DragStartEvent } from '@dnd-kit/core'
+import {
+  DndContext,
+  DragOverEvent,
+  DragOverlay,
+  DragStartEvent,
+  KeyboardSensor,
+  MouseSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core'
 import { PlaceholderTile } from './PlaceholderTile.tsx'
 import { SoundboardId } from '../../../types/Soundboard.ts'
 import { SoundTile } from './SoundTile.tsx'
@@ -20,7 +30,8 @@ export const SoundTileGrid = ({ soundboardId }: SoundTileGridContentsProps) => {
   const [columns, setColumns] = useState(1)
   const [sourceSoundId, setSourceSoundId] = useState<Option<SoundId>>(undefined)
   const [targetSoundId, setTargetSoundId] = useState<Option<SoundId>>(undefined)
-
+  // Explicitly set up sensors else Playwright test interactions don't work correctly:
+  const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor), useSensor(KeyboardSensor))
   const onResize = ({ width }: ResizePayload) => {
     if (width) {
       const newColumns = Math.floor((width + SOUND_TILE_GAP) / (SOUND_TILE_SIZE + SOUND_TILE_GAP))
@@ -64,6 +75,7 @@ export const SoundTileGrid = ({ soundboardId }: SoundTileGridContentsProps) => {
       onDragEnd={handleDragEnd}
       onDragOver={handleDragOver}
       onDragCancel={handleDragCancel}
+      sensors={sensors}
     >
       <div
         ref={ref}

@@ -77,7 +77,7 @@ test('sounds can be rearranged by dragging', async ({ mount }) => {
   await soundboardsEditorPage.expectSoundTilesToBe(['C', 'A', 'B'])
 })
 
-test.skip('sounds can be deleted from a soundboard', async ({ mount }) => {
+test('sounds can be deleted from a soundboard', async ({ mount }) => {
   const soundsEditorPage = await launchApp(mount)
   await soundsEditorPage.createSound('AAA')
   const soundboardsEditorPage = await soundsEditorPage.navbar.pressSoundboardsLink()
