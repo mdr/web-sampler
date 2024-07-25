@@ -5,61 +5,13 @@ import { AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorde
 import { NavbarTestIds } from '../../../components/navbar/NavbarTestIds.ts'
 import { launchApp } from './launchApp.tsx'
 import { SoundsSidebarPageObject } from './SoundsSidebarPageObject.ts'
-import { platform } from 'node:os'
 import { NavbarPageObject } from './NavbarPageObject.ts'
 import { SoundsSidebarTestIds } from '../../../components/soundsEditor/sidebar/SoundsSidebarTestIds.ts'
 import { EditSoundPaneTestIds } from '../../../components/soundsEditor/editSoundPane/EditSoundPaneTestIds.ts'
 import { TestAppProps } from '../TestApp.tsx'
 import { Path, Volume } from '../../../utils/types/brandedTypes.ts'
 import { Locator } from 'playwright'
-
-class SoundsEditorKeyboardShortcutsPageObject extends PageObject {
-  protected readonly name = 'SoundsEditorPage.shortcuts'
-
-  togglePlayPause = (): Promise<void> => this.step('togglePlayPause', () => this.page.keyboard.press('Space'))
-
-  undo = (): Promise<void> =>
-    this.step('undo', () => this.page.keyboard.press(platform() === 'darwin' ? 'Meta+KeyZ' : 'Control+KeyZ'))
-
-  redo = (): Promise<void> =>
-    this.step('redo', () => this.page.keyboard.press(platform() === 'darwin' ? 'Meta+Shift+KeyZ' : 'Control+KeyY'))
-
-  seekRight = (): Promise<void> =>
-    this.step('seekRight', async () => {
-      await this.page.keyboard.press('ArrowRight')
-      await this.clockNext()
-    })
-
-  seekRightFine = (): Promise<void> =>
-    this.step('seekRightFine', async () => {
-      await this.page.keyboard.press('Shift+ArrowRight')
-      await this.clockNext()
-    })
-
-  seekLeftFine = (): Promise<void> =>
-    this.step('seekLeftFine', async () => {
-      await this.page.keyboard.press('Shift+ArrowLeft')
-      await this.clockNext()
-    })
-
-  seekLeft = (): Promise<void> =>
-    this.step('seekLeft', async () => {
-      await this.page.keyboard.press('ArrowLeft')
-      await this.clockNext()
-    })
-
-  setStartPosition = (): Promise<void> =>
-    this.step('setStartPosition', async () => {
-      await this.page.keyboard.press('s')
-      await this.clockNext()
-    })
-
-  setFinishPosition = (): Promise<void> =>
-    this.step('setFinishPosition', async () => {
-      await this.page.keyboard.press('f')
-      await this.clockNext()
-    })
-}
+import { SoundsEditorKeyboardShortcutsPageObject } from './SoundsEditorKeyboardShortcutsPageObject.ts'
 
 export class SoundsEditorPageObject extends PageObject {
   protected readonly name = 'SoundsEditorPage'
@@ -69,15 +21,15 @@ export class SoundsEditorPageObject extends PageObject {
     return new SoundsEditorPageObject(mountResult)
   }
 
-  get sidebar() {
+  get sidebar(): SoundsSidebarPageObject {
     return new SoundsSidebarPageObject(this.mountResult)
   }
 
-  get navbar() {
+  get navbar(): NavbarPageObject {
     return new NavbarPageObject(this.mountResult)
   }
 
-  get shortcuts() {
+  get shortcuts(): SoundsEditorKeyboardShortcutsPageObject {
     return new SoundsEditorKeyboardShortcutsPageObject(this.mountResult)
   }
 
