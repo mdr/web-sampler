@@ -6,6 +6,7 @@ import { SoundboardsSidebarPageObject } from './SoundboardsSidebarPageObject.ts'
 import { EditSoundboardPaneTestIds } from '../../../components/soundboardsEditor/editSoundboardPane/EditSoundboardPaneTestIds.ts'
 import { ChooseSoundDialogPageObject } from './ChooseSoundDialogPageObject.ts'
 import { Locator } from 'playwright'
+import { SoundsEditorPageObject } from './SoundsEditorPageObject.ts'
 
 export class SoundboardsEditorPageObject extends PageObject {
   protected readonly name = 'SoundboardsEditor'
@@ -44,7 +45,7 @@ export class SoundboardsEditorPageObject extends PageObject {
   }
 
   private getSoundTile = (soundName: string): Locator =>
-    this.get(EditSoundboardPaneTestIds.soundTile).locator(`:has-text("${soundName}")`)
+    this.get(EditSoundboardPaneTestIds.soundTile).filter({ hasText: soundName })
 
   dragSound = ({ fromSoundName, toSoundName }: { fromSoundName: string; toSoundName: string }): Promise<void> =>
     this.step(`dragSound ${fromSoundName} to ${toSoundName}`, async () => {
@@ -53,11 +54,15 @@ export class SoundboardsEditorPageObject extends PageObject {
       await fromSound.dragTo(toSound)
     })
 
-  deleteSound = (soundName: string): Promise<void> =>
-    this.step(`deleteSound ${soundName}`, async () => {
-      // await this.getSoundTile(soundName).getByTestId(EditSoundboardPaneTestIds.deleteSoundButton).click()
-      await this.get(EditSoundboardPaneTestIds.deleteSoundButton).hover()
-      await this.get(EditSoundboardPaneTestIds.deleteSoundButton).click()
+  removeSoundFromSoundboard = (soundName: string): Promise<void> =>
+    this.step(`removeSoundFromSoundboard ${soundName}`, () =>
+      this.getSoundTile(soundName).getByTestId(EditSoundboardPaneTestIds.removeSoundButton).click(),
+    )
+
+  editSound = (soundName: string): Promise<SoundsEditorPageObject> =>
+    this.step(`editSound ${soundName}`, async () => {
+      await this.getSoundTile(soundName).getByTestId(EditSoundboardPaneTestIds.editSoundButton).click()
+      return await SoundsEditorPageObject.verifyIsShown(this.mountResult)
     })
 
   expectSoundTilesToBe = async (expectedSoundNames: string[]): Promise<void> =>

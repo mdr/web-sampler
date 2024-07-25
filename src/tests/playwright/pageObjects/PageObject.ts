@@ -116,4 +116,9 @@ export abstract class PageObject {
     await download.saveAs(path)
     return path
   }
+
+  navigateBack = (): Promise<void> =>
+    this.step('navigateBack', async () => {
+      await this.page.goBack()
+    })
 }

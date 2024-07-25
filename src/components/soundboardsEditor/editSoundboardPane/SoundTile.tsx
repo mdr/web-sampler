@@ -26,7 +26,7 @@ export const SoundTile = ({ sound }: SoundTileProps) => {
     setNodeRef(element)
     setNodeRef2(element)
   }
-  const handleDelete = () => {
+  const handleRemoveSound = () => {
     soundActions.deleteSound(sound.id)
   }
   const handleEdit = () => {
@@ -60,10 +60,10 @@ export const SoundTile = ({ sound }: SoundTileProps) => {
             <Icon path={mdiPencil} size={1} />
           </Button>
           <Button
-            data-testid={EditSoundboardPaneTestIds.deleteSoundButton}
+            data-testid={EditSoundboardPaneTestIds.removeSoundButton}
             className="rounded px-1 py-1 hover:bg-blue-300 focus:bg-blue-400"
-            onPress={handleDelete}
-            aria-label={`Delete sound ${getSoundDisplayName(sound)}`}
+            onPress={handleRemoveSound}
+            aria-label={`Remove sound ${getSoundDisplayName(sound)} from the soundboard`}
           >
             <Icon path={mdiTrashCan} size={1} />
           </Button>

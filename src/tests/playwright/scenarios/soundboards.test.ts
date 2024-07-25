@@ -85,7 +85,21 @@ test('sounds can be deleted from a soundboard', async ({ mount }) => {
   await soundboardsEditorPage.addSound('AAA')
   await soundboardsEditorPage.expectSoundTilesToBe(['AAA'])
 
-  await soundboardsEditorPage.deleteSound('AAA')
+  await soundboardsEditorPage.removeSoundFromSoundboard('AAA')
 
   await soundboardsEditorPage.expectSoundTilesToBe([])
+})
+
+test('can navigate to a sound from a soundboard', async ({ mount }) => {
+  let soundsEditorPage = await launchApp(mount)
+  await soundsEditorPage.createSound('AAA')
+  const soundboardsEditorPage = await soundsEditorPage.navbar.pressSoundboardsLink()
+  await soundboardsEditorPage.sidebar.pressNewSoundboard()
+  await soundboardsEditorPage.addSound('AAA')
+
+  soundsEditorPage = await soundboardsEditorPage.editSound('AAA')
+
+  await soundsEditorPage.enterSoundName('BBB')
+  await soundsEditorPage.navigateBack()
+  await soundboardsEditorPage.expectSoundTilesToBe(['BBB'])
 })
