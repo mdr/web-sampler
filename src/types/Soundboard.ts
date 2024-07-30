@@ -11,23 +11,29 @@ export const SoundboardId = Brand.nominal<SoundboardId>()
 
 export const newSoundboardId = (): SoundboardId => SoundboardId(uuid.v4())
 
+export interface SoundboardTile {
+  readonly soundId: SoundId
+}
+
+export const soundboardTileSchema = z.strictObject({ soundId: z.string().transform(SoundId) }).readonly()
+
 export interface Soundboard {
   readonly id: SoundboardId
   readonly name: string
-  readonly sounds: SoundId[]
+  readonly tiles: SoundboardTile[]
 }
 
 export const soundboardSchema = z
   .strictObject({
     id: z.string().transform(SoundboardId),
     name: z.string(),
-    sounds: z.array(z.string().transform(SoundId)),
+    tiles: z.array(soundboardTileSchema),
   })
   .readonly()
 
 assert<Equals<Soundboard, z.infer<typeof soundboardSchema>>>()
 
-export const newSoundboard = (): Soundboard => ({ id: newSoundboardId(), name: '', sounds: [] })
+export const newSoundboard = (): Soundboard => ({ id: newSoundboardId(), name: '', tiles: [] })
 
 export const getSoundboardDisplayName = (soundboard: Soundboard): string => soundboardNameAsDisplayName(soundboard.name)
 
@@ -40,5 +46,5 @@ export const sortSoundboardsByDisplayName = (soundsboards: readonly Soundboard[]
 
 export const removeSoundFromSoundboard = (soundboard: Soundboard, soundId: SoundId): Soundboard => ({
   ...soundboard,
-  sounds: soundboard.sounds.filter((id) => soundId !== id),
+  tiles: soundboard.tiles.filter((tile) => soundId !== tile.soundId),
 })

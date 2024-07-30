@@ -8,20 +8,22 @@ import {
   SoundTestConstants,
 } from '../types/sound.testSupport.ts'
 import { SoundState } from './SoundState.ts'
-import { makeSoundboard, SoundboardTestConstants } from '../types/soundboard.testSupport.ts'
+import { makeSoundboard, makeSoundboardTile, SoundboardTestConstants } from '../types/soundboard.testSupport.ts'
 import { Hz, Samples } from '../utils/types/brandedTypes.ts'
 
 describe('validateSoundState', () => {
   it('finds no issue with a valid sound state', () => {
     const sound = makeSoundWithAudio()
-    const soundboard = makeSoundboard({ sounds: [sound.id] })
+    const tile = makeSoundboardTile({ soundId: sound.id })
+    const soundboard = makeSoundboard({ tiles: [tile] })
     const soundState: SoundState = { sounds: [sound], soundboards: [soundboard] }
 
     expect(() => validateSoundState(soundState)).not.toThrow()
   })
 
   it('throws an appropriate error if a soundboard references a non-existent sound', () => {
-    const soundboard = makeSoundboard({ id: SoundboardTestConstants.id, sounds: [SoundTestConstants.id] })
+    const tile = makeSoundboardTile({ soundId: SoundTestConstants.id })
+    const soundboard = makeSoundboard({ id: SoundboardTestConstants.id, tiles: [tile] })
     const soundState: SoundState = { sounds: [], soundboards: [soundboard] }
 
     expect(() => validateSoundState(soundState)).toThrowErrorMatchingInlineSnapshot(
@@ -31,7 +33,9 @@ describe('validateSoundState', () => {
 
   it('throws an appropriate error if a soundboard references the same sound twice', () => {
     const sound = makeSound({ id: SoundTestConstants.id })
-    const soundboard = makeSoundboard({ id: SoundboardTestConstants.id, sounds: [sound.id, sound.id] })
+    const tile1 = makeSoundboardTile({ soundId: sound.id })
+    const tile2 = makeSoundboardTile({ soundId: sound.id })
+    const soundboard = makeSoundboard({ id: SoundboardTestConstants.id, tiles: [tile1, tile2] })
     const soundState = { sounds: [sound], soundboards: [soundboard] }
 
     expect(() => validateSoundState(soundState)).toThrowErrorMatchingInlineSnapshot(

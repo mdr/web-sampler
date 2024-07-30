@@ -1,19 +1,25 @@
 import { describe, expect, it } from 'vitest'
 import { getSoundboardDisplayName, removeSoundFromSoundboard, sortSoundboardsByDisplayName } from './Soundboard.ts'
 import { SoundTestConstants } from './sound.testSupport.ts'
-import { makeSoundboard, SoundboardTestConstants } from './soundboard.testSupport.ts'
+import { makeSoundboard, makeSoundboardTile, SoundboardTestConstants } from './soundboard.testSupport.ts'
 
 describe('removeSoundFromSoundboard', () => {
   it('should remove the sound from the soundboard if present', () => {
-    const soundboard = makeSoundboard({ sounds: [SoundTestConstants.id] })
+    const tile = makeSoundboardTile({ soundId: SoundTestConstants.id })
+    const soundboard = makeSoundboard({ tiles: [tile] })
+
     const updatedSoundboard = removeSoundFromSoundboard(soundboard, SoundTestConstants.id)
-    expect(updatedSoundboard.sounds).toEqual([])
+
+    expect(updatedSoundboard.tiles).toEqual([])
   })
 
   it('does nothing if the sound is not in the soundboard', () => {
-    const soundboard = makeSoundboard({ sounds: [SoundTestConstants.id] })
+    const tile = makeSoundboardTile({ soundId: SoundTestConstants.id })
+    const soundboard = makeSoundboard({ tiles: [tile] })
+
     const updatedSoundboard = removeSoundFromSoundboard(soundboard, SoundTestConstants.id2)
-    expect(updatedSoundboard.sounds).toEqual([SoundTestConstants.id])
+
+    expect(updatedSoundboard.tiles).toEqual([tile])
   })
 })
 

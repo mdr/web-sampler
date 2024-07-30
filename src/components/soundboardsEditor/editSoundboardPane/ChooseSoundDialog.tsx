@@ -26,7 +26,8 @@ export interface ChooseSoundDialogProps {
 
 export const ChooseSoundDialog = ({ soundboardId }: ChooseSoundDialogProps) => {
   const soundboard = useSoundboard(soundboardId)
-  const availableSounds = sortSoundsByDisplayName(useSounds().filter((sound) => !soundboard.sounds.includes(sound.id)))
+  const soundboardSoundIds = soundboard.tiles.map((tile) => tile.soundId)
+  const availableSounds = sortSoundsByDisplayName(useSounds().filter((sound) => !soundboardSoundIds.includes(sound.id)))
   const [selectedSoundId, setSelectedSoundId] = useState<Option<SoundId>>(undefined)
   const soundActions = useSoundActions()
 

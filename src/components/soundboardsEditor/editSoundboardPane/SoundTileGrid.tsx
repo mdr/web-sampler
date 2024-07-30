@@ -48,7 +48,7 @@ export const SoundTileGrid = ({ soundboardId }: SoundTileGridContentsProps) => {
 
   const handleDragEnd = () => {
     if (sourceSoundId !== undefined) {
-      soundActions.moveSoundInSoundboard2(soundboard.id, sourceSoundId, targetSoundId)
+      soundActions.moveSoundInSoundboard(soundboard.id, sourceSoundId, targetSoundId)
     }
     setSourceSoundId(undefined)
     setTargetSoundId(undefined)

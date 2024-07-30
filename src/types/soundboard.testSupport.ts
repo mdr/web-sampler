@@ -1,4 +1,5 @@
-import { newSoundboardId, Soundboard, SoundboardId } from './Soundboard.ts'
+import { newSoundboardId, Soundboard, SoundboardId, SoundboardTile } from './Soundboard.ts'
+import { SoundTestConstants } from './sound.testSupport.ts'
 
 export const SoundboardTestConstants = {
   id: SoundboardId('SoundboardTestConstants.id'),
@@ -9,12 +10,16 @@ export const SoundboardTestConstants = {
   newName: 'SoundboardTestConstants.newName',
 }
 
+export const makeSoundboardTile = ({
+  soundId = SoundTestConstants.id,
+}: Partial<SoundboardTile> = {}): SoundboardTile => ({ soundId })
+
 export const makeSoundboard = ({
   id = newSoundboardId(),
   name = SoundboardTestConstants.name,
-  sounds = [],
+  tiles = [],
 }: Partial<Soundboard> = {}): Soundboard => ({
   id,
   name,
-  sounds,
+  tiles,
 })

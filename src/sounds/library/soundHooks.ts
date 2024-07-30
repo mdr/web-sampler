@@ -76,7 +76,9 @@ export interface SoundboardAndSounds {
 export const useSoundboardAndSounds = (soundboardId: SoundboardId): SoundboardAndSounds => {
   const soundboard = useSoundboard(soundboardId)
   const allSounds = useSounds()
-  const sounds = mapNotUndefined(soundboard.sounds, (soundId) => allSounds.find((sound) => sound.id === soundId))
+  const findSound = (soundId: SoundId): Option<Sound> => allSounds.find((sound) => sound.id === soundId)
+  const soundIds = soundboard.tiles.map((tile) => tile.soundId)
+  const sounds = mapNotUndefined(soundIds, findSound)
   return { soundboard, sounds }
 }
 
@@ -113,13 +115,11 @@ export interface SoundActions {
 
   addSoundToSoundboard(soundboardId: SoundboardId, soundId: SoundId): void
 
-  moveSoundInSoundboard(soundboardId: SoundboardId, sourceIndex: number, targetIndex: number): void
-
   /**
    * Move a sound in a soundboard to a new position.
-   * The sourceSound is moved to before the targetSound, or to the end of the soundboard if targetSound is undefined.
+   * The source sound is moved to before the target sound, or to the end of the soundboard if targetSoundId is undefined.
    */
-  moveSoundInSoundboard2(soundboardId: SoundboardId, sourceSound: SoundId, targetSound: Option<SoundId>): void
+  moveSoundInSoundboard(soundboardId: SoundboardId, sourceSoundId: SoundId, targetSoundId: Option<SoundId>): void
 
   undo(): void
 

@@ -12,7 +12,13 @@ import { SoundSyncer } from '../store/SoundSyncer.ts'
 import { UndoRedoManager } from '../UndoRedoManager.ts'
 import { validateSoundState } from '../SoundStateValidator.ts'
 import { EMPTY_SOUND_STATE, makeSoundState, SoundState } from '../SoundState.ts'
-import { newSoundboard, removeSoundFromSoundboard, Soundboard, SoundboardId } from '../../types/Soundboard.ts'
+import {
+  newSoundboard,
+  removeSoundFromSoundboard,
+  Soundboard,
+  SoundboardId,
+  SoundboardTile,
+} from '../../types/Soundboard.ts'
 import { AudioData } from '../../types/AudioData.ts'
 
 export type SoundLibraryUpdatedListener = () => void
@@ -169,43 +175,33 @@ export class SoundLibrary implements SoundActions {
   addSoundToSoundboard = (soundboardId: SoundboardId, soundId: SoundId): void =>
     this.updateSoundboard(soundboardId, (soundboard) => {
       this.checkSoundExists(soundId)
-      if (!soundboard.sounds.includes(soundId)) {
-        soundboard.sounds.push(soundId)
+      const existingSoundIds = soundboard.tiles.map((tile) => tile.soundId)
+      if (!existingSoundIds.includes(soundId)) {
+        const tile: SoundboardTile = { soundId }
+        soundboard.tiles.push(tile)
       }
     })
 
-  moveSoundInSoundboard = (soundboardId: SoundboardId, sourceIndex: number, targetIndex: number): void =>
+  moveSoundInSoundboard = (soundboardId: SoundboardId, sourceSoundId: SoundId, targetSoundId: Option<SoundId>): void =>
     this.updateSoundboard(soundboardId, (soundboard) => {
-      if (sourceIndex < 0 || sourceIndex >= soundboard.sounds.length) {
-        throw new Error(`Invalid source index ${sourceIndex}`)
-      }
-      if (targetIndex < 0 || targetIndex >= soundboard.sounds.length) {
-        throw new Error(`Invalid target index ${targetIndex}`)
-      }
-      const soundId = soundboard.sounds[sourceIndex]
-      soundboard.sounds.splice(sourceIndex, 1)
-      soundboard.sounds.splice(targetIndex, 0, soundId)
-    })
-
-  moveSoundInSoundboard2 = (soundboardId: SoundboardId, sourceSound: SoundId, targetSound: Option<SoundId>): void =>
-    this.updateSoundboard(soundboardId, (soundboard) => {
-      if (sourceSound === targetSound) {
+      if (sourceSoundId === targetSoundId) {
         return
       }
-      const sounds = soundboard.sounds
-      const sourceIndex = sounds.indexOf(sourceSound)
+      const tiles = soundboard.tiles
+      const sourceIndex = tiles.findIndex((tile) => tile.soundId === sourceSoundId)
       if (sourceIndex === -1) {
-        throw new Error(`Sound ${sourceSound} not found in soundboard ${soundboardId}`)
+        throw new Error(`Sound ${sourceSoundId} not found in soundboard ${soundboardId}`)
       }
-      sounds.splice(sourceIndex, 1)
-      if (targetSound === undefined) {
-        sounds.push(sourceSound)
+      const sourceTile = tiles[sourceIndex]
+      tiles.splice(sourceIndex, 1)
+      if (targetSoundId === undefined) {
+        tiles.push(sourceTile)
       } else {
-        const targetIndex = sounds.indexOf(targetSound)
+        const targetIndex = tiles.findIndex((tile) => tile.soundId === targetSoundId)
         if (targetIndex === -1) {
-          throw new Error(`Sound ${targetSound} not found in soundboard ${soundboardId}`)
+          throw new Error(`Sound ${targetSoundId} not found in soundboard ${soundboardId}`)
         }
-        sounds.splice(targetIndex, 0, sourceSound)
+        tiles.splice(targetIndex, 0, sourceTile)
       }
     })
 
