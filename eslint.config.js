@@ -58,8 +58,9 @@ const configs = [
     files: tsFilePatterns,
     rules: {
       '@typescript-eslint/no-confusing-void-expression': 'off',
-      '@typescript-eslint/restrict-template-expressions': ['error', { allowNumber: true }],
       '@typescript-eslint/no-inferrable-types': 'off',
+      '@typescript-eslint/restrict-template-expressions': ['error', { allowNumber: true }],
+      '@typescript-eslint/unbound-method': 'off',
       'object-shorthand': ['error', 'always'],
       'react-refresh/only-export-components': 'warn',
       'react/no-unescaped-entities': 'off',
