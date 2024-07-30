@@ -4,6 +4,7 @@ import * as uuid from 'uuid'
 import { displayCollator } from '../utils/sortUtils.ts'
 import { z } from 'zod'
 import { assert, Equals } from 'tsafe'
+import { KeyboardShortcut } from './KeyboardShortcut.ts'
 
 export type SoundboardId = string & Brand.Brand<'SoundboardId'>
 
@@ -13,9 +14,14 @@ export const newSoundboardId = (): SoundboardId => SoundboardId(uuid.v4())
 
 export interface SoundboardTile {
   readonly soundId: SoundId
+  readonly shortcut?: KeyboardShortcut
 }
 
-export const soundboardTileSchema = z.strictObject({ soundId: z.string().transform(SoundId) }).readonly()
+export const soundboardTileSchema = z
+  .strictObject({ soundId: z.string().transform(SoundId), shortcut: z.string().transform(KeyboardShortcut).optional() })
+  .readonly()
+
+assert<Equals<SoundboardTile, z.infer<typeof soundboardTileSchema>>>()
 
 export interface Soundboard {
   readonly id: SoundboardId
