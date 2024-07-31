@@ -116,7 +116,7 @@
     "vite": "^5.3.5",
     "vite-plugin-checker": "^0.7.2",
     "vite-plugin-circular-dependency": "^0.4.1",
-    "vitest": "^2.0.4"
+    "vitest": "^2.0.5"
   },
   "packageManager": "yarn@4.3.0"
 }
