@@ -2,20 +2,20 @@ import { Button } from 'react-aria-components'
 import Icon from '@mdi/react'
 import { TestId } from '../../../utils/types/brandedTypes.ts'
 
-export interface SoundTileButtonProps {
+export interface SoundTileIconButtonProps {
   testId: TestId
-  ariaLabel: string
+  label: string
   icon: string
-  onPress(): void
+  onPress?(): void
 }
 
-export const SoundTileButton = ({ testId, ariaLabel, icon, onPress }: SoundTileButtonProps) => (
+export const SoundTileIconButton = ({ testId, label, icon, onPress }: SoundTileIconButtonProps) => (
   <Button
     data-testid={testId}
     className="rounded px-1 py-1 hover:bg-blue-300 focus:bg-blue-400"
     onPress={onPress}
-    aria-label={ariaLabel}
+    aria-label={label}
   >
-    <Icon title={ariaLabel} path={icon} size={1} />
+    <Icon title={label} path={icon} size={1} />
   </Button>
 )

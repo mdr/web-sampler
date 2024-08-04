@@ -7,7 +7,7 @@ import { unawaited } from '../../../utils/utils.ts'
 import { EditSoundboardPaneTestIds } from './EditSoundboardPaneTestIds.ts'
 import { getSoundDisplayName, SoundWithDefiniteAudio } from '../../../types/Sound.ts'
 import { mdiPlay } from '@mdi/js'
-import { SoundTileButton } from './SoundTileButton.tsx'
+import { SoundTileIconButton } from './SoundTileIconButton.tsx'
 
 export interface PlaySoundButtonProps {
   sound: SoundWithDefiniteAudio
@@ -68,9 +68,9 @@ export const PlaySoundButton = ({ sound }: PlaySoundButtonProps) => {
   return (
     <>
       <audio ref={audioRef} src={url} hidden></audio>
-      <SoundTileButton
+      <SoundTileIconButton
         testId={EditSoundboardPaneTestIds.editSoundButton}
-        ariaLabel={`Play sound ${getSoundDisplayName(sound)}`}
+        label={`Play sound ${getSoundDisplayName(sound)}`}
         icon={mdiPlay}
         onPress={handlePress}
       />

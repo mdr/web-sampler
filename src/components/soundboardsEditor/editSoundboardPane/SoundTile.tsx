@@ -2,13 +2,15 @@ import { getSoundDisplayName, Sound, soundHasAudio } from '../../../types/Sound.
 import { useDraggable, useDroppable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 import { EditSoundboardPaneTestIds } from './EditSoundboardPaneTestIds.ts'
-import { Toolbar } from 'react-aria-components'
-import { mdiKeyboard, mdiPencil, mdiTrashCan } from '@mdi/js'
+import { DialogTrigger, Toolbar } from 'react-aria-components'
+import { mdiClose, mdiKeyboard, mdiPencil } from '@mdi/js'
 import { useSoundActions } from '../../../sounds/library/soundHooks.ts'
 import { useNavigate } from 'react-router-dom'
 import { editSoundRoute } from '../../routes.ts'
 import { PlaySoundButton } from './PlaySoundButton.tsx'
-import { SoundTileButton } from './SoundTileButton.tsx'
+import { SoundTileIconButton } from './SoundTileIconButton.tsx'
+import { Modal } from '../../shared/Modal.tsx'
+import { ShortcutDialog } from './ShortcutDialog.tsx'
 
 export interface SoundTileProps {
   sound: Sound
@@ -33,7 +35,6 @@ export const SoundTile = ({ sound }: SoundTileProps) => {
   const handleEdit = () => {
     navigate(editSoundRoute(sound.id))
   }
-  const handleEditShortcut = () => undefined
   return (
     <div
       data-testid={EditSoundboardPaneTestIds.soundTile}
@@ -47,23 +48,27 @@ export const SoundTile = ({ sound }: SoundTileProps) => {
       <div className="flex w-full justify-center bg-blue-200 pb-1 pt-2">
         <Toolbar>
           {soundHasAudio(sound) && <PlaySoundButton sound={sound} />}
-          <SoundTileButton
+          <SoundTileIconButton
             testId={EditSoundboardPaneTestIds.editSoundButton}
-            ariaLabel={`Edit sound ${getSoundDisplayName(sound)}`}
+            label={`Edit sound ${getSoundDisplayName(sound)}`}
             icon={mdiPencil}
             onPress={handleEdit}
           />
-          <SoundTileButton
+          <DialogTrigger>
+            <SoundTileIconButton
+              testId={EditSoundboardPaneTestIds.editShortcutButton}
+              label={`Edit shortcut for sound ${getSoundDisplayName(sound)}`}
+              icon={mdiKeyboard}
+            />
+            <Modal>
+              <ShortcutDialog />
+            </Modal>
+          </DialogTrigger>
+          <SoundTileIconButton
             testId={EditSoundboardPaneTestIds.removeSoundButton}
-            ariaLabel={`Remove sound ${getSoundDisplayName(sound)} from the soundboard`}
-            icon={mdiTrashCan}
+            label={`Remove sound ${getSoundDisplayName(sound)} from the soundboard`}
+            icon={mdiClose}
             onPress={handleRemoveSound}
-          />
-          <SoundTileButton
-            testId={EditSoundboardPaneTestIds.editShortcutButton}
-            ariaLabel={`Edit shortcut for sound ${getSoundDisplayName(sound)}`}
-            icon={mdiKeyboard}
-            onPress={handleEditShortcut}
           />
         </Toolbar>
       </div>
