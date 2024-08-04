@@ -45,8 +45,8 @@ export const getSoundboardDisplayName = (soundboard: Soundboard): string => soun
 
 export const soundboardNameAsDisplayName = (name: string): string => (name.trim() === '' ? 'Untitled Soundboard' : name)
 
-export const sortSoundboardsByDisplayName = (soundsboards: readonly Soundboard[]): Soundboard[] =>
-  [...soundsboards].sort((board1, board2) =>
+export const sortSoundboardsByDisplayName = (soundboards: readonly Soundboard[]): Soundboard[] =>
+  [...soundboards].sort((board1, board2) =>
     displayCollator.compare(getSoundboardDisplayName(board1), getSoundboardDisplayName(board2)),
   )
 

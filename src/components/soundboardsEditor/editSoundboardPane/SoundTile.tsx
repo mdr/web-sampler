@@ -44,7 +44,12 @@ export const SoundTile = ({ sound }: SoundTileProps) => {
       {...attributes}
       className="flex aspect-square flex-col items-center justify-center rounded-md border border-gray-200 bg-gray-50 shadow-md hover:bg-gray-100"
     >
-      <div className="flex flex-grow items-center justify-center text-center">{getSoundDisplayName(sound)}</div>
+      <div
+        data-testid={EditSoundboardPaneTestIds.soundTileName}
+        className="flex flex-grow items-center justify-center text-center"
+      >
+        {getSoundDisplayName(sound)}
+      </div>
       <div className="flex w-full justify-center bg-blue-200 pb-1 pt-2">
         <Toolbar>
           {soundHasAudio(sound) && <PlaySoundButton sound={sound} />}

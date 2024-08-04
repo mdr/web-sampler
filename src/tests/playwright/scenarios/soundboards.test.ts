@@ -62,19 +62,19 @@ test('a sound can be added to a soundboard if not already present', async ({ mou
 
 test('sounds can be rearranged by dragging', async ({ mount }) => {
   const soundsEditorPage = await launchApp(mount)
-  await soundsEditorPage.createSound('A')
-  await soundsEditorPage.createSound('B')
-  await soundsEditorPage.createSound('C')
+  await soundsEditorPage.createSound('AAA')
+  await soundsEditorPage.createSound('BBB')
+  await soundsEditorPage.createSound('CCC')
   const soundboardsEditorPage = await soundsEditorPage.navbar.pressSoundboardsLink()
   await soundboardsEditorPage.sidebar.pressNewSoundboard()
-  for (const sound of ['A', 'B', 'C']) {
+  for (const sound of ['AAA', 'BBB', 'CCC']) {
     await soundboardsEditorPage.addSound(sound)
   }
-  await soundboardsEditorPage.expectSoundTilesToBe(['A', 'B', 'C'])
+  await soundboardsEditorPage.expectSoundTilesToBe(['AAA', 'BBB', 'CCC'])
 
-  await soundboardsEditorPage.dragSound({ fromSoundName: 'C', toSoundName: 'A' })
+  await soundboardsEditorPage.dragSound({ fromSoundName: 'CCC', toSoundName: 'AAA' })
 
-  await soundboardsEditorPage.expectSoundTilesToBe(['C', 'A', 'B'])
+  await soundboardsEditorPage.expectSoundTilesToBe(['CCC', 'AAA', 'BBB'])
 })
 
 test('sounds can be deleted from a soundboard', async ({ mount }) => {
