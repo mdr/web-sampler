@@ -92,14 +92,16 @@ export const SoundTileGrid = ({ soundboardId }: SoundTileGridContentsProps) => {
         {sounds.map((sound) => (
           <Fragment key={sound.id}>
             {targetSoundId === sound.id && <PlaceholderTile />}
-            {sound.id !== sourceSoundId && <SoundTile sound={sound} />}
+            {sound.id !== sourceSoundId && <SoundTile soundboardId={soundboardId} sound={sound} />}
           </Fragment>
         ))}
         {targetSoundId === undefined && sourceSoundId !== undefined && (
           <PlaceholderTile fudgeHeight={sounds.length % columns === 1} />
         )}
       </div>
-      <DragOverlay>{sourceSound ? <SoundTile sound={sourceSound} /> : undefined}</DragOverlay>
+      <DragOverlay>
+        {sourceSound ? <SoundTile soundboardId={soundboardId} sound={sourceSound} /> : undefined}
+      </DragOverlay>
     </DndContext>
   )
 }

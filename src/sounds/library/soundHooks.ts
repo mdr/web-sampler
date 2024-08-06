@@ -115,6 +115,8 @@ export interface SoundActions {
 
   addSoundToSoundboard(soundboardId: SoundboardId, soundId: SoundId): void
 
+  removeSoundFromSoundboard(soundboardId: SoundboardId, soundId: SoundId): void
+
   /**
    * Move a sound in a soundboard to a new position.
    * The source sound is moved to before the target sound, or to the end of the soundboard if targetSoundId is undefined.

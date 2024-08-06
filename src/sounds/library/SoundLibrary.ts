@@ -182,6 +182,12 @@ export class SoundLibrary implements SoundActions {
       }
     })
 
+  removeSoundFromSoundboard = (soundboardId: SoundboardId, soundId: SoundId): void =>
+    this.updateSoundboard(soundboardId, (soundboard) => {
+      this.checkSoundExists(soundId)
+      soundboard.tiles = soundboard.tiles.filter((tile) => tile.soundId !== soundId)
+    })
+
   moveSoundInSoundboard = (soundboardId: SoundboardId, sourceSoundId: SoundId, targetSoundId: Option<SoundId>): void =>
     this.updateSoundboard(soundboardId, (soundboard) => {
       if (sourceSoundId === targetSoundId) {

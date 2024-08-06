@@ -12,8 +12,10 @@ import { SoundTileIconButton } from './SoundTileIconButton.tsx'
 import { Modal } from '../../shared/Modal.tsx'
 import { ChooseShortcutDialog } from './ChooseShortcutDialog.tsx'
 import { useSoundTileGridStore } from './soundTileGridStore.ts'
+import { SoundboardId } from '../../../types/Soundboard.ts'
 
 export interface SoundTileProps {
+  soundboardId: SoundboardId
   sound: Sound
 }
 

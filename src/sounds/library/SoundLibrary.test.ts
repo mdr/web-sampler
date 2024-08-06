@@ -281,12 +281,74 @@ describe('SoundLibrary', () => {
       expect(soundStore.soundboards).toEqual([soundboard])
     })
 
-    it('should throw an error of the sound ID is not valid', async () => {
-      const soundboard = makeSoundboard({ tiles: [] })
+    it('should throw an error if the soundboard ID is not valid', async () => {
+      const sound = makeSound({ id: SoundTestConstants.id })
+      const { library } = await setUpTest([sound], [])
+
+      expect(() =>
+        library.addSoundToSoundboard(SoundboardTestConstants.id, sound.id),
+      ).toThrowErrorMatchingInlineSnapshot(`[Error: Soundboard with id SoundboardTestConstants.id does not exist]`)
+    })
+
+    it('should throw an error if the sound ID is not valid', async () => {
+      const soundboard = makeSoundboard()
       const sound = makeSound({ id: SoundTestConstants.id })
       const { library } = await setUpTest([], [soundboard])
 
       expect(() => library.addSoundToSoundboard(soundboard.id, sound.id)).toThrowErrorMatchingInlineSnapshot(
+        `[Error: Sound with id SoundTestConstants.id does not exist]`,
+      )
+    })
+  })
+
+  describe('removeSoundFromSoundboard', () => {
+    it('should allow a sound to be removed from the soundboard', async () => {
+      const sound1 = makeSound()
+      const sound2 = makeSound()
+      const tile1 = makeSoundboardTile({ soundId: sound1.id })
+      const tile2 = makeSoundboardTile({ soundId: sound2.id })
+      const soundboard = makeSoundboard({ tiles: [tile1, tile2] })
+      const { library, soundStore, listener } = await setUpTest([sound1, sound2], [soundboard])
+
+      library.removeSoundFromSoundboard(soundboard.id, sound1.id)
+
+      expect(listener).toHaveBeenCalledTimes(1)
+      const updatedSoundboard: Soundboard = { ...soundboard, tiles: [tile2] }
+      const updatedSoundboards = [updatedSoundboard]
+      expect(library.soundboards).toEqual(updatedSoundboards)
+      expect(library.sounds).toIncludeSameMembers([sound1, sound2])
+      await flushPromises()
+      expect(soundStore.soundboards).toEqual(updatedSoundboards)
+    })
+
+    it('should do nothing if sound is not in the soundboard', async () => {
+      const sound = makeSound()
+      const soundboard = makeSoundboard({ tiles: [] })
+      const { library, soundStore, listener } = await setUpTest([sound], [soundboard])
+
+      library.removeSoundFromSoundboard(soundboard.id, sound.id)
+
+      expect(listener).not.toHaveBeenCalled()
+      expect(library.soundboards).toEqual([soundboard])
+      await flushPromises()
+      expect(soundStore.soundboards).toEqual([soundboard])
+    })
+
+    it('should throw an error if the soundboard ID is not valid', async () => {
+      const sound = makeSound({ id: SoundTestConstants.id })
+      const { library } = await setUpTest([sound], [])
+
+      expect(() =>
+        library.removeSoundFromSoundboard(SoundboardTestConstants.id, sound.id),
+      ).toThrowErrorMatchingInlineSnapshot(`[Error: Soundboard with id SoundboardTestConstants.id does not exist]`)
+    })
+
+    it('should throw an error if the sound ID is not valid', async () => {
+      const soundboard = makeSoundboard()
+      const sound = makeSound({ id: SoundTestConstants.id })
+      const { library } = await setUpTest([], [soundboard])
+
+      expect(() => library.removeSoundFromSoundboard(soundboard.id, sound.id)).toThrowErrorMatchingInlineSnapshot(
         `[Error: Sound with id SoundTestConstants.id does not exist]`,
       )
     })
