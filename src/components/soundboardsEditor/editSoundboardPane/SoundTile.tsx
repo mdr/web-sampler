@@ -10,7 +10,7 @@ import { editSoundRoute } from '../../routes.ts'
 import { PlaySoundButton } from './PlaySoundButton.tsx'
 import { SoundTileIconButton } from './SoundTileIconButton.tsx'
 import { Modal } from '../../shared/Modal.tsx'
-import { ShortcutDialog } from './ShortcutDialog.tsx'
+import { ChooseShortcutDialog } from './ChooseShortcutDialog.tsx'
 
 export interface SoundTileProps {
   sound: Sound
@@ -66,7 +66,7 @@ export const SoundTile = ({ sound }: SoundTileProps) => {
               icon={mdiKeyboard}
             />
             <Modal>
-              <ShortcutDialog />
+              <ChooseShortcutDialog />
             </Modal>
           </DialogTrigger>
           <SoundTileIconButton

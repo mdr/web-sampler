@@ -1,13 +1,13 @@
-import { ChooseSoundDialogTestIds } from './EditSoundboardPaneTestIds.ts'
+import { EditSoundboardPaneTestIds } from './EditSoundboardPaneTestIds.ts'
 import { Dialog, Heading } from 'react-aria-components'
 import { Button } from '../../shared/Button.tsx'
 import { useRecordHotkeys } from 'react-hotkeys-hook'
 
-export const ShortcutDialog = () => {
+export const ChooseShortcutDialog = () => {
   const [keys, { start, stop, isRecording }] = useRecordHotkeys()
 
   return (
-    <Dialog data-testid={ChooseSoundDialogTestIds.dialog} className="relative outline-none">
+    <Dialog data-testid={EditSoundboardPaneTestIds.chooseShortcutDialog} className="relative outline-none">
       {({ close }) => {
         return (
           <>
