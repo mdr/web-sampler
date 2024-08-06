@@ -19,7 +19,7 @@ export interface SoundTileProps {
   sound: Sound
 }
 
-export const SoundTile = ({ sound }: SoundTileProps) => {
+export const SoundTile = ({ soundboardId, sound }: SoundTileProps) => {
   const soundActions = useSoundActions()
   const navigate = useNavigate()
   const { setShowingDialog } = useSoundTileGridStore()
@@ -33,7 +33,7 @@ export const SoundTile = ({ sound }: SoundTileProps) => {
     setNodeRef2(element)
   }
   const handleRemoveSound = () => {
-    soundActions.deleteSound(sound.id)
+    soundActions.removeSoundFromSoundboard(soundboardId, sound.id)
   }
   const handleEdit = () => {
     navigate(editSoundRoute(sound.id))

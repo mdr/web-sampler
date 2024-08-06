@@ -57,7 +57,7 @@ test('navigating away from the page should cancel recording', async ({ mount }) 
   const soundsEditorPage = await launchAndStartAudioCapture(mount)
   await soundsEditorPage.expectAudioRecorderStateToBe(AudioRecorderState.RECORDING)
 
-  await soundsEditorPage.pressHomeLink()
+  await soundsEditorPage.navbar.pressSoundboardsLink()
 
   await soundsEditorPage.expectAudioRecorderStateToBe(AudioRecorderState.IDLE)
 })

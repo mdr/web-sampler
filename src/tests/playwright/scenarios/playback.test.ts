@@ -43,7 +43,7 @@ test('playback should be stopped when navigating away from the sounds editor', a
   await soundsEditorPage.pressPlayButton()
   await soundsEditorPage.expectAudioToBePlaying(true)
 
-  await soundsEditorPage.pressHomeLink()
+  await soundsEditorPage.navbar.pressSoundboardsLink()
 
   await soundsEditorPage.expectAudioToBePlaying(false)
 })

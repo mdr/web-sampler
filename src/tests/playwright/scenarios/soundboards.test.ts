@@ -1,5 +1,6 @@
 import { test } from '../fixtures.ts'
 import { launchApp } from '../pageObjects/launchApp.tsx'
+import { SoundTestConstants } from '../../../types/sound.testSupport.ts'
 
 test('soundboards can be created and named', async ({ mount }) => {
   const soundsEditorPage = await launchApp(mount)
@@ -77,17 +78,19 @@ test('sounds can be rearranged by dragging', async ({ mount }) => {
   await soundboardsEditorPage.expectSoundTilesToBe(['CCC', 'AAA', 'BBB'])
 })
 
-test('sounds can be deleted from a soundboard', async ({ mount }) => {
+test('sounds can be removed from a soundboard', async ({ mount }) => {
   const soundsEditorPage = await launchApp(mount)
-  await soundsEditorPage.createSound('AAA')
+  await soundsEditorPage.createSound(SoundTestConstants.name)
   const soundboardsEditorPage = await soundsEditorPage.navbar.pressSoundboardsLink()
   await soundboardsEditorPage.sidebar.pressNewSoundboard()
-  await soundboardsEditorPage.addSound('AAA')
-  await soundboardsEditorPage.expectSoundTilesToBe(['AAA'])
+  await soundboardsEditorPage.addSound(SoundTestConstants.name)
+  await soundboardsEditorPage.expectSoundTilesToBe([SoundTestConstants.name])
 
-  await soundboardsEditorPage.removeSoundFromSoundboard('AAA')
+  await soundboardsEditorPage.removeSoundFromSoundboard(SoundTestConstants.name)
 
   await soundboardsEditorPage.expectSoundTilesToBe([])
+  const soundsPage = await soundboardsEditorPage.navbar.pressHomeLink()
+  await soundsPage.sidebar.expectSoundNamesToBe([SoundTestConstants.name])
 })
 
 test('can navigate to a sound from a soundboard', async ({ mount }) => {

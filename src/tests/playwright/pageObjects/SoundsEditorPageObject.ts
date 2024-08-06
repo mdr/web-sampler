@@ -2,7 +2,6 @@ import { expect, MountResult } from '@playwright/experimental-ct-react'
 import { MountFunction } from '../types.ts'
 import { PageObject } from './PageObject.ts'
 import { AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
-import { NavbarTestIds } from '../../../components/navbar/NavbarTestIds.ts'
 import { launchApp } from './launchApp.tsx'
 import { SoundsSidebarPageObject } from './SoundsSidebarPageObject.ts'
 import { NavbarPageObject } from './NavbarPageObject.ts'
@@ -92,8 +91,6 @@ export class SoundsEditorPageObject extends PageObject {
 
   pressDuplicateSound = (): Promise<void> =>
     this.step('pressDuplicateSound', () => this.press(EditSoundPaneTestIds.duplicateButton))
-
-  pressHomeLink = (): Promise<void> => this.step('pressHomeLink', () => this.press(NavbarTestIds.homeLink))
 
   clickCentreOfWaveform = (): Promise<void> =>
     this.step('clickCentreOfWaveform', async () => {
