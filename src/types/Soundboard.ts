@@ -5,6 +5,7 @@ import { displayCollator } from '../utils/sortUtils.ts'
 import { z } from 'zod'
 import { assert, Equals } from 'tsafe'
 import { KeyboardShortcut } from './KeyboardShortcut.ts'
+import { Option } from '../utils/types/Option.ts'
 
 export type SoundboardId = string & Brand.Brand<'SoundboardId'>
 
@@ -54,3 +55,14 @@ export const removeSoundFromSoundboard = (soundboard: Soundboard, soundId: Sound
   ...soundboard,
   tiles: soundboard.tiles.filter((tile) => soundId !== tile.soundId),
 })
+
+export const findTile = (soundboard: Soundboard, soundId: SoundId): Option<SoundboardTile> =>
+  soundboard.tiles.find((tile) => tile.soundId === soundId)
+
+export const getTile = (soundboard: Soundboard, soundId: SoundId): SoundboardTile => {
+  const tile = findTile(soundboard, soundId)
+  if (tile === undefined) {
+    throw new Error(`Sound ${soundId} not found in soundboard ${soundboard.id}`)
+  }
+  return tile
+}

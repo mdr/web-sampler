@@ -69,7 +69,7 @@ export const SoundTile = ({ soundboardId, sound }: SoundTileProps) => {
               icon={mdiKeyboard}
             />
             <Modal>
-              <ChooseShortcutDialog />
+              <ChooseShortcutDialog soundboardId={soundboardId} soundId={sound.id} />
             </Modal>
           </DialogTrigger>
           <SoundTileIconButton

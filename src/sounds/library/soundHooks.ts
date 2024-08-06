@@ -7,6 +7,7 @@ import { Samples, Volume } from '../../utils/types/brandedTypes.ts'
 import { Soundboard, SoundboardId } from '../../types/Soundboard.ts'
 import { AudioData } from '../../types/AudioData.ts'
 import { mapNotUndefined } from '../../utils/utils.ts'
+import { KeyboardShortcut } from '../../types/KeyboardShortcut.ts'
 
 const useSoundLibrary = (): SoundLibrary => {
   const soundLibrary = useContext(SoundLibraryContext)
@@ -122,6 +123,8 @@ export interface SoundActions {
    * The source sound is moved to before the target sound, or to the end of the soundboard if targetSoundId is undefined.
    */
   moveSoundInSoundboard(soundboardId: SoundboardId, sourceSoundId: SoundId, targetSoundId: Option<SoundId>): void
+
+  setSoundboardTileShortcut(soundboardId: SoundboardId, soundId: SoundId, shortcut: Option<KeyboardShortcut>): void
 
   undo(): void
 

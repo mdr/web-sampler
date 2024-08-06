@@ -458,6 +458,60 @@ describe('SoundLibrary', () => {
     })
   })
 
+  describe('setSoundboardTileShortcut', () => {
+    it('should allow a shortcut to be set for a soundboard tile', async () => {
+      const sound = makeSound()
+      const tile = makeSoundboardTile({ soundId: sound.id, shortcut: undefined })
+      const soundboard = makeSoundboard({ tiles: [tile] })
+      const { library, soundStore, listener } = await setUpTest([sound], [soundboard])
+
+      library.setSoundboardTileShortcut(soundboard.id, sound.id, SoundboardTestConstants.shortcut)
+
+      expect(listener).toHaveBeenCalledTimes(1)
+      const updatedTile = { ...tile, shortcut: SoundboardTestConstants.shortcut }
+      const updatedSoundboards = [{ ...soundboard, tiles: [updatedTile] }]
+      expect(library.soundboards).toEqual(updatedSoundboards)
+      await flushPromises()
+      expect(soundStore.soundboards).toEqual(updatedSoundboards)
+    })
+
+    it('should allow a shortcut to be cleared for a soundboard tile', async () => {
+      const sound = makeSound()
+      const tile = makeSoundboardTile({ soundId: sound.id, shortcut: SoundboardTestConstants.shortcut })
+      const soundboard = makeSoundboard({ tiles: [tile] })
+      const { library, soundStore, listener } = await setUpTest([sound], [soundboard])
+
+      library.setSoundboardTileShortcut(soundboard.id, sound.id, undefined)
+
+      expect(listener).toHaveBeenCalledTimes(1)
+      const updatedTile = { ...tile, shortcut: undefined }
+      const updatedSoundboards = [{ ...soundboard, tiles: [updatedTile] }]
+      expect(library.soundboards).toEqual(updatedSoundboards)
+      await flushPromises()
+      expect(soundStore.soundboards).toEqual(updatedSoundboards)
+    })
+
+    it('should throw an error if the soundboard ID is not valid', async () => {
+      const sound = makeSound()
+      const { library } = await setUpTest([sound])
+
+      expect(() =>
+        library.setSoundboardTileShortcut(SoundboardTestConstants.id, sound.id, SoundboardTestConstants.shortcut),
+      ).toThrowErrorMatchingInlineSnapshot(`[Error: Soundboard with id SoundboardTestConstants.id does not exist]`)
+    })
+
+    it('should throw an error if the sound ID is not valid', async () => {
+      const soundboard = makeSoundboard({ id: SoundboardTestConstants.id })
+      const { library } = await setUpTest([], [soundboard])
+
+      expect(() =>
+        library.setSoundboardTileShortcut(soundboard.id, SoundTestConstants.id, SoundboardTestConstants.shortcut),
+      ).toThrowErrorMatchingInlineSnapshot(
+        `[Error: Sound SoundTestConstants.id not found in soundboard SoundboardTestConstants.id]`,
+      )
+    })
+  })
+
   describe('undo/redo', () => {
     it('should support undo and redo', async () => {
       const sound = makeSound({ name: SoundTestConstants.oldName })

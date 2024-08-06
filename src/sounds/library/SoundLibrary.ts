@@ -20,6 +20,7 @@ import {
   SoundboardTile,
 } from '../../types/Soundboard.ts'
 import { AudioData } from '../../types/AudioData.ts'
+import { KeyboardShortcut } from '../../types/KeyboardShortcut.ts'
 
 export type SoundLibraryUpdatedListener = () => void
 
@@ -209,6 +210,15 @@ export class SoundLibrary implements SoundActions {
         }
         tiles.splice(targetIndex, 0, sourceTile)
       }
+    })
+
+  setSoundboardTileShortcut = (soundboardId: SoundboardId, soundId: SoundId, shortcut: Option<KeyboardShortcut>) =>
+    this.updateSoundboard(soundboardId, (soundboard) => {
+      const tile = soundboard.tiles.find((tile) => tile.soundId === soundId)
+      if (tile === undefined) {
+        throw new Error(`Sound ${soundId} not found in soundboard ${soundboardId}`)
+      }
+      tile.shortcut = shortcut
     })
 
   updateSoundboard = (id: SoundboardId, update: (soundboard: Draft<Soundboard>) => void): void =>

@@ -1,5 +1,6 @@
 import { newSoundboardId, Soundboard, SoundboardId, SoundboardTile } from './Soundboard.ts'
 import { SoundTestConstants } from './sound.testSupport.ts'
+import { KeyboardShortcut } from './KeyboardShortcut.ts'
 
 export const SoundboardTestConstants = {
   id: SoundboardId('SoundboardTestConstants.id'),
@@ -8,6 +9,7 @@ export const SoundboardTestConstants = {
   name: 'SoundboardTestConstants.name',
   oldName: 'SoundboardTestConstants.oldName',
   newName: 'SoundboardTestConstants.newName',
+  shortcut: KeyboardShortcut('k'),
 }
 
 export const makeSoundboardTile = ({
