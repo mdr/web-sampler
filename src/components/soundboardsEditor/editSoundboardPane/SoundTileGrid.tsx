@@ -19,6 +19,7 @@ import { PlaceholderTile } from './PlaceholderTile.tsx'
 import { SoundboardId } from '../../../types/Soundboard.ts'
 import { SoundTile } from './SoundTile.tsx'
 import { SOUND_TILE_GAP, SOUND_TILE_SIZE } from './soundTileConstants.ts'
+import { useSoundTileGridStore } from './soundTileGridStore.ts'
 
 export interface SoundTileGridContentsProps {
   soundboardId: SoundboardId
@@ -32,6 +33,8 @@ export const SoundTileGrid = ({ soundboardId }: SoundTileGridContentsProps) => {
   const [targetSoundId, setTargetSoundId] = useState<Option<SoundId>>(undefined)
   // Explicitly set up sensors else Playwright test interactions don't work correctly:
   const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor), useSensor(KeyboardSensor))
+  const isShowingDialog = useSoundTileGridStore((state) => state.isShowingDialog)
+
   const onResize = ({ width }: ResizePayload) => {
     if (width) {
       const newColumns = Math.floor((width + SOUND_TILE_GAP) / (SOUND_TILE_SIZE + SOUND_TILE_GAP))
@@ -75,7 +78,7 @@ export const SoundTileGrid = ({ soundboardId }: SoundTileGridContentsProps) => {
       onDragEnd={handleDragEnd}
       onDragOver={handleDragOver}
       onDragCancel={handleDragCancel}
-      sensors={sensors}
+      sensors={isShowingDialog ? [] : sensors}
     >
       <div
         ref={ref}

@@ -20,7 +20,7 @@ const configs = [
       parserOptions: {
         ecmaFeatures: { modules: true },
         ecmaVersion: 'latest',
-        projectService: true,
+        project: './tsconfig.json',
       },
     },
   },

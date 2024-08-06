@@ -11,6 +11,7 @@ import { PlaySoundButton } from './PlaySoundButton.tsx'
 import { SoundTileIconButton } from './SoundTileIconButton.tsx'
 import { Modal } from '../../shared/Modal.tsx'
 import { ChooseShortcutDialog } from './ChooseShortcutDialog.tsx'
+import { useSoundTileGridStore } from './soundTileGridStore.ts'
 
 export interface SoundTileProps {
   sound: Sound
@@ -19,7 +20,7 @@ export interface SoundTileProps {
 export const SoundTile = ({ sound }: SoundTileProps) => {
   const soundActions = useSoundActions()
   const navigate = useNavigate()
-
+  const { setShowingDialog } = useSoundTileGridStore()
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: sound.id,
   })
@@ -59,7 +60,7 @@ export const SoundTile = ({ sound }: SoundTileProps) => {
             icon={mdiPencil}
             onPress={handleEdit}
           />
-          <DialogTrigger>
+          <DialogTrigger onOpenChange={(isOpen) => setShowingDialog(isOpen)}>
             <SoundTileIconButton
               testId={EditSoundboardPaneTestIds.editShortcutButton}
               label={`Edit shortcut for sound ${getSoundDisplayName(sound)}`}
