@@ -5,7 +5,8 @@ import { useRecordHotkeys } from 'react-hotkeys-hook'
 import { SoundId } from '../../../types/Sound.ts'
 import { getTile, SoundboardId } from '../../../types/Soundboard.ts'
 import { useSoundActions, useSoundboard } from '../../../sounds/library/soundHooks.ts'
-import { KeyboardShortcut } from '../../../types/KeyboardShortcut.ts'
+import { describeKeyboardShortcut, KeyboardShortcut } from '../../../types/KeyboardShortcut.ts'
+import _ from 'lodash'
 
 export interface ChooseShortcutDialogProps {
   soundboardId: SoundboardId
@@ -17,10 +18,11 @@ export const ChooseShortcutDialog = ({ soundId, soundboardId }: ChooseShortcutDi
   const soundActions = useSoundActions()
   const tile = getTile(soundboard, soundId)
   const [recordingKeySet, { start: startRecording, stop: stopRecording, isRecording }] = useRecordHotkeys()
-  const recordingKeys = Array.from(recordingKeySet).sort()
+  const recordedShortcut =
+    recordingKeySet.size > 0 ? KeyboardShortcut(_.sortBy(Array.from(recordingKeySet)).join('+')) : undefined
   const handleStopRecording = () => {
-    if (recordingKeys.length > 0) {
-      soundActions.setSoundboardTileShortcut(soundboardId, soundId, KeyboardShortcut(recordingKeys.join(' + ')))
+    if (recordedShortcut !== undefined) {
+      soundActions.setSoundboardTileShortcut(soundboardId, soundId, recordedShortcut)
     }
     stopRecording()
   }
@@ -38,7 +40,8 @@ export const ChooseShortcutDialog = ({ soundId, soundboardId }: ChooseShortcutDi
             </Heading>
             {isRecording && (
               <>
-                <p>Recorded keys: {recordingKeys.join(' + ')}</p>
+                {recordedShortcut === undefined && <p>Press a key combination to set a shortcut</p>}
+                {recordedShortcut !== undefined && <p>Recorded keys: {describeKeyboardShortcut(recordedShortcut)}</p>}
                 <Button label="Stop recording" onPress={handleStopRecording} />
               </>
             )}
