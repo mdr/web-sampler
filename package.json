@@ -32,7 +32,7 @@
     "clsx": "^2.1.1",
     "conditional-wrap": "^1.0.2",
     "dexie": "^4.0.8",
-    "effect": "^3.6.1",
+    "effect": "^3.6.2",
     "file-saver": "^2.0.5",
     "humanize-duration": "^3.32.1",
     "immer": "^10.1.1",
