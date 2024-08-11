@@ -2,7 +2,7 @@ import { getSoundDisplayName, Sound, soundHasAudio } from '../../../types/Sound.
 import { useDraggable, useDroppable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 import { EditSoundboardPaneTestIds } from './EditSoundboardPaneTestIds.ts'
-import { DialogTrigger, Toolbar } from 'react-aria-components'
+import { Button, DialogTrigger, Toolbar } from 'react-aria-components'
 import { mdiClose, mdiKeyboard, mdiPencil } from '@mdi/js'
 import { useSoundActions } from '../../../sounds/library/soundHooks.ts'
 import { useNavigate } from 'react-router-dom'
@@ -15,6 +15,7 @@ import { useSoundTileGridStore } from './soundTileGridStore.ts'
 import { SoundboardId } from '../../../types/Soundboard.ts'
 import { KeyboardShortcut } from '../../../types/KeyboardShortcut.ts'
 import { Option } from '../../../utils/types/Option.ts'
+import Icon from '@mdi/react'
 
 export interface SoundTileProps {
   soundboardId: SoundboardId
@@ -50,9 +51,21 @@ export const SoundTile = ({ soundboardId, sound, shortcut }: SoundTileProps) => 
       {...attributes}
       className="relative flex aspect-square flex-col items-center justify-center rounded-md border border-gray-200 bg-gray-50 shadow-md hover:bg-gray-100"
     >
-      {shortcut !== undefined && (
-        <div className="absolute right-0 top-0 m-2 rounded bg-gray-800 p-1 text-xs text-white">{shortcut}</div>
-      )}
+      <>
+        <DialogTrigger onOpenChange={(isOpen) => setShowingDialog(isOpen)}>
+          <Button
+            className="absolute right-0 top-0 m-2 rounded bg-gray-800 p-1 px-1 py-1 text-xs text-white hover:bg-blue-500 focus:bg-blue-600"
+            aria-label={`Edit shortcut for sound ${getSoundDisplayName(sound)}`}
+          >
+            {shortcut ?? (
+              <Icon title={`Edit shortcut for sound ${getSoundDisplayName(sound)}`} path={mdiKeyboard} size={1} />
+            )}
+          </Button>
+          <Modal>
+            <ChooseShortcutDialog soundboardId={soundboardId} soundId={sound.id} />
+          </Modal>
+        </DialogTrigger>
+      </>
       <div
         data-testid={EditSoundboardPaneTestIds.soundTileName}
         className="flex flex-grow items-center justify-center text-center"
@@ -68,16 +81,6 @@ export const SoundTile = ({ soundboardId, sound, shortcut }: SoundTileProps) => 
             icon={mdiPencil}
             onPress={handleEdit}
           />
-          <DialogTrigger onOpenChange={(isOpen) => setShowingDialog(isOpen)}>
-            <SoundTileIconButton
-              testId={EditSoundboardPaneTestIds.editShortcutButton}
-              label={`Edit shortcut for sound ${getSoundDisplayName(sound)}`}
-              icon={mdiKeyboard}
-            />
-            <Modal>
-              <ChooseShortcutDialog soundboardId={soundboardId} soundId={sound.id} />
-            </Modal>
-          </DialogTrigger>
           <SoundTileIconButton
             testId={EditSoundboardPaneTestIds.removeSoundButton}
             label={`Remove sound ${getSoundDisplayName(sound)} from the soundboard`}
