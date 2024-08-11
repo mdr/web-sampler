@@ -13,13 +13,16 @@ import { Modal } from '../../shared/Modal.tsx'
 import { ChooseShortcutDialog } from './ChooseShortcutDialog.tsx'
 import { useSoundTileGridStore } from './soundTileGridStore.ts'
 import { SoundboardId } from '../../../types/Soundboard.ts'
+import { KeyboardShortcut } from '../../../types/KeyboardShortcut.ts'
+import { Option } from '../../../utils/types/Option.ts'
 
 export interface SoundTileProps {
   soundboardId: SoundboardId
+  shortcut: Option<KeyboardShortcut>
   sound: Sound
 }
 
-export const SoundTile = ({ soundboardId, sound }: SoundTileProps) => {
+export const SoundTile = ({ soundboardId, sound, shortcut }: SoundTileProps) => {
   const soundActions = useSoundActions()
   const navigate = useNavigate()
   const { setShowingDialog } = useSoundTileGridStore()
@@ -45,8 +48,11 @@ export const SoundTile = ({ soundboardId, sound }: SoundTileProps) => {
       style={style}
       {...listeners}
       {...attributes}
-      className="flex aspect-square flex-col items-center justify-center rounded-md border border-gray-200 bg-gray-50 shadow-md hover:bg-gray-100"
+      className="relative flex aspect-square flex-col items-center justify-center rounded-md border border-gray-200 bg-gray-50 shadow-md hover:bg-gray-100"
     >
+      {shortcut !== undefined && (
+        <div className="absolute right-0 top-0 m-2 rounded bg-gray-800 p-1 text-xs text-white">{shortcut}</div>
+      )}
       <div
         data-testid={EditSoundboardPaneTestIds.soundTileName}
         className="flex flex-grow items-center justify-center text-center"

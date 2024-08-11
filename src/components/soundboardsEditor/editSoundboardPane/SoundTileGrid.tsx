@@ -27,7 +27,7 @@ export interface SoundTileGridContentsProps {
 
 export const SoundTileGrid = ({ soundboardId }: SoundTileGridContentsProps) => {
   const soundActions = useSoundActions()
-  const { soundboard, sounds } = useSoundboardAndSounds(soundboardId)
+  const { soundboard, tiles } = useSoundboardAndSounds(soundboardId)
   const [columns, setColumns] = useState(1)
   const [sourceSoundId, setSourceSoundId] = useState<Option<SoundId>>(undefined)
   const [targetSoundId, setTargetSoundId] = useState<Option<SoundId>>(undefined)
@@ -71,7 +71,7 @@ export const SoundTileGrid = ({ soundboardId }: SoundTileGridContentsProps) => {
     }
   }
 
-  const sourceSound = sounds.find((sound) => sound.id === sourceSoundId)
+  const sourceTile = tiles.find((tile) => tile.soundId === sourceSoundId)
   return (
     <DndContext
       onDragStart={handleDragStart}
@@ -89,18 +89,22 @@ export const SoundTileGrid = ({ soundboardId }: SoundTileGridContentsProps) => {
           rowGap: `${SOUND_TILE_GAP}px`,
         }}
       >
-        {sounds.map((sound) => (
-          <Fragment key={sound.id}>
-            {targetSoundId === sound.id && <PlaceholderTile />}
-            {sound.id !== sourceSoundId && <SoundTile soundboardId={soundboardId} sound={sound} />}
+        {tiles.map((tile) => (
+          <Fragment key={tile.soundId}>
+            {targetSoundId === tile.soundId && <PlaceholderTile />}
+            {tile.soundId !== sourceSoundId && (
+              <SoundTile soundboardId={soundboardId} sound={tile.sound} shortcut={tile.shortcut} />
+            )}
           </Fragment>
         ))}
         {targetSoundId === undefined && sourceSoundId !== undefined && (
-          <PlaceholderTile fudgeHeight={sounds.length % columns === 1} />
+          <PlaceholderTile fudgeHeight={tiles.length % columns === 1} />
         )}
       </div>
       <DragOverlay>
-        {sourceSound ? <SoundTile soundboardId={soundboardId} sound={sourceSound} /> : undefined}
+        {sourceTile !== undefined && (
+          <SoundTile soundboardId={soundboardId} sound={sourceTile.sound} shortcut={sourceTile.shortcut} />
+        )}
       </DragOverlay>
     </DndContext>
   )

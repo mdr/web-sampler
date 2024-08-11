@@ -4,9 +4,8 @@ import { SoundLibraryContext } from './SoundLibraryContext.ts'
 import { Option } from '../../utils/types/Option.ts'
 import { SoundLibrary } from './SoundLibrary.ts'
 import { Samples, Volume } from '../../utils/types/brandedTypes.ts'
-import { Soundboard, SoundboardId } from '../../types/Soundboard.ts'
+import { Soundboard, SoundboardId, SoundboardTile } from '../../types/Soundboard.ts'
 import { AudioData } from '../../types/AudioData.ts'
-import { mapNotUndefined } from '../../utils/utils.ts'
 import { KeyboardShortcut } from '../../types/KeyboardShortcut.ts'
 
 const useSoundLibrary = (): SoundLibrary => {
@@ -71,16 +70,29 @@ export const useSoundboard = (id: SoundboardId): Soundboard => {
 
 export interface SoundboardAndSounds {
   soundboard: Soundboard
-  sounds: readonly Sound[]
+  tiles: readonly SoundboardTileWithSound[]
+}
+
+export interface SoundboardTileWithSound extends SoundboardTile {
+  readonly sound: Sound
 }
 
 export const useSoundboardAndSounds = (soundboardId: SoundboardId): SoundboardAndSounds => {
   const soundboard = useSoundboard(soundboardId)
   const allSounds = useSounds()
-  const findSound = (soundId: SoundId): Option<Sound> => allSounds.find((sound) => sound.id === soundId)
-  const soundIds = soundboard.tiles.map((tile) => tile.soundId)
-  const sounds = mapNotUndefined(soundIds, findSound)
-  return { soundboard, sounds }
+  const getSound = (soundId: SoundId): Sound => {
+    const sound = allSounds.find((sound) => sound.id === soundId)
+    if (sound === undefined) {
+      throw new Error(`no sound found with id ${soundId}`)
+    }
+    return sound
+  }
+  const addSound = (tile: SoundboardTile): SoundboardTileWithSound => ({
+    ...tile,
+    sound: getSound(tile.soundId),
+  })
+  const tiles = soundboard.tiles.map(addSound)
+  return { soundboard, tiles }
 }
 
 export const useIsLoading = (): boolean => useSoundLibraryState().isLoading

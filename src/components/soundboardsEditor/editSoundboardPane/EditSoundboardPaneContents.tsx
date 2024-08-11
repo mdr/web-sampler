@@ -1,4 +1,4 @@
-import { useSoundActions, useSoundboardAndSounds } from '../../../sounds/library/soundHooks.ts'
+import { useSoundActions, useSoundboard } from '../../../sounds/library/soundHooks.ts'
 import { SoundboardId } from '../../../types/Soundboard.ts'
 import { SoundboardNameTextField } from '../SoundboardNameTextField.tsx'
 import { AddSoundButton } from './AddSoundButton.tsx'
@@ -10,7 +10,7 @@ export interface EditSoundboardPaneContentsProps {
 
 export const EditSoundboardPaneContents = ({ soundboardId }: EditSoundboardPaneContentsProps) => {
   const soundActions = useSoundActions()
-  const { soundboard } = useSoundboardAndSounds(soundboardId)
+  const soundboard = useSoundboard(soundboardId)
   const setSoundboardName = (name: string) => soundActions.setSoundboardName(soundboardId, name)
   return (
     <div className="flex flex-col space-y-4 px-4 pt-4">
