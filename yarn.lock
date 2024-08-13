@@ -293,9 +293,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/inline-edit@npm:^13.6.0":
-  version: 13.6.0
-  resolution: "@atlaskit/inline-edit@npm:13.6.0"
+"@atlaskit/inline-edit@npm:^13.6.1":
+  version: 13.6.1
+  resolution: "@atlaskit/inline-edit@npm:13.6.1"
   dependencies:
     "@atlaskit/analytics-next": "npm:^10.1.0"
     "@atlaskit/button": "npm:^19.2.0"
@@ -305,14 +305,14 @@ __metadata:
     "@atlaskit/inline-dialog": "npm:^14.3.0"
     "@atlaskit/primitives": "npm:^12.0.0"
     "@atlaskit/textfield": "npm:^6.5.0"
-    "@atlaskit/theme": "npm:^12.12.0"
+    "@atlaskit/theme": "npm:^13.0.0"
     "@atlaskit/tokens": "npm:^1.58.0"
     "@atlaskit/visually-hidden": "npm:^1.5.0"
     "@babel/runtime": "npm:^7.0.0"
     "@emotion/react": "npm:^11.7.1"
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 10c0/ed5864b49317339adc8f8c8b3c602581651daba55fa1aacd9ec52e723d0c12efc19f81f299d68615b5f9ff4c7fad79c2ae07e6beabddf69dbfe6926d1dea7718
+  checksum: 10c0/432d91643041bcd2b69fc75400e4299d2883480d045b76f7589d59c1a0e5a50b0957aeed31df9bdc043b62585cc6f8866b316b8d2a2bde7fc8e69ad25dcb289c
   languageName: node
   linkType: hard
 
@@ -486,6 +486,20 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
   checksum: 10c0/6b590019d1b25b916a0f7b8b9dc69df5c8172fa95070a82edd2287f37230ab10e639daf2dacef92ce2345cf55005180955102434a134cfa4b186ee1e6a152928
+  languageName: node
+  linkType: hard
+
+"@atlaskit/theme@npm:^13.0.0":
+  version: 13.0.0
+  resolution: "@atlaskit/theme@npm:13.0.0"
+  dependencies:
+    "@atlaskit/codemod-utils": "npm:^4.2.0"
+    "@atlaskit/ds-lib": "npm:^2.4.0"
+    "@atlaskit/tokens": "npm:^1.58.0"
+    "@babel/runtime": "npm:^7.0.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 10c0/7c7ba2fb8c98a29999e36f8c62bc7569112b231b642a24e0272330793aeb05101d526078f75654fc2859e9fdd1c6f68d1fd35d787c83712e70bd08248396c0b8
   languageName: node
   linkType: hard
 
@@ -15423,7 +15437,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "web-sampler@workspace:."
   dependencies:
-    "@atlaskit/inline-edit": "npm:^13.6.0"
+    "@atlaskit/inline-edit": "npm:^13.6.1"
     "@breezystack/lamejs": "npm:^1.2.7"
     "@chromatic-com/storybook": "npm:^1.6.1"
     "@dnd-kit/core": "npm:^6.1.0"
