@@ -5802,14 +5802,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/codemod@npm:8.2.8":
-  version: 8.2.8
-  resolution: "@storybook/codemod@npm:8.2.8"
+"@storybook/codemod@npm:8.2.9":
+  version: 8.2.9
+  resolution: "@storybook/codemod@npm:8.2.9"
   dependencies:
     "@babel/core": "npm:^7.24.4"
     "@babel/preset-env": "npm:^7.24.4"
     "@babel/types": "npm:^7.24.0"
-    "@storybook/core": "npm:8.2.8"
+    "@storybook/core": "npm:8.2.9"
     "@storybook/csf": "npm:0.1.11"
     "@types/cross-spawn": "npm:^6.0.2"
     cross-spawn: "npm:^7.0.3"
@@ -5819,7 +5819,7 @@ __metadata:
     prettier: "npm:^3.1.1"
     recast: "npm:^0.23.5"
     tiny-invariant: "npm:^1.3.1"
-  checksum: 10c0/1220e9478311643f4741ae0d32fcbf211993eb7d43580b522fc1cbc30cdc3f9d65592d2f1d9281551ce3d640b09d8f01c7ea5c028214e9ee295a2face2d472ac
+  checksum: 10c0/60db7c8142789257ab8a5d49031e7bf2113c3964e07250e131843fa7ed2572d99baea9e3ce2d518c322da0db0933e1871fe17ace8872466a077802c02d13990f
   languageName: node
   linkType: hard
 
@@ -5841,9 +5841,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/core@npm:8.2.8":
-  version: 8.2.8
-  resolution: "@storybook/core@npm:8.2.8"
+"@storybook/core@npm:8.2.9":
+  version: 8.2.9
+  resolution: "@storybook/core@npm:8.2.9"
   dependencies:
     "@storybook/csf": "npm:0.1.11"
     "@types/express": "npm:^4.17.21"
@@ -5856,7 +5856,7 @@ __metadata:
     recast: "npm:^0.23.5"
     util: "npm:^0.12.4"
     ws: "npm:^8.2.3"
-  checksum: 10c0/2aa7a258bd8a41c194211ddfc0ed982356e5113840f7f13403640768f526d19f3a16cb0f6feb053014d28f029fa354ed5795e14f555d750a34e0bea28a725cee
+  checksum: 10c0/ea259bef45b8565fde0eec4ee0f99e3c4d2b9e4e4ecd95bb56c0c728ba8ae0da1232e0e336c7c80e2bb925ae72e708d534fb8e498eeaadf9b9428fabf0564454
   languageName: node
   linkType: hard
 
@@ -14123,14 +14123,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"storybook@npm:^8.2.8":
-  version: 8.2.8
-  resolution: "storybook@npm:8.2.8"
+"storybook@npm:^8.2.9":
+  version: 8.2.9
+  resolution: "storybook@npm:8.2.9"
   dependencies:
     "@babel/core": "npm:^7.24.4"
     "@babel/types": "npm:^7.24.0"
-    "@storybook/codemod": "npm:8.2.8"
-    "@storybook/core": "npm:8.2.8"
+    "@storybook/codemod": "npm:8.2.9"
+    "@storybook/core": "npm:8.2.9"
     "@types/semver": "npm:^7.3.4"
     "@yarnpkg/fslib": "npm:2.10.3"
     "@yarnpkg/libzip": "npm:2.3.0"
@@ -14159,7 +14159,7 @@ __metadata:
     getstorybook: ./bin/index.cjs
     sb: ./bin/index.cjs
     storybook: ./bin/index.cjs
-  checksum: 10c0/2230084581214a19a686dc3d6b050c76e9bf5a91b6178ea1f2de454cd1f31005fc39b49113cbdfc43e70bf6a7609a0342234f17d3fab809766602be453fa5ef9
+  checksum: 10c0/a0ad2b85fa9c062e94fb0bcfcd3f2cb50638d4274a09dcb4b972cf731b090db8c4433789e3d55aff5fb076f661aae33487591ee57a1853e407d513ef13e12da5
   languageName: node
   linkType: hard
 
@@ -15582,7 +15582,7 @@ __metadata:
     react-spinners: "npm:^0.14.1"
     react-toastify: "npm:^10.0.5"
     react-use: "npm:^17.5.1"
-    storybook: "npm:^8.2.8"
+    storybook: "npm:^8.2.9"
     tailwindcss: "npm:^3.4.9"
     tailwindcss-react-aria-components: "npm:^1.1.4"
     tmp: "npm:^0.2.3"
