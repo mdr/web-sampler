@@ -1,5 +1,5 @@
-import { AbstractStorageManager } from './AbstractStorageManager.tsx'
 import { isChromiumBasedBrowser } from '../utils/browserUtils.ts'
+import { AbstractStorageManager } from './AbstractStorageManager.tsx'
 import { AttemptToMakeStoragePersistentResult, StorageManager } from './StorageManager.tsx'
 
 export class WebStorageManager extends AbstractStorageManager implements StorageManager {

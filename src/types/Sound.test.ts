@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { makeSound, makeSoundWithAudio, SoundTestConstants } from './sound.testSupport.ts'
+
 import { getSoundDisplayName, sortSoundsByDisplayName, soundHasAudio } from './Sound.ts'
+import { SoundTestConstants, makeSound, makeSoundWithAudio } from './sound.testSupport.ts'
 
 describe('getSoundDisplayName', () => {
   it('should return the sound name if present', () => {

@@ -1,4 +1,5 @@
 import Dexie, { Table } from 'dexie'
+
 import { Sound, SoundId } from '../../types/Sound.ts'
 import { Soundboard, SoundboardId } from '../../types/Soundboard.ts'
 

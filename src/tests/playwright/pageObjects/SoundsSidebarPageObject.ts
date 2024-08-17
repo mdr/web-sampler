@@ -1,6 +1,7 @@
-import { PageObject } from './PageObject.ts'
 import { expect } from '@playwright/experimental-ct-react'
+
 import { SoundsSidebarTestIds } from '../../../components/soundsEditor/sidebar/SoundsSidebarTestIds.ts'
+import { PageObject } from './PageObject.ts'
 
 export class SoundsSidebarPageObject extends PageObject {
   protected readonly name = 'SoundsSidebar'

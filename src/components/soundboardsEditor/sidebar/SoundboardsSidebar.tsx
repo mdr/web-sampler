@@ -1,10 +1,11 @@
-import { useSoundboards } from '../../../sounds/library/soundHooks.ts'
 import { Link } from 'react-router-dom'
-import { SoundboardsSidebarTestIds } from './SoundboardsSidebarTestIds.ts'
+
+import { useSoundboards } from '../../../sounds/library/soundHooks.ts'
 import { getSoundboardDisplayName, sortSoundboardsByDisplayName } from '../../../types/Soundboard.ts'
-import { NewSoundboardButton } from '../NewSoundboardButton.tsx'
-import { editSoundboardRoute } from '../../routes.ts'
 import { useSoundboardIdParam } from '../../routeHooks.ts'
+import { editSoundboardRoute } from '../../routes.ts'
+import { NewSoundboardButton } from '../NewSoundboardButton.tsx'
+import { SoundboardsSidebarTestIds } from './SoundboardsSidebarTestIds.ts'
 
 export const SoundboardsSidebar = () => {
   const currentSoundboardId = useSoundboardIdParam()

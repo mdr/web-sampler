@@ -1,8 +1,8 @@
-import React from 'react'
 import { mdiStop } from '@mdi/js'
+import React from 'react'
+
 import { doNothing } from '../../../utils/utils.ts'
 import { Button } from '../../shared/Button.tsx'
-
 import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
 
 interface StopButtonProps {

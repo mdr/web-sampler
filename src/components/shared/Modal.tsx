@@ -1,5 +1,5 @@
-import * as ReactAriaComponents from 'react-aria-components'
 import { ReactNode } from 'react'
+import * as ReactAriaComponents from 'react-aria-components'
 
 export interface ModalProps {
   children: ReactNode

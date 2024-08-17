@@ -1,4 +1,5 @@
 import React, { ReactElement, ReactNode } from 'react'
+
 import { Option } from '../../utils/types/Option.ts'
 
 export interface SwitchProps {

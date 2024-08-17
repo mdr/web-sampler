@@ -1,7 +1,8 @@
-import { AudioRecorderState, AudioRecorderStateChangeListener, RecordingCompleteListener } from './AudioRecorder.ts'
 import _ from 'lodash'
-import { Option } from '../utils/types/Option.ts'
+
 import { AudioData } from '../types/AudioData.ts'
+import { Option } from '../utils/types/Option.ts'
+import { AudioRecorderState, AudioRecorderStateChangeListener, RecordingCompleteListener } from './AudioRecorder.ts'
 
 export class AbstractAudioRecorder {
   private readonly stateChangeListeners: AudioRecorderStateChangeListener[] = []

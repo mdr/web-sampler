@@ -1,9 +1,9 @@
 /// <reference types="vitest" />
-import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite'
 import checker from 'vite-plugin-checker'
-import { coverageConfigDefaults } from 'vitest/config'
 import circleDependency from 'vite-plugin-circular-dependency'
+import { coverageConfigDefaults } from 'vitest/config'
 
 // https://vitejs.dev/config/
 export default defineConfig({

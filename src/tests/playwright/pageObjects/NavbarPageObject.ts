@@ -1,10 +1,10 @@
-import { PageObject } from './PageObject.ts'
 import { NavbarTestIds } from '../../../components/navbar/NavbarTestIds.ts'
-import { NavbarMenuPageObject } from './NavbarMenuPageObject.ts'
-import { StorageWarningDialogPageObject } from './StorageWarningDialogPageObject.ts'
 import { StorageWarningDialogTestIds } from '../../../components/navbar/StorageWarningDialogTestIds.ts'
+import { NavbarMenuPageObject } from './NavbarMenuPageObject.ts'
+import { PageObject } from './PageObject.ts'
 import { SoundboardsEditorPageObject } from './SoundboardsEditorPageObject.ts'
 import { SoundsEditorPageObject } from './SoundsEditorPageObject.ts'
+import { StorageWarningDialogPageObject } from './StorageWarningDialogPageObject.ts'
 
 export class NavbarPageObject extends PageObject {
   protected readonly name = 'Navbar'

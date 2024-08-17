@@ -1,7 +1,6 @@
 import { AudioContextProvider } from '../audioRecorder/AudioContextProvider.ts'
-import { Hz, Pcm } from '../utils/types/brandedTypes.ts'
-
 import { AudioData } from '../types/AudioData.ts'
+import { Hz, Pcm } from '../utils/types/brandedTypes.ts'
 
 export class AudioOperations {
   constructor(private readonly audioContextProvider: AudioContextProvider) {}

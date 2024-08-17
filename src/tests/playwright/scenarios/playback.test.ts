@@ -1,6 +1,6 @@
+import { Seconds, Volume } from '../../../utils/types/brandedTypes.ts'
 import { test } from '../fixtures.ts'
 import { launchAndRecordNewSound } from '../pageObjects/SoundsEditorPageObject.ts'
-import { Seconds, Volume } from '../../../utils/types/brandedTypes.ts'
 
 test('start, pause and resume playback can be controlled via the play/pause button', async ({ mount }) => {
   const soundsEditorPage = await launchAndRecordNewSound(mount)

@@ -1,9 +1,10 @@
 import { Brand } from 'effect'
+import { Equals, assert } from 'tsafe'
 import * as uuid from 'uuid'
-import { SoundAudio, soundAudioSchema } from './SoundAudio.ts'
-import { displayCollator } from '../utils/sortUtils.ts'
 import { z } from 'zod'
-import { assert, Equals } from 'tsafe'
+
+import { displayCollator } from '../utils/sortUtils.ts'
+import { SoundAudio, soundAudioSchema } from './SoundAudio.ts'
 
 export type SoundId = string & Brand.Brand<'SoundId'>
 

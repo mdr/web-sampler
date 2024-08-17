@@ -1,6 +1,6 @@
+import { SoundTestConstants } from '../../../types/sound.testSupport.ts'
 import { test } from '../fixtures.ts'
 import { launchApp } from '../pageObjects/launchApp.tsx'
-import { SoundTestConstants } from '../../../types/sound.testSupport.ts'
 
 test('soundboards can be created and named', async ({ mount }) => {
   const soundsEditorPage = await launchApp(mount)

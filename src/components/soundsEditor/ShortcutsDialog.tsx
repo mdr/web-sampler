@@ -1,8 +1,9 @@
+import { FC } from 'react'
 import { Dialog } from 'react-aria-components'
+
+import { isMacOs } from '../../utils/browserUtils.ts'
 import { Button } from '../shared/Button.tsx'
 import { ButtonVariant } from '../shared/ButtonVariant.tsx'
-import { FC } from 'react'
-import { isMacOs } from '../../utils/browserUtils.ts'
 
 export interface ShortcutsWarningDialogProps {
   close: () => void

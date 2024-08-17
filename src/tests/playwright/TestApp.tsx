@@ -1,14 +1,15 @@
-import { App } from '../../components/App.tsx'
-import { MockAudioRecorder } from './mocks/MockAudioRecorder.ts'
 import { default as FakeTimers } from '@sinonjs/fake-timers'
 import useDidMount from 'beautiful-react-hooks/useDidMount'
-import { DefaultWindowTestHooks } from './testApp/DefaultWindowTestHooks.tsx'
-import { castPartial, MockAudioElement } from './mocks/MockAudioElement.ts'
+
+import { AudioOperations } from '../../audioOperations/AudioOperations.ts'
+import { LazyAudioContextProvider } from '../../audioRecorder/AudioContextProvider.ts'
+import { App } from '../../components/App.tsx'
 import { AppConfig, makeAppConfig } from '../../config/AppConfig.ts'
 import { FakeStorageManager } from '../../storage/FakeStorageManager.tsx'
 import { AttemptToMakeStoragePersistentResult } from '../../storage/StorageManager.tsx'
-import { AudioOperations } from '../../audioOperations/AudioOperations.ts'
-import { LazyAudioContextProvider } from '../../audioRecorder/AudioContextProvider.ts'
+import { MockAudioElement, castPartial } from './mocks/MockAudioElement.ts'
+import { MockAudioRecorder } from './mocks/MockAudioRecorder.ts'
+import { DefaultWindowTestHooks } from './testApp/DefaultWindowTestHooks.tsx'
 
 export interface TestAppProps {
   useFakeTimers?: boolean

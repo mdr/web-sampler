@@ -1,10 +1,11 @@
-import { describe, expect, it } from 'vitest'
-import { SoundSyncer } from './SoundSyncer.ts'
-import { makeSound, SoundTestConstants } from '../../types/sound.testSupport.ts'
-import { MemorySoundStore } from './MemorySoundStore.testSupport.ts'
 import flushPromises from 'flush-promises'
+import { describe, expect, it } from 'vitest'
+
+import { SoundTestConstants, makeSound } from '../../types/sound.testSupport.ts'
+import { SoundboardTestConstants, makeSoundboard } from '../../types/soundboard.testSupport.ts'
 import { EMPTY_SOUND_STATE, makeSoundState } from '../SoundState.ts'
-import { makeSoundboard, SoundboardTestConstants } from '../../types/soundboard.testSupport.ts'
+import { MemorySoundStore } from './MemorySoundStore.testSupport.ts'
+import { SoundSyncer } from './SoundSyncer.ts'
 
 describe('SoundSyncer', () => {
   it('should write modifications to a sound store as sounds are changed', async () => {

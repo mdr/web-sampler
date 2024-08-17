@@ -1,10 +1,11 @@
 import { mdiDownload } from '@mdi/js'
-import { getSoundDisplayName, SoundWithDefiniteAudio } from '../../../types/Sound.ts'
-import { Button } from '../../shared/Button.tsx'
-import { getPlayRegionAudioData } from '../../../types/SoundAudio.ts'
 import FileSaver from 'file-saver'
-import { EditSoundPaneTestIds } from '../editSoundPane/EditSoundPaneTestIds.ts'
+
+import { SoundWithDefiniteAudio, getSoundDisplayName } from '../../../types/Sound.ts'
+import { getPlayRegionAudioData } from '../../../types/SoundAudio.ts'
 import { pcmToWavBlob } from '../../../utils/wav.ts'
+import { Button } from '../../shared/Button.tsx'
+import { EditSoundPaneTestIds } from '../editSoundPane/EditSoundPaneTestIds.ts'
 
 interface DownloadWavButtonProps {
   sound: SoundWithDefiniteAudio

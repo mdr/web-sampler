@@ -1,6 +1,7 @@
-import { CANVAS_HEIGHT } from './waveformConstants.ts'
-import { Pixels, Seconds } from '../../../utils/types/brandedTypes.ts'
 import { Line, Text } from 'react-konva'
+
+import { Pixels, Seconds } from '../../../utils/types/brandedTypes.ts'
+import { CANVAS_HEIGHT } from './waveformConstants.ts'
 
 const TICK_LABEL_TEXT_OFFSET = Pixels(15) // Offset above the major tick to place the text
 const MAJOR_TICK_HEIGHT = Pixels(10)

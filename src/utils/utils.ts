@@ -1,4 +1,5 @@
 import _ from 'lodash'
+
 import { Option } from './types/Option.ts'
 
 export const unawaited = <T>(promise: Promise<T>): void => void promise

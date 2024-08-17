@@ -1,6 +1,7 @@
-import { PageObject } from './PageObject.ts'
-import { expect, MountResult } from '@playwright/experimental-ct-react'
+import { MountResult, expect } from '@playwright/experimental-ct-react'
+
 import { MiscTestIds } from '../../../components/misc/MiscTestIds.ts'
+import { PageObject } from './PageObject.ts'
 
 export class NotFoundPageObject extends PageObject {
   protected readonly name = 'NotFoundPage'

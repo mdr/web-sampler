@@ -1,6 +1,7 @@
-import { average, concatenateFloat32Arrays, doNothing, mapNotUndefined } from './utils.ts'
 import { describe, expect, it } from 'vitest'
+
 import { Option } from './types/Option.ts'
+import { average, concatenateFloat32Arrays, doNothing, mapNotUndefined } from './utils.ts'
 
 describe('doNothing', () => {
   it('returns undefined', () => {

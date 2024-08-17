@@ -1,8 +1,8 @@
-import { SoundState, soundStateSchema } from './SoundState.ts'
 import { Sound, SoundId } from '../types/Sound.ts'
-import { getTotalNumberOfSamples, SoundAudio } from '../types/SoundAudio.ts'
+import { SoundAudio, getTotalNumberOfSamples } from '../types/SoundAudio.ts'
 import { Soundboard } from '../types/Soundboard.ts'
 import { MAX_VOLUME, MIN_VOLUME } from '../utils/types/brandedTypes.ts'
+import { SoundState, soundStateSchema } from './SoundState.ts'
 
 export const validateSoundState = (soundState: SoundState): void => new SoundStateValidator(soundState).validate()
 

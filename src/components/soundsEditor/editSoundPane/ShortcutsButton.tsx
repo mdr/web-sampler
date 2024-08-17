@@ -1,6 +1,7 @@
-import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
 import { mdiKeyboard } from '@mdi/js'
+
 import { Button } from '../../shared/Button.tsx'
+import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
 
 export interface ShortcutsButtonProps {
   onPress(): void

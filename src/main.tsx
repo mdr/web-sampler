@@ -1,11 +1,12 @@
-import ReactDOM from 'react-dom/client'
-import { ProdApp } from './components/ProdApp.tsx'
-import { TestApp } from './tests/playwright/TestApp.tsx'
-import 'typeface-roboto'
-import 'react-toastify/dist/ReactToastify.css'
-import './main.css'
-import { getDocumentRoot } from './utils/domUtils.ts'
 import * as Sentry from '@sentry/react'
+import ReactDOM from 'react-dom/client'
+import 'react-toastify/dist/ReactToastify.css'
+import 'typeface-roboto'
+
+import { ProdApp } from './components/ProdApp.tsx'
+import './main.css'
+import { TestApp } from './tests/playwright/TestApp.tsx'
+import { getDocumentRoot } from './utils/domUtils.ts'
 
 if (import.meta.env.PROD) {
   Sentry.init({

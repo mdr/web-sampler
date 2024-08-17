@@ -1,11 +1,11 @@
-import { AudioRecorder } from '../audioRecorder/AudioRecorder.ts'
-import { AudioPlayer } from '../audioPlayer/AudioPlayer.ts'
-import { SoundLibrary } from '../sounds/library/SoundLibrary.ts'
-import { DefaultAudioPlayer } from '../audioPlayer/DefaultAudioPlayer.ts'
-import { DexieSoundStore } from '../sounds/store/DexieSoundStore.ts'
-import { AppDb } from '../sounds/store/AppDb.ts'
-import { StorageManager } from '../storage/StorageManager.tsx'
 import { AudioOperations } from '../audioOperations/AudioOperations.ts'
+import { AudioPlayer } from '../audioPlayer/AudioPlayer.ts'
+import { DefaultAudioPlayer } from '../audioPlayer/DefaultAudioPlayer.ts'
+import { AudioRecorder } from '../audioRecorder/AudioRecorder.ts'
+import { SoundLibrary } from '../sounds/library/SoundLibrary.ts'
+import { AppDb } from '../sounds/store/AppDb.ts'
+import { DexieSoundStore } from '../sounds/store/DexieSoundStore.ts'
+import { StorageManager } from '../storage/StorageManager.tsx'
 
 export interface AppConfig {
   audioRecorder: AudioRecorder

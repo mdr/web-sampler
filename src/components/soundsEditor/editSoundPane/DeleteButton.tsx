@@ -1,7 +1,8 @@
 import { mdiTrashCan } from '@mdi/js'
+
 import { Button } from '../../shared/Button.tsx'
-import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
 import { ButtonVariant } from '../../shared/ButtonVariant.tsx'
+import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
 
 interface DeleteButtonProps {
   onPress(): void

@@ -1,6 +1,6 @@
-import { newSoundboardId, Soundboard, SoundboardId, SoundboardTile } from './Soundboard.ts'
-import { SoundTestConstants } from './sound.testSupport.ts'
 import { KeyboardShortcut } from './KeyboardShortcut.ts'
+import { Soundboard, SoundboardId, SoundboardTile, newSoundboardId } from './Soundboard.ts'
+import { SoundTestConstants } from './sound.testSupport.ts'
 
 export const SoundboardTestConstants = {
   id: SoundboardId('SoundboardTestConstants.id'),

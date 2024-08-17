@@ -1,6 +1,6 @@
+import { AudioData } from '../types/AudioData.ts'
 import { Option } from '../utils/types/Option.ts'
 import { Volume } from '../utils/types/brandedTypes.ts'
-import { AudioData } from '../types/AudioData.ts'
 
 export enum AudioRecorderState {
   IDLE = 'IDLE',

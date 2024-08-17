@@ -1,7 +1,8 @@
-import { doNothing, unawaited } from '../../utils/utils.ts'
 import { FC, ReactNode, useEffect, useState } from 'react'
 import { useTimeout } from 'react-use'
+
 import { Millis } from '../../utils/types/brandedTypes.ts'
+import { doNothing, unawaited } from '../../utils/utils.ts'
 
 export interface ExclusiveTabProps {
   children: ReactNode

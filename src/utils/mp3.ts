@@ -1,5 +1,6 @@
-import { AudioData } from '../types/AudioData.ts'
 import { Mp3Encoder } from '@breezystack/lamejs'
+
+import { AudioData } from '../types/AudioData.ts'
 import { Pcm } from './types/brandedTypes.ts'
 
 export const pcmToMp3Blob = (audioData: AudioData): Blob => {

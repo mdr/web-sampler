@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest'
+
 import { getSoundboardDisplayName, removeSoundFromSoundboard, sortSoundboardsByDisplayName } from './Soundboard.ts'
 import { SoundTestConstants } from './sound.testSupport.ts'
-import { makeSoundboard, makeSoundboardTile, SoundboardTestConstants } from './soundboard.testSupport.ts'
+import { SoundboardTestConstants, makeSoundboard, makeSoundboardTile } from './soundboard.testSupport.ts'
 
 describe('removeSoundFromSoundboard', () => {
   it('should remove the sound from the soundboard if present', () => {

@@ -1,4 +1,6 @@
-import { Link } from 'react-router-dom' // Assuming you're using React Router for navigation
+import { Link } from 'react-router-dom'
+
+// Assuming you're using React Router for navigation
 
 export const ErrorFallback = () => (
   <div className="flex h-screen flex-col items-center justify-center bg-gray-100 text-center">

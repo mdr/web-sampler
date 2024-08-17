@@ -1,12 +1,13 @@
+import { mdiPlay } from '@mdi/js'
 import { useCallback, useEffect, useRef, useState } from 'react'
+
+import { SoundWithDefiniteAudio, getSoundDisplayName } from '../../../types/Sound.ts'
+import { getPlayRegionAudioData } from '../../../types/SoundAudio.ts'
 import { Option } from '../../../utils/types/Option.ts'
 import { Url } from '../../../utils/types/brandedTypes.ts'
-import { getPlayRegionAudioData } from '../../../types/SoundAudio.ts'
-import { pcmToWavBlob } from '../../../utils/wav.ts'
 import { unawaited } from '../../../utils/utils.ts'
+import { pcmToWavBlob } from '../../../utils/wav.ts'
 import { EditSoundboardPaneTestIds } from './EditSoundboardPaneTestIds.ts'
-import { getSoundDisplayName, SoundWithDefiniteAudio } from '../../../types/Sound.ts'
-import { mdiPlay } from '@mdi/js'
 import { SoundTileIconButton } from './SoundTileIconButton.tsx'
 
 export interface PlaySoundButtonProps {

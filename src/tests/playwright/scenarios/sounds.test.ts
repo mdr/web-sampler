@@ -1,14 +1,6 @@
-import { expect, test } from '../fixtures.ts'
-import { launchApp } from '../pageObjects/launchApp.tsx'
-import {
-  launchAndCreateNewSound,
-  launchAndRecordNewSound,
-  launchAndStartAudioCapture,
-} from '../pageObjects/SoundsEditorPageObject.ts'
-import { getFinishTime, getStartTime, getTotalAudioDuration } from '../../../types/SoundAudio.ts'
-import { assertSoundHasAudio, filesAreEqual } from '../testUtils.ts'
-import { Seconds } from '../../../utils/types/brandedTypes.ts'
 import { MAX_RECORDING_DURATION } from '../../../components/soundsEditor/recordingConstants.ts'
+import { getFinishTime, getStartTime, getTotalAudioDuration } from '../../../types/SoundAudio.ts'
+import { Seconds } from '../../../utils/types/brandedTypes.ts'
 import {
   EXPECTED_MP3_DOWNLOAD_PATH,
   EXPECTED_WAV_DOWNLOAD_PATH,
@@ -16,6 +8,14 @@ import {
   LONG_AUDIO_FILE,
   TEST_AUDIO_FILE,
 } from '../data/testFiles.testSupport.ts'
+import { expect, test } from '../fixtures.ts'
+import {
+  launchAndCreateNewSound,
+  launchAndRecordNewSound,
+  launchAndStartAudioCapture,
+} from '../pageObjects/SoundsEditorPageObject.ts'
+import { launchApp } from '../pageObjects/launchApp.tsx'
+import { assertSoundHasAudio, filesAreEqual } from '../testUtils.ts'
 
 test('sounds can be created and named', async ({ mount }) => {
   const soundsEditorPage = await launchApp(mount)

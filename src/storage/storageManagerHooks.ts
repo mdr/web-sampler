@@ -1,6 +1,7 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
-import { StorageManagerContext } from './StorageManagerContext.ts'
+
 import { StorageManager, StorageManagerActions, StorageManagerState } from './StorageManager.tsx'
+import { StorageManagerContext } from './StorageManagerContext.ts'
 
 const getStorageManagerState = (storageManager: StorageManager): StorageManagerState => ({
   isStoragePersistent: storageManager.isStoragePersistent,

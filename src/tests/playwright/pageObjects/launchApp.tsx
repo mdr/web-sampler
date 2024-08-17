@@ -1,9 +1,10 @@
-import { MountFunction } from '../types.ts'
-import { expect, MountResult, test } from '@playwright/experimental-ct-react'
+import { MountResult, expect, test } from '@playwright/experimental-ct-react'
+
 import { TestApp, TestAppProps } from '../TestApp.tsx'
-import { SoundsEditorPageObject } from './SoundsEditorPageObject.ts'
-import { NotFoundPageObject } from './NotFoundPageObject.ts'
 import { ProxyWindowTestHooks } from '../testApp/ProxyWindowTestHooks.ts'
+import { MountFunction } from '../types.ts'
+import { NotFoundPageObject } from './NotFoundPageObject.ts'
+import { SoundsEditorPageObject } from './SoundsEditorPageObject.ts'
 
 const areTestHooksInstalled = (mountResult: MountResult): Promise<boolean> =>
   mountResult.page().evaluate(() => window.testHooks !== undefined)

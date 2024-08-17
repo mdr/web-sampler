@@ -1,8 +1,9 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
+
 import { useRequestAnimationFrame } from '../utils/hooks/useRequestAnimationFrame.ts'
+import { Volume } from '../utils/types/brandedTypes.ts'
 import { AudioRecorder, AudioRecorderState, RecordingCompleteListener, StartRecordingOutcome } from './AudioRecorder.ts'
 import { AudioRecorderContext } from './AudioRecorderContext.ts'
-import { Volume } from '../utils/types/brandedTypes.ts'
 
 const useAudioRecorder = (): AudioRecorder => {
   const audioRecorder = useContext(AudioRecorderContext)

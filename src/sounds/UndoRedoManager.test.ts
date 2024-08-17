@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+
 import { UndoRedoManager } from './UndoRedoManager.ts'
 
 describe('UndoRedoManager', () => {

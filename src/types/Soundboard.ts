@@ -1,11 +1,12 @@
 import { Brand } from 'effect'
-import { SoundId } from './Sound.ts'
+import { Equals, assert } from 'tsafe'
 import * as uuid from 'uuid'
-import { displayCollator } from '../utils/sortUtils.ts'
 import { z } from 'zod'
-import { assert, Equals } from 'tsafe'
-import { KeyboardShortcut } from './KeyboardShortcut.ts'
+
+import { displayCollator } from '../utils/sortUtils.ts'
 import { Option } from '../utils/types/Option.ts'
+import { KeyboardShortcut } from './KeyboardShortcut.ts'
+import { SoundId } from './Sound.ts'
 
 export type SoundboardId = string & Brand.Brand<'SoundboardId'>
 

@@ -1,12 +1,13 @@
-import { WindowTestHooks } from './WindowTestHooks.ts'
-import { MockAudioRecorder } from '../mocks/MockAudioRecorder.ts'
 import { InstalledClock } from '@sinonjs/fake-timers'
+
 import { AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
-import { MockAudioElement } from '../mocks/MockAudioElement.ts'
 import { SoundLibrary } from '../../../sounds/library/SoundLibrary.ts'
-import { serialiseSounds } from './soundsSerialisation.ts'
-import { Millis, Seconds, Volume } from '../../../utils/types/brandedTypes.ts'
 import { Option } from '../../../utils/types/Option.ts'
+import { Millis, Seconds, Volume } from '../../../utils/types/brandedTypes.ts'
+import { MockAudioElement } from '../mocks/MockAudioElement.ts'
+import { MockAudioRecorder } from '../mocks/MockAudioRecorder.ts'
+import { WindowTestHooks } from './WindowTestHooks.ts'
+import { serialiseSounds } from './soundsSerialisation.ts'
 
 export class DefaultWindowTestHooks implements WindowTestHooks {
   constructor(

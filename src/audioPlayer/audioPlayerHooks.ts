@@ -1,9 +1,10 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
-import { AudioPlayer } from './AudioPlayer.ts'
-import { AudioPlayerContext } from './AudioPlayerContext.ts'
-import { Seconds, Url, Volume } from '../utils/types/brandedTypes.ts'
+
 import { useRequestAnimationFrame } from '../utils/hooks/useRequestAnimationFrame.ts'
 import { Option } from '../utils/types/Option.ts'
+import { Seconds, Url, Volume } from '../utils/types/brandedTypes.ts'
+import { AudioPlayer } from './AudioPlayer.ts'
+import { AudioPlayerContext } from './AudioPlayerContext.ts'
 
 const useAudioPlayer = (): AudioPlayer => {
   const audioPlayer = useContext(AudioPlayerContext)

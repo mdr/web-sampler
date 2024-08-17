@@ -1,10 +1,10 @@
-import { AudioRecorder, AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
 import { AbstractAudioRecorder } from '../../../audioRecorder/AbstractAudioRecorder.ts'
-import { SOUND_DURATION } from '../testConstants.ts'
-import { Hz, MIN_VOLUME, Pcm, Samples, Seconds, Volume } from '../../../utils/types/brandedTypes.ts'
-import { samplesToSeconds, secondsToSamples } from '../../../types/sampleConversions.ts'
+import { AudioRecorder, AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
 import { AudioData } from '../../../types/AudioData.ts'
+import { samplesToSeconds, secondsToSamples } from '../../../types/sampleConversions.ts'
 import { SoundTestConstants } from '../../../types/sound.testSupport.ts'
+import { Hz, MIN_VOLUME, Pcm, Samples, Seconds, Volume } from '../../../utils/types/brandedTypes.ts'
+import { SOUND_DURATION } from '../testConstants.ts'
 
 export class MockAudioRecorder extends AbstractAudioRecorder implements AudioRecorder {
   volume: Volume = MIN_VOLUME

@@ -1,6 +1,6 @@
 import { useSounds } from '../../sounds/library/soundHooks.ts'
-import { SoundButton } from './SoundButton.tsx'
 import { sortSoundsByDisplayName, soundHasAudio } from '../../types/Sound.ts'
+import { SoundButton } from './SoundButton.tsx'
 
 export const SoundboardPage = () => {
   const sounds = sortSoundsByDisplayName(useSounds()).filter(soundHasAudio)

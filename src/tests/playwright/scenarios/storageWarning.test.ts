@@ -1,6 +1,6 @@
+import { AttemptToMakeStoragePersistentResult } from '../../../storage/StorageManager.tsx'
 import { test } from '../fixtures.ts'
 import { launchApp } from '../pageObjects/launchApp.tsx'
-import { AttemptToMakeStoragePersistentResult } from '../../../storage/StorageManager.tsx'
 
 test('if storage has not been made persistent, a warning button is shown, and the user can attempt to fix it in a dialog', async ({
   mount,

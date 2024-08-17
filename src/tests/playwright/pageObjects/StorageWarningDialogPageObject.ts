@@ -1,6 +1,7 @@
-import { PageObject } from './PageObject.ts'
-import { expect, MountResult } from '@playwright/experimental-ct-react'
+import { MountResult, expect } from '@playwright/experimental-ct-react'
+
 import { StorageWarningDialogTestIds } from '../../../components/navbar/StorageWarningDialogTestIds.ts'
+import { PageObject } from './PageObject.ts'
 
 export class StorageWarningDialogPageObject extends PageObject {
   protected readonly name = 'StorageWarningDialog'

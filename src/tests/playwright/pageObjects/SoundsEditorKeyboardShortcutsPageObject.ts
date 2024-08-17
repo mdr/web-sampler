@@ -1,5 +1,6 @@
-import { PageObject } from './PageObject.ts'
 import { platform } from 'node:os'
+
+import { PageObject } from './PageObject.ts'
 
 export class SoundsEditorKeyboardShortcutsPageObject extends PageObject {
   protected readonly name = 'SoundsEditorPage.shortcuts'

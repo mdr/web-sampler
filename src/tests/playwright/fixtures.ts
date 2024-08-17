@@ -1,4 +1,4 @@
-import { expect, test as ctBase } from '@playwright/experimental-ct-react'
+import { test as ctBase, expect } from '@playwright/experimental-ct-react'
 import { addCoverageReport } from 'monocart-reporter'
 
 const test = ctBase.extend<{ autoTestFixture: string }>({

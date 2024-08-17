@@ -1,5 +1,5 @@
-import { SOUND_TILE_SIZE } from './soundTileConstants.ts'
 import { Pixels } from '../../../utils/types/brandedTypes.ts'
+import { SOUND_TILE_SIZE } from './soundTileConstants.ts'
 
 export interface PlaceholderTileProps {
   // For reasons not yet bottomed out, the placeholder disappears when it's the only item on its row unless

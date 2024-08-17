@@ -1,5 +1,5 @@
-import { newSoundId, Sound, SoundId } from './Sound.ts'
 import { Hz, Pcm, Samples, Volume } from '../utils/types/brandedTypes.ts'
+import { Sound, SoundId, newSoundId } from './Sound.ts'
 import { SoundAudio } from './SoundAudio.ts'
 
 export const makePcm = (samples: Samples): Pcm => Pcm(new Float32Array(samples))

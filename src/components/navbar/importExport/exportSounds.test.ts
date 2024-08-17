@@ -1,9 +1,10 @@
 import { describe, expect, it } from 'vitest'
+
+import { Sound, newSoundId } from '../../../types/Sound.ts'
+import { SoundTestConstants } from '../../../types/sound.testSupport.ts'
+import { Samples, Volume } from '../../../utils/types/brandedTypes.ts'
 import { zipSounds } from './exportSounds.ts'
 import { unzipSounds } from './importSounds.ts'
-import { newSoundId, Sound } from '../../../types/Sound.ts'
-import { Samples, Volume } from '../../../utils/types/brandedTypes.ts'
-import { SoundTestConstants } from '../../../types/sound.testSupport.ts'
 
 describe('zipSounds', () => {
   it('preserves a collection of sounds on a round trip', async () => {

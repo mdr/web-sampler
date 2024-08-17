@@ -1,11 +1,12 @@
-import { Pixels } from '../../../utils/types/brandedTypes.ts'
-import { useCallback } from 'react'
 import Konva from 'konva'
-import { Group, Line, Rect, RegularPolygon } from 'react-konva'
-import { CANVAS_HEIGHT } from './waveformConstants.ts'
 import { Vector2d } from 'konva/lib/types'
+import { useCallback } from 'react'
+import { Group, Line, Rect, RegularPolygon } from 'react-konva'
+
 import { Option } from '../../../utils/types/Option.ts'
+import { Pixels } from '../../../utils/types/brandedTypes.ts'
 import { Case, Default, Switch } from '../../misc/Switch.tsx'
+import { CANVAS_HEIGHT } from './waveformConstants.ts'
 
 const HANDLE_RADIUS = Pixels(10)
 const DRAG_TARGET_WIDTH = Pixels(16)

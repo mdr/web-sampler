@@ -1,8 +1,9 @@
-import { Seconds, Url, Volume } from '../utils/types/brandedTypes'
-import { AudioPlayer } from './AudioPlayer'
-import { Option } from '../utils/types/Option.ts'
 import AsyncLock from 'async-lock'
+
+import { Option } from '../utils/types/Option.ts'
+import { Seconds, Url, Volume } from '../utils/types/brandedTypes'
 import { unawaited } from '../utils/utils.ts'
+import { AudioPlayer } from './AudioPlayer'
 
 export class DefaultAudioPlayer implements AudioPlayer {
   private url: Option<Url> = undefined

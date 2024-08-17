@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { Sound } from '../types/Sound'
-import { compareSoundStates, isDiffEmpty, makeSoundStateDiff } from './SoundStateDiff.ts'
-import { makeSound, SoundTestConstants } from '../types/sound.testSupport.ts'
-import { makeSoundboard, SoundboardTestConstants } from '../types/soundboard.testSupport.ts'
 
+import { Sound } from '../types/Sound'
+import { SoundTestConstants, makeSound } from '../types/sound.testSupport.ts'
+import { SoundboardTestConstants, makeSoundboard } from '../types/soundboard.testSupport.ts'
 import { makeSoundState } from './SoundState.ts'
+import { compareSoundStates, isDiffEmpty, makeSoundStateDiff } from './SoundStateDiff.ts'
 
 describe('compareSoundStates', () => {
   it('correctly identifies sounds to upsert and delete', () => {

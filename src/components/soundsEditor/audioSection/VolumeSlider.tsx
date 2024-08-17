@@ -1,4 +1,5 @@
 import { Label, Slider, SliderOutput, SliderThumb, SliderTrack } from 'react-aria-components'
+
 import { Volume } from '../../../utils/types/brandedTypes.ts'
 import { EditSoundPaneTestIds } from '../editSoundPane/EditSoundPaneTestIds.ts'
 

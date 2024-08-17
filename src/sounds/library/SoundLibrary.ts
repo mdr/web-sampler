@@ -1,26 +1,27 @@
-import { newSound, newSoundId, Sound, SoundId } from '../../types/Sound.ts'
-import { Option } from '../../utils/types/Option.ts'
-import _ from 'lodash'
-import { SoundActions } from './soundHooks.ts'
-import { unawaited } from '../../utils/utils.ts'
-import { Samples, Volume } from '../../utils/types/brandedTypes.ts'
 import { Draft, produce } from 'immer'
-import { pcmLength, pcmSlice } from '../../utils/pcmUtils.ts'
-import { newSoundAudio, SoundAudio } from '../../types/SoundAudio.ts'
-import { SoundStore } from '../store/SoundStore.ts'
-import { SoundSyncer } from '../store/SoundSyncer.ts'
-import { UndoRedoManager } from '../UndoRedoManager.ts'
-import { validateSoundState } from '../SoundStateValidator.ts'
-import { EMPTY_SOUND_STATE, makeSoundState, SoundState } from '../SoundState.ts'
+import _ from 'lodash'
+
+import { AudioData } from '../../types/AudioData.ts'
+import { KeyboardShortcut } from '../../types/KeyboardShortcut.ts'
+import { Sound, SoundId, newSound, newSoundId } from '../../types/Sound.ts'
+import { SoundAudio, newSoundAudio } from '../../types/SoundAudio.ts'
 import {
-  newSoundboard,
-  removeSoundFromSoundboard,
   Soundboard,
   SoundboardId,
   SoundboardTile,
+  newSoundboard,
+  removeSoundFromSoundboard,
 } from '../../types/Soundboard.ts'
-import { AudioData } from '../../types/AudioData.ts'
-import { KeyboardShortcut } from '../../types/KeyboardShortcut.ts'
+import { pcmLength, pcmSlice } from '../../utils/pcmUtils.ts'
+import { Option } from '../../utils/types/Option.ts'
+import { Samples, Volume } from '../../utils/types/brandedTypes.ts'
+import { unawaited } from '../../utils/utils.ts'
+import { EMPTY_SOUND_STATE, SoundState, makeSoundState } from '../SoundState.ts'
+import { validateSoundState } from '../SoundStateValidator.ts'
+import { UndoRedoManager } from '../UndoRedoManager.ts'
+import { SoundStore } from '../store/SoundStore.ts'
+import { SoundSyncer } from '../store/SoundSyncer.ts'
+import { SoundActions } from './soundHooks.ts'
 
 export type SoundLibraryUpdatedListener = () => void
 

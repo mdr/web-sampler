@@ -1,10 +1,10 @@
-import globals from 'globals'
-import pluginJs from '@eslint/js'
-import tseslint from 'typescript-eslint'
-import pluginReactConfig from 'eslint-plugin-react/configs/recommended.js'
 import { fixupConfigRules } from '@eslint/compat'
-import reactRefresh from 'eslint-plugin-react-refresh'
+import pluginJs from '@eslint/js'
 import tsParser from '@typescript-eslint/parser'
+import reactRefresh from 'eslint-plugin-react-refresh'
+import pluginReactConfig from 'eslint-plugin-react/configs/recommended.js'
+import globals from 'globals'
+import tseslint from 'typescript-eslint'
 
 const tsFilePatterns = ['src/**/*.ts', 'src/**/*.tsx']
 

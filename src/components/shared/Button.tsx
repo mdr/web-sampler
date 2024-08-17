@@ -1,8 +1,8 @@
-import * as ReactAriaComponents from 'react-aria-components'
 import Icon from '@mdi/react'
+import clsx from 'clsx'
+import * as ReactAriaComponents from 'react-aria-components'
 
 import { TestId } from '../../utils/types/brandedTypes.ts'
-import clsx from 'clsx'
 import { ButtonVariant } from './ButtonVariant.tsx'
 
 export interface ButtonProps {

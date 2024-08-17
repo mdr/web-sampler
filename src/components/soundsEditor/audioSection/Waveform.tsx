@@ -1,6 +1,7 @@
 import { Shape } from 'react-konva'
-import { CANVAS_HEIGHT } from './waveformConstants.ts'
+
 import { Pcm, Pixels } from '../../../utils/types/brandedTypes.ts'
+import { CANVAS_HEIGHT } from './waveformConstants.ts'
 
 export interface WaveformProps {
   pcm: Pcm

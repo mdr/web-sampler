@@ -1,15 +1,16 @@
 import { describe, expect, it } from 'vitest'
-import { validatePcmSample, validateSoundAudio, validateSoundState } from './SoundStateValidator.ts'
+
 import {
+  SoundTestConstants,
   makePcm,
   makeSound,
   makeSoundAudio,
   makeSoundWithAudio,
-  SoundTestConstants,
 } from '../types/sound.testSupport.ts'
-import { SoundState } from './SoundState.ts'
-import { makeSoundboard, makeSoundboardTile, SoundboardTestConstants } from '../types/soundboard.testSupport.ts'
+import { SoundboardTestConstants, makeSoundboard, makeSoundboardTile } from '../types/soundboard.testSupport.ts'
 import { Hz, Samples } from '../utils/types/brandedTypes.ts'
+import { SoundState } from './SoundState.ts'
+import { validatePcmSample, validateSoundAudio, validateSoundState } from './SoundStateValidator.ts'
 
 describe('validateSoundState', () => {
   it('finds no issue with a valid sound state', () => {

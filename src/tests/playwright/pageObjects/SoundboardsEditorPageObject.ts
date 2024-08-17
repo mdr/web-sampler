@@ -1,11 +1,12 @@
-import { expect, MountResult } from '@playwright/experimental-ct-react'
-import { PageObject } from './PageObject.ts'
-import { NavbarPageObject } from './NavbarPageObject.ts'
-import { SoundboardsSidebarTestIds } from '../../../components/soundboardsEditor/sidebar/SoundboardsSidebarTestIds.ts'
-import { SoundboardsSidebarPageObject } from './SoundboardsSidebarPageObject.ts'
-import { EditSoundboardPaneTestIds } from '../../../components/soundboardsEditor/editSoundboardPane/EditSoundboardPaneTestIds.ts'
-import { ChooseSoundDialogPageObject } from './ChooseSoundDialogPageObject.ts'
+import { MountResult, expect } from '@playwright/experimental-ct-react'
 import { Locator } from 'playwright'
+
+import { EditSoundboardPaneTestIds } from '../../../components/soundboardsEditor/editSoundboardPane/EditSoundboardPaneTestIds.ts'
+import { SoundboardsSidebarTestIds } from '../../../components/soundboardsEditor/sidebar/SoundboardsSidebarTestIds.ts'
+import { ChooseSoundDialogPageObject } from './ChooseSoundDialogPageObject.ts'
+import { NavbarPageObject } from './NavbarPageObject.ts'
+import { PageObject } from './PageObject.ts'
+import { SoundboardsSidebarPageObject } from './SoundboardsSidebarPageObject.ts'
 import { SoundsEditorPageObject } from './SoundsEditorPageObject.ts'
 
 export class SoundboardsEditorPageObject extends PageObject {

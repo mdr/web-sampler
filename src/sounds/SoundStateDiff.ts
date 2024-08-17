@@ -1,7 +1,8 @@
-import { Sound, SoundId } from '../types/Sound.ts'
 import _ from 'lodash'
-import { SoundState } from './SoundState.ts'
+
+import { Sound, SoundId } from '../types/Sound.ts'
 import { Soundboard, SoundboardId } from '../types/Soundboard.ts'
+import { SoundState } from './SoundState.ts'
 
 export interface SoundStateDiff {
   soundsToUpsert: readonly Sound[]

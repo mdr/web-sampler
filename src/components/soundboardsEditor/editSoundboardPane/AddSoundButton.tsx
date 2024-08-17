@@ -1,11 +1,12 @@
+import { mdiViewGridPlusOutline } from '@mdi/js'
 import { DialogTrigger } from 'react-aria-components'
+
+import { SoundboardId } from '../../../types/Soundboard.ts'
 import { Button } from '../../shared/Button.tsx'
 import { ButtonVariant } from '../../shared/ButtonVariant.tsx'
-import { EditSoundboardPaneTestIds } from './EditSoundboardPaneTestIds.ts'
-import { mdiViewGridPlusOutline } from '@mdi/js'
 import { Modal } from '../../shared/Modal.tsx'
 import { ChooseSoundDialog } from './ChooseSoundDialog.tsx'
-import { SoundboardId } from '../../../types/Soundboard.ts'
+import { EditSoundboardPaneTestIds } from './EditSoundboardPaneTestIds.ts'
 
 export interface AddSoundButtonProps {
   soundboardId: SoundboardId

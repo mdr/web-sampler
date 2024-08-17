@@ -1,4 +1,6 @@
 import { describe, expect, it } from 'vitest'
+
+import { Hz, Pcm, Samples, Seconds } from '../utils/types/brandedTypes.ts'
 import {
   getFinishTime,
   getPlayRegionAudioData,
@@ -7,9 +9,8 @@ import {
   getStartTime,
   getTotalAudioDuration,
 } from './SoundAudio.ts'
-import { makePcm, makeSoundAudio, SoundTestConstants } from './sound.testSupport.ts'
-import { Hz, Pcm, Samples, Seconds } from '../utils/types/brandedTypes.ts'
 import { secondsToSamples } from './sampleConversions.ts'
+import { SoundTestConstants, makePcm, makeSoundAudio } from './sound.testSupport.ts'
 
 describe('getPlayRegionDuration', () => {
   it('should return the duration of the play region', () => {

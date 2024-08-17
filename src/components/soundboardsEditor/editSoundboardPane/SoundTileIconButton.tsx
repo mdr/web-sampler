@@ -1,5 +1,6 @@
-import { Button } from 'react-aria-components'
 import Icon from '@mdi/react'
+import { Button } from 'react-aria-components'
+
 import { TestId } from '../../../utils/types/brandedTypes.ts'
 
 export interface SoundTileIconButtonProps {

@@ -1,9 +1,3 @@
-import { useSoundActions, useSoundboardAndSounds } from '../../../sounds/library/soundHooks.ts'
-import { Fragment, useState } from 'react'
-import { Option } from '../../../utils/types/Option.ts'
-import { SoundId } from '../../../types/Sound.ts'
-import { ResizePayload } from 'react-resize-detector/build/types/types'
-import { useResizeDetector } from 'react-resize-detector'
 import {
   DndContext,
   DragOverEvent,
@@ -15,8 +9,15 @@ import {
   useSensor,
   useSensors,
 } from '@dnd-kit/core'
-import { PlaceholderTile } from './PlaceholderTile.tsx'
+import { Fragment, useState } from 'react'
+import { useResizeDetector } from 'react-resize-detector'
+import { ResizePayload } from 'react-resize-detector/build/types/types'
+
+import { useSoundActions, useSoundboardAndSounds } from '../../../sounds/library/soundHooks.ts'
+import { SoundId } from '../../../types/Sound.ts'
 import { SoundboardId } from '../../../types/Soundboard.ts'
+import { Option } from '../../../utils/types/Option.ts'
+import { PlaceholderTile } from './PlaceholderTile.tsx'
 import { SoundTile } from './SoundTile.tsx'
 import { SOUND_TILE_GAP, SOUND_TILE_SIZE } from './soundTileConstants.ts'
 import { useSoundTileGridStore } from './soundTileGridStore.ts'

@@ -1,14 +1,16 @@
-import { Layer, Line, Rect, Stage } from 'react-konva'
-import { Pcm, Pixels, Seconds } from '../../../utils/types/brandedTypes.ts'
-import { FC, memo, useCallback, useState } from 'react'
-import { useMeasure } from 'react-use'
-import { DraggableTimeBoundary } from './DraggableTimeBoundary.tsx'
-import { CANVAS_HEIGHT } from './waveformConstants.ts'
 import Konva from 'konva'
+import { FC, memo, useCallback, useState } from 'react'
+import { Layer, Line, Rect, Stage } from 'react-konva'
+import { useMeasure } from 'react-use'
+
 import { Option } from '../../../utils/types/Option.ts'
-import { Waveform } from './Waveform.tsx'
-import { Ticks } from './Ticks.tsx'
+import { Pcm, Pixels, Seconds } from '../../../utils/types/brandedTypes.ts'
 import { EditSoundPaneTestIds } from '../editSoundPane/EditSoundPaneTestIds.ts'
+import { DraggableTimeBoundary } from './DraggableTimeBoundary.tsx'
+import { Ticks } from './Ticks.tsx'
+import { Waveform } from './Waveform.tsx'
+import { CANVAS_HEIGHT } from './waveformConstants.ts'
+
 import KonvaEventObject = Konva.KonvaEventObject
 
 export interface WaveformVisualiserProps {

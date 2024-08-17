@@ -1,7 +1,8 @@
 import React from 'react'
+import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels'
+
 import { Navbar } from '../navbar/Navbar.tsx'
 import { SoundsSidebar } from './sidebar/SoundsSidebar.tsx'
-import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels'
 
 interface SoundsEditorPageLayoutProps {
   children?: React.ReactNode

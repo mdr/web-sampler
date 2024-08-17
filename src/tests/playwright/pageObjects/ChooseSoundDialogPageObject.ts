@@ -1,6 +1,7 @@
-import { PageObject } from './PageObject.ts'
-import { expect, MountResult } from '@playwright/experimental-ct-react'
+import { MountResult, expect } from '@playwright/experimental-ct-react'
+
 import { ChooseSoundDialogTestIds } from '../../../components/soundboardsEditor/editSoundboardPane/EditSoundboardPaneTestIds.ts'
+import { PageObject } from './PageObject.ts'
 
 export class ChooseSoundDialogPageObject extends PageObject {
   protected readonly name = 'ChooseSoundDialog'

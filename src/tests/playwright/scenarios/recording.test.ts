@@ -1,9 +1,9 @@
-import { test } from '../fixtures.ts'
-import { launchApp } from '../pageObjects/launchApp.tsx'
-import { MAX_RECORDING_DURATION } from '../../../components/soundsEditor/recordingConstants.ts'
 import { AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
-import { launchAndStartAudioCapture } from '../pageObjects/SoundsEditorPageObject.ts'
+import { MAX_RECORDING_DURATION } from '../../../components/soundsEditor/recordingConstants.ts'
 import { Volume } from '../../../utils/types/brandedTypes.ts'
+import { test } from '../fixtures.ts'
+import { launchAndStartAudioCapture } from '../pageObjects/SoundsEditorPageObject.ts'
+import { launchApp } from '../pageObjects/launchApp.tsx'
 
 test('captured audio should be shown after recording', async ({ mount }) => {
   const soundsEditorPage = await launchAndStartAudioCapture(mount)

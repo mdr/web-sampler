@@ -1,12 +1,11 @@
-import { AudioRecorder, AudioRecorderState, StartRecordingOutcome } from './AudioRecorder.ts'
 import { Option } from '../utils/types/Option.ts'
-import { CAPTURING_AUDIO_WORKLET_NAME, STOP_MESSAGE } from './CapturingAudioWorkletConstants.ts'
-import { AudioContextProvider } from './AudioContextProvider.ts'
-import { AbstractAudioRecorder } from './AbstractAudioRecorder.ts'
-import { average, concatenateFloat32Arrays } from '../utils/utils.ts'
-
-import workletUrl from './CapturingAudioWorkletProcessor?worker&url'
 import { Hz, Pcm, Volume } from '../utils/types/brandedTypes.ts'
+import { average, concatenateFloat32Arrays } from '../utils/utils.ts'
+import { AbstractAudioRecorder } from './AbstractAudioRecorder.ts'
+import { AudioContextProvider } from './AudioContextProvider.ts'
+import { AudioRecorder, AudioRecorderState, StartRecordingOutcome } from './AudioRecorder.ts'
+import { CAPTURING_AUDIO_WORKLET_NAME, STOP_MESSAGE } from './CapturingAudioWorkletConstants.ts'
+import workletUrl from './CapturingAudioWorkletProcessor?worker&url'
 
 export class WebAudioRecorder extends AbstractAudioRecorder implements AudioRecorder {
   private mediaStream: Option<MediaStream> = undefined

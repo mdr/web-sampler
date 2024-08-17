@@ -1,5 +1,8 @@
 import { Link } from 'react-router-dom'
-import { MiscTestIds } from './MiscTestIds.ts' // Assuming you're using React Router for navigation
+
+import { MiscTestIds } from './MiscTestIds.ts'
+
+// Assuming you're using React Router for navigation
 
 export const NotFoundPage = () => (
   <div

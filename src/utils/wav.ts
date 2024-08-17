@@ -1,8 +1,8 @@
 // Adapted from https://github.com/Experience-Monks/audiobuffer-to-wav (MIT License)
 // itself adapted from https://github.com/mattdiamond/Recorderjs (MIT License)
-import { Hz } from './types/brandedTypes.ts'
-import { AUDIO_WAV } from './mediaTypes.ts'
 import { AudioData } from '../types/AudioData.ts'
+import { AUDIO_WAV } from './mediaTypes.ts'
+import { Hz } from './types/brandedTypes.ts'
 
 export const pcmToWavBlob = (audioData: AudioData): Blob => new Blob([encodeWav(audioData)], { type: AUDIO_WAV })
 

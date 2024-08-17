@@ -1,12 +1,13 @@
-import { EditSoundboardPaneTestIds } from './EditSoundboardPaneTestIds.ts'
-import { Dialog, Heading } from 'react-aria-components'
-import { Button } from '../../shared/Button.tsx'
-import { useRecordHotkeys } from 'react-hotkeys-hook'
-import { SoundId } from '../../../types/Sound.ts'
-import { getTile, SoundboardId } from '../../../types/Soundboard.ts'
-import { useSoundActions, useSoundboard } from '../../../sounds/library/soundHooks.ts'
-import { describeKeyboardShortcut, KeyboardShortcut } from '../../../types/KeyboardShortcut.ts'
 import _ from 'lodash'
+import { Dialog, Heading } from 'react-aria-components'
+import { useRecordHotkeys } from 'react-hotkeys-hook'
+
+import { useSoundActions, useSoundboard } from '../../../sounds/library/soundHooks.ts'
+import { KeyboardShortcut, describeKeyboardShortcut } from '../../../types/KeyboardShortcut.ts'
+import { SoundId } from '../../../types/Sound.ts'
+import { SoundboardId, getTile } from '../../../types/Soundboard.ts'
+import { Button } from '../../shared/Button.tsx'
+import { EditSoundboardPaneTestIds } from './EditSoundboardPaneTestIds.ts'
 
 export interface ChooseShortcutDialogProps {
   soundboardId: SoundboardId

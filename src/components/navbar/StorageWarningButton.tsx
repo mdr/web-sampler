@@ -1,9 +1,10 @@
 import { mdiAlert } from '@mdi/js'
 import { DialogTrigger } from 'react-aria-components'
-import { StorageWarningDialog } from './StorageWarningDialog.tsx'
-import { NavbarTestIds } from './NavbarTestIds.ts'
-import { NavbarIconButton } from './NavbarIconButton.tsx'
+
 import { Modal } from '../shared/Modal.tsx'
+import { NavbarIconButton } from './NavbarIconButton.tsx'
+import { NavbarTestIds } from './NavbarTestIds.ts'
+import { StorageWarningDialog } from './StorageWarningDialog.tsx'
 
 export const StorageWarningButton = () => (
   <DialogTrigger>

@@ -1,8 +1,8 @@
-import { Input, TextField } from 'react-aria-components'
 import InlineEdit from '@atlaskit/inline-edit'
+import { Input, TextField } from 'react-aria-components'
 
-import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
 import { soundNameAsDisplayName } from '../../../types/Sound.ts'
+import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
 
 export interface SoundNameTextFieldProps {
   name: string

@@ -1,5 +1,7 @@
+import { mdiCheck } from '@mdi/js'
+import Icon from '@mdi/react'
+import { useState } from 'react'
 import {
-  Button as RacButton,
   ComboBox,
   Dialog,
   Heading,
@@ -8,17 +10,16 @@ import {
   ListBox,
   ListBoxItem,
   Popover,
+  Button as RacButton,
 } from 'react-aria-components'
-import { ChooseSoundDialogTestIds } from './EditSoundboardPaneTestIds.ts'
-import { Button } from '../../shared/Button.tsx'
+
 import { useSoundActions, useSoundboard, useSounds } from '../../../sounds/library/soundHooks.ts'
-import { getSoundDisplayName, sortSoundsByDisplayName, Sound, SoundId } from '../../../types/Sound.ts'
-import Icon from '@mdi/react'
-import { mdiCheck } from '@mdi/js'
-import { ButtonVariant } from '../../shared/ButtonVariant.tsx'
-import { useState } from 'react'
-import { Option } from '../../../utils/types/Option.ts'
+import { Sound, SoundId, getSoundDisplayName, sortSoundsByDisplayName } from '../../../types/Sound.ts'
 import { SoundboardId } from '../../../types/Soundboard.ts'
+import { Option } from '../../../utils/types/Option.ts'
+import { Button } from '../../shared/Button.tsx'
+import { ButtonVariant } from '../../shared/ButtonVariant.tsx'
+import { ChooseSoundDialogTestIds } from './EditSoundboardPaneTestIds.ts'
 
 export interface ChooseSoundDialogProps {
   soundboardId: SoundboardId

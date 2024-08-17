@@ -1,7 +1,8 @@
+import { Equals, assert } from 'tsafe'
+import { z } from 'zod'
+
 import { Sound, soundSchema } from '../types/Sound.ts'
 import { Soundboard, soundboardSchema } from '../types/Soundboard.ts'
-import { z } from 'zod'
-import { assert, Equals } from 'tsafe'
 
 export interface SoundState {
   readonly soundboards: readonly Soundboard[]

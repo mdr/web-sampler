@@ -1,10 +1,11 @@
-import { Hz, MAX_VOLUME, Pcm, Samples, Seconds, secondsToMillis, Volume } from '../utils/types/brandedTypes.ts'
-import { pcmLength, pcmSlice } from '../utils/pcmUtils.ts'
-import { samplesToSeconds } from './sampleConversions.ts'
-import { AudioData } from './AudioData.ts'
 import humanizeDuration from 'humanize-duration'
+import { Equals, assert } from 'tsafe'
 import { z } from 'zod'
-import { assert, Equals } from 'tsafe'
+
+import { pcmLength, pcmSlice } from '../utils/pcmUtils.ts'
+import { Hz, MAX_VOLUME, Pcm, Samples, Seconds, Volume, secondsToMillis } from '../utils/types/brandedTypes.ts'
+import { AudioData } from './AudioData.ts'
+import { samplesToSeconds } from './sampleConversions.ts'
 
 export interface SoundAudio {
   readonly pcm: Pcm

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels'
+
 import { Navbar } from '../navbar/Navbar.tsx'
 import { SoundboardsSidebar } from './sidebar/SoundboardsSidebar.tsx'
 
