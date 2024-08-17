@@ -3660,26 +3660,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/experimental-ct-core@npm:1.46.0":
-  version: 1.46.0
-  resolution: "@playwright/experimental-ct-core@npm:1.46.0"
+"@playwright/experimental-ct-core@npm:1.46.1":
+  version: 1.46.1
+  resolution: "@playwright/experimental-ct-core@npm:1.46.1"
   dependencies:
-    playwright: "npm:1.46.0"
-    playwright-core: "npm:1.46.0"
+    playwright: "npm:1.46.1"
+    playwright-core: "npm:1.46.1"
     vite: "npm:^5.2.8"
-  checksum: 10c0/3348aca42d10046e8951b277f8f5d360b81146e278266e71ee4e09b99639650137fe4d7030626d6a23d670c0819d5dfccdb084044b4f67c4f2efe6f606113347
+  checksum: 10c0/3ef8ca589ee5eacd4283ebf710a0e7a933929ef5797a556ff98e0b0ce43848fb6176e8155cd664e8a0457def18bad22063a132e592fd1805a8411efa44992085
   languageName: node
   linkType: hard
 
-"@playwright/experimental-ct-react@npm:^1.46.0":
-  version: 1.46.0
-  resolution: "@playwright/experimental-ct-react@npm:1.46.0"
+"@playwright/experimental-ct-react@npm:^1.46.1":
+  version: 1.46.1
+  resolution: "@playwright/experimental-ct-react@npm:1.46.1"
   dependencies:
-    "@playwright/experimental-ct-core": "npm:1.46.0"
+    "@playwright/experimental-ct-core": "npm:1.46.1"
     "@vitejs/plugin-react": "npm:^4.2.1"
   bin:
     playwright: cli.js
-  checksum: 10c0/7a00f37e4671343fe898911c978d7887881779b2ff3221efb4a307552b335b49552067deb9d8cff2cc002e7acc1eeff8f8cb998a9338362cad549ec550835859
+  checksum: 10c0/7cb31dc140b8f759e7ae49776f18ebc1818b42bde64f736b96a1a0d223d576cf5482afa34fee20ba3caf0c02e2234260fde733b170b1f13c9d830e5fd69cbb5c
   languageName: node
   linkType: hard
 
@@ -5234,10 +5234,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@remix-run/router@npm:1.19.0":
-  version: 1.19.0
-  resolution: "@remix-run/router@npm:1.19.0"
-  checksum: 10c0/8c1503a535035f43747fea063b027aa841690c19a6bd8b6251c53d3aab4d4cae89b0bd4809dc7ab69fdbe61897f43c2683b82fc4cdc5785f9166cf2ea60e5932
+"@remix-run/router@npm:1.19.1":
+  version: 1.19.1
+  resolution: "@remix-run/router@npm:1.19.1"
+  checksum: 10c0/9101fc96646e5107b6b0ef248d4c93bd965590c37ac02d35bcc57d1902467db7fc6eeec0a1fb97d0ce5bc96fae58e75239555e44a983239a61badba18e82d3b8
   languageName: node
   linkType: hard
 
@@ -6420,12 +6420,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^22.3.0":
-  version: 22.3.0
-  resolution: "@types/node@npm:22.3.0"
+"@types/node@npm:^22.4.0":
+  version: 22.4.0
+  resolution: "@types/node@npm:22.4.0"
   dependencies:
-    undici-types: "npm:~6.18.2"
-  checksum: 10c0/855be3b97f4262a84818f889ff898e147dcef4f72b866e3551a8367380cdb63a45cf3929f09d9a0647f62706f8d4772e91a1ecd1bd7c6a80d6744c2b0cbca608
+    undici-types: "npm:~6.19.2"
+  checksum: 10c0/84cd094b19a27e0db425f1d02614e4f7ac59b5eb3b21e288c8f8d4d0a4c9ad370107bc1a649d4c2b4e810cd133feea26e0bbf7e7c617f93e9e139d6d2568cf50
   languageName: node
   linkType: hard
 
@@ -12284,27 +12284,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.46.0":
-  version: 1.46.0
-  resolution: "playwright-core@npm:1.46.0"
+"playwright-core@npm:1.46.1":
+  version: 1.46.1
+  resolution: "playwright-core@npm:1.46.1"
   bin:
     playwright-core: cli.js
-  checksum: 10c0/2d2d163dc22a424a86765b25c5523e932748f38d071f49ac6c41f14c8c10c0874b3854a290057e9988c5e876bb8be8aa52fe40ee8c57b3390b9c01593074e3df
+  checksum: 10c0/98e48e271caccaa6c54b3c591cbddbef36a679eef011b38e2af11fbaba0aab1f997b45f9207c4099468a0c79047a1e879bbd9e81bd880ae24501a0ee3c7a33c7
   languageName: node
   linkType: hard
 
-"playwright@npm:1.46.0, playwright@npm:^1.46.0":
-  version: 1.46.0
-  resolution: "playwright@npm:1.46.0"
+"playwright@npm:1.46.1, playwright@npm:^1.46.1":
+  version: 1.46.1
+  resolution: "playwright@npm:1.46.1"
   dependencies:
     fsevents: "npm:2.3.2"
-    playwright-core: "npm:1.46.0"
+    playwright-core: "npm:1.46.1"
   dependenciesMeta:
     fsevents:
       optional: true
   bin:
     playwright: cli.js
-  checksum: 10c0/fa4192af99908c2c02ae20880e27f51efa6694348c2496d1c2818908eb394c4b21947edd0c5ce2a83f471f5399ac3f0cee8a7be8a35cd80d32d32875184962c7
+  checksum: 10c0/2a328a2073313136192d74b48b981d9aeb1d4cc54926ed235f638c875f9de59c41370bb20bb2d8cf30126c52c6e25cc02db21ffafeb487c92c84c52c84846912
   languageName: node
   linkType: hard
 
@@ -12965,27 +12965,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:^6.26.0":
-  version: 6.26.0
-  resolution: "react-router-dom@npm:6.26.0"
+"react-router-dom@npm:^6.26.1":
+  version: 6.26.1
+  resolution: "react-router-dom@npm:6.26.1"
   dependencies:
-    "@remix-run/router": "npm:1.19.0"
-    react-router: "npm:6.26.0"
+    "@remix-run/router": "npm:1.19.1"
+    react-router: "npm:6.26.1"
   peerDependencies:
     react: ">=16.8"
     react-dom: ">=16.8"
-  checksum: 10c0/f59a5b72b1dab6480f97f20fa49b601cb1366e6e1c8def7fd727ccbc4e8cf527f64f7aedd2889534de222dc86634a23e2ed108b99e5443e7b5401a4db104e611
+  checksum: 10c0/9d9d8ed54d1c95497c6fa35a6ab46992efeccf1cfc6f0f6089c6c9b040af3eae09568fbb80c690bae08051a955d92d7aa3a0e730f626eb69285114993d31d430
   languageName: node
   linkType: hard
 
-"react-router@npm:6.26.0":
-  version: 6.26.0
-  resolution: "react-router@npm:6.26.0"
+"react-router@npm:6.26.1":
+  version: 6.26.1
+  resolution: "react-router@npm:6.26.1"
   dependencies:
-    "@remix-run/router": "npm:1.19.0"
+    "@remix-run/router": "npm:1.19.1"
   peerDependencies:
     react: ">=16.8"
-  checksum: 10c0/498b97cac077170096715609e65e0039b64e497612ed585b8d3b88733310d23e7ca76ce189b09b6fbc65ca8df1595ca20ccac05a84006803843dfa05107d9540
+  checksum: 10c0/463078e740462b42bb5ba8004448f33fc9e63778f432a4ed55c57b93c5b519e25fb17913ee8435b0fda33c6b9f75df8ef6fcb2c3a4f8db84fb546d202e29aa51
   languageName: node
   linkType: hard
 
@@ -14724,10 +14724,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici-types@npm:~6.18.2":
-  version: 6.18.2
-  resolution: "undici-types@npm:6.18.2"
-  checksum: 10c0/dea28163891a5af7624c120107dc07a74c369ee94c6dd1d0de29af061ee129fac4846f97130589f4436b85f6102c73d30328ca908be02626dd8ab9fec5642aba
+"undici-types@npm:~6.19.2":
+  version: 6.19.6
+  resolution: "undici-types@npm:6.19.6"
+  checksum: 10c0/9b2264c5700e7169c6c62c643aac56cd8984c5fd7e18ed31ff11780260e137f6340dee8317a2e6e0ae3c49f5e5ef6fa577ea07193cbaa535265cba76a267cae9
   languageName: node
   linkType: hard
 
@@ -15351,7 +15351,7 @@ __metadata:
     "@eslint/js": "npm:^9.9.0"
     "@mdi/js": "npm:^7.4.47"
     "@mdi/react": "npm:^1.6.1"
-    "@playwright/experimental-ct-react": "npm:^1.46.0"
+    "@playwright/experimental-ct-react": "npm:^1.46.1"
     "@sentry/react": "npm:^8.26.0"
     "@sinonjs/fake-timers": "npm:^11.2.2"
     "@storybook/addon-essentials": "npm:^8.2.9"
@@ -15370,7 +15370,7 @@ __metadata:
     "@types/file-saver": "npm:^2.0.7"
     "@types/humanize-duration": "npm:^3.27.4"
     "@types/lodash": "npm:^4.17.7"
-    "@types/node": "npm:^22.3.0"
+    "@types/node": "npm:^22.4.0"
     "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.3.0"
     "@types/sinonjs__fake-timers": "npm:^8.1.5"
@@ -15409,7 +15409,7 @@ __metadata:
     konva: "npm:^9.3.14"
     lodash: "npm:^4.17.21"
     monocart-reporter: "npm:^2.6.5"
-    playwright: "npm:^1.46.0"
+    playwright: "npm:^1.46.1"
     postcss: "npm:^8.4.41"
     prettier: "npm:3.3.3"
     prettier-plugin-tailwindcss: "npm:^0.6.6"
@@ -15422,7 +15422,7 @@ __metadata:
     react-konva: "npm:^18.2.10"
     react-resizable-panels: "npm:^2.1.0"
     react-resize-detector: "npm:^11.0.1"
-    react-router-dom: "npm:^6.26.0"
+    react-router-dom: "npm:^6.26.1"
     react-spinners: "npm:^0.14.1"
     react-toastify: "npm:^10.0.5"
     react-use: "npm:^17.5.1"
