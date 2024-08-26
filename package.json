@@ -95,7 +95,7 @@
     "@vitest/ui": "^2.0.5",
     "autoprefixer": "^10.4.20",
     "blob-polyfill": "^9.0.20240710",
-    "eslint": "^9.9.0",
+    "eslint": "^9.9.1",
     "eslint-plugin-react": "^7.35.0",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.11",
