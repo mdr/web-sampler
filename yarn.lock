@@ -7293,10 +7293,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zip.js/zip.js@npm:^2.7.51":
-  version: 2.7.51
-  resolution: "@zip.js/zip.js@npm:2.7.51"
-  checksum: 10c0/c4fc6021159964b3dc0d858002dff7b748112872aae708bb4074f74c3239bd0ffd1ae63c73c4d2ddbb958b0a6c6a0b86a4c742ee4eb2f01497a3dfd1848dae49
+"@zip.js/zip.js@npm:^2.7.52":
+  version: 2.7.52
+  resolution: "@zip.js/zip.js@npm:2.7.52"
+  checksum: 10c0/c337da5f9198fb45958c19281cc43afdc915057744613362b8400224e144e8265af3b1893258959a682d15c4514aa6a899b4322c60bacb16f131c372f145fe5a
   languageName: node
   linkType: hard
 
@@ -15780,7 +15780,7 @@ __metadata:
     "@vitejs/plugin-react": "npm:^4.3.1"
     "@vitest/coverage-v8": "npm:^2.0.5"
     "@vitest/ui": "npm:^2.0.5"
-    "@zip.js/zip.js": "npm:^2.7.51"
+    "@zip.js/zip.js": "npm:^2.7.52"
     async-lock: "npm:^1.4.1"
     autoprefixer: "npm:^10.4.20"
     beautiful-react-hooks: "npm:^5.0.2"
