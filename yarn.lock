@@ -5798,7 +5798,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sinonjs/commons@npm:^3.0.0":
+"@sinonjs/commons@npm:^3.0.1":
   version: 3.0.1
   resolution: "@sinonjs/commons@npm:3.0.1"
   dependencies:
@@ -5807,12 +5807,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sinonjs/fake-timers@npm:^11.2.2":
-  version: 11.2.2
-  resolution: "@sinonjs/fake-timers@npm:11.2.2"
+"@sinonjs/fake-timers@npm:^11.3.1":
+  version: 11.3.1
+  resolution: "@sinonjs/fake-timers@npm:11.3.1"
   dependencies:
-    "@sinonjs/commons": "npm:^3.0.0"
-  checksum: 10c0/a4218efa6fdafda622d02d4c0a6ab7df3641cb038bb0b14f0a3ee56f50c95aab4f1ab2d7798ce928b40c6fc1839465a558c9393a77e4dca879e1b2f8d60d8136
+    "@sinonjs/commons": "npm:^3.0.1"
+  checksum: 10c0/c4f96ea7c3ab0e1a5fc1e2e1201e984a9302841a9fb10059120ce3b6789dae0f851c8827cf16b052a6f87db9a098cdd36f7067246e7a9b71da1d5a2c3d3a9f3d
   languageName: node
   linkType: hard
 
@@ -12696,6 +12696,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postcss@npm:^8.4.44":
+  version: 8.4.44
+  resolution: "postcss@npm:8.4.44"
+  dependencies:
+    nanoid: "npm:^3.3.7"
+    picocolors: "npm:^1.0.1"
+    source-map-js: "npm:^1.2.0"
+  checksum: 10c0/53c33338261a3d4f4198f8893e9dfe8b828d8d9186142ee85f02d228f04245c5bbe31239411a357a556ad20ed96f28db24d0921d63edc428fdc9133289371a1d
+  languageName: node
+  linkType: hard
+
 "prelude-ls@npm:^1.2.1":
   version: 1.2.1
   resolution: "prelude-ls@npm:1.2.1"
@@ -13111,13 +13122,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-hotkeys-hook@npm:^4.5.0":
-  version: 4.5.0
-  resolution: "react-hotkeys-hook@npm:4.5.0"
+"react-hotkeys-hook@npm:^4.5.1":
+  version: 4.5.1
+  resolution: "react-hotkeys-hook@npm:4.5.1"
   peerDependencies:
     react: ">=16.8.1"
     react-dom: ">=16.8.1"
-  checksum: 10c0/ae3ee47c623aaece4c21ce8027b0fff18caaee8c6cb22fafcbebbb54cee27ef7d0097145f04da1bd67b5af1d89cb4f983ae6a72b32451de81dca193255187480
+  checksum: 10c0/d881d8b3dc94e63629467e9e370921d168fee23a683bd02cf52d9c51c488a0fd944d15bb43b5f2b1c99f2d04bac7f58ffb84b57f9c3f84b2f437ea81b439ec10
   languageName: node
   linkType: hard
 
@@ -15685,7 +15696,7 @@ __metadata:
     "@mdi/react": "npm:^1.6.1"
     "@playwright/experimental-ct-react": "npm:^1.46.1"
     "@sentry/react": "npm:^8.27.0"
-    "@sinonjs/fake-timers": "npm:^11.2.2"
+    "@sinonjs/fake-timers": "npm:^11.3.1"
     "@storybook/addon-essentials": "npm:^8.2.9"
     "@storybook/addon-interactions": "npm:^8.2.9"
     "@storybook/addon-links": "npm:^8.2.9"
@@ -15743,7 +15754,7 @@ __metadata:
     lodash: "npm:^4.17.21"
     monocart-reporter: "npm:^2.8.0"
     playwright: "npm:^1.46.1"
-    postcss: "npm:^8.4.41"
+    postcss: "npm:^8.4.44"
     prettier: "npm:3.3.3"
     prettier-plugin-tailwindcss: "npm:^0.6.6"
     react: "npm:^18.3.1"
@@ -15751,7 +15762,7 @@ __metadata:
     react-array-to-tree: "npm:^2.0.1"
     react-dom: "npm:^18.3.1"
     react-error-boundary: "npm:^4.0.13"
-    react-hotkeys-hook: "npm:^4.5.0"
+    react-hotkeys-hook: "npm:^4.5.1"
     react-konva: "npm:^18.2.10"
     react-resizable-panels: "npm:^2.1.2"
     react-resize-detector: "npm:^11.0.1"
