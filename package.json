@@ -96,7 +96,7 @@
     "autoprefixer": "^10.4.20",
     "blob-polyfill": "^9.0.20240710",
     "eslint": "^9.9.1",
-    "eslint-plugin-react": "^7.35.2",
+    "eslint-plugin-react": "^7.36.1",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.11",
     "eslint-plugin-storybook": "^0.8.0",
