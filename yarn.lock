@@ -7400,12 +7400,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn-walk@npm:^8.3.3":
-  version: 8.3.3
-  resolution: "acorn-walk@npm:8.3.3"
+"acorn-walk@npm:^8.3.4":
+  version: 8.3.4
+  resolution: "acorn-walk@npm:8.3.4"
   dependencies:
     acorn: "npm:^8.11.0"
-  checksum: 10c0/4a9e24313e6a0a7b389e712ba69b66b455b4cb25988903506a8d247e7b126f02060b05a8a5b738a9284214e4ca95f383dd93443a4ba84f1af9b528305c7f243b
+  checksum: 10c0/76537ac5fb2c37a64560feaf3342023dadc086c46da57da363e64c6148dc21b57d49ace26f949e225063acb6fb441eabffd89f7a3066de5ad37ab3e328927c62
   languageName: node
   linkType: hard
 
@@ -11950,15 +11950,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"monocart-coverage-reports@npm:^2.10.3":
-  version: 2.10.3
-  resolution: "monocart-coverage-reports@npm:2.10.3"
+"monocart-coverage-reports@npm:^2.10.9":
+  version: 2.10.9
+  resolution: "monocart-coverage-reports@npm:2.10.9"
   dependencies:
     "@bcoe/v8-coverage": "npm:^0.2.3"
     "@jridgewell/sourcemap-codec": "npm:^1.5.0"
     acorn: "npm:^8.12.1"
     acorn-loose: "npm:^8.4.0"
-    acorn-walk: "npm:^8.3.3"
+    acorn-walk: "npm:^8.3.4"
     commander: "npm:^12.1.0"
     console-grid: "npm:^2.2.2"
     eight-colors: "npm:^1.3.0"
@@ -11970,7 +11970,7 @@ __metadata:
     monocart-locator: "npm:^1.0.2"
   bin:
     mcr: lib/cli.js
-  checksum: 10c0/df5aaddad2a73f39c5f3e36146ace2195dc83e4ab2f21418ca84a4a178e641e8ff1fcc22e09d9ca75430dd41bb74bfe9d2a2a1f0f5baed1accc11529c7de0c59
+  checksum: 10c0/9a4b21aa771c0b55c79aefe9321d4a72ecbcfefe4454e6c7738b03f1220774c803ac2cbbc0cde44b17c26f41912fcf99789d134b0639ce6d5dbba20671d5c2e8
   languageName: node
   linkType: hard
 
@@ -11981,21 +11981,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"monocart-reporter@npm:^2.8.0":
-  version: 2.8.0
-  resolution: "monocart-reporter@npm:2.8.0"
+"monocart-reporter@npm:^2.8.1":
+  version: 2.8.1
+  resolution: "monocart-reporter@npm:2.8.1"
   dependencies:
     console-grid: "npm:^2.2.2"
     eight-colors: "npm:^1.3.0"
     koa: "npm:^2.15.3"
     koa-static-resolver: "npm:^1.0.6"
     lz-utils: "npm:^2.1.0"
-    monocart-coverage-reports: "npm:^2.10.3"
+    monocart-coverage-reports: "npm:^2.10.9"
     monocart-locator: "npm:^1.0.2"
-    nodemailer: "npm:^6.9.14"
+    nodemailer: "npm:^6.9.15"
   bin:
     monocart: lib/cli.js
-  checksum: 10c0/7b6199ad524cfd92d4e19e2f0cb0eec0459d373589ceb93b15219eeb2f7e30c3b8d7abc1a903d204e6db0dbdba4951353bf418baeb8ed68d25ca4e0123a9afba
+  checksum: 10c0/c0a1ffaaf1dfcb2495543379778e64bb612c083704af39edc37749dafa717c38204821dc894e3a71136bcc441dba8bb2ca60e61d641e01cb506a16c42c773af0
   languageName: node
   linkType: hard
 
@@ -12137,10 +12137,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nodemailer@npm:^6.9.14":
-  version: 6.9.14
-  resolution: "nodemailer@npm:6.9.14"
-  checksum: 10c0/2542986849bc6ec2bf12fb7b72226da0ce9c6a0946216dea020d9eedee3ac1a4eb2413f59772a3ddd4bb9188d5ce859167a030c065719473f71319e052a319dc
+"nodemailer@npm:^6.9.15":
+  version: 6.9.15
+  resolution: "nodemailer@npm:6.9.15"
+  checksum: 10c0/92493406310cb1bb0bac575d604b3c75b67e420e8af94711bd55cb012ee02d3bf6fda57c663d66c15bdd89acd5f9cd540922644b089617c6e191596536503b5b
   languageName: node
   linkType: hard
 
@@ -15862,7 +15862,7 @@ __metadata:
     jsdom: "npm:^25.0.0"
     konva: "npm:^9.3.15"
     lodash: "npm:^4.17.21"
-    monocart-reporter: "npm:^2.8.0"
+    monocart-reporter: "npm:^2.8.1"
     playwright: "npm:^1.46.1"
     postcss: "npm:^8.4.47"
     prettier: "npm:3.3.3"
