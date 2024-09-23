@@ -104,7 +104,7 @@
     "flush-promises": "^1.0.2",
     "globals": "^15.9.0",
     "jest-extended": "^4.0.2",
-    "jsdom": "^25.0.0",
+    "jsdom": "^25.0.1",
     "monocart-reporter": "^2.8.1",
     "playwright": "^1.46.1",
     "postcss": "^8.4.47",
