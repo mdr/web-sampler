@@ -92,7 +92,7 @@
     "@typescript-eslint/parser": "^8.6.0",
     "@vitejs/plugin-react": "^4.3.1",
     "@vitest/coverage-v8": "^2.0.5",
-    "@vitest/ui": "^2.0.5",
+    "@vitest/ui": "^2.1.1",
     "autoprefixer": "^10.4.20",
     "blob-polyfill": "^9.0.20240710",
     "eslint": "^9.9.1",
