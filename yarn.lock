@@ -7432,6 +7432,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eight-colors@npm:^1.3.1":
+  version: 1.3.1
+  resolution: "eight-colors@npm:1.3.1"
+  checksum: 10c0/af37c6302b4879e1d756d3fcf9dbf21b0e8bb95d662e2725700aa451a756c9996d37a66cb05cbdbd156663e93398b8224199180f3683d1780542f3c9fd553d7d
+  languageName: node
+  linkType: hard
+
 "electron-to-chromium@npm:^1.4.601":
   version: 1.4.630
   resolution: "electron-to-chromium@npm:1.4.630"
@@ -10423,12 +10430,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"monocart-reporter@npm:^2.8.1":
-  version: 2.8.1
-  resolution: "monocart-reporter@npm:2.8.1"
+"monocart-reporter@npm:^2.8.4":
+  version: 2.8.4
+  resolution: "monocart-reporter@npm:2.8.4"
   dependencies:
     console-grid: "npm:^2.2.2"
-    eight-colors: "npm:^1.3.0"
+    eight-colors: "npm:^1.3.1"
     koa: "npm:^2.15.3"
     koa-static-resolver: "npm:^1.0.6"
     lz-utils: "npm:^2.1.0"
@@ -10437,7 +10444,7 @@ __metadata:
     nodemailer: "npm:^6.9.15"
   bin:
     monocart: lib/cli.js
-  checksum: 10c0/c0a1ffaaf1dfcb2495543379778e64bb612c083704af39edc37749dafa717c38204821dc894e3a71136bcc441dba8bb2ca60e61d641e01cb506a16c42c773af0
+  checksum: 10c0/426d9953ab36951bd75a256c57f9d557b023e806abebeed8c1aa487b2c5ef9f7af04a8efbf5943dacfd9e1df5d7a00d86dbe4480497f49635f19fb3bcf94d0b7
   languageName: node
   linkType: hard
 
@@ -13769,7 +13776,7 @@ __metadata:
     jsdom: "npm:^25.0.1"
     konva: "npm:^9.3.15"
     lodash: "npm:^4.17.21"
-    monocart-reporter: "npm:^2.8.1"
+    monocart-reporter: "npm:^2.8.4"
     playwright: "npm:^1.46.1"
     postcss: "npm:^8.4.47"
     prettier: "npm:3.3.3"
