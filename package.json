@@ -51,7 +51,7 @@
     "react-spinners": "^0.14.1",
     "react-toastify": "^10.0.5",
     "react-use": "^17.5.1",
-    "tailwindcss-react-aria-components": "^1.1.5",
+    "tailwindcss-react-aria-components": "^1.1.6",
     "tsafe": "^1.7.4",
     "typeface-roboto": "^1.1.13",
     "use-file-picker": "^2.1.2",
