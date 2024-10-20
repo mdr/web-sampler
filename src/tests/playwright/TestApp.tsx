@@ -1,4 +1,4 @@
-import { default as FakeTimers } from '@sinonjs/fake-timers'
+import { default as FakeTimers, InstalledClock } from '@sinonjs/fake-timers'
 import useDidMount from 'beautiful-react-hooks/useDidMount'
 
 import { AudioOperations } from '../../audioOperations/AudioOperations.ts'
@@ -32,7 +32,7 @@ export const TestApp = ({
   )
 
   useDidMount(() => {
-    const clock = useFakeTimers ? FakeTimers.install() : undefined
+    const clock = useFakeTimers ? installFakeTimers() : undefined
     window.testHooks = new DefaultWindowTestHooks(audioRecorder, mockAudioElement, clock, config.soundLibrary)
     return () => clock?.uninstall()
   })
@@ -51,3 +51,17 @@ const makeTestAppConfig = (
   const audioOperations = new AudioOperations(audioContextProvider)
   return makeAppConfig(audioRecorder, audioElement, storageManager, audioOperations)
 }
+
+const installFakeTimers = (): InstalledClock =>
+  FakeTimers.install({
+    toFake: [
+      'setTimeout',
+      'clearTimeout',
+      'setInterval',
+      'clearInterval',
+      'Date',
+      'requestAnimationFrame',
+      'cancelAnimationFrame',
+      'performance',
+    ],
+  })
