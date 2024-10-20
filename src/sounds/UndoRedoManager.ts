@@ -23,25 +23,17 @@ export class UndoRedoManager<T> {
     this.redoStack.length = 0
   }
 
-  undo = (): Option<T> => {
-    const previousState = this.undoStack.pop()
-    if (previousState === undefined) {
-      return undefined
-    }
-    this.redoStack.push(this.currentState)
-    this.currentState = previousState
-    return previousState
+  private moveState = (fromStack: T[], toStack: T[]): Option<T> => {
+    const newState = fromStack.pop()
+    if (newState === undefined) return undefined
+    toStack.push(this.currentState)
+    this.currentState = newState
+    return newState
   }
 
-  redo = (): Option<T> => {
-    const nextState = this.redoStack.pop()
-    if (nextState === undefined) {
-      return undefined
-    }
-    this.undoStack.push(this.currentState)
-    this.currentState = nextState
-    return nextState
-  }
+  undo = (): Option<T> => this.moveState(this.undoStack, this.redoStack)
+
+  redo = (): Option<T> => this.moveState(this.redoStack, this.undoStack)
 
   get canUndo(): boolean {
     return this.undoStack.length > 0

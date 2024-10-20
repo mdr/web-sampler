@@ -1,6 +1,6 @@
 import { mdiExport, mdiImport } from '@mdi/js'
 import Icon from '@mdi/react'
-import FileSaver from 'file-saver'
+import saveAs from 'file-saver'
 import { Key, Menu, MenuItem } from 'react-aria-components'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -15,7 +15,7 @@ import { zipSounds } from './importExport/exportSounds.ts'
 import { unzipSounds } from './importExport/importSounds.ts'
 
 const NavbarMenuIds = {
-  exportAllSounds: 'exportSounds',
+  exportAllSounds: 'exportAllSounds',
   importSounds: 'importSounds',
 }
 
@@ -47,7 +47,7 @@ export const NavbarMenu = () => {
   const doExport = () =>
     fireAndForget(async () => {
       const zipBlob = await zipSounds(sounds)
-      FileSaver.saveAs(zipBlob, 'library.sounds')
+      saveAs(zipBlob, 'library.sounds', { autoBom: false })
       toast.info('All sounds exported.')
     })
 
