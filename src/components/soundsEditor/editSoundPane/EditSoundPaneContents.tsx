@@ -1,5 +1,5 @@
 import useUnmount from 'beautiful-react-hooks/useUnmount'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useRef } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -19,8 +19,6 @@ import { Option } from '../../../utils/types/Option.ts'
 import { TimerId } from '../../../utils/types/TimerId.ts'
 import { secondsToMillis } from '../../../utils/types/brandedTypes.ts'
 import { fireAndForget } from '../../../utils/utils.ts'
-import { Modal } from '../../shared/Modal.tsx'
-import { ShortcutsWarningDialog } from '../ShortcutsDialog.tsx'
 import { AudioSection } from '../audioSection/AudioSection.tsx'
 import { CropButton } from '../audioSection/CropButton.tsx'
 import { DownloadMp3Button } from '../audioSection/DownloadMp3Button.tsx'
@@ -50,9 +48,8 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPaneProps) => {
   const audioRecorderState = useAudioRecorderState()
   const timerIdRef = useRef<Option<TimerId>>()
   const navigate = useNavigate()
-  const [shortcutsWarningDialogOpen, setShortcutsWarningDialogOpen] = useState(false)
 
-  useHotkeys('shift+?', () => setShortcutsWarningDialogOpen(true))
+  useHotkeys('shift+?', () => undefined)
 
   const handleRecordingComplete = useCallback(
     (audioData: Option<AudioData>) => {
@@ -115,15 +112,12 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPaneProps) => {
 
   return (
     <>
-      <Modal isOpen={shortcutsWarningDialogOpen}>
-        <ShortcutsWarningDialog close={() => setShortcutsWarningDialogOpen(false)} />
-      </Modal>
       <div className="flex flex-col space-y-4 px-4 pt-4">
         <SoundNameTextField name={sound.name} setName={setSoundName} />
         <div className="flex space-x-2">
           <DeleteButton onPress={handleDeleteButtonPressed} />
           <DuplicateSoundButton soundId={soundId} />
-          <ShortcutsButton onPress={() => setShortcutsWarningDialogOpen(true)} />
+          <ShortcutsButton />
         </div>
         <h2 className="text-xl" data-testid={EditSoundPaneTestIds.audioHeading}>
           Audio

@@ -5,10 +5,6 @@ import { isMacOs } from '../../utils/browserUtils.ts'
 import { Button } from '../shared/Button.tsx'
 import { ButtonVariant } from '../shared/ButtonVariant.tsx'
 
-export interface ShortcutsWarningDialogProps {
-  close: () => void
-}
-
 const TableHeader: FC = () => {
   return (
     <thead className="bg-gray-50">
@@ -63,13 +59,17 @@ const ShortcutTable: FC = () => {
   )
 }
 
-export const ShortcutsWarningDialog = ({ close }: ShortcutsWarningDialogProps) => {
+export const ShortcutsWarningDialog = () => {
   return (
     <Dialog aria-label="Shortcuts" className="relative outline-none">
-      <ShortcutTable />
-      <div className="mt-6 flex justify-end">
-        <Button variant={ButtonVariant.PRIMARY} label="Close" onPress={close} />
-      </div>
+      {({ close }) => (
+        <div>
+          <ShortcutTable />
+          <div className="mt-6 flex justify-end">
+            <Button variant={ButtonVariant.PRIMARY} label="Close" onPress={close} />
+          </div>
+        </div>
+      )}
     </Dialog>
   )
 }
