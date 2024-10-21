@@ -31,7 +31,7 @@
     "bowser": "^2.11.0",
     "clsx": "^2.1.1",
     "conditional-wrap": "^1.0.2",
-    "dexie": "^4.0.8",
+    "dexie": "^4.0.9",
     "effect": "^3.9.2",
     "file-saver": "^2.0.5",
     "humanize-duration": "^3.32.1",

@@ -7368,10 +7368,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dexie@npm:^4.0.8":
-  version: 4.0.8
-  resolution: "dexie@npm:4.0.8"
-  checksum: 10c0/d35a817d986c334a2de5f1a0d5ef373b3d9464de7b520f9af50c00ea2f974386632a3f949add83ba1fce9e929908d96db19726377f641f4768c137a554969a2d
+"dexie@npm:^4.0.9":
+  version: 4.0.9
+  resolution: "dexie@npm:4.0.9"
+  checksum: 10c0/6f89db439b1e8ddd2485190933f82c7744b4ab2d0613b78299ee2439a713f8f2e08152b698e3992033ea8f1d961159a7b4712392e43d67cf6bbd6e6cb258ac12
   languageName: node
   linkType: hard
 
@@ -13797,7 +13797,7 @@ __metadata:
     bowser: "npm:^2.11.0"
     clsx: "npm:^2.1.1"
     conditional-wrap: "npm:^1.0.2"
-    dexie: "npm:^4.0.8"
+    dexie: "npm:^4.0.9"
     effect: "npm:^3.9.2"
     eslint: "npm:^9.13.0"
     eslint-plugin-react: "npm:^7.37.1"
