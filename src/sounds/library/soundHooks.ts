@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
 
-import { Image, ImageId } from '../../types/Image.ts'
+import { Image } from '../../types/Image.ts'
 import { Sound, SoundId } from '../../types/Sound.ts'
 import { Soundboard, SoundboardId, SoundboardTile } from '../../types/Soundboard.ts'
 import { Option } from '../../utils/types/Option.ts'
@@ -19,6 +19,7 @@ const useSoundLibrary = (): SoundLibrary => {
 interface SoundLibraryState {
   sounds: readonly Sound[]
   soundboards: readonly Soundboard[]
+  images: readonly Image[]
   isLoading: boolean
   canUndo: boolean
   canRedo: boolean
@@ -27,6 +28,7 @@ interface SoundLibraryState {
 const getSoundLibraryState = (soundLibrary: SoundLibrary): SoundLibraryState => ({
   sounds: soundLibrary.sounds,
   soundboards: soundLibrary.soundboards,
+  images: soundLibrary.images,
   isLoading: soundLibrary.isLoading,
   canUndo: soundLibrary.canUndo,
   canRedo: soundLibrary.canRedo,
@@ -102,15 +104,3 @@ export const useCanUndo = (): boolean => useSoundLibraryState().canUndo
 export const useCanRedo = (): boolean => useSoundLibraryState().canRedo
 
 export const useSoundActions = (): SoundActions => useSoundLibrary()
-
-export const useImages = (): readonly Image[] => []
-
-export const useMaybeImage = (id: ImageId): Option<Image> => useImages().find((image) => image.id === id)
-
-export const useImage = (id: ImageId): Image => {
-  const image = useMaybeImage(id)
-  if (image === undefined) {
-    throw new Error(`no image found with id ${id}`)
-  }
-  return image
-}

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-import { useImages } from '../../../sounds/library/soundHooks.ts'
+import { useImages } from '../../../sounds/library/imageHooks.ts'
 import { getImageDisplayName, sortImagesByDisplayName } from '../../../types/Image.ts'
 import { useImageIdParam } from '../../routeHooks.ts'
 import { editImageRoute } from '../../routes.ts'

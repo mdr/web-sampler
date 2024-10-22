@@ -1,4 +1,5 @@
-import { useIsLoading, useMaybeImage } from '../../../sounds/library/soundHooks.ts'
+import { useMaybeImage } from '../../../sounds/library/imageHooks.ts'
+import { useIsLoading } from '../../../sounds/library/soundHooks.ts'
 import { ImageId } from '../../../types/Image.ts'
 import { ImageNotFound } from '../ImageNotFound.tsx'
 import { EditImagePaneContents } from './EditImagePaneContents.tsx'
