@@ -4767,12 +4767,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sinonjs/fake-timers@npm:^13.0.3":
-  version: 13.0.3
-  resolution: "@sinonjs/fake-timers@npm:13.0.3"
+"@sinonjs/fake-timers@npm:^13.0.4":
+  version: 13.0.4
+  resolution: "@sinonjs/fake-timers@npm:13.0.4"
   dependencies:
     "@sinonjs/commons": "npm:^3.0.1"
-  checksum: 10c0/4495b12def9117b93f72b6d5d6fc1a52f2efc059166bf791381e476f197d34bcf9061bd53dce1ce6cc9d858582011d29d1360f512f746ca78ff99217545b549e
+  checksum: 10c0/bf0eb8c28bb4f257baef30f1be49ca21b13f50d632226f29defd5d95ee2b2d7513e71b6eb7363cbbabd243b912a569bd9dc3da83f29e8c513634debded4c3e95
   languageName: node
   linkType: hard
 
@@ -13604,7 +13604,7 @@ __metadata:
     "@mdi/react": "npm:^1.6.1"
     "@playwright/experimental-ct-react": "npm:^1.48.1"
     "@sentry/react": "npm:^8.35.0"
-    "@sinonjs/fake-timers": "npm:^13.0.3"
+    "@sinonjs/fake-timers": "npm:^13.0.4"
     "@storybook/addon-essentials": "npm:^8.3.6"
     "@storybook/addon-interactions": "npm:^8.3.6"
     "@storybook/addon-links": "npm:^8.3.6"
