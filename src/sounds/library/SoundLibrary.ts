@@ -21,7 +21,7 @@ import { validateSoundState } from '../SoundStateValidator.ts'
 import { UndoRedoManager } from '../UndoRedoManager.ts'
 import { SoundStore } from '../store/SoundStore.ts'
 import { SoundSyncer } from '../store/SoundSyncer.ts'
-import { SoundActions } from './soundHooks.ts'
+import { SoundActions } from './SoundActions.ts'
 
 export type SoundLibraryUpdatedListener = () => void
 
