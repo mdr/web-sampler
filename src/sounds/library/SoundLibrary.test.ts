@@ -70,7 +70,7 @@ describe('SoundLibrary', () => {
 
   it('should support removing listeners', async () => {
     const sound = makeSound()
-    const { library, listener } = await setUpTest([sound])
+    const { library, listener } = await setUpTest({ sounds: [sound] })
 
     library.removeListener(listener)
 
@@ -81,7 +81,7 @@ describe('SoundLibrary', () => {
   describe('deleteSound', () => {
     it('should allow a sound to be deleted', async () => {
       const sound = makeSound()
-      const { library, soundStore, listener } = await setUpTest([sound])
+      const { library, soundStore, listener } = await setUpTest({ sounds: [sound] })
 
       library.deleteSound(sound.id)
 
@@ -97,7 +97,7 @@ describe('SoundLibrary', () => {
       const tile1 = makeSoundboardTile({ soundId: sound1.id })
       const tile2 = makeSoundboardTile({ soundId: sound2.id })
       const soundboard = makeSoundboard({ tiles: [tile1, tile2] })
-      const { library, soundStore } = await setUpTest([sound1, sound2], [soundboard])
+      const { library, soundStore } = await setUpTest({ sounds: [sound1, sound2], soundboards: [soundboard] })
 
       library.deleteSound(sound1.id)
 
@@ -110,7 +110,7 @@ describe('SoundLibrary', () => {
 
   it('should allow a sound name to be changed', async () => {
     const sound = makeSound({ name: SoundTestConstants.oldName })
-    const { library, soundStore, listener } = await setUpTest([sound])
+    const { library, soundStore, listener } = await setUpTest({ sounds: [sound] })
 
     library.setName(sound.id, SoundTestConstants.newName)
 
@@ -123,7 +123,7 @@ describe('SoundLibrary', () => {
   describe('importSounds', () => {
     it('should allow sounds to be imported', async () => {
       const oldSounds = [makeSound()]
-      const { library, soundStore, listener } = await setUpTest(oldSounds)
+      const { library, soundStore, listener } = await setUpTest({ sounds: oldSounds })
       const newSounds = [makeSound()]
 
       library.importSounds(newSounds)
@@ -138,7 +138,7 @@ describe('SoundLibrary', () => {
       const sound = makeSound()
       const tile = makeSoundboardTile({ soundId: sound.id })
       const soundboard = makeSoundboard({ tiles: [tile] })
-      const { library } = await setUpTest([sound], [soundboard])
+      const { library } = await setUpTest({ sounds: [sound], soundboards: [soundboard] })
       const newSounds = [makeSound()]
 
       library.importSounds(newSounds)
@@ -149,7 +149,7 @@ describe('SoundLibrary', () => {
 
   it('should allow the volume of a sound to be set', async () => {
     const sound = makeSoundWithAudio({ volume: Volume(1) })
-    const { library, soundStore, listener } = await setUpTest([sound])
+    const { library, soundStore, listener } = await setUpTest({ sounds: [sound] })
 
     library.setVolume(sound.id, Volume(0.5))
 
@@ -162,7 +162,7 @@ describe('SoundLibrary', () => {
   it('should allow the audio of a sound to be cropped', async () => {
     const pcm = makePcm(Samples(100))
     const sound = makeSoundWithAudio({ pcm, start: Samples(10), finish: Samples(90) })
-    const { library, soundStore, listener } = await setUpTest([sound])
+    const { library, soundStore, listener } = await setUpTest({ sounds: [sound] })
 
     library.cropAudio(sound.id)
 
@@ -179,7 +179,7 @@ describe('SoundLibrary', () => {
 
   it('should allow a sound start time to be updated', async () => {
     const sound = makeSoundWithAudio({ start: Samples(10), finish: Samples(20) })
-    const { library, listener } = await setUpTest([sound])
+    const { library, listener } = await setUpTest({ sounds: [sound] })
 
     library.setAudioStart(sound.id, Samples(15))
 
@@ -191,7 +191,7 @@ describe('SoundLibrary', () => {
 
   it('should allow a sound finish time to be updated', async () => {
     const sound = makeSoundWithAudio({ start: Samples(10), finish: Samples(20) })
-    const { library, listener } = await setUpTest([sound])
+    const { library, listener } = await setUpTest({ sounds: [sound] })
 
     library.setAudioFinish(sound.id, Samples(15))
 
@@ -216,7 +216,7 @@ describe('SoundLibrary', () => {
 
   it('should allow a soundboard name to be changed', async () => {
     const soundboard = makeSoundboard({ name: SoundboardTestConstants.oldName })
-    const { library, soundStore, listener } = await setUpTest([], [soundboard])
+    const { library, soundStore, listener } = await setUpTest({ soundboards: [soundboard] })
 
     library.setSoundboardName(soundboard.id, SoundboardTestConstants.newName)
 
@@ -229,7 +229,7 @@ describe('SoundLibrary', () => {
 
   it('should allow a sound to be duplicated', async () => {
     const sound = makeSound()
-    const { library, soundStore, listener } = await setUpTest([sound])
+    const { library, soundStore, listener } = await setUpTest({ sounds: [sound] })
 
     library.duplicateSound(sound.id)
 
@@ -242,7 +242,7 @@ describe('SoundLibrary', () => {
   it('should allow audio data to be set', async () => {
     const sound = makeSound()
     const audioData = { pcm: makePcm(Samples(100)), sampleRate: SoundTestConstants.sampleRate }
-    const { library, soundStore, listener } = await setUpTest([sound])
+    const { library, soundStore, listener } = await setUpTest({ sounds: [sound] })
 
     library.setAudioData(sound.id, audioData)
 
@@ -258,7 +258,7 @@ describe('SoundLibrary', () => {
       const sound2 = makeSound()
       const tile1 = makeSoundboardTile({ soundId: sound1.id })
       const soundboard = makeSoundboard({ tiles: [tile1] })
-      const { library, soundStore, listener } = await setUpTest([sound1, sound2], [soundboard])
+      const { library, soundStore, listener } = await setUpTest({ sounds: [sound1, sound2], soundboards: [soundboard] })
 
       library.addSoundToSoundboard(soundboard.id, sound2.id)
 
@@ -274,7 +274,7 @@ describe('SoundLibrary', () => {
       const sound = makeSound()
       const tile = makeSoundboardTile({ soundId: sound.id })
       const soundboard = makeSoundboard({ tiles: [tile] })
-      const { library, soundStore, listener } = await setUpTest([sound], [soundboard])
+      const { library, soundStore, listener } = await setUpTest({ sounds: [sound], soundboards: [soundboard] })
 
       library.addSoundToSoundboard(soundboard.id, sound.id)
 
@@ -286,7 +286,7 @@ describe('SoundLibrary', () => {
 
     it('should throw an error if the soundboard ID is not valid', async () => {
       const sound = makeSound({ id: SoundTestConstants.id })
-      const { library } = await setUpTest([sound], [])
+      const { library } = await setUpTest({ sounds: [sound] })
 
       expect(() =>
         library.addSoundToSoundboard(SoundboardTestConstants.id, sound.id),
@@ -296,7 +296,7 @@ describe('SoundLibrary', () => {
     it('should throw an error if the sound ID is not valid', async () => {
       const soundboard = makeSoundboard()
       const sound = makeSound({ id: SoundTestConstants.id })
-      const { library } = await setUpTest([], [soundboard])
+      const { library } = await setUpTest({ soundboards: [soundboard] })
 
       expect(() => library.addSoundToSoundboard(soundboard.id, sound.id)).toThrowErrorMatchingInlineSnapshot(
         `[Error: Sound with id SoundTestConstants.id does not exist]`,
@@ -311,7 +311,7 @@ describe('SoundLibrary', () => {
       const tile1 = makeSoundboardTile({ soundId: sound1.id })
       const tile2 = makeSoundboardTile({ soundId: sound2.id })
       const soundboard = makeSoundboard({ tiles: [tile1, tile2] })
-      const { library, soundStore, listener } = await setUpTest([sound1, sound2], [soundboard])
+      const { library, soundStore, listener } = await setUpTest({ sounds: [sound1, sound2], soundboards: [soundboard] })
 
       library.removeSoundFromSoundboard(soundboard.id, sound1.id)
 
@@ -327,7 +327,7 @@ describe('SoundLibrary', () => {
     it('should do nothing if sound is not in the soundboard', async () => {
       const sound = makeSound()
       const soundboard = makeSoundboard({ tiles: [] })
-      const { library, soundStore, listener } = await setUpTest([sound], [soundboard])
+      const { library, soundStore, listener } = await setUpTest({ sounds: [sound], soundboards: [soundboard] })
 
       library.removeSoundFromSoundboard(soundboard.id, sound.id)
 
@@ -339,7 +339,7 @@ describe('SoundLibrary', () => {
 
     it('should throw an error if the soundboard ID is not valid', async () => {
       const sound = makeSound({ id: SoundTestConstants.id })
-      const { library } = await setUpTest([sound], [])
+      const { library } = await setUpTest({ sounds: [sound] })
 
       expect(() =>
         library.removeSoundFromSoundboard(SoundboardTestConstants.id, sound.id),
@@ -349,7 +349,7 @@ describe('SoundLibrary', () => {
     it('should throw an error if the sound ID is not valid', async () => {
       const soundboard = makeSoundboard()
       const sound = makeSound({ id: SoundTestConstants.id })
-      const { library } = await setUpTest([], [soundboard])
+      const { library } = await setUpTest({ soundboards: [soundboard] })
 
       expect(() => library.removeSoundFromSoundboard(soundboard.id, sound.id)).toThrowErrorMatchingInlineSnapshot(
         `[Error: Sound with id SoundTestConstants.id does not exist]`,
@@ -366,7 +366,10 @@ describe('SoundLibrary', () => {
       const tile2 = makeSoundboardTile({ soundId: sound2.id })
       const tile3 = makeSoundboardTile({ soundId: sound3.id })
       const soundboard = makeSoundboard({ tiles: [tile1, tile2, tile3] })
-      const { library, soundStore, listener } = await setUpTest([sound1, sound2, sound3], [soundboard])
+      const { library, soundStore, listener } = await setUpTest({
+        sounds: [sound1, sound2, sound3],
+        soundboards: [soundboard],
+      })
 
       library.moveSoundInSoundboard(soundboard.id, sound1.id, sound3.id)
 
@@ -384,7 +387,7 @@ describe('SoundLibrary', () => {
       const tile1 = makeSoundboardTile({ soundId: sound1.id })
       const tile2 = makeSoundboardTile({ soundId: sound2.id })
       const soundboard = makeSoundboard({ tiles: [tile1, tile2] })
-      const { library, soundStore, listener } = await setUpTest([sound1, sound2], [soundboard])
+      const { library, soundStore, listener } = await setUpTest({ sounds: [sound1, sound2], soundboards: [soundboard] })
 
       library.moveSoundInSoundboard(soundboard.id, sound2.id, sound1.id)
 
@@ -402,7 +405,7 @@ describe('SoundLibrary', () => {
       const tile1 = makeSoundboardTile({ soundId: sound1.id })
       const tile2 = makeSoundboardTile({ soundId: sound2.id })
       const soundboard = makeSoundboard({ tiles: [tile1, tile2] })
-      const { library, soundStore, listener } = await setUpTest([sound1, sound2], [soundboard])
+      const { library, soundStore, listener } = await setUpTest({ sounds: [sound1, sound2], soundboards: [soundboard] })
 
       library.moveSoundInSoundboard(soundboard.id, sound1.id, undefined)
 
@@ -424,7 +427,7 @@ describe('SoundLibrary', () => {
 
     it('should throw an error if the source sound ID is not valid', async () => {
       const soundboard = makeSoundboard({ id: SoundboardTestConstants.id, tiles: [] })
-      const { library } = await setUpTest([], [soundboard])
+      const { library } = await setUpTest({ soundboards: [soundboard] })
 
       expect(() =>
         library.moveSoundInSoundboard(soundboard.id, SoundTestConstants.id, undefined),
@@ -437,7 +440,7 @@ describe('SoundLibrary', () => {
       const sound = makeSound()
       const tile = makeSoundboardTile({ soundId: sound.id })
       const soundboard = makeSoundboard({ id: SoundboardTestConstants.id, tiles: [tile] })
-      const { library } = await setUpTest([sound], [soundboard])
+      const { library } = await setUpTest({ sounds: [sound], soundboards: [soundboard] })
 
       expect(() =>
         library.moveSoundInSoundboard(soundboard.id, sound.id, SoundTestConstants.id),
@@ -450,7 +453,7 @@ describe('SoundLibrary', () => {
       const sound = makeSound()
       const tile = makeSoundboardTile({ soundId: sound.id })
       const soundboard = makeSoundboard({ tiles: [tile] })
-      const { library, soundStore, listener } = await setUpTest([sound], [soundboard])
+      const { library, soundStore, listener } = await setUpTest({ sounds: [sound], soundboards: [soundboard] })
 
       library.moveSoundInSoundboard(soundboard.id, sound.id, sound.id)
 
@@ -466,7 +469,7 @@ describe('SoundLibrary', () => {
       const sound = makeSound()
       const tile = makeSoundboardTile({ soundId: sound.id, shortcut: undefined })
       const soundboard = makeSoundboard({ tiles: [tile] })
-      const { library, soundStore, listener } = await setUpTest([sound], [soundboard])
+      const { library, soundStore, listener } = await setUpTest({ sounds: [sound], soundboards: [soundboard] })
 
       library.setSoundboardTileShortcut(soundboard.id, sound.id, SoundboardTestConstants.shortcut)
 
@@ -482,7 +485,7 @@ describe('SoundLibrary', () => {
       const sound = makeSound()
       const tile = makeSoundboardTile({ soundId: sound.id, shortcut: SoundboardTestConstants.shortcut })
       const soundboard = makeSoundboard({ tiles: [tile] })
-      const { library, soundStore, listener } = await setUpTest([sound], [soundboard])
+      const { library, soundStore, listener } = await setUpTest({ sounds: [sound], soundboards: [soundboard] })
 
       library.setSoundboardTileShortcut(soundboard.id, sound.id, undefined)
 
@@ -496,7 +499,7 @@ describe('SoundLibrary', () => {
 
     it('should throw an error if the soundboard ID is not valid', async () => {
       const sound = makeSound()
-      const { library } = await setUpTest([sound])
+      const { library } = await setUpTest({ sounds: [sound] })
 
       expect(() =>
         library.setSoundboardTileShortcut(SoundboardTestConstants.id, sound.id, SoundboardTestConstants.shortcut),
@@ -505,7 +508,7 @@ describe('SoundLibrary', () => {
 
     it('should throw an error if the sound ID is not valid', async () => {
       const soundboard = makeSoundboard({ id: SoundboardTestConstants.id })
-      const { library } = await setUpTest([], [soundboard])
+      const { library } = await setUpTest({ soundboards: [soundboard] })
 
       expect(() =>
         library.setSoundboardTileShortcut(soundboard.id, SoundTestConstants.id, SoundboardTestConstants.shortcut),
@@ -518,7 +521,7 @@ describe('SoundLibrary', () => {
   describe('undo/redo', () => {
     it('should support undo and redo', async () => {
       const sound = makeSound({ name: SoundTestConstants.oldName })
-      const { library, soundStore, listener } = await setUpTest([sound])
+      const { library, soundStore, listener } = await setUpTest({ sounds: [sound] })
       expect(library).toMatchObject({ canUndo: false, canRedo: false })
 
       library.setName(sound.id, SoundTestConstants.newName)
@@ -547,7 +550,7 @@ describe('SoundLibrary', () => {
 
     test('redo stack should be cleared when a new action is performed', async () => {
       const sound = makeSound({ name: 'Name 1' })
-      const { library } = await setUpTest([sound])
+      const { library } = await setUpTest({ sounds: [sound] })
 
       library.setName(sound.id, 'Name 2')
       expect(library.sounds).toEqual([{ ...sound, name: 'Name 2' }])
@@ -580,7 +583,7 @@ describe('SoundLibrary', () => {
 
   it('should allow an image name to be changed', async () => {
     const image = makeImage({ name: ImageTestConstants.oldName })
-    const { library, soundStore, listener } = await setUpTest([], [], [image])
+    const { library, soundStore, listener } = await setUpTest({ images: [image] })
 
     library.setImageName(image.id, ImageTestConstants.newName)
 
@@ -592,12 +595,14 @@ describe('SoundLibrary', () => {
   })
 })
 
-const setUpTest = async (
-  initialSounds: Sound[] = [],
-  initialSoundboards: Soundboard[] = [],
-  initialImages: Image[] = [],
-) => {
-  const soundStore = new MemorySoundStore(initialSounds, initialSoundboards, initialImages)
+interface TestSetupParams {
+  sounds: readonly Sound[]
+  soundboards: readonly Soundboard[]
+  images: readonly Image[]
+}
+
+const setUpTest = async ({ sounds = [], soundboards = [], images = [] }: Partial<TestSetupParams> = {}) => {
+  const soundStore = new MemorySoundStore(sounds, soundboards, images)
   const library = await makeLoadedSoundLibrary(soundStore)
   const listener = mockFunction<SoundLibraryUpdatedListener>()
   library.addListener(listener)
