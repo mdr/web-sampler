@@ -6,5 +6,6 @@ export const editSoundRoute = (soundId: SoundId): string => `/sound/${soundId}`
 export const editSoundboardRoute = (soundboardId: SoundboardId): string => `/soundboard/${soundboardId}`
 export const editImageRoute = (imageId: ImageId): string => `/image/${imageId}`
 
+export const soundsRoute = (): string => '/sounds'
 export const soundboardsRoute = (): string => '/soundboards'
 export const imagesRoute = (): string => '/images'

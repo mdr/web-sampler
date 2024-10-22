@@ -25,7 +25,7 @@ tasks:
         -p 9323:9323 
         -v $(pwd):$(pwd) 
         mcr.microsoft.com/playwright:v{{.PLAYWRIGHT_VERSION}}-jammy 
-        sh -c "cd $(pwd) && yarn && yarn test-ct --update-snapshots"
+        sh -c "cd $(pwd) && yarn && NODE_OPTIONS=--max_old_space_size=8192 yarn test-ct --update-snapshots"
   check-all:
     aliases:
       - ca

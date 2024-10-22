@@ -1,4 +1,4 @@
-import { mdiImage, mdiMenu, mdiRedo, mdiUndo, mdiViewGridOutline } from '@mdi/js'
+import { mdiImage, mdiMenu, mdiRedo, mdiUndo, mdiViewGridOutline, mdiVolumeHigh } from '@mdi/js'
 import Icon from '@mdi/react'
 import { MenuTrigger, Popover } from 'react-aria-components'
 import { useHotkeys } from 'react-hotkeys-hook'
@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom'
 
 import { useCanRedo, useCanUndo, useSoundActions } from '../../sounds/library/soundHooks.ts'
 import { useStorageManagerState } from '../../storage/storageManagerHooks.ts'
-import { imagesRoute, soundboardsRoute } from '../routes.ts'
+import { imagesRoute, soundboardsRoute, soundsRoute } from '../routes.ts'
 import { NavbarIconButton } from './NavbarIconButton.tsx'
 import { NavbarMenu } from './NavbarMenu.tsx'
 import { NavbarTestIds } from './NavbarTestIds.ts'
@@ -28,6 +28,11 @@ export const Navbar = () => {
         <li className="text-xl hover:text-gray-300">
           <NavLink data-testid={NavbarTestIds.homeLink} to="/">
             Sound Sampler
+          </NavLink>
+        </li>
+        <li className="flex items-center">
+          <NavLink data-testid={NavbarTestIds.soundsLink} to={soundsRoute()}>
+            <Icon path={mdiVolumeHigh} size={1} title="Sounds" />
           </NavLink>
         </li>
         <li className="flex items-center">

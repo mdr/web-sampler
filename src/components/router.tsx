@@ -14,6 +14,11 @@ export const router = createHashRouter([
     errorElement: <ErrorFallback />,
   },
   {
+    path: '/sounds',
+    element: <SoundsEditorPage />,
+    errorElement: <ErrorFallback />,
+  },
+  {
     path: '/sound/:soundId',
     element: <SoundsEditorPage />,
     errorElement: <ErrorFallback />,
