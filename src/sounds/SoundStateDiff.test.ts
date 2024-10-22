@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import { Sound } from '../types/Sound'
+import { ImageTestConstants, makeImage } from '../types/image.testSupport.ts'
 import { SoundTestConstants, makeSound } from '../types/sound.testSupport.ts'
 import { SoundboardTestConstants, makeSoundboard } from '../types/soundboard.testSupport.ts'
 import { makeSoundState } from './SoundState.ts'
@@ -41,6 +42,22 @@ describe('compareSoundStates', () => {
     expect(diff.soundboardsToUpsert).toIncludeSameMembers([soundboard2Version2, soundboard3])
     expect(diff.soundboardIdsToDelete).toEqual([soundboard1.id])
   })
+
+  it('correctly identifies images to upsert and delete', () => {
+    const image1 = makeImage({ id: ImageTestConstants.id })
+    const image2Version1 = makeImage({ id: ImageTestConstants.id2, name: ImageTestConstants.oldName })
+    const image2Version2 = { ...image2Version1, name: ImageTestConstants.newName }
+    const image3 = makeImage({ id: ImageTestConstants.id3 })
+    const oldImages = [image1, image2Version1]
+    const newImages = [image2Version2, image3]
+    const oldState = makeSoundState({ images: oldImages })
+    const newState = makeSoundState({ images: newImages })
+
+    const diff = compareSoundStates(oldState, newState)
+
+    expect(diff.imagesToUpsert).toIncludeSameMembers([image2Version2, image3])
+    expect(diff.imageIdsToDelete).toEqual([image1.id])
+  })
 })
 
 describe('isDiffEmpty', () => {
@@ -51,6 +68,8 @@ describe('isDiffEmpty', () => {
         soundIdsToDelete: [],
         soundboardsToUpsert: [],
         soundboardIdsToDelete: [],
+        imagesToUpsert: [],
+        imageIdsToDelete: [],
       }),
     ).toBeTrue()
   })
@@ -60,5 +79,7 @@ describe('isDiffEmpty', () => {
     expect(isDiffEmpty(makeSoundStateDiff({ soundIdsToDelete: [SoundTestConstants.id] }))).toBeFalse()
     expect(isDiffEmpty(makeSoundStateDiff({ soundboardsToUpsert: [makeSoundboard()] }))).toBeFalse()
     expect(isDiffEmpty(makeSoundStateDiff({ soundboardIdsToDelete: [SoundboardTestConstants.id] }))).toBeFalse()
+    expect(isDiffEmpty(makeSoundStateDiff({ imagesToUpsert: [makeImage()] }))).toBeFalse()
+    expect(isDiffEmpty(makeSoundStateDiff({ imageIdsToDelete: [ImageTestConstants.id] }))).toBeFalse()
   })
 })

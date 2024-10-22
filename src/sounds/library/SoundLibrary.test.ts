@@ -563,6 +563,18 @@ describe('SoundLibrary', () => {
       expect(library.sounds).toEqual([{ ...sound, name: 'Name 3' }])
     })
   })
+
+  it('should allow an image to be created', async () => {
+    const { library, soundStore, listener } = await setUpTest()
+
+    const image = library.newImage()
+
+    expect(image.name).toEqual('')
+    expect(listener).toHaveBeenCalledTimes(1)
+    expect(library.images).toEqual([image])
+    await flushPromises()
+    expect(soundStore.images).toEqual([image])
+  })
 })
 
 const setUpTest = async (initialSounds: Sound[] = [], initialSoundboards: Soundboard[] = []) => {
