@@ -2,7 +2,7 @@ import { Draft, produce } from 'immer'
 import _ from 'lodash'
 
 import { AudioData } from '../../types/AudioData.ts'
-import { Image, newImage } from '../../types/Image.ts'
+import { Image, ImageId, newImage } from '../../types/Image.ts'
 import { KeyboardShortcut } from '../../types/KeyboardShortcut.ts'
 import { Sound, SoundId, newSound, newSoundId } from '../../types/Sound.ts'
 import { SoundAudio, newSoundAudio } from '../../types/SoundAudio.ts'
@@ -322,5 +322,33 @@ export class SoundLibrary implements SoundActions {
     const updatedImages = [...this.images, image]
     this.setImages(updatedImages)
     return image
+  }
+
+  findImage = (id: ImageId): Option<Image> => this.images.find((image) => image.id === id)
+
+  getImage = (id: ImageId): Image => {
+    const image = this.findImage(id)
+    if (image === undefined) {
+      throw new Error(`Image with id ${id} does not exist`)
+    }
+    return image
+  }
+
+  setImageName = (id: ImageId, name: string): void =>
+    this.updateImage(id, (image) => {
+      image.name = name
+    })
+
+  updateImage = (id: ImageId, update: (soundboard: Draft<Image>) => void): void =>
+    this.updateImagePure(id, (image) => produce(image, update))
+
+  updateImagePure = (id: ImageId, update: (image: Image) => Image): void => {
+    const currentImage = this.getImage(id)
+    const updatedImage = update(currentImage)
+    if (_.isEqual(currentImage, updatedImage)) {
+      return
+    }
+    const updatedImages = this.images.map((image) => (image.id === id ? updatedImage : image))
+    this.setImages(updatedImages)
   }
 }

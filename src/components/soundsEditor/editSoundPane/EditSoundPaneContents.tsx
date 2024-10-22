@@ -111,39 +111,37 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPaneProps) => {
   const audio = sound.audio
 
   return (
-    <>
-      <div className="flex flex-col space-y-4 px-4 pt-4">
-        <SoundNameTextField name={sound.name} setName={setSoundName} />
-        <div className="flex space-x-2">
-          <DeleteButton onPress={handleDeleteButtonPressed} />
-          <DuplicateSoundButton soundId={soundId} />
-          <ShortcutsButton />
-        </div>
-        <h2 className="text-xl" data-testid={EditSoundPaneTestIds.audioHeading}>
-          Audio
-          {audio !== undefined && audioRecorderState === AudioRecorderState.IDLE && (
-            <> ({getPlayRegionDurationFriendly(audio)})</>
-          )}
-        </h2>
-        {audioRecorderState === AudioRecorderState.IDLE && (
-          <>
-            <div className="flex space-x-2">
-              <CaptureAudioButton onPress={handleCaptureAudioButtonPressed} />
-              <ImportAudioButton soundId={soundId} />
-              {soundHasAudio(sound) && getPlayRegionDuration(sound.audio) > 0 && <DownloadWavButton sound={sound} />}
-              {soundHasAudio(sound) && getPlayRegionDuration(sound.audio) > 0 && <DownloadMp3Button sound={sound} />}
-              {audio !== undefined && <CropButton soundId={soundId} />}
-            </div>
-            {soundHasAudio(sound) && <AudioSection sound={sound} />}
-          </>
-        )}
-        {audioRecorderState === AudioRecorderState.RECORDING && (
-          <div className="flex items-center space-x-4">
-            <StopButton onPress={handleStopButtonPressed} />
-            <VolumeMeter />
-          </div>
-        )}
+    <div className="flex flex-col space-y-4 px-4 pt-4">
+      <SoundNameTextField name={sound.name} setName={setSoundName} />
+      <div className="flex space-x-2">
+        <DeleteButton onPress={handleDeleteButtonPressed} />
+        <DuplicateSoundButton soundId={soundId} />
+        <ShortcutsButton />
       </div>
-    </>
+      <h2 className="text-xl" data-testid={EditSoundPaneTestIds.audioHeading}>
+        Audio
+        {audio !== undefined && audioRecorderState === AudioRecorderState.IDLE && (
+          <> ({getPlayRegionDurationFriendly(audio)})</>
+        )}
+      </h2>
+      {audioRecorderState === AudioRecorderState.IDLE && (
+        <>
+          <div className="flex space-x-2">
+            <CaptureAudioButton onPress={handleCaptureAudioButtonPressed} />
+            <ImportAudioButton soundId={soundId} />
+            {soundHasAudio(sound) && getPlayRegionDuration(sound.audio) > 0 && <DownloadWavButton sound={sound} />}
+            {soundHasAudio(sound) && getPlayRegionDuration(sound.audio) > 0 && <DownloadMp3Button sound={sound} />}
+            {audio !== undefined && <CropButton soundId={soundId} />}
+          </div>
+          {soundHasAudio(sound) && <AudioSection sound={sound} />}
+        </>
+      )}
+      {audioRecorderState === AudioRecorderState.RECORDING && (
+        <div className="flex items-center space-x-4">
+          <StopButton onPress={handleStopButtonPressed} />
+          <VolumeMeter />
+        </div>
+      )}
+    </div>
   )
 }

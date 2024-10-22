@@ -1,9 +1,11 @@
 import flushPromises from 'flush-promises'
 import { describe, expect, it, test } from 'vitest'
 
+import { Image } from '../../types/Image.ts'
 import { Sound, SoundId, newSoundId } from '../../types/Sound.ts'
 import { SoundAudio } from '../../types/SoundAudio.ts'
 import { Soundboard } from '../../types/Soundboard.ts'
+import { ImageTestConstants, makeImage } from '../../types/image.testSupport.ts'
 import { SoundTestConstants, makePcm, makeSound, makeSoundWithAudio } from '../../types/sound.testSupport.ts'
 import { SoundboardTestConstants, makeSoundboard, makeSoundboardTile } from '../../types/soundboard.testSupport.ts'
 import { mockFunction } from '../../utils/mockUtils.testSupport.ts'
@@ -575,10 +577,27 @@ describe('SoundLibrary', () => {
     await flushPromises()
     expect(soundStore.images).toEqual([image])
   })
+
+  it('should allow an image name to be changed', async () => {
+    const image = makeImage({ name: ImageTestConstants.oldName })
+    const { library, soundStore, listener } = await setUpTest([], [], [image])
+
+    library.setImageName(image.id, ImageTestConstants.newName)
+
+    expect(listener).toHaveBeenCalledTimes(1)
+    const updatedImages = [{ ...image, name: ImageTestConstants.newName }]
+    expect(library.images).toEqual(updatedImages)
+    await flushPromises()
+    expect(soundStore.images).toEqual(updatedImages)
+  })
 })
 
-const setUpTest = async (initialSounds: Sound[] = [], initialSoundboards: Soundboard[] = []) => {
-  const soundStore = new MemorySoundStore(initialSounds, initialSoundboards)
+const setUpTest = async (
+  initialSounds: Sound[] = [],
+  initialSoundboards: Soundboard[] = [],
+  initialImages: Image[] = [],
+) => {
+  const soundStore = new MemorySoundStore(initialSounds, initialSoundboards, initialImages)
   const library = await makeLoadedSoundLibrary(soundStore)
   const listener = mockFunction<SoundLibraryUpdatedListener>()
   library.addListener(listener)

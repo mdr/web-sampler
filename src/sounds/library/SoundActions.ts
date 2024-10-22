@@ -1,5 +1,5 @@
 import { AudioData } from '../../types/AudioData.ts'
-import { Image } from '../../types/Image.ts'
+import { Image, ImageId } from '../../types/Image.ts'
 import { KeyboardShortcut } from '../../types/KeyboardShortcut.ts'
 import { Sound, SoundId } from '../../types/Sound.ts'
 import { Soundboard, SoundboardId } from '../../types/Soundboard.ts'
@@ -44,6 +44,8 @@ export interface SoundActions {
   setSoundboardTileShortcut(soundboardId: SoundboardId, soundId: SoundId, shortcut: Option<KeyboardShortcut>): void
 
   newImage(): Image
+
+  setImageName(id: ImageId, name: string): void
 
   undo(): void
 

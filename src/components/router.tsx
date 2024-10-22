@@ -34,6 +34,11 @@ export const router = createHashRouter([
     errorElement: <ErrorFallback />,
   },
   {
+    path: '/image/:imageId',
+    element: <ImagesEditorPage />,
+    errorElement: <ErrorFallback />,
+  },
+  {
     path: '/play',
     element: <SoundboardPage />,
     errorElement: <ErrorFallback />,
