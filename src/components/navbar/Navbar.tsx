@@ -1,4 +1,4 @@
-import { mdiMenu, mdiRedo, mdiUndo, mdiViewGridOutline } from '@mdi/js'
+import { mdiImage, mdiMenu, mdiRedo, mdiUndo, mdiViewGridOutline } from '@mdi/js'
 import Icon from '@mdi/react'
 import { MenuTrigger, Popover } from 'react-aria-components'
 import { useHotkeys } from 'react-hotkeys-hook'
@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom'
 
 import { useCanRedo, useCanUndo, useSoundActions } from '../../sounds/library/soundHooks.ts'
 import { useStorageManagerState } from '../../storage/storageManagerHooks.ts'
-import { soundboardsRoute } from '../routes.ts'
+import { imagesRoute, soundboardsRoute } from '../routes.ts'
 import { NavbarIconButton } from './NavbarIconButton.tsx'
 import { NavbarMenu } from './NavbarMenu.tsx'
 import { NavbarTestIds } from './NavbarTestIds.ts'
@@ -33,6 +33,11 @@ export const Navbar = () => {
         <li className="flex items-center">
           <NavLink data-testid={NavbarTestIds.soundboardsLink} to={soundboardsRoute()}>
             <Icon path={mdiViewGridOutline} size={1} title="Soundboards" />
+          </NavLink>
+        </li>
+        <li className="flex items-center">
+          <NavLink data-testid={NavbarTestIds.imagesLink} to={imagesRoute()}>
+            <Icon path={mdiImage} size={1} title="Images" />
           </NavLink>
         </li>
         <li className="flex">

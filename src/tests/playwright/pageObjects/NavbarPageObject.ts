@@ -1,5 +1,6 @@
 import { NavbarTestIds } from '../../../components/navbar/NavbarTestIds.ts'
 import { StorageWarningDialogTestIds } from '../../../components/navbar/StorageWarningDialogTestIds.ts'
+import { ImagesEditorPageObject } from './ImagesEditorPageObject.ts'
 import { NavbarMenuPageObject } from './NavbarMenuPageObject.ts'
 import { PageObject } from './PageObject.ts'
 import { SoundboardsEditorPageObject } from './SoundboardsEditorPageObject.ts'
@@ -13,6 +14,12 @@ export class NavbarPageObject extends PageObject {
     this.step('pressSoundboardsLink', async () => {
       await this.press(NavbarTestIds.soundboardsLink)
       return SoundboardsEditorPageObject.verifyIsShown(this.mountResult)
+    })
+
+  pressImagesLink = (): Promise<ImagesEditorPageObject> =>
+    this.step('pressImagesLink', async () => {
+      await this.press(NavbarTestIds.imagesLink)
+      return ImagesEditorPageObject.verifyIsShown(this.mountResult)
     })
 
   pressHomeLink = (): Promise<SoundsEditorPageObject> =>
