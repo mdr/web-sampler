@@ -9,7 +9,7 @@ import {
 } from '../types/sound.testSupport.ts'
 import { SoundboardTestConstants, makeSoundboard, makeSoundboardTile } from '../types/soundboard.testSupport.ts'
 import { Hz, Samples } from '../utils/types/brandedTypes.ts'
-import { SoundState } from './SoundState.ts'
+import { SoundState, makeSoundState } from './SoundState.ts'
 import { validatePcmSample, validateSoundAudio, validateSoundState } from './SoundStateValidator.ts'
 
 describe('validateSoundState', () => {
@@ -17,7 +17,7 @@ describe('validateSoundState', () => {
     const sound = makeSoundWithAudio()
     const tile = makeSoundboardTile({ soundId: sound.id })
     const soundboard = makeSoundboard({ tiles: [tile] })
-    const soundState: SoundState = { sounds: [sound], soundboards: [soundboard] }
+    const soundState: SoundState = makeSoundState({ sounds: [sound], soundboards: [soundboard] })
 
     expect(() => validateSoundState(soundState)).not.toThrow()
   })
@@ -25,7 +25,7 @@ describe('validateSoundState', () => {
   it('throws an appropriate error if a soundboard references a non-existent sound', () => {
     const tile = makeSoundboardTile({ soundId: SoundTestConstants.id })
     const soundboard = makeSoundboard({ id: SoundboardTestConstants.id, tiles: [tile] })
-    const soundState: SoundState = { sounds: [], soundboards: [soundboard] }
+    const soundState: SoundState = makeSoundState({ sounds: [], soundboards: [soundboard] })
 
     expect(() => validateSoundState(soundState)).toThrowErrorMatchingInlineSnapshot(
       `[SoundboardValidationError: Soundboard SoundboardTestConstants.id references missing sound: SoundTestConstants.id]`,
@@ -37,7 +37,7 @@ describe('validateSoundState', () => {
     const tile1 = makeSoundboardTile({ soundId: sound.id })
     const tile2 = makeSoundboardTile({ soundId: sound.id })
     const soundboard = makeSoundboard({ id: SoundboardTestConstants.id, tiles: [tile1, tile2] })
-    const soundState = { sounds: [sound], soundboards: [soundboard] }
+    const soundState = makeSoundState({ sounds: [sound], soundboards: [soundboard] })
 
     expect(() => validateSoundState(soundState)).toThrowErrorMatchingInlineSnapshot(
       `[SoundboardValidationError: Soundboard SoundboardTestConstants.id contains duplicate sound ID: SoundTestConstants.id]`,

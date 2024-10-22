@@ -4,7 +4,8 @@ export interface EditImagePaneContentsProps {
   imageId: ImageId
 }
 
-export const EditImagePaneContents = (_: EditImagePaneContentsProps) => {
+export const EditImagePaneContents = ({ imageId }: EditImagePaneContentsProps) => {
+  console.log({ imageId })
   // const soundActions = useSoundActions()
   // const image = useImage(imageId)
   return <div className="flex flex-col space-y-4 px-4 pt-4"></div>

@@ -13,7 +13,7 @@ export class DexieSoundStore implements SoundStore {
     this.db.transaction('r', this.sounds.dexieTable, this.soundboards.dexieTable, async () => {
       const sounds = await this.sounds.toArray()
       const soundboards = await this.soundboards.toArray()
-      return { sounds, soundboards }
+      return { sounds, soundboards, images: [] }
     })
 
   bulkUpdate = ({

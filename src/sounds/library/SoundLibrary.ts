@@ -2,6 +2,7 @@ import { Draft, produce } from 'immer'
 import _ from 'lodash'
 
 import { AudioData } from '../../types/AudioData.ts'
+import { Image, newImage } from '../../types/Image.ts'
 import { KeyboardShortcut } from '../../types/KeyboardShortcut.ts'
 import { Sound, SoundId, newSound, newSoundId } from '../../types/Sound.ts'
 import { SoundAudio, newSoundAudio } from '../../types/SoundAudio.ts'
@@ -54,6 +55,10 @@ export class SoundLibrary implements SoundActions {
 
   get soundboards(): readonly Soundboard[] {
     return this.soundState.soundboards
+  }
+
+  get images(): readonly Image[] {
+    return this.soundState.images
   }
 
   private get soundState(): SoundState {
@@ -141,7 +146,7 @@ export class SoundLibrary implements SoundActions {
   deleteSound = (id: SoundId): void => {
     const updatedSounds = this.sounds.filter((sound) => sound.id !== id)
     const updatedSoundboards = this.soundboards.map((soundboard) => removeSoundFromSoundboard(soundboard, id))
-    const newState = { sounds: updatedSounds, soundboards: updatedSoundboards }
+    const newState = { ...this.soundState, sounds: updatedSounds, soundboards: updatedSoundboards }
     this.setState(newState)
   }
 
@@ -305,5 +310,17 @@ export class SoundLibrary implements SoundActions {
     if (this._isLoading) {
       throw new Error('Cannot manipulate sounds yet as they are still loading')
     }
+  }
+
+  private setImages = (images: readonly Image[]): void => {
+    const newState = { ...this.soundState, images }
+    this.setState(newState)
+  }
+
+  newImage = (): Image => {
+    const image = newImage()
+    const updatedImages = [...this.images, image]
+    this.setImages(updatedImages)
+    return image
   }
 }

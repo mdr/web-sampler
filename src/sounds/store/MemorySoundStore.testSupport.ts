@@ -1,5 +1,6 @@
 import _ from 'lodash'
 
+import { Image } from '../../types/Image.ts'
 import { Sound, SoundId } from '../../types/Sound.ts'
 import { Soundboard } from '../../types/Soundboard.ts'
 import { SoundState, soundStateSchema } from '../SoundState.ts'
@@ -9,10 +10,16 @@ import { SoundStore } from './SoundStore.ts'
 export class MemorySoundStore implements SoundStore {
   sounds: Sound[] = []
   soundboards: Soundboard[] = []
+  images: Image[] = []
 
-  constructor(initialSounds: readonly Sound[] = [], initialSoundboards: readonly Soundboard[] = []) {
+  constructor(
+    initialSounds: readonly Sound[] = [],
+    initialSoundboards: readonly Soundboard[] = [],
+    initialImages: readonly Image[] = [],
+  ) {
     this.sounds = [...initialSounds]
     this.soundboards = [...initialSoundboards]
+    this.images = [...initialImages]
   }
 
   getSound = (soundId: SoundId): Sound => {
@@ -28,6 +35,7 @@ export class MemorySoundStore implements SoundStore {
     soundStateSchema.parse({
       sounds: [...this.sounds],
       soundboards: [...this.soundboards],
+      images: [...this.images],
     })
 
   bulkUpdate = ({
