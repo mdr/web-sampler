@@ -2,6 +2,7 @@ import 'fake-indexeddb/auto'
 import { describe, expect, it } from 'vitest'
 
 import { Sound } from '../../types/Sound.ts'
+import { ImageTestConstants, makeImage } from '../../types/image.testSupport.ts'
 import { SoundTestConstants, makeSound } from '../../types/sound.testSupport.ts'
 import { SoundboardTestConstants, makeSoundboard } from '../../types/soundboard.testSupport.ts'
 import { makeSoundStateDiff } from '../SoundStateDiff.ts'
@@ -47,6 +48,24 @@ describe.each([
     const change3 = makeSoundStateDiff({ soundboardsToUpsert: [], soundboardIdsToDelete: [updatedSoundboard.id] })
     await store.bulkUpdate(change3)
     expect((await store.getSoundState()).soundboards).toEqual([])
+  })
+
+  it('should allow images to be added, updated, and removed', async () => {
+    expect((await store.getSoundState()).images).toEqual([])
+
+    const image = makeImage()
+    const change1 = makeSoundStateDiff({ imagesToUpsert: [image], imageIdsToDelete: [] })
+    await store.bulkUpdate(change1)
+    expect((await store.getSoundState()).images).toEqual([image])
+
+    const updatedImage = { ...image, name: ImageTestConstants.newName }
+    const change2 = makeSoundStateDiff({ imagesToUpsert: [updatedImage], imageIdsToDelete: [] })
+    await store.bulkUpdate(change2)
+    expect((await store.getSoundState()).images).toEqual([updatedImage])
+
+    const change3 = makeSoundStateDiff({ imagesToUpsert: [], imageIdsToDelete: [updatedImage.id] })
+    await store.bulkUpdate(change3)
+    expect((await store.getSoundState()).images).toEqual([])
   })
 
   it('should validate data shape on reading from the store', async () => {

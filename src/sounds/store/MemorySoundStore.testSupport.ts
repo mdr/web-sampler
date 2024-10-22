@@ -38,16 +38,20 @@ export class MemorySoundStore implements SoundStore {
       images: [...this.images],
     })
 
-  bulkUpdate = ({
+  // eslint-disable-next-line @typescript-eslint/require-await
+  bulkUpdate = async ({
     soundsToUpsert,
     soundIdsToDelete,
     soundboardsToUpsert,
     soundboardIdsToDelete,
+    imagesToUpsert,
+    imageIdsToDelete,
   }: SoundStateDiff): Promise<void> => {
     this.sounds = _.unionBy(soundsToUpsert, this.sounds, 'id')
     _.remove(this.sounds, (sound) => soundIdsToDelete.includes(sound.id))
     this.soundboards = _.unionBy(soundboardsToUpsert, this.soundboards, 'id')
     _.remove(this.soundboards, (soundboard) => soundboardIdsToDelete.includes(soundboard.id))
-    return Promise.resolve()
+    this.images = _.unionBy(imagesToUpsert, this.images, 'id')
+    _.remove(this.images, (image) => imageIdsToDelete.includes(image.id))
   }
 }
