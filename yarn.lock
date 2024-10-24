@@ -11567,13 +11567,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-resizable-panels@npm:^2.1.4":
-  version: 2.1.4
-  resolution: "react-resizable-panels@npm:2.1.4"
+"react-resizable-panels@npm:^2.1.5":
+  version: 2.1.5
+  resolution: "react-resizable-panels@npm:2.1.5"
   peerDependencies:
-    react: ^16.14.0 || ^17.0.0 || ^18.0.0
-    react-dom: ^16.14.0 || ^17.0.0 || ^18.0.0
-  checksum: 10c0/c1afef5baf9b401292fbe90297da0802142967a20ecc88cc93086f43acd46c1d0dccc124aa0e95688378850856d4cb55c9a054e12860e39a4f653256fbf3835f
+    react: ^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+    react-dom: ^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+  checksum: 10c0/4a3a149928bd9111ab17a6e32895f81d56f90734fa9e74593cc60dde75d8938c653bb25638c7d683859ded343066f7d7615aea1fde7da4d298cc0f769f0af23c
   languageName: node
   linkType: hard
 
@@ -13704,7 +13704,7 @@ __metadata:
     react-error-boundary: "npm:^4.1.2"
     react-hotkeys-hook: "npm:^4.5.1"
     react-konva: "npm:^18.2.10"
-    react-resizable-panels: "npm:^2.1.4"
+    react-resizable-panels: "npm:^2.1.5"
     react-resize-detector: "npm:^11.0.1"
     react-router-dom: "npm:^6.27.0"
     react-spinners: "npm:^0.14.1"
