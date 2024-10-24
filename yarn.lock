@@ -1599,21 +1599,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@chromatic-com/storybook@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "@chromatic-com/storybook@npm:3.0.0"
+"@chromatic-com/storybook@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "@chromatic-com/storybook@npm:3.1.0"
   dependencies:
     "@storybook/channels": "npm:^8.3.0"
     "@storybook/telemetry": "npm:^8.3.0"
     "@storybook/types": "npm:^8.3.0"
-    chromatic: "npm:^11.4.0"
+    chromatic: "npm:^11.15.0"
     filesize: "npm:^10.0.12"
     jsonfile: "npm:^6.1.0"
     react-confetti: "npm:^6.1.0"
     strip-ansi: "npm:^7.1.0"
   peerDependencies:
     storybook: ^8.3.0
-  checksum: 10c0/0adab1a673c0d9d3b4ba0275e60a31af7796075f292af4ee1ce1283210fcbf2488b8273d2d3a0c6081686c5405eda7651c6b63b5503f2aa2fe938586b6e0a2d6
+  checksum: 10c0/cb9672d828f076e9a6c7277fe08a846d05316fb7d3e625862fc667718f5abc2746ff7cea04507e5cbc0136a4d55950fce88ea91420e8d3c05d84f528050a1dce
   languageName: node
   linkType: hard
 
@@ -6842,9 +6842,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chromatic@npm:^11.4.0":
-  version: 11.4.1
-  resolution: "chromatic@npm:11.4.1"
+"chromatic@npm:^11.15.0":
+  version: 11.15.0
+  resolution: "chromatic@npm:11.15.0"
   peerDependencies:
     "@chromatic-com/cypress": ^0.*.* || ^1.0.0
     "@chromatic-com/playwright": ^0.*.* || ^1.0.0
@@ -6857,7 +6857,7 @@ __metadata:
     chroma: dist/bin.js
     chromatic: dist/bin.js
     chromatic-cli: dist/bin.js
-  checksum: 10c0/50a913706145aaf1eb4e1f2d3f9f00c5d06b61fe3775c5b69099d24192bbde4fa14d53c48fbc90bc070811974fa524e799ca272b7cf0c7ecd1532df56e5453b5
+  checksum: 10c0/8add464ff39417c402b77d973300806a50bd5e3b8f95eeccd965787536b4273e6bfa6b6e0716417bf342cd5106e82e8f1e0dec4a290a89c00e7862f3833fff10
   languageName: node
   linkType: hard
 
@@ -13628,7 +13628,7 @@ __metadata:
   dependencies:
     "@atlaskit/inline-edit": "npm:^13.7.6"
     "@breezystack/lamejs": "npm:^1.2.7"
-    "@chromatic-com/storybook": "npm:^3.0.0"
+    "@chromatic-com/storybook": "npm:^3.1.0"
     "@dnd-kit/core": "npm:^6.1.0"
     "@eslint/compat": "npm:^1.2.1"
     "@eslint/js": "npm:^9.13.0"
