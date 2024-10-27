@@ -8,35 +8,31 @@ import { Option } from '../../../utils/types/Option.ts'
 import { Url } from '../../../utils/types/brandedTypes.ts'
 import { ImageNameTextField } from './ImageNameTextField.tsx'
 import { ImageUploadZone } from './ImageUploadZone.tsx'
+import { imageCropToPercentCrop, percentCropToImageCrop } from './cropConversions.ts'
 
 export interface EditImagePaneContentsProps {
   imageId: ImageId
 }
 
 export const EditImagePaneContents = ({ imageId }: EditImagePaneContentsProps) => {
-  const [crop, setCrop] = useState<PercentCrop>()
-  const soundActions = useSoundActions()
   const image = useImage(imageId)
+  const imageData = image.data
+  const imageCrop = imageData?.crop
+  const initialCrop = imageCrop === undefined ? undefined : imageCropToPercentCrop(imageCrop)
+  const [crop, setCrop] = useState<Option<PercentCrop>>(initialCrop)
+  const soundActions = useSoundActions()
   const setImageName = (name: string) => soundActions.setImageName(imageId, name)
   const [imageUrl, setImageUrl] = useState<Option<Url>>(undefined)
-  const imageData = image.data
   const onImageLoad: ReactEventHandler<HTMLImageElement> = (e) => {
     const { naturalWidth: width, naturalHeight: height } = e.currentTarget
-    const crop = centerCrop(
-      makeAspectCrop(
-        {
-          unit: '%',
-          height: 100,
-          // width: 100,
-        },
-        1,
-        width,
-        height,
-      ),
-      width,
-      height,
-    )
-    setCrop(crop)
+    const crop = centerCrop(makeAspectCrop({ unit: '%', height: 100 }, 1, width, height), width, height)
+    if (initialCrop === undefined) {
+      setCrop(crop)
+    }
+  }
+
+  const handleCropChange = (percentageCrop: PercentCrop) => {
+    soundActions.setImageCrop(imageId, percentCropToImageCrop(percentageCrop))
   }
 
   useEffect(() => {
@@ -55,19 +51,14 @@ export const EditImagePaneContents = ({ imageId }: EditImagePaneContentsProps) =
       {image.data === undefined && <ImageUploadZone imageId={imageId} />}
       {imageUrl && (
         <ReactCrop
-          className="w-full h-full object-contain rounded-lg"
           crop={crop}
           onChange={(_, percentageCrop) => setCrop(percentageCrop)}
+          onComplete={(_, percentageCrop) => handleCropChange(percentageCrop)}
           aspect={1}
           minWidth={32}
           minHeight={32}
         >
-          <img
-            src={imageUrl}
-            alt={getImageDisplayName(image)}
-            className="max-w-full max-h-96 rounded-lg"
-            onLoad={onImageLoad}
-          />
+          <img src={imageUrl} alt={getImageDisplayName(image)} onLoad={onImageLoad} />
         </ReactCrop>
       )}
     </div>
