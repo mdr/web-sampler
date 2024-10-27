@@ -1,4 +1,4 @@
-import { ImageData } from '../utils/types/brandedTypes.ts'
+import { ImageBytes } from '../utils/types/brandedTypes.ts'
 import { Image, ImageId, newImageId } from './Image.ts'
 
 export const ImageTestConstants = {
@@ -8,7 +8,7 @@ export const ImageTestConstants = {
   name: 'ImageTestConstants.name',
   oldName: 'ImageTestConstants.oldName',
   newName: 'ImageTestConstants.newName',
-  imageData: ImageData(new Uint8Array([1, 2, 3])),
+  imageData: ImageBytes(new Uint8Array([1, 2, 3])),
 }
 
 export const makeImage = ({ id = newImageId(), name = ImageTestConstants.name, data }: Partial<Image> = {}): Image => ({

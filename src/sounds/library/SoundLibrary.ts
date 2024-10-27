@@ -15,7 +15,7 @@ import {
 } from '../../types/Soundboard.ts'
 import { pcmLength, pcmSlice } from '../../utils/pcmUtils.ts'
 import { Option } from '../../utils/types/Option.ts'
-import { ImageData, Samples, Volume } from '../../utils/types/brandedTypes.ts'
+import { ImageBytes, Samples, Volume } from '../../utils/types/brandedTypes.ts'
 import { unawaited } from '../../utils/utils.ts'
 import { EMPTY_SOUND_STATE, SoundState, makeSoundState } from '../SoundState.ts'
 import { validateSoundState } from '../SoundStateValidator.ts'
@@ -339,7 +339,7 @@ export class SoundLibrary implements SoundActions {
       image.name = name
     })
 
-  setImageData = (id: ImageId, imageData: ImageData) =>
+  setImageData = (id: ImageId, imageData: ImageBytes) =>
     this.updateImage(id, (image) => {
       image.data = imageData
     })
