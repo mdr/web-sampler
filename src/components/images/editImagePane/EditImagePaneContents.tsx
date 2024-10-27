@@ -6,6 +6,7 @@ import { useSoundActions } from '../../../sounds/library/soundHooks.ts'
 import { ImageId, getImageDisplayName } from '../../../types/Image.ts'
 import { Option } from '../../../utils/types/Option.ts'
 import { Url } from '../../../utils/types/brandedTypes.ts'
+import { EditImagePaneTestIds } from './EditImagePaneTestIds.ts'
 import { ImageNameTextField } from './ImageNameTextField.tsx'
 import { ImageUploadZone } from './ImageUploadZone.tsx'
 import { imageCropToPercentCrop, percentCropToImageCrop } from './cropConversions.ts'
@@ -58,7 +59,12 @@ export const EditImagePaneContents = ({ imageId }: EditImagePaneContentsProps) =
           minWidth={32}
           minHeight={32}
         >
-          <img src={imageUrl} alt={getImageDisplayName(image)} onLoad={onImageLoad} />
+          <img
+            data-testid={EditImagePaneTestIds.image}
+            src={imageUrl}
+            alt={getImageDisplayName(image)}
+            onLoad={onImageLoad}
+          />
         </ReactCrop>
       )}
     </div>

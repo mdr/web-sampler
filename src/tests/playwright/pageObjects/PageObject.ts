@@ -108,6 +108,13 @@ export abstract class PageObject {
     }
   }
 
+  protected clickAndUploadFile = async (testId: TestId, path: Path): Promise<void> => {
+    const fileChooserPromise = this.page.waitForEvent('filechooser')
+    await this.press(testId)
+    const fileChooser = await fileChooserPromise
+    await fileChooser.setFiles(path)
+  }
+
   protected triggerDownload = async (fn: () => Promise<void>): Promise<Path> => {
     const downloadPromise = this.page.waitForEvent('download')
     await fn()

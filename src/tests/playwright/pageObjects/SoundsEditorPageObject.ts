@@ -63,12 +63,7 @@ export class SoundsEditorPageObject extends PageObject {
     this.step('pressCropAudio', () => this.press(EditSoundPaneTestIds.cropAudioButton))
 
   pressImportAudioButton = (path: Path): Promise<void> =>
-    this.step('pressImportAudioButton', async () => {
-      const fileChooserPromise = this.page.waitForEvent('filechooser')
-      await this.press(EditSoundPaneTestIds.importAudioButton)
-      const fileChooser = await fileChooserPromise
-      await fileChooser.setFiles(path)
-    })
+    this.step('pressImportAudioButton', () => this.clickAndUploadFile(EditSoundPaneTestIds.importAudioButton, path))
 
   pressDownloadWav = (): Promise<Path> =>
     this.step('pressDownloadWav', async () =>

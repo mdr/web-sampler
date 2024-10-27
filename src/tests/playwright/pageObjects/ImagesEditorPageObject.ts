@@ -2,6 +2,7 @@ import { MountResult, expect } from '@playwright/experimental-ct-react'
 
 import { EditImagePaneTestIds } from '../../../components/images/editImagePane/EditImagePaneTestIds.ts'
 import { ImagesSidebarTestIds } from '../../../components/images/sidebar/ImagesSidebarTestIds.ts'
+import { Path } from '../../../utils/types/brandedTypes.ts'
 import { ImagesSidebarPageObject } from './ImagesSidebarPageObject.ts'
 import { NavbarPageObject } from './NavbarPageObject.ts'
 import { PageObject } from './PageObject.ts'
@@ -28,4 +29,13 @@ export class ImagesEditorPageObject extends PageObject {
       await this.get(EditImagePaneTestIds.imageNameInput).fill(name)
       await this.page.keyboard.press('Enter')
     })
+
+  clickImageUploadZoneAndChooseFile = (path: Path): Promise<void> =>
+    this.step('clickImageUploadZone', () => this.clickAndUploadFile(EditImagePaneTestIds.dropzone, path))
+
+  expectImageToBeShown = (): Promise<void> =>
+    this.step('expectImageToBeShown', () => this.expectToBeVisible(EditImagePaneTestIds.image))
+
+  expectImageNotToBeShown = (): Promise<void> =>
+    this.step('expectImageNotToBeShown', () => this.expectToBeHidden(EditImagePaneTestIds.image))
 }

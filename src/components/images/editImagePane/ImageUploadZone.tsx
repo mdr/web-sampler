@@ -7,6 +7,7 @@ import { ImageId } from '../../../types/Image.ts'
 import { fileToUint8Array } from '../../../utils/fileUtils.ts'
 import { ImageBytes, MediaType } from '../../../utils/types/brandedTypes.ts'
 import { fireAndForget } from '../../../utils/utils.ts'
+import { EditImagePaneTestIds } from './EditImagePaneTestIds.ts'
 
 export interface ImageUploadZoneProps {
   imageId: ImageId
@@ -37,9 +38,9 @@ export const ImageUploadZone = ({ imageId }: ImageUploadZoneProps) => {
 
   const onPaste: ClipboardEventHandler = useCallback(
     (event: ClipboardEvent) => {
-      const items = event.clipboardData.items
-      const imageItem = Array.from(items).find((item) => item.type.startsWith('image/'))
-      if (imageItem) {
+      const items = Array.from(event.clipboardData.items)
+      const imageItem = items.find((item) => item.type.startsWith('image/'))
+      if (imageItem !== undefined) {
         const file = imageItem.getAsFile() ?? undefined
         if (file) {
           onDrop([file])
@@ -59,6 +60,7 @@ export const ImageUploadZone = ({ imageId }: ImageUploadZoneProps) => {
 
   return (
     <div
+      data-testid={EditImagePaneTestIds.dropzone}
       onPaste={onPaste}
       {...getRootProps()}
       className={clsx(
