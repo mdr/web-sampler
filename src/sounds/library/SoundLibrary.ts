@@ -2,7 +2,7 @@ import { Draft, produce } from 'immer'
 import _ from 'lodash'
 
 import { AudioData } from '../../types/AudioData.ts'
-import { Image, ImageId, newImage } from '../../types/Image.ts'
+import { Image, ImageCrop, ImageId, newImage } from '../../types/Image.ts'
 import { KeyboardShortcut } from '../../types/KeyboardShortcut.ts'
 import { Sound, SoundId, newSound, newSoundId } from '../../types/Sound.ts'
 import { SoundAudio, newSoundAudio } from '../../types/SoundAudio.ts'
@@ -342,6 +342,15 @@ export class SoundLibrary implements SoundActions {
   setImageData = (id: ImageId, bytes: ImageBytes, mediaType: MediaType) =>
     this.updateImage(id, (image) => {
       image.data = { bytes, mediaType }
+    })
+
+  setImageCrop = (id: ImageId, crop: ImageCrop) =>
+    this.updateImage(id, (image) => {
+      const imageData = image.data
+      if (imageData === undefined) {
+        throw new Error(`Image ${id} does not have image data`)
+      }
+      imageData.crop = crop
     })
 
   updateImage = (id: ImageId, update: (soundboard: Draft<Image>) => void): void =>

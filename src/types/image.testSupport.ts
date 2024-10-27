@@ -1,5 +1,5 @@
-import { ImageBytes } from '../utils/types/brandedTypes.ts'
-import { Image, ImageId, newImageId } from './Image.ts'
+import { ImageBytes, JPEG_MEDIA_TYPE, Percent } from '../utils/types/brandedTypes.ts'
+import { Image, ImageCrop, ImageData, ImageId, newImageId } from './Image.ts'
 
 export const ImageTestConstants = {
   id: ImageId('ImageTestConstants.id'),
@@ -15,4 +15,26 @@ export const makeImage = ({ id = newImageId(), name = ImageTestConstants.name, d
   id,
   name,
   data,
+})
+
+export const makeImageData = ({
+  bytes = ImageTestConstants.imageBytes,
+  mediaType = JPEG_MEDIA_TYPE,
+  crop = undefined,
+}: Partial<ImageData> = {}): ImageData => ({
+  bytes,
+  mediaType,
+  crop,
+})
+
+export const makeImageCrop = ({
+  x = Percent(0),
+  y = Percent(0),
+  width = Percent(100),
+  height = Percent(100),
+}: Partial<ImageCrop> = {}): ImageCrop => ({
+  x,
+  y,
+  width,
+  height,
 })

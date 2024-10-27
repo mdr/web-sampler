@@ -1,5 +1,5 @@
 import { AudioData } from '../../types/AudioData.ts'
-import { Image, ImageId } from '../../types/Image.ts'
+import { Image, ImageCrop, ImageId } from '../../types/Image.ts'
 import { KeyboardShortcut } from '../../types/KeyboardShortcut.ts'
 import { Sound, SoundId } from '../../types/Sound.ts'
 import { Soundboard, SoundboardId } from '../../types/Soundboard.ts'
@@ -48,6 +48,8 @@ export interface SoundActions {
   setImageName(id: ImageId, name: string): void
 
   setImageData(id: ImageId, imageData: ImageBytes, mediaType: MediaType): void
+
+  setImageCrop(id: ImageId, crop: ImageCrop): void
 
   undo(): void
 

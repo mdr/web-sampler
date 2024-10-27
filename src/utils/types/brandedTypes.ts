@@ -51,3 +51,6 @@ export type MediaType = string & Brand.Brand<'MediaType'>
 export const MediaType = Brand.nominal<MediaType>()
 
 export const JPEG_MEDIA_TYPE = MediaType('image/jpeg')
+
+export type Percent = number & Brand.Brand<'Percent'>
+export const Percent = Brand.nominal<Percent>()

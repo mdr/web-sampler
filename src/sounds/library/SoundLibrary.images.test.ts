@@ -2,7 +2,7 @@ import flushPromises from 'flush-promises'
 import { expect, it } from 'vitest'
 
 import { ImageData } from '../../types/Image.ts'
-import { ImageTestConstants, makeImage } from '../../types/image.testSupport.ts'
+import { ImageTestConstants, makeImage, makeImageCrop, makeImageData } from '../../types/image.testSupport.ts'
 import { JPEG_MEDIA_TYPE } from '../../utils/types/brandedTypes.ts'
 import { setUpTest } from './SoundLibrary.testSupport.ts'
 
@@ -42,4 +42,17 @@ it('should allow image data to be set', async () => {
   expect(library.getImage(image.id).data).toEqual(expectedImageData)
   await flushPromises()
   expect(soundStore.getImage(image.id).data).toEqual(expectedImageData)
+})
+
+it('should allow image crop to be set', async () => {
+  const image = makeImage({ data: makeImageData({ crop: undefined }) })
+  const { library, soundStore, listener } = await setUpTest({ images: [image] })
+  const imageCrop = makeImageCrop()
+
+  library.setImageCrop(image.id, imageCrop)
+
+  expect(listener).toHaveBeenCalledTimes(1)
+  expect(library.getImage(image.id).data?.crop).toEqual(imageCrop)
+  await flushPromises()
+  expect(soundStore.getImage(image.id).data?.crop).toEqual(imageCrop)
 })

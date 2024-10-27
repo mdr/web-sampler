@@ -3,7 +3,7 @@ import * as uuid from 'uuid'
 import { z } from 'zod'
 
 import { displayCollator } from '../utils/sortUtils.ts'
-import { ImageBytes, MediaType } from '../utils/types/brandedTypes.ts'
+import { ImageBytes, MediaType, Percent } from '../utils/types/brandedTypes.ts'
 
 export type ImageId = string & Brand.Brand<'ImageId'>
 
@@ -11,15 +11,33 @@ export const ImageId = Brand.nominal<ImageId>()
 
 export const newImageId = (): ImageId => ImageId(uuid.v4())
 
+export interface ImageCrop {
+  readonly x: Percent
+  readonly y: Percent
+  readonly width: Percent
+  readonly height: Percent
+}
+
+export const imageCropSchema = z
+  .strictObject({
+    x: z.number().transform(Percent),
+    y: z.number().transform(Percent),
+    width: z.number().transform(Percent),
+    height: z.number().transform(Percent),
+  })
+  .readonly()
+
 export interface ImageData {
   readonly bytes: ImageBytes
   readonly mediaType: MediaType
+  readonly crop?: ImageCrop
 }
 
 export const imageDataSchema = z
   .strictObject({
     bytes: z.instanceof(Uint8Array).transform(ImageBytes),
     mediaType: z.string().transform(MediaType),
+    crop: imageCropSchema.optional(),
   })
   .readonly()
 
