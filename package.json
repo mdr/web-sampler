@@ -45,6 +45,7 @@
     "react-dropzone": "^14.2.10",
     "react-error-boundary": "^4.1.2",
     "react-hotkeys-hook": "^4.5.1",
+    "react-image-crop": "^11.0.7",
     "react-konva": "^18.2.10",
     "react-resizable-panels": "^2.1.5",
     "react-resize-detector": "^11.0.1",
