@@ -1,8 +1,8 @@
 import _ from 'lodash'
 
-import { Image } from '../../types/Image.ts'
+import { Image, ImageId } from '../../types/Image.ts'
 import { Sound, SoundId } from '../../types/Sound.ts'
-import { Soundboard } from '../../types/Soundboard.ts'
+import { Soundboard, SoundboardId } from '../../types/Soundboard.ts'
 import { SoundState, soundStateSchema } from '../SoundState.ts'
 import { SoundStateDiff } from '../SoundStateDiff.ts'
 import { SoundStore } from './SoundStore.ts'
@@ -28,6 +28,22 @@ export class MemorySoundStore implements SoundStore {
       throw new Error(`Sound with id ${soundId} does not exist`)
     }
     return sound
+  }
+
+  getSoundboard = (soundboardId: SoundboardId): Soundboard => {
+    const soundboard = this.soundboards.find((soundboard) => soundboard.id === soundboardId)
+    if (soundboard === undefined) {
+      throw new Error(`Soundboard with id ${soundboardId} does not exist`)
+    }
+    return soundboard
+  }
+
+  getImage = (imageId: ImageId): Image => {
+    const image = this.images.find((image) => image.id === imageId)
+    if (image === undefined) {
+      throw new Error(`Image with id ${imageId} does not exist`)
+    }
+    return image
   }
 
   // eslint-disable-next-line @typescript-eslint/require-await

@@ -4,7 +4,7 @@ import { KeyboardShortcut } from '../../types/KeyboardShortcut.ts'
 import { Sound, SoundId } from '../../types/Sound.ts'
 import { Soundboard, SoundboardId } from '../../types/Soundboard.ts'
 import { Option } from '../../utils/types/Option.ts'
-import { Samples, Volume } from '../../utils/types/brandedTypes.ts'
+import { ImageData, Samples, Volume } from '../../utils/types/brandedTypes.ts'
 
 export interface SoundActions {
   newSound(): Sound
@@ -46,6 +46,8 @@ export interface SoundActions {
   newImage(): Image
 
   setImageName(id: ImageId, name: string): void
+
+  setImageData(id: ImageId, imageData: ImageData): void
 
   undo(): void
 

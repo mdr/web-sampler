@@ -475,10 +475,9 @@ describe('SoundLibrary', () => {
 
       expect(listener).toHaveBeenCalledTimes(1)
       const updatedTile = { ...tile, shortcut: SoundboardTestConstants.shortcut }
-      const updatedSoundboards = [{ ...soundboard, tiles: [updatedTile] }]
-      expect(library.soundboards).toEqual(updatedSoundboards)
+      expect(library.getSoundboard(soundboard.id).tiles).toEqual([updatedTile])
       await flushPromises()
-      expect(soundStore.soundboards).toEqual(updatedSoundboards)
+      expect(soundStore.getSoundboard(soundboard.id).tiles).toEqual([updatedTile])
     })
 
     it('should allow a shortcut to be cleared for a soundboard tile', async () => {
@@ -491,10 +490,9 @@ describe('SoundLibrary', () => {
 
       expect(listener).toHaveBeenCalledTimes(1)
       const updatedTile = { ...tile, shortcut: undefined }
-      const updatedSoundboards = [{ ...soundboard, tiles: [updatedTile] }]
-      expect(library.soundboards).toEqual(updatedSoundboards)
+      expect(library.getSoundboard(soundboard.id).tiles).toEqual([updatedTile])
       await flushPromises()
-      expect(soundStore.soundboards).toEqual(updatedSoundboards)
+      expect(soundStore.getSoundboard(soundboard.id).tiles).toEqual([updatedTile])
     })
 
     it('should throw an error if the soundboard ID is not valid', async () => {
@@ -527,25 +525,25 @@ describe('SoundLibrary', () => {
       library.setName(sound.id, SoundTestConstants.newName)
 
       expect(listener).toHaveBeenCalledTimes(1)
-      expect(library.sounds).toEqual([{ ...sound, name: SoundTestConstants.newName }])
+      expect(library.getSound(sound.id).name).toEqual(SoundTestConstants.newName)
       await flushPromises()
-      expect(soundStore.sounds).toEqual([{ ...sound, name: SoundTestConstants.newName }])
+      expect(soundStore.getSound(sound.id).name).toEqual(SoundTestConstants.newName)
       expect(library).toMatchObject({ canUndo: true, canRedo: false })
 
       library.undo()
 
       expect(listener).toHaveBeenCalledTimes(2)
-      expect(library.sounds).toEqual([sound])
+      expect(library.getSound(sound.id).name).toEqual(SoundTestConstants.oldName)
       await flushPromises()
-      expect(soundStore.sounds).toEqual([sound])
+      expect(soundStore.getSound(sound.id).name).toEqual(SoundTestConstants.oldName)
       expect(library).toMatchObject({ canUndo: false, canRedo: true })
 
       library.redo()
 
       expect(listener).toHaveBeenCalledTimes(3)
-      expect(library.sounds).toEqual([{ ...sound, name: SoundTestConstants.newName }])
+      expect(library.getSound(sound.id).name).toEqual(SoundTestConstants.newName)
       await flushPromises()
-      expect(soundStore.sounds).toEqual([{ ...sound, name: SoundTestConstants.newName }])
+      expect(soundStore.getSound(sound.id).name).toEqual(SoundTestConstants.newName)
     })
 
     test('redo stack should be cleared when a new action is performed', async () => {
@@ -553,19 +551,19 @@ describe('SoundLibrary', () => {
       const { library } = await setUpTest({ sounds: [sound] })
 
       library.setName(sound.id, 'Name 2')
-      expect(library.sounds).toEqual([{ ...sound, name: 'Name 2' }])
+      expect(library.getSound(sound.id).name).toEqual('Name 2')
       expect(library).toMatchObject({ canUndo: true, canRedo: false })
 
       library.undo()
-      expect(library.sounds).toEqual([sound])
+      expect(library.getSound(sound.id).name).toEqual('Name 1')
       expect(library).toMatchObject({ canUndo: false, canRedo: true })
 
       library.setName(sound.id, 'Name 3')
-      expect(library.sounds).toEqual([{ ...sound, name: 'Name 3' }])
+      expect(library.getSound(sound.id).name).toEqual('Name 3')
       expect(library).toMatchObject({ canUndo: true, canRedo: false })
 
       library.redo()
-      expect(library.sounds).toEqual([{ ...sound, name: 'Name 3' }])
+      expect(library.getSound(sound.id).name).toEqual('Name 3')
     })
   })
 
@@ -592,6 +590,18 @@ describe('SoundLibrary', () => {
     expect(library.images).toEqual(updatedImages)
     await flushPromises()
     expect(soundStore.images).toEqual(updatedImages)
+  })
+
+  it('should allow image data to be set', async () => {
+    const image = makeImage({ data: undefined })
+    const { library, soundStore, listener } = await setUpTest({ images: [image] })
+
+    library.setImageData(image.id, ImageTestConstants.imageData)
+
+    expect(listener).toHaveBeenCalledTimes(1)
+    expect(library.getImage(image.id).data).toEqual(ImageTestConstants.imageData)
+    await flushPromises()
+    expect(soundStore.getImage(image.id).data).toEqual(ImageTestConstants.imageData)
   })
 })
 

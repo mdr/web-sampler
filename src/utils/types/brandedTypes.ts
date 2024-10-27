@@ -43,3 +43,6 @@ export const Volume = Brand.refined<Volume>(
 
 export const MIN_VOLUME: Volume = Volume(0)
 export const MAX_VOLUME: Volume = Volume(1)
+
+export type ImageData = Uint8Array & Brand.Brand<'ImageData'>
+export const ImageData = Brand.nominal<ImageData>()
