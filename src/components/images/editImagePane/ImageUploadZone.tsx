@@ -2,9 +2,32 @@ import clsx from 'clsx'
 import { ClipboardEvent, ClipboardEventHandler, useCallback } from 'react'
 import { FileRejection, useDropzone } from 'react-dropzone'
 
-export const ImageUploadZone = () => {
-  const onDrop = (acceptedFiles: File[]) => {
-    console.log(acceptedFiles)
+import { useSoundActions } from '../../../sounds/library/soundHooks.ts'
+import { ImageId } from '../../../types/Image.ts'
+import { fileToUint8Array } from '../../../utils/fileUtils.ts'
+import { ImageData } from '../../../utils/types/brandedTypes.ts'
+import { fireAndForget } from '../../../utils/utils.ts'
+
+export interface ImageUploadZoneProps {
+  imageId: ImageId
+}
+
+export const ImageUploadZone = ({ imageId }: ImageUploadZoneProps) => {
+  const soundActions = useSoundActions()
+
+  const onDrop = async (acceptedFiles: File[]) => {
+    if (acceptedFiles.length === 0) {
+      return
+    }
+    if (acceptedFiles.length > 1) {
+      alert('Only one image file is allowed.')
+      return
+    }
+    const file = acceptedFiles[0]
+    fireAndForget(async () => {
+      const fileData = await fileToUint8Array(file)
+      soundActions.setImageData(imageId, ImageData(fileData))
+    })
   }
 
   const onDropRejected = (fileRejections: FileRejection[]) => {
