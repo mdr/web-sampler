@@ -19,7 +19,7 @@ export const EditImagePaneContents = ({ imageId }: EditImagePaneContentsProps) =
   const [imageUrl, setImageUrl] = useState<Option<Url>>(undefined)
   useEffect(() => {
     if (image.data !== undefined) {
-      const blob = new Blob([image.data], { type: 'image/jpeg' })
+      const blob = new Blob([image.data.bytes], { type: 'image/jpeg' })
       const url = Url(URL.createObjectURL(blob))
       setImageUrl(url)
       return () => URL.revokeObjectURL(url)

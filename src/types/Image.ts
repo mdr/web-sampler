@@ -11,17 +11,23 @@ export const ImageId = Brand.nominal<ImageId>()
 
 export const newImageId = (): ImageId => ImageId(uuid.v4())
 
+export interface ImageData {
+  readonly bytes: ImageBytes
+}
+
+export const imageDataSchema = z.strictObject({ bytes: z.instanceof(Uint8Array).transform(ImageBytes) }).readonly()
+
 export interface Image {
   readonly id: ImageId
   readonly name: string
-  readonly data?: ImageBytes
+  readonly data?: ImageData
 }
 
 export const imageSchema = z
   .strictObject({
     id: z.string().transform(ImageId),
     name: z.string(),
-    data: z.instanceof(Uint8Array).transform(ImageBytes).optional(),
+    data: imageDataSchema.optional(),
   })
   .readonly()
 

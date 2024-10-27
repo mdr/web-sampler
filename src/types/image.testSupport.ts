@@ -8,7 +8,7 @@ export const ImageTestConstants = {
   name: 'ImageTestConstants.name',
   oldName: 'ImageTestConstants.oldName',
   newName: 'ImageTestConstants.newName',
-  imageData: ImageBytes(new Uint8Array([1, 2, 3])),
+  imageBytes: ImageBytes(new Uint8Array([1, 2, 3])),
 }
 
 export const makeImage = ({ id = newImageId(), name = ImageTestConstants.name, data }: Partial<Image> = {}): Image => ({

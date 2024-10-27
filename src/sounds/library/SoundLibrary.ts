@@ -339,9 +339,9 @@ export class SoundLibrary implements SoundActions {
       image.name = name
     })
 
-  setImageData = (id: ImageId, imageData: ImageBytes) =>
+  setImageData = (id: ImageId, bytes: ImageBytes) =>
     this.updateImage(id, (image) => {
-      image.data = imageData
+      image.data = { bytes }
     })
 
   updateImage = (id: ImageId, update: (soundboard: Draft<Image>) => void): void =>

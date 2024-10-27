@@ -596,12 +596,12 @@ describe('SoundLibrary', () => {
     const image = makeImage({ data: undefined })
     const { library, soundStore, listener } = await setUpTest({ images: [image] })
 
-    library.setImageData(image.id, ImageTestConstants.imageData)
+    library.setImageData(image.id, ImageTestConstants.imageBytes)
 
     expect(listener).toHaveBeenCalledTimes(1)
-    expect(library.getImage(image.id).data).toEqual(ImageTestConstants.imageData)
+    expect(library.getImage(image.id).data).toEqual({ bytes: ImageTestConstants.imageBytes })
     await flushPromises()
-    expect(soundStore.getImage(image.id).data).toEqual(ImageTestConstants.imageData)
+    expect(soundStore.getImage(image.id).data).toEqual({ bytes: ImageTestConstants.imageBytes })
   })
 })
 
