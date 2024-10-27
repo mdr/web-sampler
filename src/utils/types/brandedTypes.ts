@@ -46,3 +46,8 @@ export const MAX_VOLUME: Volume = Volume(1)
 
 export type ImageBytes = Uint8Array & Brand.Brand<'ImageBytes'>
 export const ImageBytes = Brand.nominal<ImageBytes>()
+
+export type MediaType = string & Brand.Brand<'MediaType'>
+export const MediaType = Brand.nominal<MediaType>()
+
+export const JPEG_MEDIA_TYPE = MediaType('image/jpeg')

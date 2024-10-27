@@ -5,7 +5,7 @@ import { FileRejection, useDropzone } from 'react-dropzone'
 import { useSoundActions } from '../../../sounds/library/soundHooks.ts'
 import { ImageId } from '../../../types/Image.ts'
 import { fileToUint8Array } from '../../../utils/fileUtils.ts'
-import { ImageBytes } from '../../../utils/types/brandedTypes.ts'
+import { ImageBytes, MediaType } from '../../../utils/types/brandedTypes.ts'
 import { fireAndForget } from '../../../utils/utils.ts'
 
 export interface ImageUploadZoneProps {
@@ -26,7 +26,7 @@ export const ImageUploadZone = ({ imageId }: ImageUploadZoneProps) => {
     const file = acceptedFiles[0]
     fireAndForget(async () => {
       const fileData = await fileToUint8Array(file)
-      soundActions.setImageData(imageId, ImageBytes(fileData))
+      soundActions.setImageData(imageId, ImageBytes(fileData), MediaType(file.type))
     })
   }
 

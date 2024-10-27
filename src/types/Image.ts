@@ -3,7 +3,7 @@ import * as uuid from 'uuid'
 import { z } from 'zod'
 
 import { displayCollator } from '../utils/sortUtils.ts'
-import { ImageBytes } from '../utils/types/brandedTypes.ts'
+import { ImageBytes, MediaType } from '../utils/types/brandedTypes.ts'
 
 export type ImageId = string & Brand.Brand<'ImageId'>
 
@@ -13,9 +13,15 @@ export const newImageId = (): ImageId => ImageId(uuid.v4())
 
 export interface ImageData {
   readonly bytes: ImageBytes
+  readonly mediaType: MediaType
 }
 
-export const imageDataSchema = z.strictObject({ bytes: z.instanceof(Uint8Array).transform(ImageBytes) }).readonly()
+export const imageDataSchema = z
+  .strictObject({
+    bytes: z.instanceof(Uint8Array).transform(ImageBytes),
+    mediaType: z.string().transform(MediaType),
+  })
+  .readonly()
 
 export interface Image {
   readonly id: ImageId
