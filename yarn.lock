@@ -11605,13 +11605,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-resizable-panels@npm:^2.1.5":
-  version: 2.1.5
-  resolution: "react-resizable-panels@npm:2.1.5"
+"react-resizable-panels@npm:^2.1.6":
+  version: 2.1.6
+  resolution: "react-resizable-panels@npm:2.1.6"
   peerDependencies:
     react: ^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc
     react-dom: ^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc
-  checksum: 10c0/4a3a149928bd9111ab17a6e32895f81d56f90734fa9e74593cc60dde75d8938c653bb25638c7d683859ded343066f7d7615aea1fde7da4d298cc0f769f0af23c
+  checksum: 10c0/f81aa13b70aeac24feaeee648aadbeab13c0f048c06c46d23a0cc746216928b1aa8a169567009cac8352ffe86b58dbe5a8b957eda357400af38bd71a56874ab5
   languageName: node
   linkType: hard
 
@@ -13316,12 +13316,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uuid@npm:^10.0.0":
-  version: 10.0.0
-  resolution: "uuid@npm:10.0.0"
+"uuid@npm:^11.0.0":
+  version: 11.0.0
+  resolution: "uuid@npm:11.0.0"
   bin:
-    uuid: dist/bin/uuid
-  checksum: 10c0/eab18c27fe4ab9fb9709a5d5f40119b45f2ec8314f8d4cf12ce27e4c6f4ffa4a6321dc7db6c515068fa373c075b49691ba969f0010bf37f44c37ca40cd6bf7fe
+    uuid: dist/esm/bin/uuid
+  checksum: 10c0/6613e9d27f2ef6d6a5866cbaa86405f314f255b054445f185c84c734a737e9869dfd7b7452010f5e5d8ef2b20af227819058228537a3787b04d5bf3fa774e10a
   languageName: node
   linkType: hard
 
@@ -13751,7 +13751,7 @@ __metadata:
     react-hotkeys-hook: "npm:^4.5.1"
     react-image-crop: "npm:^11.0.7"
     react-konva: "npm:^18.2.10"
-    react-resizable-panels: "npm:^2.1.5"
+    react-resizable-panels: "npm:^2.1.6"
     react-resize-detector: "npm:^11.0.1"
     react-router-dom: "npm:^6.27.0"
     react-spinners: "npm:^0.14.1"
@@ -13766,7 +13766,7 @@ __metadata:
     typescript: "npm:^5.6.3"
     typescript-eslint: "npm:^8.11.0"
     use-file-picker: "npm:^2.1.2"
-    uuid: "npm:^10.0.0"
+    uuid: "npm:^11.0.0"
     vite: "npm:^5.4.10"
     vite-plugin-checker: "npm:^0.8.0"
     vite-plugin-circular-dependency: "npm:^0.5.0"

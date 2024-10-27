@@ -47,7 +47,7 @@
     "react-hotkeys-hook": "^4.5.1",
     "react-image-crop": "^11.0.7",
     "react-konva": "^18.2.10",
-    "react-resizable-panels": "^2.1.5",
+    "react-resizable-panels": "^2.1.6",
     "react-resize-detector": "^11.0.1",
     "react-router-dom": "^6.27.0",
     "react-spinners": "^0.14.1",
@@ -57,7 +57,7 @@
     "tsafe": "^1.7.5",
     "typeface-roboto": "^1.1.13",
     "use-file-picker": "^2.1.2",
-    "uuid": "^10.0.0",
+    "uuid": "^11.0.0",
     "zod": "^3.23.8",
     "zustand": "^5.0.0"
   },
