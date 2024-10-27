@@ -1,5 +1,5 @@
 import { ReactEventHandler, useEffect, useState } from 'react'
-import { Crop, ReactCrop, centerCrop, makeAspectCrop } from 'react-image-crop'
+import { PercentCrop, ReactCrop, centerCrop, makeAspectCrop } from 'react-image-crop'
 
 import { useImage } from '../../../sounds/library/imageHooks.ts'
 import { useSoundActions } from '../../../sounds/library/soundHooks.ts'
@@ -14,7 +14,7 @@ export interface EditImagePaneContentsProps {
 }
 
 export const EditImagePaneContents = ({ imageId }: EditImagePaneContentsProps) => {
-  const [crop, setCrop] = useState<Crop>()
+  const [crop, setCrop] = useState<PercentCrop>()
   const soundActions = useSoundActions()
   const image = useImage(imageId)
   const setImageName = (name: string) => soundActions.setImageName(imageId, name)
@@ -25,9 +25,9 @@ export const EditImagePaneContents = ({ imageId }: EditImagePaneContentsProps) =
     const crop = centerCrop(
       makeAspectCrop(
         {
-          unit: 'px',
-          height: 50,
-          width: 50,
+          unit: '%',
+          height: 100,
+          // width: 100,
         },
         1,
         width,
@@ -57,7 +57,7 @@ export const EditImagePaneContents = ({ imageId }: EditImagePaneContentsProps) =
         <ReactCrop
           className="w-full h-full object-contain rounded-lg"
           crop={crop}
-          onChange={setCrop}
+          onChange={(_, percentageCrop) => setCrop(percentageCrop)}
           aspect={1}
           minWidth={32}
           minHeight={32}
