@@ -2,7 +2,7 @@ import { ReactEventHandler, useEffect, useState } from 'react'
 import { PercentCrop, ReactCrop, centerCrop, makeAspectCrop } from 'react-image-crop'
 
 import { useImage } from '../../../sounds/library/imageHooks.ts'
-import { useSoundActions } from '../../../sounds/library/soundHooks.ts'
+import { useImageActions } from '../../../sounds/library/soundHooks.ts'
 import { ImageId, getImageDisplayName } from '../../../types/Image.ts'
 import { Option } from '../../../utils/types/Option.ts'
 import { Url } from '../../../utils/types/brandedTypes.ts'
@@ -21,8 +21,8 @@ export const EditImagePaneContents = ({ imageId }: EditImagePaneContentsProps) =
   const imageCrop = imageData?.crop
   const initialCrop = imageCrop === undefined ? undefined : imageCropToPercentCrop(imageCrop)
   const [crop, setCrop] = useState<Option<PercentCrop>>(initialCrop)
-  const soundActions = useSoundActions()
-  const setImageName = (name: string) => soundActions.setImageName(imageId, name)
+  const imageActions = useImageActions()
+  const setImageName = (name: string) => imageActions.setImageName(imageId, name)
   const [imageUrl, setImageUrl] = useState<Option<Url>>(undefined)
   const onImageLoad: ReactEventHandler<HTMLImageElement> = (e) => {
     const { naturalWidth: width, naturalHeight: height } = e.currentTarget
@@ -33,7 +33,7 @@ export const EditImagePaneContents = ({ imageId }: EditImagePaneContentsProps) =
   }
 
   const handleCropChange = (percentageCrop: PercentCrop) => {
-    soundActions.setImageCrop(imageId, percentCropToImageCrop(percentageCrop))
+    imageActions.setImageCrop(imageId, percentCropToImageCrop(percentageCrop))
   }
 
   useEffect(() => {

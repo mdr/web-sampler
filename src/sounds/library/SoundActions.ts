@@ -9,7 +9,7 @@ import { ImageBytes, MediaType, Samples, Volume } from '../../utils/types/brande
 export interface SoundActions {
   newSound(): Sound
 
-  setName(id: SoundId, name: string): void
+  setSoundName(id: SoundId, name: string): void
 
   setAudioData(id: SoundId, audioData: AudioData): void
 
@@ -43,15 +43,17 @@ export interface SoundActions {
 
   setSoundboardTileShortcut(soundboardId: SoundboardId, soundId: SoundId, shortcut: Option<KeyboardShortcut>): void
 
+  undo(): void
+
+  redo(): void
+}
+
+export interface ImageActions {
   newImage(): Image
 
   setImageName(id: ImageId, name: string): void
 
-  setImageData(id: ImageId, imageData: ImageBytes, mediaType: MediaType): void
+  setImageData(id: ImageId, data: ImageBytes, mediaType: MediaType): void
 
   setImageCrop(id: ImageId, crop: ImageCrop): void
-
-  undo(): void
-
-  redo(): void
 }

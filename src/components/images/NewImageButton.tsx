@@ -1,7 +1,7 @@
 import { mdiPlus } from '@mdi/js'
 import { useNavigate } from 'react-router-dom'
 
-import { useSoundActions } from '../../sounds/library/soundHooks.ts'
+import { useImageActions } from '../../sounds/library/soundHooks.ts'
 import { TestId } from '../../utils/types/brandedTypes.ts'
 import { editImageRoute } from '../routes.ts'
 import { Button } from '../shared/Button.tsx'
@@ -12,10 +12,10 @@ export interface NewImageButtonProps {
 }
 
 export const NewImageButton = ({ testId }: NewImageButtonProps) => {
-  const soundActions = useSoundActions()
+  const imageActions = useImageActions()
   const navigate = useNavigate()
   const handlePress = () => {
-    const image = soundActions.newImage()
+    const image = imageActions.newImage()
     navigate(editImageRoute(image.id))
   }
   return (

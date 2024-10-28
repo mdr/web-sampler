@@ -44,7 +44,7 @@ it('should not allow sounds to be modified while still loading', () => {
   expect(() => library.deleteSound(sound.id)).toThrowErrorMatchingInlineSnapshot(
     `[Error: Cannot manipulate sounds yet as they are still loading]`,
   )
-  expect(() => library.setName(sound.id, SoundTestConstants.name)).toThrowError()
+  expect(() => library.setSoundName(sound.id, SoundTestConstants.name)).toThrowError()
 })
 
 it('should allow sounds to be queried', async () => {
@@ -74,7 +74,7 @@ it('should support removing listeners', async () => {
 
   library.removeListener(listener)
 
-  library.setName(sound.id, SoundTestConstants.newName)
+  library.setSoundName(sound.id, SoundTestConstants.newName)
   expect(listener).not.toHaveBeenCalled()
 })
 
@@ -112,7 +112,7 @@ it('should allow a sound name to be changed', async () => {
   const sound = makeSound({ name: SoundTestConstants.oldName })
   const { library, soundStore, listener } = await setUpTest({ sounds: [sound] })
 
-  library.setName(sound.id, SoundTestConstants.newName)
+  library.setSoundName(sound.id, SoundTestConstants.newName)
 
   expect(listener).toHaveBeenCalledTimes(1)
   expect(library.getSound(sound.id).name).toEqual(SoundTestConstants.newName)
@@ -232,7 +232,7 @@ describe('undo/redo', () => {
     const { library, soundStore, listener } = await setUpTest({ sounds: [sound] })
     expect(library).toMatchObject({ canUndo: false, canRedo: false })
 
-    library.setName(sound.id, SoundTestConstants.newName)
+    library.setSoundName(sound.id, SoundTestConstants.newName)
 
     expect(listener).toHaveBeenCalledTimes(1)
     expect(library.getSound(sound.id).name).toEqual(SoundTestConstants.newName)
@@ -260,7 +260,7 @@ describe('undo/redo', () => {
     const sound = makeSound({ name: 'Name 1' })
     const { library } = await setUpTest({ sounds: [sound] })
 
-    library.setName(sound.id, 'Name 2')
+    library.setSoundName(sound.id, 'Name 2')
     expect(library.getSound(sound.id).name).toEqual('Name 2')
     expect(library).toMatchObject({ canUndo: true, canRedo: false })
 
@@ -268,7 +268,7 @@ describe('undo/redo', () => {
     expect(library.getSound(sound.id).name).toEqual('Name 1')
     expect(library).toMatchObject({ canUndo: false, canRedo: true })
 
-    library.setName(sound.id, 'Name 3')
+    library.setSoundName(sound.id, 'Name 3')
     expect(library.getSound(sound.id).name).toEqual('Name 3')
     expect(library).toMatchObject({ canUndo: true, canRedo: false })
 

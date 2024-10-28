@@ -100,7 +100,7 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPaneProps) => {
 
   const handleStopButtonPressed = () => audioRecorderActions.stopRecording()
 
-  const setSoundName = (name: string) => soundActions.setName(soundId, name)
+  const setSoundName = (name: string) => soundActions.setSoundName(soundId, name)
 
   const handleDeleteButtonPressed = () => {
     soundActions.deleteSound(soundId)

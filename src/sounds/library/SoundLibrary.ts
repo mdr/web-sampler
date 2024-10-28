@@ -22,14 +22,14 @@ import { validateSoundState } from '../SoundStateValidator.ts'
 import { UndoRedoManager } from '../UndoRedoManager.ts'
 import { SoundStore } from '../store/SoundStore.ts'
 import { SoundSyncer } from '../store/SoundSyncer.ts'
-import { SoundActions } from './SoundActions.ts'
+import { ImageActions, SoundActions } from './SoundActions.ts'
 
 export type SoundLibraryUpdatedListener = () => void
 
 /**
  * In-memory storage and manipulation of sounds in the app.
  */
-export class SoundLibrary implements SoundActions {
+export class SoundLibrary implements SoundActions, ImageActions {
   private _isLoading = true
   private readonly undoRedoManager = new UndoRedoManager<SoundState>(EMPTY_SOUND_STATE)
   private readonly listeners: SoundLibraryUpdatedListener[] = []
@@ -110,7 +110,7 @@ export class SoundLibrary implements SoundActions {
     return sound
   }
 
-  setName = (id: SoundId, name: string): void =>
+  setSoundName = (id: SoundId, name: string): void =>
     this.updateSound(id, (sound) => {
       sound.name = name
     })
