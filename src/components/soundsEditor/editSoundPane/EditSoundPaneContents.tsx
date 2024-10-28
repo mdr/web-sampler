@@ -19,6 +19,7 @@ import { Option } from '../../../utils/types/Option.ts'
 import { TimerId } from '../../../utils/types/TimerId.ts'
 import { secondsToMillis } from '../../../utils/types/brandedTypes.ts'
 import { fireAndForget } from '../../../utils/utils.ts'
+import { AddImageButton } from '../../images/editImagePane/AddImageButton.tsx'
 import { AudioSection } from '../audioSection/AudioSection.tsx'
 import { CropButton } from '../audioSection/CropButton.tsx'
 import { DownloadMp3Button } from '../audioSection/DownloadMp3Button.tsx'
@@ -118,6 +119,10 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPaneProps) => {
         <DuplicateSoundButton soundId={soundId} />
         <ShortcutsButton />
       </div>
+      <h2 className="text-xl" data-testid={EditSoundPaneTestIds.imageHeading}>
+        Image
+      </h2>
+      <div className="flex">{sound.image === undefined && <AddImageButton soundId={soundId} />}</div>
       <h2 className="text-xl" data-testid={EditSoundPaneTestIds.audioHeading}>
         Audio
         {audio !== undefined && audioRecorderState === AudioRecorderState.IDLE && (
