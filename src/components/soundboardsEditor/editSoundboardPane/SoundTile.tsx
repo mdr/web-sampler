@@ -28,9 +28,7 @@ export const SoundTile = ({ soundboardId, sound, shortcut }: SoundTileProps) => 
   const soundboardActions = useSoundboardActions()
   const navigate = useNavigate()
   const { setShowingDialog } = useSoundTileGridStore()
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: sound.id,
-  })
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({ id: sound.id })
   const { setNodeRef: setNodeRef2 } = useDroppable({ id: sound.id })
   const style = transform ? { transform: CSS.Translate.toString(transform) } : undefined
   const setRef = (element: HTMLElement | null) => {

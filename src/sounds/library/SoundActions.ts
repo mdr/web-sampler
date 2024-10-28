@@ -1,4 +1,5 @@
 import { AudioData } from '../../types/AudioData.ts'
+import { ImageId } from '../../types/Image.ts'
 import { Sound, SoundId } from '../../types/Sound.ts'
 import { Samples, Volume } from '../../utils/types/brandedTypes.ts'
 
@@ -22,4 +23,6 @@ export interface SoundActions {
   cropAudio(id: SoundId): void
 
   importSounds(sounds: readonly Sound[]): void
+
+  setImage(soundId: SoundId, imageId: ImageId): void
 }

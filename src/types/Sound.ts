@@ -4,6 +4,7 @@ import * as uuid from 'uuid'
 import { z } from 'zod'
 
 import { displayCollator } from '../utils/sortUtils.ts'
+import { ImageId } from './Image.ts'
 import { SoundAudio, soundAudioSchema } from './SoundAudio.ts'
 
 export type SoundId = string & Brand.Brand<'SoundId'>
@@ -14,6 +15,7 @@ export interface Sound {
   readonly id: SoundId
   readonly name: string
   readonly audio?: SoundAudio
+  readonly image?: ImageId
 }
 
 export const soundSchema = z
@@ -21,6 +23,7 @@ export const soundSchema = z
     id: z.string().transform(SoundId),
     name: z.string(),
     audio: soundAudioSchema.optional(),
+    image: z.string().transform(ImageId).optional(),
   })
   .readonly()
 

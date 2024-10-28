@@ -160,6 +160,15 @@ export class SoundLibrary implements SoundActions, SoundboardActions, ImageActio
     this.setSounds(updatedSounds)
   }
 
+  setImage = (soundId: SoundId, imageId: ImageId): void => {
+    this.updateSound(soundId, (sound) => {
+      if (!this.imageExists(imageId)) {
+        throw new Error(`Image with id ${imageId} does not exist`)
+      }
+      sound.image = imageId
+    })
+  }
+
   findSoundboard = (id: SoundboardId): Option<Soundboard> => this.soundboards.find((soundboard) => soundboard.id === id)
 
   getSoundboard = (id: SoundboardId): Soundboard => {
@@ -334,6 +343,8 @@ export class SoundLibrary implements SoundActions, SoundboardActions, ImageActio
   }
 
   findImage = (id: ImageId): Option<Image> => this.images.find((image) => image.id === id)
+
+  imageExists = (id: ImageId): boolean => this.findImage(id) !== undefined
 
   getImage = (id: ImageId): Image => {
     const image = this.findImage(id)

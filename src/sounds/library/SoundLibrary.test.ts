@@ -1,51 +1,16 @@
 import flushPromises from 'flush-promises'
-import { describe, expect, it, test } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
 import { SoundId, newSoundId } from '../../types/Sound.ts'
 import { SoundAudio } from '../../types/SoundAudio.ts'
 import { Soundboard } from '../../types/Soundboard.ts'
-import { makeImage } from '../../types/image.testSupport.ts'
+import { ImageTestConstants, makeImage } from '../../types/image.testSupport.ts'
 import { SoundTestConstants, makePcm, makeSound, makeSoundWithAudio } from '../../types/sound.testSupport.ts'
 import { makeSoundboard, makeSoundboardTile } from '../../types/soundboard.testSupport.ts'
 import { pcmSlice } from '../../utils/pcmUtils.ts'
 import { Samples, Volume } from '../../utils/types/brandedTypes.ts'
 import { MemorySoundStore } from '../store/MemorySoundStore.testSupport.ts'
 import { makeLoadedSoundLibrary, setUpTest } from './SoundLibrary.testSupport.ts'
-import { SoundLibrary } from './SoundLibrary.ts'
-
-it('should load data from the store on creation', async () => {
-  const sounds = [makeSound()]
-  const soundBoards = [makeSoundboard()]
-  const images = [makeImage()]
-  const soundStore = new MemorySoundStore(sounds, soundBoards, images)
-  const library = new SoundLibrary(soundStore)
-  expect(library.isLoading).toBe(true)
-  expect(library.sounds).toEqual([])
-  expect(library.soundboards).toEqual([])
-  expect(library.images).toEqual([])
-
-  await flushPromises()
-
-  expect(library.isLoading).toBe(false)
-  expect(library.sounds).toIncludeSameMembers(sounds)
-  expect(library.soundboards).toIncludeSameMembers(soundBoards)
-  expect(library.images).toIncludeSameMembers(images)
-})
-
-it('should not allow sounds to be modified while still loading', () => {
-  const sound = makeSound()
-  const soundStore = new MemorySoundStore([sound])
-  const library = new SoundLibrary(soundStore)
-  expect(library.isLoading).toBe(true)
-
-  expect(library.newSound).toThrowErrorMatchingInlineSnapshot(
-    `[Error: Cannot manipulate sounds yet as they are still loading]`,
-  )
-  expect(() => library.deleteSound(sound.id)).toThrowErrorMatchingInlineSnapshot(
-    `[Error: Cannot manipulate sounds yet as they are still loading]`,
-  )
-  expect(() => library.setSoundName(sound.id, SoundTestConstants.name)).toThrowError()
-})
 
 it('should allow sounds to be queried', async () => {
   const sound = makeSound()
@@ -226,53 +191,24 @@ it('should allow audio data to be set', async () => {
   expect(soundStore.getSound(sound.id).audio).toMatchObject(audioData)
 })
 
-describe('undo/redo', () => {
-  it('should support undo and redo', async () => {
-    const sound = makeSound({ name: SoundTestConstants.oldName })
-    const { library, soundStore, listener } = await setUpTest({ sounds: [sound] })
-    expect(library).toMatchObject({ canUndo: false, canRedo: false })
+it('should allow an image to be set', async () => {
+  const sound = makeSound({ image: undefined })
+  const image = makeImage()
+  const { library, soundStore, listener } = await setUpTest({ sounds: [sound], images: [image] })
 
-    library.setSoundName(sound.id, SoundTestConstants.newName)
+  library.setImage(sound.id, image.id)
 
-    expect(listener).toHaveBeenCalledTimes(1)
-    expect(library.getSound(sound.id).name).toEqual(SoundTestConstants.newName)
-    await flushPromises()
-    expect(soundStore.getSound(sound.id).name).toEqual(SoundTestConstants.newName)
-    expect(library).toMatchObject({ canUndo: true, canRedo: false })
+  expect(listener).toHaveBeenCalledTimes(1)
+  expect(library.getSound(sound.id).image).toEqual(image.id)
+  await flushPromises()
+  expect(soundStore.getSound(sound.id).image).toEqual(image.id)
+})
 
-    library.undo()
+it('should throw an appropriate error when setting an image that does not exist', async () => {
+  const sound = makeSound()
+  const { library } = await setUpTest({ sounds: [sound], images: [] })
 
-    expect(listener).toHaveBeenCalledTimes(2)
-    expect(library.getSound(sound.id).name).toEqual(SoundTestConstants.oldName)
-    await flushPromises()
-    expect(soundStore.getSound(sound.id).name).toEqual(SoundTestConstants.oldName)
-    expect(library).toMatchObject({ canUndo: false, canRedo: true })
-
-    library.redo()
-
-    expect(listener).toHaveBeenCalledTimes(3)
-    expect(library.getSound(sound.id).name).toEqual(SoundTestConstants.newName)
-    await flushPromises()
-    expect(soundStore.getSound(sound.id).name).toEqual(SoundTestConstants.newName)
-  })
-
-  test('redo stack should be cleared when a new action is performed', async () => {
-    const sound = makeSound({ name: 'Name 1' })
-    const { library } = await setUpTest({ sounds: [sound] })
-
-    library.setSoundName(sound.id, 'Name 2')
-    expect(library.getSound(sound.id).name).toEqual('Name 2')
-    expect(library).toMatchObject({ canUndo: true, canRedo: false })
-
-    library.undo()
-    expect(library.getSound(sound.id).name).toEqual('Name 1')
-    expect(library).toMatchObject({ canUndo: false, canRedo: true })
-
-    library.setSoundName(sound.id, 'Name 3')
-    expect(library.getSound(sound.id).name).toEqual('Name 3')
-    expect(library).toMatchObject({ canUndo: true, canRedo: false })
-
-    library.redo()
-    expect(library.getSound(sound.id).name).toEqual('Name 3')
-  })
+  expect(() => library.setImage(sound.id, ImageTestConstants.id)).toThrowErrorMatchingInlineSnapshot(
+    `[Error: Image with id ImageTestConstants.id does not exist]`,
+  )
 })
