@@ -10,6 +10,7 @@ updates:
       storybook:
         patterns:
           - '@storybook/*'
+    versioning-strategy: increase
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
