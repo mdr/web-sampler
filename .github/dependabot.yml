@@ -6,6 +6,10 @@ updates:
     directory: '/'
     schedule:
       interval: 'daily'
+    groups:
+      storybook:
+        patterns:
+          - '@storybook/*'
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
