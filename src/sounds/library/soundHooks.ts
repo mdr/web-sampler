@@ -4,9 +4,12 @@ import { Image } from '../../types/Image.ts'
 import { Sound, SoundId } from '../../types/Sound.ts'
 import { Soundboard, SoundboardId, SoundboardTile } from '../../types/Soundboard.ts'
 import { Option } from '../../utils/types/Option.ts'
-import { ImageActions, SoundActions } from './SoundActions.ts'
+import { ImageActions } from './ImageActions.ts'
+import { MiscActions } from './MiscActions.ts'
+import { SoundActions } from './SoundActions.ts'
 import { SoundLibrary } from './SoundLibrary.ts'
 import { SoundLibraryContext } from './SoundLibraryContext.ts'
+import { SoundboardActions } from './SoundboardActions.ts'
 
 const useSoundLibrary = (): SoundLibrary => {
   const soundLibrary = useContext(SoundLibraryContext)
@@ -105,4 +108,8 @@ export const useCanRedo = (): boolean => useSoundLibraryState().canRedo
 
 export const useSoundActions = (): SoundActions => useSoundLibrary()
 
+export const useSoundboardActions = (): SoundboardActions => useSoundLibrary()
+
 export const useImageActions = (): ImageActions => useSoundLibrary()
+
+export const useMiscActions = (): MiscActions => useSoundLibrary()

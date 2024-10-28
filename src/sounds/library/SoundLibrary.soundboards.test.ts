@@ -266,7 +266,7 @@ describe('setSoundboardTileShortcut', () => {
     const soundboard = makeSoundboard({ tiles: [tile] })
     const { library, soundStore, listener } = await setUpTest({ sounds: [sound], soundboards: [soundboard] })
 
-    library.setSoundboardTileShortcut(soundboard.id, sound.id, undefined)
+    library.clearSoundboardTileShortcut(soundboard.id, sound.id)
 
     expect(listener).toHaveBeenCalledTimes(1)
     const updatedTile = { ...tile, shortcut: undefined }

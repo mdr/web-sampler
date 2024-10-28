@@ -13,7 +13,7 @@ import {
   Button as RacButton,
 } from 'react-aria-components'
 
-import { useSoundActions, useSoundboard, useSounds } from '../../../sounds/library/soundHooks.ts'
+import { useSoundboard, useSoundboardActions, useSounds } from '../../../sounds/library/soundHooks.ts'
 import { Sound, SoundId, getSoundDisplayName, sortSoundsByDisplayName } from '../../../types/Sound.ts'
 import { SoundboardId } from '../../../types/Soundboard.ts'
 import { Option } from '../../../utils/types/Option.ts'
@@ -30,13 +30,13 @@ export const ChooseSoundDialog = ({ soundboardId }: ChooseSoundDialogProps) => {
   const soundboardSoundIds = soundboard.tiles.map((tile) => tile.soundId)
   const availableSounds = sortSoundsByDisplayName(useSounds().filter((sound) => !soundboardSoundIds.includes(sound.id)))
   const [selectedSoundId, setSelectedSoundId] = useState<Option<SoundId>>(undefined)
-  const soundActions = useSoundActions()
+  const soundboardActions = useSoundboardActions()
 
   const handleAddButtonPressed = (close: () => void) => () => {
     if (selectedSoundId === undefined) {
       throw new Error('selectedSoundId is undefined')
     }
-    soundActions.addSoundToSoundboard(soundboardId, selectedSoundId)
+    soundboardActions.addSoundToSoundboard(soundboardId, selectedSoundId)
     close()
   }
 

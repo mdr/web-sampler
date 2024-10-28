@@ -1,7 +1,7 @@
 import { mdiPlus } from '@mdi/js'
 import { useNavigate } from 'react-router-dom'
 
-import { useSoundActions } from '../../sounds/library/soundHooks.ts'
+import { useSoundboardActions } from '../../sounds/library/soundHooks.ts'
 import { TestId } from '../../utils/types/brandedTypes.ts'
 import { editSoundboardRoute } from '../routes.ts'
 import { Button } from '../shared/Button.tsx'
@@ -12,10 +12,10 @@ export interface NewSoundboardButtonProps {
 }
 
 export const NewSoundboardButton = ({ testId }: NewSoundboardButtonProps) => {
-  const soundActions = useSoundActions()
+  const soundboardActions = useSoundboardActions()
   const navigate = useNavigate()
   const handlePress = () => {
-    const soundboard = soundActions.newSoundboard()
+    const soundboard = soundboardActions.newSoundboard()
     navigate(editSoundboardRoute(soundboard.id))
   }
   return (

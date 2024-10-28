@@ -5,7 +5,7 @@ import Icon from '@mdi/react'
 import { Button, DialogTrigger, Toolbar } from 'react-aria-components'
 import { useNavigate } from 'react-router-dom'
 
-import { useSoundActions } from '../../../sounds/library/soundHooks.ts'
+import { useSoundboardActions } from '../../../sounds/library/soundHooks.ts'
 import { KeyboardShortcut } from '../../../types/KeyboardShortcut.ts'
 import { Sound, getSoundDisplayName, soundHasAudio } from '../../../types/Sound.ts'
 import { SoundboardId } from '../../../types/Soundboard.ts'
@@ -25,7 +25,7 @@ export interface SoundTileProps {
 }
 
 export const SoundTile = ({ soundboardId, sound, shortcut }: SoundTileProps) => {
-  const soundActions = useSoundActions()
+  const soundboardActions = useSoundboardActions()
   const navigate = useNavigate()
   const { setShowingDialog } = useSoundTileGridStore()
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
@@ -38,7 +38,7 @@ export const SoundTile = ({ soundboardId, sound, shortcut }: SoundTileProps) => 
     setNodeRef2(element)
   }
   const handleRemoveSound = () => {
-    soundActions.removeSoundFromSoundboard(soundboardId, sound.id)
+    soundboardActions.removeSoundFromSoundboard(soundboardId, sound.id)
   }
   const handleEdit = () => {
     navigate(editSoundRoute(sound.id))

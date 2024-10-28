@@ -4,7 +4,7 @@ import { MenuTrigger, Popover } from 'react-aria-components'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { NavLink } from 'react-router-dom'
 
-import { useCanRedo, useCanUndo, useSoundActions } from '../../sounds/library/soundHooks.ts'
+import { useCanRedo, useCanUndo, useMiscActions } from '../../sounds/library/soundHooks.ts'
 import { useStorageManagerState } from '../../storage/storageManagerHooks.ts'
 import { imagesRoute, soundboardsRoute, soundsRoute } from '../routes.ts'
 import { NavbarIconButton } from './NavbarIconButton.tsx'
@@ -13,14 +13,14 @@ import { NavbarTestIds } from './NavbarTestIds.ts'
 import { StorageWarningButton } from './StorageWarningButton.tsx'
 
 export const Navbar = () => {
-  const soundActions = useSoundActions()
+  const miscActions = useMiscActions()
   const canUndo = useCanUndo()
   const canRedo = useCanRedo()
   const { isStoragePersistent } = useStorageManagerState()
 
-  useHotkeys('mod+z', () => soundActions.undo(), { preventDefault: true }, [soundActions])
-  useHotkeys('mod+shift+z', () => soundActions.redo(), { preventDefault: true }, [soundActions])
-  useHotkeys('ctrl+y', () => soundActions.redo(), { preventDefault: true }, [soundActions])
+  useHotkeys('mod+z', () => miscActions.undo(), { preventDefault: true }, [miscActions])
+  useHotkeys('mod+shift+z', () => miscActions.redo(), { preventDefault: true }, [miscActions])
+  useHotkeys('ctrl+y', () => miscActions.redo(), { preventDefault: true }, [miscActions])
 
   return (
     <nav className="bg-gray-800 p-4 text-white">
@@ -51,7 +51,7 @@ export const Navbar = () => {
             icon={mdiUndo}
             testId={NavbarTestIds.undoButton}
             disabled={!canUndo}
-            onPress={() => soundActions.undo()}
+            onPress={() => miscActions.undo()}
           />
         </li>
         <li className="flex">
@@ -60,7 +60,7 @@ export const Navbar = () => {
             icon={mdiRedo}
             testId={NavbarTestIds.redoButton}
             disabled={!canRedo}
-            onPress={() => soundActions.redo()}
+            onPress={() => miscActions.redo()}
           />
         </li>
         <div className="flex-grow" />

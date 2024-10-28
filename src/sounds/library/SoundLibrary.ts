@@ -22,14 +22,17 @@ import { validateSoundState } from '../SoundStateValidator.ts'
 import { UndoRedoManager } from '../UndoRedoManager.ts'
 import { SoundStore } from '../store/SoundStore.ts'
 import { SoundSyncer } from '../store/SoundSyncer.ts'
-import { ImageActions, SoundActions } from './SoundActions.ts'
+import { ImageActions } from './ImageActions.ts'
+import { MiscActions } from './MiscActions.ts'
+import { SoundActions } from './SoundActions.ts'
+import { SoundboardActions } from './SoundboardActions.ts'
 
 export type SoundLibraryUpdatedListener = () => void
 
 /**
  * In-memory storage and manipulation of sounds in the app.
  */
-export class SoundLibrary implements SoundActions, ImageActions {
+export class SoundLibrary implements SoundActions, SoundboardActions, ImageActions, MiscActions {
   private _isLoading = true
   private readonly undoRedoManager = new UndoRedoManager<SoundState>(EMPTY_SOUND_STATE)
   private readonly listeners: SoundLibraryUpdatedListener[] = []
@@ -218,7 +221,13 @@ export class SoundLibrary implements SoundActions, ImageActions {
       }
     })
 
-  setSoundboardTileShortcut = (soundboardId: SoundboardId, soundId: SoundId, shortcut: Option<KeyboardShortcut>) =>
+  setSoundboardTileShortcut = (soundboardId: SoundboardId, soundId: SoundId, shortcut: KeyboardShortcut) =>
+    this._setSoundboardTileShortcut(soundboardId, soundId, shortcut)
+
+  clearSoundboardTileShortcut = (soundboardId: SoundboardId, soundId: SoundId) =>
+    this._setSoundboardTileShortcut(soundboardId, soundId, undefined)
+
+  _setSoundboardTileShortcut = (soundboardId: SoundboardId, soundId: SoundId, shortcut: Option<KeyboardShortcut>) =>
     this.updateSoundboard(soundboardId, (soundboard) => {
       const tile = soundboard.tiles.find((tile) => tile.soundId === soundId)
       if (tile === undefined) {

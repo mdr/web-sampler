@@ -2,7 +2,7 @@ import _ from 'lodash'
 import { Dialog, Heading } from 'react-aria-components'
 import { useRecordHotkeys } from 'react-hotkeys-hook'
 
-import { useSoundActions, useSoundboard } from '../../../sounds/library/soundHooks.ts'
+import { useSoundboard, useSoundboardActions } from '../../../sounds/library/soundHooks.ts'
 import { KeyboardShortcut, describeKeyboardShortcut } from '../../../types/KeyboardShortcut.ts'
 import { SoundId } from '../../../types/Sound.ts'
 import { SoundboardId, getTile } from '../../../types/Soundboard.ts'
@@ -16,20 +16,20 @@ export interface ChooseShortcutDialogProps {
 
 export const ChooseShortcutDialog = ({ soundId, soundboardId }: ChooseShortcutDialogProps) => {
   const soundboard = useSoundboard(soundboardId)
-  const soundActions = useSoundActions()
+  const soundboardActions = useSoundboardActions()
   const tile = getTile(soundboard, soundId)
   const [recordingKeySet, { start: startRecording, stop: stopRecording, isRecording }] = useRecordHotkeys()
   const recordedShortcut =
     recordingKeySet.size > 0 ? KeyboardShortcut(_.sortBy(Array.from(recordingKeySet)).join('+')) : undefined
   const handleStopRecording = () => {
     if (recordedShortcut !== undefined) {
-      soundActions.setSoundboardTileShortcut(soundboardId, soundId, recordedShortcut)
+      soundboardActions.setSoundboardTileShortcut(soundboardId, soundId, recordedShortcut)
     }
     stopRecording()
   }
 
   const handleClear = () => {
-    soundActions.setSoundboardTileShortcut(soundboardId, soundId, undefined)
+    soundboardActions.clearSoundboardTileShortcut(soundboardId, soundId)
   }
   return (
     <Dialog data-testid={EditSoundboardPaneTestIds.chooseShortcutDialog} className="relative outline-none">

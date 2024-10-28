@@ -13,7 +13,7 @@ import { Fragment, useState } from 'react'
 import { useResizeDetector } from 'react-resize-detector'
 import { ResizePayload } from 'react-resize-detector/build/types/types'
 
-import { useSoundActions, useSoundboardAndSounds } from '../../../sounds/library/soundHooks.ts'
+import { useSoundboardActions, useSoundboardAndSounds } from '../../../sounds/library/soundHooks.ts'
 import { SoundId } from '../../../types/Sound.ts'
 import { SoundboardId } from '../../../types/Soundboard.ts'
 import { Option } from '../../../utils/types/Option.ts'
@@ -27,7 +27,7 @@ export interface SoundTileGridContentsProps {
 }
 
 export const SoundTileGrid = ({ soundboardId }: SoundTileGridContentsProps) => {
-  const soundActions = useSoundActions()
+  const soundboardActions = useSoundboardActions()
   const { soundboard, tiles } = useSoundboardAndSounds(soundboardId)
   const [columns, setColumns] = useState(1)
   const [sourceSoundId, setSourceSoundId] = useState<Option<SoundId>>(undefined)
@@ -52,7 +52,7 @@ export const SoundTileGrid = ({ soundboardId }: SoundTileGridContentsProps) => {
 
   const handleDragEnd = () => {
     if (sourceSoundId !== undefined) {
-      soundActions.moveSoundInSoundboard(soundboard.id, sourceSoundId, targetSoundId)
+      soundboardActions.moveSoundInSoundboard(soundboard.id, sourceSoundId, targetSoundId)
     }
     setSourceSoundId(undefined)
     setTargetSoundId(undefined)
