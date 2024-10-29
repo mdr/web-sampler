@@ -25,7 +25,7 @@
     "@sentry/react": "^8.35.0",
     "@sinonjs/fake-timers": "^13.0.4",
     "@ungap/structured-clone": "^1.2.0",
-    "@zip.js/zip.js": "^2.7.52",
+    "@zip.js/zip.js": "^2.7.53",
     "async-lock": "^1.4.1",
     "beautiful-react-hooks": "^5.0.2",
     "bowser": "^2.11.0",
