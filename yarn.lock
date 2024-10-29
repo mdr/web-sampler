@@ -5866,7 +5866,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:8.12.0, @typescript-eslint/parser@npm:^8.12.0":
+"@typescript-eslint/parser@npm:8.12.0":
   version: 8.12.0
   resolution: "@typescript-eslint/parser@npm:8.12.0"
   dependencies:
@@ -5881,6 +5881,24 @@ __metadata:
     typescript:
       optional: true
   checksum: 10c0/269f5259b1bdbdfa141cc4d41224484433817f9bed3509fc5bf791a165b68058339c330faf7f06cdbf4cf5c629c73636e6dbb3355ce08b773b874f7d4a4dc405
+  languageName: node
+  linkType: hard
+
+"@typescript-eslint/parser@npm:^8.12.2":
+  version: 8.12.2
+  resolution: "@typescript-eslint/parser@npm:8.12.2"
+  dependencies:
+    "@typescript-eslint/scope-manager": "npm:8.12.2"
+    "@typescript-eslint/types": "npm:8.12.2"
+    "@typescript-eslint/typescript-estree": "npm:8.12.2"
+    "@typescript-eslint/visitor-keys": "npm:8.12.2"
+    debug: "npm:^4.3.4"
+  peerDependencies:
+    eslint: ^8.57.0 || ^9.0.0
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10c0/0d41f02e91045c5dca70e347731c74a4162ab567bedf3f7f69a2c3f152f629f2d1f96cf09188270c7df48e8a2d6193ccf177e636dcaa3e58cb85ba453c343d24
   languageName: node
   linkType: hard
 
@@ -13934,7 +13952,7 @@ __metadata:
     "@types/ungap__structured-clone": "npm:^1.2.0"
     "@types/uuid": "npm:^10.0.0"
     "@typescript-eslint/eslint-plugin": "npm:^8.12.2"
-    "@typescript-eslint/parser": "npm:^8.12.0"
+    "@typescript-eslint/parser": "npm:^8.12.2"
     "@ungap/structured-clone": "npm:^1.2.0"
     "@vitejs/plugin-react": "npm:^4.3.3"
     "@vitest/coverage-v8": "npm:^2.1.4"
