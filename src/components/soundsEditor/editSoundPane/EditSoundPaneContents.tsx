@@ -29,6 +29,7 @@ import { CaptureAudioButton } from './CaptureAudioButton.tsx'
 import { DeleteButton } from './DeleteButton.tsx'
 import { DuplicateSoundButton } from './DuplicateSoundButton.tsx'
 import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
+import { ImageDisplay } from './ImageDisplay.tsx'
 import { ImportAudioButton } from './ImportAudioButton.tsx'
 import { ShortcutsButton } from './ShortcutsButton.tsx'
 import { SoundNameTextField } from './SoundNameTextField.tsx'
@@ -123,6 +124,7 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPaneProps) => {
         Image
       </h2>
       <div className="flex">{sound.image === undefined && <AddImageButton soundId={soundId} />}</div>
+      {sound.image !== undefined && <ImageDisplay imageId={sound.image} />}
       <h2 className="text-xl" data-testid={EditSoundPaneTestIds.audioHeading}>
         Audio
         {audio !== undefined && audioRecorderState === AudioRecorderState.IDLE && (
