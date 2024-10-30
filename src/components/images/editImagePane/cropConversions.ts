@@ -7,12 +7,12 @@ export const imageCropToPercentCrop = (crop: ImageCrop): PercentCrop => ({
   unit: '%',
   x: crop.x,
   y: crop.y,
-  width: crop.width,
-  height: crop.height,
+  width: crop.size,
+  height: crop.size,
 })
+
 export const percentCropToImageCrop = (crop: PercentCrop): ImageCrop => ({
   x: Percent(crop.x),
   y: Percent(crop.y),
-  width: Percent(crop.width),
-  height: Percent(crop.height),
+  size: Percent(crop.width),
 })

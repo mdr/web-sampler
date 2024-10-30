@@ -30,11 +30,9 @@ export const makeImageData = ({
 export const makeImageCrop = ({
   x = Percent(0),
   y = Percent(0),
-  width = Percent(100),
-  height = Percent(100),
+  size = Percent(100),
 }: Partial<ImageCrop> = {}): ImageCrop => ({
   x,
   y,
-  width,
-  height,
+  size,
 })

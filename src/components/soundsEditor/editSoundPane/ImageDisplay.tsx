@@ -31,5 +31,5 @@ export const ImageDisplay: FC<ImageDisplayProps> = ({ imageId }) => {
   if (crop === undefined) {
     return <img src={imageUrl} alt={image.name} />
   }
-  return <img src={imageUrl} alt="Cropped Image" style={{}} />
+  return <img src={imageUrl} alt="Cropped Image" />
 }

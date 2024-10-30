@@ -1,13 +1,14 @@
 import * as Sentry from '@sentry/react'
 import ReactDOM from 'react-dom/client'
-import 'react-image-crop/dist/ReactCrop.css'
-import 'react-toastify/dist/ReactToastify.css'
 import 'typeface-roboto'
 
 import { ProdApp } from './components/ProdApp.tsx'
-import './main.css'
 import { TestApp } from './tests/playwright/TestApp.tsx'
 import { getDocumentRoot } from './utils/domUtils.ts'
+
+import './main.css'
+import 'react-image-crop/dist/ReactCrop.css'
+import 'react-toastify/dist/ReactToastify.css'
 
 if (import.meta.env.PROD) {
   Sentry.init({
