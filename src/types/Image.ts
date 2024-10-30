@@ -14,14 +14,16 @@ export const newImageId = (): ImageId => ImageId(uuid.v4())
 export interface ImageCrop {
   readonly x: Percent
   readonly y: Percent
-  readonly size: Percent
+  readonly width: Percent
+  readonly height: Percent
 }
 
 export const imageCropSchema = z
   .strictObject({
     x: z.number().transform(Percent),
     y: z.number().transform(Percent),
-    size: z.number().transform(Percent),
+    width: z.number().transform(Percent),
+    height: z.number().transform(Percent),
   })
   .readonly()
 
