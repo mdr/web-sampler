@@ -6294,7 +6294,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"attr-accept@npm:^2.2.2":
+"attr-accept@npm:^2.2.4":
   version: 2.2.4
   resolution: "attr-accept@npm:2.2.4"
   checksum: 10c0/602d88b40cb039f1159b86e389ca4f908c13dba513753f7c511e69499ba6216c153519f31a484bac9c9efa633f8f6a4ec25b4f777bd55198f8cb2514cef04618
@@ -8130,12 +8130,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"file-selector@npm:^0.6.0":
-  version: 0.6.0
-  resolution: "file-selector@npm:0.6.0"
+"file-selector@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "file-selector@npm:1.2.0"
   dependencies:
-    tslib: "npm:^2.4.0"
-  checksum: 10c0/477ca1b56274db9fee1a8a623c4bfef580389726a5fef843af8c1f2f17f70ec2d1e41b29115777c92e120a15f1cca734c6ef36bb48bfa2ee027c68da16cd0d28
+    tslib: "npm:^2.7.0"
+  checksum: 10c0/96be6691fae3e1ed3cb340385b48ef2c9b17fc7feff634116085bd0c385764dd273607c89ab8e416570b2f15f4b29aff7ccc60bf8fc1656517bda596dbb1b0f8
   languageName: node
   linkType: hard
 
@@ -10883,16 +10883,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dropzone@npm:^14.2.10":
-  version: 14.2.10
-  resolution: "react-dropzone@npm:14.2.10"
+"react-dropzone@npm:^14.3.1":
+  version: 14.3.1
+  resolution: "react-dropzone@npm:14.3.1"
   dependencies:
-    attr-accept: "npm:^2.2.2"
-    file-selector: "npm:^0.6.0"
+    attr-accept: "npm:^2.2.4"
+    file-selector: "npm:^1.2.0"
     prop-types: "npm:^15.8.1"
   peerDependencies:
     react: ">= 16.8 || 18.0.0"
-  checksum: 10c0/07f24b77cae951f8bdbcaeabfca1eacf8699ed79e5924c534d81c0da23bf98a83dae19d5e04419f2010b527233830f69159caabf0cdaedb1aaaaa4fe7efa99f0
+  checksum: 10c0/12a4ea019e10aa45a2eef12961c111d84d912b70340da4c1a12fa112bd848fb8e2ee82964bb6837c81f54a630641ea5513b8749e740ba11d6d1a846d819407c5
   languageName: node
   linkType: hard
 
@@ -12300,6 +12300,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tslib@npm:^2.7.0":
+  version: 2.8.1
+  resolution: "tslib@npm:2.8.1"
+  checksum: 10c0/9c4759110a19c53f992d9aae23aac5ced636e99887b51b9e61def52611732872ff7668757d4e4c61f19691e36f4da981cd9485e869b4a7408d689f6bf1f14e62
+  languageName: node
+  linkType: hard
+
 "tsscmp@npm:1.0.6":
   version: 1.0.6
   resolution: "tsscmp@npm:1.0.6"
@@ -13027,7 +13034,7 @@ __metadata:
     react-aria-components: "npm:^1.4.1"
     react-array-to-tree: "npm:^2.0.1"
     react-dom: "npm:^18.3.1"
-    react-dropzone: "npm:^14.2.10"
+    react-dropzone: "npm:^14.3.1"
     react-error-boundary: "npm:^4.1.2"
     react-hotkeys-hook: "npm:^4.5.1"
     react-image-crop: "npm:^11.0.7"
