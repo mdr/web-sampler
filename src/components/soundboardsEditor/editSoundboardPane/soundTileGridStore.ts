@@ -1,11 +1,3 @@
-import { create } from 'zustand'
+import { atom } from 'jotai'
 
-interface SoundTileGridState {
-  isShowingDialog: boolean
-  setShowingDialog: (isShowingDialog: boolean) => void
-}
-
-export const useSoundTileGridStore = create<SoundTileGridState>()((set) => ({
-  isShowingDialog: false,
-  setShowingDialog: (isShowingDialog: boolean) => set({ isShowingDialog }),
-}))
+export const isShowingDialogAtom = atom<boolean>(false)

@@ -9,6 +9,7 @@ import {
   useSensor,
   useSensors,
 } from '@dnd-kit/core'
+import { useAtom } from 'jotai'
 import { Fragment, useState } from 'react'
 import { useResizeDetector } from 'react-resize-detector'
 import { ResizePayload } from 'react-resize-detector/build/types/types'
@@ -20,7 +21,7 @@ import { Option } from '../../../utils/types/Option.ts'
 import { PlaceholderTile } from './PlaceholderTile.tsx'
 import { SoundTile } from './SoundTile.tsx'
 import { SOUND_TILE_GAP, SOUND_TILE_SIZE } from './soundTileConstants.ts'
-import { useSoundTileGridStore } from './soundTileGridStore.ts'
+import { isShowingDialogAtom } from './soundTileGridStore.ts'
 
 export interface SoundTileGridContentsProps {
   soundboardId: SoundboardId
@@ -34,7 +35,7 @@ export const SoundTileGrid = ({ soundboardId }: SoundTileGridContentsProps) => {
   const [targetSoundId, setTargetSoundId] = useState<Option<SoundId>>(undefined)
   // Explicitly set up sensors else Playwright test interactions don't work correctly:
   const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor), useSensor(KeyboardSensor))
-  const isShowingDialog = useSoundTileGridStore((state) => state.isShowingDialog)
+  const [isShowingDialog] = useAtom(isShowingDialogAtom)
 
   const onResize = ({ width }: ResizePayload) => {
     if (width) {
@@ -79,7 +80,7 @@ export const SoundTileGrid = ({ soundboardId }: SoundTileGridContentsProps) => {
       onDragEnd={handleDragEnd}
       onDragOver={handleDragOver}
       onDragCancel={handleDragCancel}
-      sensors={isShowingDialog ? [] : sensors}
+      sensors={isShowingDialog ? [] : sensors} // deactivate sensors when choose shortcut dialog is open else it interferes with dialog interactions
     >
       <div
         ref={ref}

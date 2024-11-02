@@ -2,6 +2,7 @@ import { useDraggable, useDroppable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 import { mdiClose, mdiKeyboard, mdiPencil } from '@mdi/js'
 import Icon from '@mdi/react'
+import { useSetAtom } from 'jotai'
 import { Button, DialogTrigger, Toolbar } from 'react-aria-components'
 import { useNavigate } from 'react-router-dom'
 
@@ -16,7 +17,7 @@ import { ChooseShortcutDialog } from './ChooseShortcutDialog.tsx'
 import { EditSoundboardPaneTestIds } from './EditSoundboardPaneTestIds.ts'
 import { PlaySoundButton } from './PlaySoundButton.tsx'
 import { SoundTileIconButton } from './SoundTileIconButton.tsx'
-import { useSoundTileGridStore } from './soundTileGridStore.ts'
+import { isShowingDialogAtom } from './soundTileGridStore.ts'
 
 export interface SoundTileProps {
   soundboardId: SoundboardId
@@ -27,7 +28,7 @@ export interface SoundTileProps {
 export const SoundTile = ({ soundboardId, sound, shortcut }: SoundTileProps) => {
   const soundboardActions = useSoundboardActions()
   const navigate = useNavigate()
-  const { setShowingDialog } = useSoundTileGridStore()
+  const setShowingDialog = useSetAtom(isShowingDialogAtom)
   const { attributes, listeners, setNodeRef, transform } = useDraggable({ id: sound.id })
   const { setNodeRef: setNodeRef2 } = useDroppable({ id: sound.id })
   const style = transform ? { transform: CSS.Translate.toString(transform) } : undefined
