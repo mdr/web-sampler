@@ -107,7 +107,7 @@
     "globals": "^15.11.0",
     "jest-extended": "^4.0.2",
     "jsdom": "^25.0.1",
-    "monocart-reporter": "^2.9.7",
+    "monocart-reporter": "^2.9.8",
     "playwright": "^1.48.2",
     "postcss": "^8.4.47",
     "prettier": "3.3.3",
