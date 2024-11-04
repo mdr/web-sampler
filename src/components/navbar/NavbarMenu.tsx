@@ -10,6 +10,7 @@ import { SelectedFiles } from 'use-file-picker/types'
 import { useSoundActions, useSounds } from '../../sounds/library/soundHooks.ts'
 import { Sound } from '../../types/Sound.ts'
 import { fireAndForget } from '../../utils/utils.ts'
+import { soundsRoute } from '../routes.ts'
 import { NavbarTestIds } from './NavbarTestIds.ts'
 import { zipSounds } from './importExport/exportSounds.ts'
 import { unzipSounds } from './importExport/importSounds.ts'
@@ -34,7 +35,7 @@ export const NavbarMenu = () => {
       return
     }
     soundActions.importSounds(sounds)
-    navigate('/')
+    navigate(soundsRoute)
     toast.info('Sounds imported successfully.')
   }
 

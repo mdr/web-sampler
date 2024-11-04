@@ -20,13 +20,14 @@ import { TimerId } from '../../../utils/types/TimerId.ts'
 import { secondsToMillis } from '../../../utils/types/brandedTypes.ts'
 import { fireAndForget } from '../../../utils/utils.ts'
 import { AddImageButton } from '../../images/editImagePane/AddImageButton.tsx'
+import { soundsRoute } from '../../routes.ts'
 import { AudioSection } from '../audioSection/AudioSection.tsx'
 import { CropButton } from '../audioSection/CropButton.tsx'
 import { DownloadMp3Button } from '../audioSection/DownloadMp3Button.tsx'
 import { DownloadWavButton } from '../audioSection/DownloadWavButton.tsx'
 import { MAX_RECORDING_DURATION } from '../recordingConstants.ts'
 import { CaptureAudioButton } from './CaptureAudioButton.tsx'
-import { DeleteButton } from './DeleteButton.tsx'
+import { DeleteSoundButton } from './DeleteSoundButton.tsx'
 import { DuplicateSoundButton } from './DuplicateSoundButton.tsx'
 import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
 import { ImageDisplay } from './ImageDisplay.tsx'
@@ -106,7 +107,7 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPaneProps) => {
 
   const handleDeleteButtonPressed = () => {
     soundActions.deleteSound(soundId)
-    navigate('/')
+    navigate(soundsRoute)
     toast.info(`Deleted sound ${getSoundDisplayName(sound)}`)
   }
 
@@ -116,7 +117,7 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPaneProps) => {
     <div className="flex flex-col space-y-4 px-4 pt-4">
       <SoundNameTextField name={sound.name} setName={setSoundName} />
       <div className="flex space-x-2">
-        <DeleteButton onPress={handleDeleteButtonPressed} />
+        <DeleteSoundButton onPress={handleDeleteButtonPressed} />
         <DuplicateSoundButton soundId={soundId} />
         <ShortcutsButton />
       </div>

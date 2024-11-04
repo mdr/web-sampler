@@ -4,11 +4,11 @@ import { Button } from '../../shared/Button.tsx'
 import { ButtonVariant } from '../../shared/ButtonVariant.tsx'
 import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
 
-interface DeleteButtonProps {
+interface DeleteSoundButtonProps {
   onPress(): void
 }
 
-export const DeleteButton = ({ onPress }: DeleteButtonProps) => (
+export const DeleteSoundButton = ({ onPress }: DeleteSoundButtonProps) => (
   <Button
     testId={EditSoundPaneTestIds.deleteButton}
     variant={ButtonVariant.DANGEROUS}
