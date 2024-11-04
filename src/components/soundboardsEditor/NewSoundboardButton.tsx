@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { useSoundboardActions } from '../../sounds/library/soundHooks.ts'
 import { TestId } from '../../utils/types/brandedTypes.ts'
-import { editSoundboardRoute } from '../routes.ts'
+import { Routes } from '../routes.ts'
 import { Button } from '../shared/Button.tsx'
 import { ButtonVariant } from '../shared/ButtonVariant.tsx'
 
@@ -16,7 +16,7 @@ export const NewSoundboardButton = ({ testId }: NewSoundboardButtonProps) => {
   const navigate = useNavigate()
   const handlePress = () => {
     const soundboard = soundboardActions.newSoundboard()
-    navigate(editSoundboardRoute(soundboard.id))
+    navigate(Routes.editSoundboardRoute(soundboard.id))
   }
   return (
     <Button

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { useImageActions } from '../../sounds/library/soundHooks.ts'
 import { TestId } from '../../utils/types/brandedTypes.ts'
-import { editImageRoute } from '../routes.ts'
+import { Routes } from '../routes.ts'
 import { Button } from '../shared/Button.tsx'
 import { ButtonVariant } from '../shared/ButtonVariant.tsx'
 
@@ -16,7 +16,7 @@ export const NewImageButton = ({ testId }: NewImageButtonProps) => {
   const navigate = useNavigate()
   const handlePress = () => {
     const image = imageActions.newImage()
-    navigate(editImageRoute(image.id))
+    navigate(Routes.editImageRoute(image.id))
   }
   return (
     <Button variant={ButtonVariant.PRIMARY} testId={testId} icon={mdiPlus} label="New Image" onPress={handlePress} />

@@ -20,7 +20,7 @@ import { TimerId } from '../../../utils/types/TimerId.ts'
 import { secondsToMillis } from '../../../utils/types/brandedTypes.ts'
 import { fireAndForget } from '../../../utils/utils.ts'
 import { AddImageButton } from '../../images/editImagePane/AddImageButton.tsx'
-import { soundsRoute } from '../../routes.ts'
+import { Routes } from '../../routes.ts'
 import { AudioSection } from '../audioSection/AudioSection.tsx'
 import { CropButton } from '../audioSection/CropButton.tsx'
 import { DownloadMp3Button } from '../audioSection/DownloadMp3Button.tsx'
@@ -107,7 +107,7 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPaneProps) => {
 
   const handleDeleteButtonPressed = () => {
     soundActions.deleteSound(soundId)
-    navigate(soundsRoute)
+    navigate(Routes.soundsRoute)
     toast.info(`Deleted sound ${getSoundDisplayName(sound)}`)
   }
 

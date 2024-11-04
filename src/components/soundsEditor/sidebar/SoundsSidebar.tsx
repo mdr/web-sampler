@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useSounds } from '../../../sounds/library/soundHooks.ts'
 import { getSoundDisplayName, sortSoundsByDisplayName } from '../../../types/Sound.ts'
 import { useSoundIdParam } from '../../routeHooks.ts'
-import { editSoundRoute } from '../../routes.ts'
+import { Routes } from '../../routes.ts'
 import { NewSoundButton } from '../NewSoundButton.tsx'
 import { SoundsSidebarTestIds } from './SoundsSidebarTestIds.ts'
 
@@ -21,7 +21,7 @@ export const SoundsSidebar = () => {
             >
               <div className="flex items-center justify-between">
                 <Link
-                  to={editSoundRoute(sound.id)}
+                  to={Routes.editSoundRoute(sound.id)}
                   className="block w-full p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
                   draggable={false}
                   data-testid={SoundsSidebarTestIds.soundName}

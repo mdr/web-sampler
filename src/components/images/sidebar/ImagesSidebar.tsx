@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useImages } from '../../../sounds/library/imageHooks.ts'
 import { getImageDisplayName, sortImagesByDisplayName } from '../../../types/Image.ts'
 import { useImageIdParam } from '../../routeHooks.ts'
-import { editImageRoute } from '../../routes.ts'
+import { Routes } from '../../routes.ts'
 import { NewImageButton } from '../NewImageButton.tsx'
 import { ImagesSidebarTestIds } from './ImagesSidebarTestIds.ts'
 
@@ -21,7 +21,7 @@ export const ImagesSidebar = () => {
             >
               <div className="flex items-center justify-between">
                 <Link
-                  to={editImageRoute(image.id)}
+                  to={Routes.editImageRoute(image.id)}
                   className="block w-full p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
                   draggable={false}
                   data-testid={ImagesSidebarTestIds.imageName}

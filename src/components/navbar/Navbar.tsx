@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom'
 
 import { useCanRedo, useCanUndo, useMiscActions } from '../../sounds/library/soundHooks.ts'
 import { useStorageManagerState } from '../../storage/storageManagerHooks.ts'
-import { imagesRoute, soundboardsRoute, soundsRoute } from '../routes.ts'
+import { Routes } from '../routes.ts'
 import { NavbarIconButton } from './NavbarIconButton.tsx'
 import { NavbarMenu } from './NavbarMenu.tsx'
 import { NavbarTestIds } from './NavbarTestIds.ts'
@@ -31,17 +31,17 @@ export const Navbar = () => {
           </NavLink>
         </li>
         <li className="flex items-center">
-          <NavLink data-testid={NavbarTestIds.soundsLink} to={soundsRoute}>
+          <NavLink data-testid={NavbarTestIds.soundsLink} to={Routes.soundsRoute}>
             <Icon path={mdiVolumeHigh} size={1} title="Sounds" />
           </NavLink>
         </li>
         <li className="flex items-center">
-          <NavLink data-testid={NavbarTestIds.soundboardsLink} to={soundboardsRoute}>
+          <NavLink data-testid={NavbarTestIds.soundboardsLink} to={Routes.soundboardsRoute}>
             <Icon path={mdiViewGridOutline} size={1} title="Soundboards" />
           </NavLink>
         </li>
         <li className="flex items-center">
-          <NavLink data-testid={NavbarTestIds.imagesLink} to={imagesRoute}>
+          <NavLink data-testid={NavbarTestIds.imagesLink} to={Routes.imagesRoute}>
             <Icon path={mdiImage} size={1} title="Images" />
           </NavLink>
         </li>

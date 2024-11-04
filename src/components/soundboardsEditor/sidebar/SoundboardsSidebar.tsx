@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useSoundboards } from '../../../sounds/library/soundHooks.ts'
 import { getSoundboardDisplayName, sortSoundboardsByDisplayName } from '../../../types/Soundboard.ts'
 import { useSoundboardIdParam } from '../../routeHooks.ts'
-import { editSoundboardRoute } from '../../routes.ts'
+import { Routes } from '../../routes.ts'
 import { NewSoundboardButton } from '../NewSoundboardButton.tsx'
 import { SoundboardsSidebarTestIds } from './SoundboardsSidebarTestIds.ts'
 
@@ -21,7 +21,7 @@ export const SoundboardsSidebar = () => {
             >
               <div className="flex items-center justify-between">
                 <Link
-                  to={editSoundboardRoute(soundboard.id)}
+                  to={Routes.editSoundboardRoute(soundboard.id)}
                   className="block w-full p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
                   draggable={false}
                   data-testid={SoundboardsSidebarTestIds.soundboardName}

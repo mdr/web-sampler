@@ -11,7 +11,7 @@ import { KeyboardShortcut } from '../../../types/KeyboardShortcut.ts'
 import { Sound, getSoundDisplayName, soundHasAudio } from '../../../types/Sound.ts'
 import { SoundboardId } from '../../../types/Soundboard.ts'
 import { Option } from '../../../utils/types/Option.ts'
-import { editSoundRoute } from '../../routes.ts'
+import { Routes } from '../../routes.ts'
 import { Modal } from '../../shared/Modal.tsx'
 import { ChooseShortcutDialog } from './ChooseShortcutDialog.tsx'
 import { EditSoundboardPaneTestIds } from './EditSoundboardPaneTestIds.ts'
@@ -40,7 +40,7 @@ export const SoundTile = ({ soundboardId, sound, shortcut }: SoundTileProps) => 
     soundboardActions.removeSoundFromSoundboard(soundboardId, sound.id)
   }
   const handleEdit = () => {
-    navigate(editSoundRoute(sound.id))
+    navigate(Routes.editSoundRoute(sound.id))
   }
   return (
     <div
