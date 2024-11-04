@@ -2,6 +2,7 @@ import { useSoundboard, useSoundboardActions } from '../../../sounds/library/sou
 import { SoundboardId } from '../../../types/Soundboard.ts'
 import { SoundboardNameTextField } from '../SoundboardNameTextField.tsx'
 import { AddSoundButton } from './AddSoundButton.tsx'
+import { DeleteSoundboardButton } from './DeleteSoundboardButton.tsx'
 import { SoundTileGrid } from './SoundTileGrid.tsx'
 
 export interface EditSoundboardPaneContentsProps {
@@ -15,8 +16,9 @@ export const EditSoundboardPaneContents = ({ soundboardId }: EditSoundboardPaneC
   return (
     <div className="flex flex-col space-y-4 px-4 pt-4">
       <SoundboardNameTextField name={soundboard.name} setName={setSoundboardName} />
-      <div className="flex justify-center">
+      <div className="flex space-x-2">
         <AddSoundButton soundboardId={soundboardId} />
+        <DeleteSoundboardButton soundboardId={soundboardId} />
       </div>
       <SoundTileGrid soundboardId={soundboardId} />
     </div>

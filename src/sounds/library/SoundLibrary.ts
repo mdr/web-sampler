@@ -186,6 +186,11 @@ export class SoundLibrary implements SoundActions, SoundboardActions, ImageActio
     return soundboard
   }
 
+  deleteSoundboard = (id: SoundboardId): void => {
+    const updatedSoundboards = this.soundboards.filter((soundboard) => soundboard.id !== id)
+    this.setSoundboards(updatedSoundboards)
+  }
+
   setSoundboardName = (id: SoundboardId, name: string): void =>
     this.updateSoundboard(id, (soundboard) => {
       soundboard.name = name

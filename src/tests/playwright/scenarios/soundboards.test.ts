@@ -18,6 +18,16 @@ test('soundboards can be created and named', async ({ mount }) => {
   await soundboardsEditorPage.sidebar.expectSoundboardNamesToBe(['Soundboard 9', 'Soundboard 10', 'Soundboard 11'])
 })
 
+test('soundboards can be deleted', async ({ mount }) => {
+  const soundsEditorPage = await launchApp(mount)
+  const soundboardsEditorPage = await soundsEditorPage.navbar.pressSoundboardsLink()
+  await soundboardsEditorPage.sidebar.pressNewSoundboard()
+
+  await soundboardsEditorPage.pressDeleteSoundboard()
+
+  await soundboardsEditorPage.sidebar.expectSoundboardNamesToBe([])
+})
+
 test('a soundboard without a name is displayed as "Untitled Soundboard"', async ({ mount }) => {
   const soundsEditorPage = await launchApp(mount)
   const soundboardsEditorPage = await soundsEditorPage.navbar.pressSoundboardsLink()

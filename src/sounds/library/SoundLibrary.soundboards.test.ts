@@ -19,6 +19,18 @@ it('should allow a soundboard to be created', async () => {
   expect(soundStore.soundboards).toEqual([soundboard])
 })
 
+it('should allow a soundboard to be deleted', async () => {
+  const soundboard = makeSoundboard()
+  const { library, soundStore, listener } = await setUpTest({ soundboards: [soundboard] })
+
+  library.deleteSoundboard(soundboard.id)
+
+  expect(listener).toHaveBeenCalledTimes(1)
+  expect(library.soundboards).toEqual([])
+  await flushPromises()
+  expect(soundStore.soundboards).toEqual([])
+})
+
 it('should allow a soundboard name to be changed', async () => {
   const soundboard = makeSoundboard({ name: SoundboardTestConstants.oldName })
   const { library, soundStore, listener } = await setUpTest({ soundboards: [soundboard] })

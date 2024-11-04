@@ -6,6 +6,8 @@ import { Option } from '../../utils/types/Option.ts'
 export interface SoundboardActions {
   newSoundboard(): Soundboard
 
+  deleteSoundboard(id: SoundboardId): void
+
   setSoundboardName(id: SoundboardId, name: string): void
 
   addSoundToSoundboard(soundboardId: SoundboardId, soundId: SoundId): void

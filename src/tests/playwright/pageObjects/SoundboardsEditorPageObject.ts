@@ -38,6 +38,9 @@ export class SoundboardsEditorPageObject extends PageObject {
       return await ChooseSoundDialogPageObject.verifyIsShown(this.mountResult)
     })
 
+  pressDeleteSoundboard = (): Promise<void> =>
+    this.step('pressDeleteSoundboard', () => this.get(EditSoundboardPaneTestIds.deleteButton).click())
+
   addSound = async (soundName: string): Promise<void> => {
     const chooseSoundDialog = await this.pressAddSound()
     await chooseSoundDialog.pressDropdownButton()
