@@ -72,3 +72,10 @@ tasks:
       - yarn playwright install
       - yarn test-ct
       - open report/coverage/index.html
+  bump-asdf-versions:
+    desc: Update asdf plugins
+    dir: .
+    cmds:
+      - asdf plugin update --all
+      - scripts/bump-asdf-versions.sh
+      - asdf install
