@@ -31,17 +31,17 @@ export const Navbar = () => {
           </NavLink>
         </li>
         <li className="flex items-center">
-          <NavLink data-testid={NavbarTestIds.soundsLink} to={Routes.soundsRoute}>
+          <NavLink data-testid={NavbarTestIds.soundsLink} to={Routes.sounds}>
             <Icon path={mdiVolumeHigh} size={1} title="Sounds" />
           </NavLink>
         </li>
         <li className="flex items-center">
-          <NavLink data-testid={NavbarTestIds.soundboardsLink} to={Routes.soundboardsRoute}>
+          <NavLink data-testid={NavbarTestIds.soundboardsLink} to={Routes.soundboards}>
             <Icon path={mdiViewGridOutline} size={1} title="Soundboards" />
           </NavLink>
         </li>
         <li className="flex items-center">
-          <NavLink data-testid={NavbarTestIds.imagesLink} to={Routes.imagesRoute}>
+          <NavLink data-testid={NavbarTestIds.imagesLink} to={Routes.images}>
             <Icon path={mdiImage} size={1} title="Images" />
           </NavLink>
         </li>

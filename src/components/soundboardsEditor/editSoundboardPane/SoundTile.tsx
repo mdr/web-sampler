@@ -40,7 +40,7 @@ export const SoundTile = ({ soundboardId, sound, shortcut }: SoundTileProps) => 
     soundboardActions.removeSoundFromSoundboard(soundboardId, sound.id)
   }
   const handleEdit = () => {
-    navigate(Routes.editSoundRoute(sound.id))
+    navigate(Routes.editSound(sound.id))
   }
   return (
     <div

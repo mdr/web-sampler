@@ -16,7 +16,7 @@ export const NewSoundButton = ({ testId }: NewSoundButtonProps) => {
   const navigate = useNavigate()
   const handlePress = () => {
     const sound = soundActions.newSound()
-    navigate(Routes.editSoundRoute(sound.id))
+    navigate(Routes.editSound(sound.id))
   }
   return (
     <Button variant={ButtonVariant.PRIMARY} testId={testId} icon={mdiPlus} label="New Sound" onPress={handlePress} />

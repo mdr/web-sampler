@@ -21,7 +21,7 @@ export const SoundsSidebar = () => {
             >
               <div className="flex items-center justify-between">
                 <Link
-                  to={Routes.editSoundRoute(sound.id)}
+                  to={Routes.editSound(sound.id)}
                   className="block w-full p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
                   draggable={false}
                   data-testid={SoundsSidebarTestIds.soundName}

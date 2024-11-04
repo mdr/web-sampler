@@ -16,7 +16,7 @@ export const NewImageButton = ({ testId }: NewImageButtonProps) => {
   const navigate = useNavigate()
   const handlePress = () => {
     const image = imageActions.newImage()
-    navigate(Routes.editImageRoute(image.id))
+    navigate(Routes.editImage(image.id))
   }
   return (
     <Button variant={ButtonVariant.PRIMARY} testId={testId} icon={mdiPlus} label="New Image" onPress={handlePress} />

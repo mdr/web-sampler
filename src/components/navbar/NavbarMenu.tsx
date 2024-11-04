@@ -35,7 +35,7 @@ export const NavbarMenu = () => {
       return
     }
     soundActions.importSounds(sounds)
-    navigate(Routes.soundsRoute)
+    navigate(Routes.sounds)
     toast.info('Sounds imported successfully.')
   }
 

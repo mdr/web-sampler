@@ -16,7 +16,7 @@ export const NewSoundboardButton = ({ testId }: NewSoundboardButtonProps) => {
   const navigate = useNavigate()
   const handlePress = () => {
     const soundboard = soundboardActions.newSoundboard()
-    navigate(Routes.editSoundboardRoute(soundboard.id))
+    navigate(Routes.editSoundboard(soundboard.id))
   }
   return (
     <Button

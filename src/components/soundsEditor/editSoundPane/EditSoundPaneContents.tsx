@@ -107,7 +107,7 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPaneProps) => {
 
   const handleDeleteButtonPressed = () => {
     soundActions.deleteSound(soundId)
-    navigate(Routes.soundsRoute)
+    navigate(Routes.sounds)
     toast.info(`Deleted sound ${getSoundDisplayName(sound)}`)
   }
 
