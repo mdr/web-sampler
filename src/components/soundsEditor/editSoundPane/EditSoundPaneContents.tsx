@@ -1,7 +1,6 @@
 import useUnmount from 'beautiful-react-hooks/useUnmount'
 import { useCallback, useRef } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
-import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
@@ -12,7 +11,7 @@ import {
 } from '../../../audioRecorder/audioRecorderHooks.ts'
 import { useSound, useSoundActions } from '../../../sounds/library/soundHooks.ts'
 import { AudioData } from '../../../types/AudioData.ts'
-import { SoundId, getSoundDisplayName, soundHasAudio } from '../../../types/Sound.ts'
+import { SoundId, soundHasAudio } from '../../../types/Sound.ts'
 import { getPlayRegionDuration, getPlayRegionDurationFriendly } from '../../../types/SoundAudio.ts'
 import { isChromiumBasedBrowser } from '../../../utils/browserUtils.ts'
 import { Option } from '../../../utils/types/Option.ts'
@@ -20,7 +19,6 @@ import { TimerId } from '../../../utils/types/TimerId.ts'
 import { secondsToMillis } from '../../../utils/types/brandedTypes.ts'
 import { fireAndForget } from '../../../utils/utils.ts'
 import { AddImageButton } from '../../images/editImagePane/AddImageButton.tsx'
-import { Routes } from '../../routes.ts'
 import { AudioSection } from '../audioSection/AudioSection.tsx'
 import { CropButton } from '../audioSection/CropButton.tsx'
 import { DownloadMp3Button } from '../audioSection/DownloadMp3Button.tsx'
@@ -50,7 +48,6 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPaneProps) => {
   const audioRecorderActions = useAudioRecorderActions()
   const audioRecorderState = useAudioRecorderState()
   const timerIdRef = useRef<Option<TimerId>>()
-  const navigate = useNavigate()
 
   useHotkeys('shift+?', () => undefined)
 
@@ -105,19 +102,13 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPaneProps) => {
 
   const setSoundName = (name: string) => soundActions.setSoundName(soundId, name)
 
-  const handleDeleteButtonPressed = () => {
-    soundActions.deleteSound(soundId)
-    navigate(Routes.sounds)
-    toast.info(`Deleted sound ${getSoundDisplayName(sound)}`)
-  }
-
   const audio = sound.audio
 
   return (
     <div className="flex flex-col space-y-4 px-4 pt-4">
       <SoundNameTextField name={sound.name} setName={setSoundName} />
       <div className="flex space-x-2">
-        <DeleteSoundButton onPress={handleDeleteButtonPressed} />
+        <DeleteSoundButton soundId={soundId} />
         <DuplicateSoundButton soundId={soundId} />
         <ShortcutsButton />
       </div>
