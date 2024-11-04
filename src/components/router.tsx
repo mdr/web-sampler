@@ -1,4 +1,4 @@
-import { createHashRouter } from 'react-router-dom'
+import { Navigate, createHashRouter } from 'react-router-dom'
 
 import { ImagesEditorPage } from './images/ImagesEditorPage.tsx'
 import { ErrorFallback } from './misc/ErrorFallback.tsx'
@@ -11,9 +11,9 @@ import { SoundsEditorPage } from './soundsEditor/SoundsEditorPage.tsx'
 export const router = createHashRouter([
   {
     path: '/',
-    errorElement: <ErrorFallback />, // Shared fallback for all child routes
+    errorElement: <ErrorFallback />,
     children: [
-      { path: '/', element: <SoundsEditorPage /> },
+      { path: '/', element: <Navigate to={Routes.sounds} replace /> },
       { path: Routes.sounds, element: <SoundsEditorPage /> },
       { path: '/sound/:soundId', element: <SoundsEditorPage /> },
       { path: Routes.soundboards, element: <SoundboardsEditorPage /> },
