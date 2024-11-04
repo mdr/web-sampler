@@ -5442,12 +5442,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^22.8.6":
-  version: 22.8.6
-  resolution: "@types/node@npm:22.8.6"
+"@types/node@npm:^22.8.7":
+  version: 22.8.7
+  resolution: "@types/node@npm:22.8.7"
   dependencies:
     undici-types: "npm:~6.19.8"
-  checksum: 10c0/d3a11f2549234a91a4c5d0ff35ab4bdcb7ba34db4d3f1d189be39b8bd41c19aac98d117150a95a9c5a9d45b1014135477ea240b2b8317c86ae3d3cf1c3b3f8f4
+  checksum: 10c0/14372885db80059ed6e92c320b2bcd8f7dc271698adce11f51aa0f424a3f82aa1749a4f66321b87043791b894346b2458d514cbb65ce70167c2fd8a78a124947
   languageName: node
   linkType: hard
 
@@ -7142,12 +7142,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"effect@npm:^3.10.8":
-  version: 3.10.8
-  resolution: "effect@npm:3.10.8"
+"effect@npm:^3.10.9":
+  version: 3.10.9
+  resolution: "effect@npm:3.10.9"
   dependencies:
     fast-check: "npm:^3.21.0"
-  checksum: 10c0/4d7efb6f507dfc1fb6f6b7494d3f115ed94e62b23e31591f3201acb48927c3946c7870510fd99d13e37164686413971b428e36a76239bfc48750728d333a008b
+  checksum: 10c0/1ae9bad5530edf9ba9f4290a45eb63d1a630b2bb3ee0e70c996ab91cc49ed32b64551d0933e1c2dd8e40ec4c956c3c16f569b900b4ca495d7c419ee16cfa2070
   languageName: node
   linkType: hard
 
@@ -8100,12 +8100,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"file-selector@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "file-selector@npm:1.2.0"
+"file-selector@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "file-selector@npm:2.1.0"
   dependencies:
     tslib: "npm:^2.7.0"
-  checksum: 10c0/96be6691fae3e1ed3cb340385b48ef2c9b17fc7feff634116085bd0c385764dd273607c89ab8e416570b2f15f4b29aff7ccc60bf8fc1656517bda596dbb1b0f8
+  checksum: 10c0/6eccfba9e0ac9f2d91fd43678ce120661088bc5cee23a679f67101f979afff71171fc10f35d39916ce244edf1e151451091cee1692a8826d3a33eb4c81cdd4b8
   languageName: node
   linkType: hard
 
@@ -10868,16 +10868,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dropzone@npm:^14.3.1":
-  version: 14.3.1
-  resolution: "react-dropzone@npm:14.3.1"
+"react-dropzone@npm:^14.3.3":
+  version: 14.3.3
+  resolution: "react-dropzone@npm:14.3.3"
   dependencies:
     attr-accept: "npm:^2.2.4"
-    file-selector: "npm:^1.2.0"
+    file-selector: "npm:^2.1.0"
     prop-types: "npm:^15.8.1"
   peerDependencies:
     react: ">= 16.8 || 18.0.0"
-  checksum: 10c0/12a4ea019e10aa45a2eef12961c111d84d912b70340da4c1a12fa112bd848fb8e2ee82964bb6837c81f54a630641ea5513b8749e740ba11d6d1a846d819407c5
+  checksum: 10c0/7832ccfc402938c1626aba690bd7e679d0abb59a149c9fd7eb1b0f0a950db1a453c8709a498a2a3e61ffc389119f9175cfa9b2edef245392fbad61b85e091577
   languageName: node
   linkType: hard
 
@@ -10910,13 +10910,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-hotkeys-hook@npm:^4.5.1":
-  version: 4.5.1
-  resolution: "react-hotkeys-hook@npm:4.5.1"
+"react-hotkeys-hook@npm:^4.6.1":
+  version: 4.6.1
+  resolution: "react-hotkeys-hook@npm:4.6.1"
   peerDependencies:
     react: ">=16.8.1"
     react-dom: ">=16.8.1"
-  checksum: 10c0/d881d8b3dc94e63629467e9e370921d168fee23a683bd02cf52d9c51c488a0fd944d15bb43b5f2b1c99f2d04bac7f58ffb84b57f9c3f84b2f437ea81b439ec10
+  checksum: 10c0/e23916567b0b863831cf7e2ddba591e82988a3212a9e4b818ac7da6d751b7e8b102f2245d8bf7e9526a97766ffd092efdbfbcc457b74564415f5d5f8ab51919e
   languageName: node
   linkType: hard
 
@@ -12972,7 +12972,7 @@ __metadata:
     "@types/file-saver": "npm:^2.0.7"
     "@types/humanize-duration": "npm:^3.27.4"
     "@types/lodash": "npm:^4.17.13"
-    "@types/node": "npm:^22.8.6"
+    "@types/node": "npm:^22.8.7"
     "@types/react": "npm:^18.3.12"
     "@types/react-dom": "npm:^18.3.1"
     "@types/sinonjs__fake-timers": "npm:^8.1.5"
@@ -12994,7 +12994,7 @@ __metadata:
     clsx: "npm:^2.1.1"
     conditional-wrap: "npm:^1.0.2"
     dexie: "npm:^4.0.9"
-    effect: "npm:^3.10.8"
+    effect: "npm:^3.10.9"
     eslint: "npm:^9.14.0"
     eslint-plugin-react: "npm:^7.37.2"
     eslint-plugin-react-hooks: "npm:^5.0.0"
@@ -13020,9 +13020,9 @@ __metadata:
     react-aria-components: "npm:^1.4.1"
     react-array-to-tree: "npm:^2.0.1"
     react-dom: "npm:^18.3.1"
-    react-dropzone: "npm:^14.3.1"
+    react-dropzone: "npm:^14.3.3"
     react-error-boundary: "npm:^4.1.2"
-    react-hotkeys-hook: "npm:^4.5.1"
+    react-hotkeys-hook: "npm:^4.6.1"
     react-image-crop: "npm:^11.0.7"
     react-konva: "npm:^18.2.10"
     react-resizable-panels: "npm:^2.1.6"
