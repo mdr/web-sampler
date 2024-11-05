@@ -5,7 +5,7 @@ import { PageObject } from './PageObject.ts'
 
 export class StorageWarningDialogPageObject extends PageObject {
   verifyIsShown = async (): Promise<StorageWarningDialogPageObject> =>
-    this.step(`verifyIsShown`, async () => {
+    this.step('verifyIsShown', async () => {
       await expect(this.get(StorageWarningDialogTestIds.dialog)).toBeVisible()
       return this
     })

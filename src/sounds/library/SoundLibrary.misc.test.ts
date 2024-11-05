@@ -36,16 +36,16 @@ it('should not allow sounds to be modified while still loading', () => {
   expect(library.isLoading).toBe(true)
 
   expect(library.newSound).toThrowErrorMatchingInlineSnapshot(
-    `[Error: Cannot manipulate sounds yet as they are still loading]`,
+    '[Error: Cannot manipulate sounds yet as they are still loading]',
   )
   expect(() => library.newSoundboard()).toThrowErrorMatchingInlineSnapshot(
-    `[Error: Cannot manipulate sounds yet as they are still loading]`,
+    '[Error: Cannot manipulate sounds yet as they are still loading]',
   )
   expect(() => library.newImage()).toThrowErrorMatchingInlineSnapshot(
-    `[Error: Cannot manipulate sounds yet as they are still loading]`,
+    '[Error: Cannot manipulate sounds yet as they are still loading]',
   )
   expect(() => library.deleteSound(sound.id)).toThrowErrorMatchingInlineSnapshot(
-    `[Error: Cannot manipulate sounds yet as they are still loading]`,
+    '[Error: Cannot manipulate sounds yet as they are still loading]',
   )
   expect(() => library.setSoundName(sound.id, SoundTestConstants.name)).toThrowError()
 })

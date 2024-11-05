@@ -209,6 +209,6 @@ it('should throw an appropriate error when setting an image that does not exist'
   const { library } = await setUpTest({ sounds: [sound], images: [] })
 
   expect(() => library.setImage(sound.id, ImageTestConstants.id)).toThrowErrorMatchingInlineSnapshot(
-    `[Error: Image with id ImageTestConstants.id does not exist]`,
+    '[Error: Image with id ImageTestConstants.id does not exist]',
   )
 })

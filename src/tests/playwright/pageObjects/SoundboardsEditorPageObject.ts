@@ -11,7 +11,7 @@ import { SoundsEditorPageObject } from './SoundsEditorPageObject.ts'
 
 export class SoundboardsEditorPageObject extends PageObject {
   verifyIsShown = async (): Promise<SoundboardsEditorPageObject> =>
-    this.step(`verifyIsShown`, async () => {
+    this.step('verifyIsShown', async () => {
       await expect(this.get(SoundboardsSidebarTestIds.sidebar)).toBeVisible()
       return this
     })

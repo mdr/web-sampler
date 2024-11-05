@@ -66,6 +66,7 @@ const configs = [
       'react/no-unescaped-entities': 'off',
       'react/prop-types': 'off',
       'react/react-in-jsx-scope': 'off',
+      quotes: ['error', 'single', { avoidEscape: true }],
     },
   },
 ]

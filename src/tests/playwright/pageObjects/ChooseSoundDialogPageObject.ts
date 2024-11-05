@@ -5,13 +5,13 @@ import { PageObject } from './PageObject.ts'
 
 export class ChooseSoundDialogPageObject extends PageObject {
   verifyIsShown = async (): Promise<ChooseSoundDialogPageObject> =>
-    this.step(`verifyIsShown`, async () => {
+    this.step('verifyIsShown', async () => {
       await expect(this.page.getByTestId(ChooseSoundDialogTestIds.dialog)).toBeVisible()
       return this
     })
 
   pressDropdownButton = (): Promise<void> =>
-    this.step(`pressDropdownButton`, () => this.press(ChooseSoundDialogTestIds.comboBoxDropdownButton))
+    this.step('pressDropdownButton', () => this.press(ChooseSoundDialogTestIds.comboBoxDropdownButton))
 
   selectSoundOption = (name: string): Promise<void> =>
     this.step(`selectSoundOption ${name}`, async () => {
@@ -19,7 +19,7 @@ export class ChooseSoundDialogPageObject extends PageObject {
     })
 
   pressAddButton = (): Promise<void> =>
-    this.step(`pressAddButton`, () => this.press(ChooseSoundDialogTestIds.addButton))
+    this.step('pressAddButton', () => this.press(ChooseSoundDialogTestIds.addButton))
 
   expectSoundOptionsToBe = (expectedNamesInOrder: string[]) =>
     this.step(`expectSoundOptionsToBe [${expectedNamesInOrder.join(', ')}]`, () =>

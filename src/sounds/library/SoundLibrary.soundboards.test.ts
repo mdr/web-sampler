@@ -81,7 +81,7 @@ describe('addSoundToSoundboard', () => {
     const { library } = await setUpTest({ sounds: [sound] })
 
     expect(() => library.addSoundToSoundboard(SoundboardTestConstants.id, sound.id)).toThrowErrorMatchingInlineSnapshot(
-      `[Error: Soundboard with id SoundboardTestConstants.id does not exist]`,
+      '[Error: Soundboard with id SoundboardTestConstants.id does not exist]',
     )
   })
 
@@ -91,7 +91,7 @@ describe('addSoundToSoundboard', () => {
     const { library } = await setUpTest({ soundboards: [soundboard] })
 
     expect(() => library.addSoundToSoundboard(soundboard.id, sound.id)).toThrowErrorMatchingInlineSnapshot(
-      `[Error: Sound with id SoundTestConstants.id does not exist]`,
+      '[Error: Sound with id SoundTestConstants.id does not exist]',
     )
   })
 })
@@ -135,7 +135,7 @@ describe('removeSoundFromSoundboard', () => {
 
     expect(() =>
       library.removeSoundFromSoundboard(SoundboardTestConstants.id, sound.id),
-    ).toThrowErrorMatchingInlineSnapshot(`[Error: Soundboard with id SoundboardTestConstants.id does not exist]`)
+    ).toThrowErrorMatchingInlineSnapshot('[Error: Soundboard with id SoundboardTestConstants.id does not exist]')
   })
 
   it('should throw an error if the sound ID is not valid', async () => {
@@ -144,7 +144,7 @@ describe('removeSoundFromSoundboard', () => {
     const { library } = await setUpTest({ soundboards: [soundboard] })
 
     expect(() => library.removeSoundFromSoundboard(soundboard.id, sound.id)).toThrowErrorMatchingInlineSnapshot(
-      `[Error: Sound with id SoundTestConstants.id does not exist]`,
+      '[Error: Sound with id SoundTestConstants.id does not exist]',
     )
   })
 })
@@ -214,7 +214,7 @@ describe('moveSoundInSoundboard', () => {
 
     expect(() =>
       library.moveSoundInSoundboard(SoundboardTestConstants.id, SoundTestConstants.id, undefined),
-    ).toThrowErrorMatchingInlineSnapshot(`[Error: Soundboard with id SoundboardTestConstants.id does not exist]`)
+    ).toThrowErrorMatchingInlineSnapshot('[Error: Soundboard with id SoundboardTestConstants.id does not exist]')
   })
 
   it('should throw an error if the source sound ID is not valid', async () => {
@@ -224,7 +224,7 @@ describe('moveSoundInSoundboard', () => {
     expect(() =>
       library.moveSoundInSoundboard(soundboard.id, SoundTestConstants.id, undefined),
     ).toThrowErrorMatchingInlineSnapshot(
-      `[Error: Sound SoundTestConstants.id not found in soundboard SoundboardTestConstants.id]`,
+      '[Error: Sound SoundTestConstants.id not found in soundboard SoundboardTestConstants.id]',
     )
   })
 
@@ -237,7 +237,7 @@ describe('moveSoundInSoundboard', () => {
     expect(() =>
       library.moveSoundInSoundboard(soundboard.id, sound.id, SoundTestConstants.id),
     ).toThrowErrorMatchingInlineSnapshot(
-      `[Error: Sound SoundTestConstants.id not found in soundboard SoundboardTestConstants.id]`,
+      '[Error: Sound SoundTestConstants.id not found in soundboard SoundboardTestConstants.id]',
     )
   })
 
@@ -293,7 +293,7 @@ describe('setSoundboardTileShortcut', () => {
 
     expect(() =>
       library.setSoundboardTileShortcut(SoundboardTestConstants.id, sound.id, SoundboardTestConstants.shortcut),
-    ).toThrowErrorMatchingInlineSnapshot(`[Error: Soundboard with id SoundboardTestConstants.id does not exist]`)
+    ).toThrowErrorMatchingInlineSnapshot('[Error: Soundboard with id SoundboardTestConstants.id does not exist]')
   })
 
   it('should throw an error if the sound ID is not valid', async () => {
@@ -303,7 +303,7 @@ describe('setSoundboardTileShortcut', () => {
     expect(() =>
       library.setSoundboardTileShortcut(soundboard.id, SoundTestConstants.id, SoundboardTestConstants.shortcut),
     ).toThrowErrorMatchingInlineSnapshot(
-      `[Error: Sound SoundTestConstants.id not found in soundboard SoundboardTestConstants.id]`,
+      '[Error: Sound SoundTestConstants.id not found in soundboard SoundboardTestConstants.id]',
     )
   })
 })
