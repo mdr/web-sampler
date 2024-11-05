@@ -20,8 +20,8 @@ export const DeleteImageButton = ({ imageId }: DeleteImageButtonProps) => {
   const navigate = useNavigate()
   const onPress = () => {
     imageActions.deleteImage(imageId)
-    navigate(Routes.sounds)
-    toast.info(`Deleted sound ${getImageDisplayName(image)}`)
+    navigate(Routes.images)
+    toast.info(`Deleted image ${getImageDisplayName(image)}`)
   }
   return (
     <Button

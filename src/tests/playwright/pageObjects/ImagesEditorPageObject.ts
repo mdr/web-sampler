@@ -30,7 +30,10 @@ export class ImagesEditorPageObject extends PageObject {
       await this.page.keyboard.press('Enter')
     })
 
-  pressDelete = (): Promise<void> => this.step('pressDelete', () => this.press(EditImagePaneTestIds.deleteButton))
+  pressDelete = async (): Promise<ImagesEditorPageObject> => {
+    await this.step('pressDelete', () => this.press(EditImagePaneTestIds.deleteButton))
+    return await ImagesEditorPageObject.verifyIsShown(this.mountResult)
+  }
 
   clickImageUploadZoneAndChooseFile = (path: Path): Promise<void> =>
     this.step('clickImageUploadZone', () => this.clickAndUploadFile(EditImagePaneTestIds.dropzone, path))

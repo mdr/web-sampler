@@ -26,6 +26,7 @@ test('soundboards can be deleted', async ({ mount }) => {
   await soundboardsEditorPage.pressDeleteSoundboard()
 
   await soundboardsEditorPage.sidebar.expectSoundboardNamesToBe([])
+  await soundboardsEditorPage.expectToastToBeShown('Deleted soundboard Untitled Soundboard')
 })
 
 test('a soundboard without a name is displayed as "Untitled Soundboard"', async ({ mount }) => {

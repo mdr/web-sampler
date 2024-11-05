@@ -25,6 +25,7 @@ test('images can be deleted', async ({ mount }) => {
 
   await imagesEditorPage.pressDelete()
 
+  await imagesEditorPage.expectToastToBeShown('Deleted image Untitled Image')
   await imagesEditorPage.sidebar.expectImageNamesToBe([])
 })
 

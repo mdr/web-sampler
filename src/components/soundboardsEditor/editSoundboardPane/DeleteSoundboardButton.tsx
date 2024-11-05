@@ -20,7 +20,7 @@ export const DeleteSoundboardButton = ({ soundboardId }: DeleteSoundboardButtonP
   const onPress = () => {
     soundboardActions.deleteSoundboard(soundboardId)
     navigate(Routes.soundboards)
-    toast.info(`Deleted sound ${getSoundboardDisplayName(soundboard)}`)
+    toast.info(`Deleted soundboard ${getSoundboardDisplayName(soundboard)}`)
   }
   return (
     <Button
