@@ -14,12 +14,9 @@ import {
   launchAndRecordNewSound,
   launchAndStartAudioCapture,
 } from '../pageObjects/SoundsEditorPageObject.ts'
-import { launchApp } from '../pageObjects/launchApp.tsx'
 import { assertSoundHasAudio, filesAreEqual } from '../testUtils.ts'
 
-test('sounds can be created and named', async ({ mount }) => {
-  const soundsEditorPage = await launchApp(mount)
-
+test('sounds can be created and named', async ({ soundsEditorPage }) => {
   await soundsEditorPage.sidebar.pressNewSound()
   await soundsEditorPage.enterSoundName('Sound 11')
 
@@ -32,16 +29,13 @@ test('sounds can be created and named', async ({ mount }) => {
   await soundsEditorPage.sidebar.expectSoundNamesToBe(['Sound 9', 'sound 10', 'Sound 11'])
 })
 
-test('a sound without a name is displayed as "Untitled Sound"', async ({ mount }) => {
-  const soundsEditorPage = await launchApp(mount)
-
+test('a sound without a name is displayed as "Untitled Sound"', async ({ soundsEditorPage }) => {
   await soundsEditorPage.sidebar.pressNewSound()
 
   await soundsEditorPage.sidebar.expectSoundNamesToBe(['Untitled Sound'])
 })
 
-test('sounds can be renamed', async ({ mount }) => {
-  const soundsEditorPage = await launchApp(mount)
+test('sounds can be renamed', async ({ soundsEditorPage }) => {
   await soundsEditorPage.sidebar.pressNewSound()
   await soundsEditorPage.enterSoundName('Sound AAA')
   await soundsEditorPage.sidebar.pressNewSound()
@@ -53,8 +47,7 @@ test('sounds can be renamed', async ({ mount }) => {
   await soundsEditorPage.sidebar.expectSoundNamesToBe(['Sound BBB', 'Sound CCC'])
 })
 
-test('sounds can be deleted', async ({ mount }) => {
-  const soundsEditorPage = await launchApp(mount)
+test('sounds can be deleted', async ({ soundsEditorPage }) => {
   await soundsEditorPage.sidebar.pressNewSound()
   await soundsEditorPage.enterSoundName('Sound AAA')
   await soundsEditorPage.sidebar.pressNewSound()
@@ -66,8 +59,7 @@ test('sounds can be deleted', async ({ mount }) => {
   await soundsEditorPage.expectToastToBeShown('Deleted sound Sound BBB')
 })
 
-test('sounds can be duplicated', async ({ mount }) => {
-  const soundsEditorPage = await launchApp(mount)
+test('sounds can be duplicated', async ({ soundsEditorPage }) => {
   await soundsEditorPage.sidebar.pressNewSound()
   await soundsEditorPage.enterSoundName('Sound AAA')
 
@@ -77,8 +69,7 @@ test('sounds can be duplicated', async ({ mount }) => {
   await soundsEditorPage.sidebar.expectSoundNamesToBe(['Sound AAA', 'Sound AAA', 'Sound AAA'])
 })
 
-test('undo/redo should handle sound creation and name editing', async ({ mount }) => {
-  const soundsEditorPage = await launchApp(mount)
+test('undo/redo should handle sound creation and name editing', async ({ soundsEditorPage }) => {
   await soundsEditorPage.sidebar.pressNewSound()
   await soundsEditorPage.enterSoundName('A')
   await soundsEditorPage.sidebar.expectSoundNamesToBe(['A'])
