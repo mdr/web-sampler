@@ -2,10 +2,7 @@ import { SoundTestConstants } from '../../../types/sound.testSupport.ts'
 import { test } from '../fixtures.ts'
 import { launchApp } from '../pageObjects/launchApp.tsx'
 
-test('soundboards can be created and named', async ({ mount }) => {
-  const soundsEditorPage = await launchApp(mount)
-  const soundboardsEditorPage = await soundsEditorPage.navbar.pressSoundboardsLink()
-
+test('soundboards can be created and named', async ({ soundboardsEditorPage }) => {
   await soundboardsEditorPage.sidebar.pressNewSoundboard()
   await soundboardsEditorPage.enterSoundboardName('Soundboard 11')
 
@@ -18,9 +15,7 @@ test('soundboards can be created and named', async ({ mount }) => {
   await soundboardsEditorPage.sidebar.expectSoundboardNamesToBe(['Soundboard 9', 'Soundboard 10', 'Soundboard 11'])
 })
 
-test('soundboards can be deleted', async ({ mount }) => {
-  const soundsEditorPage = await launchApp(mount)
-  const soundboardsEditorPage = await soundsEditorPage.navbar.pressSoundboardsLink()
+test('soundboards can be deleted', async ({ soundboardsEditorPage }) => {
   await soundboardsEditorPage.sidebar.pressNewSoundboard()
 
   await soundboardsEditorPage.pressDeleteSoundboard()
@@ -29,19 +24,13 @@ test('soundboards can be deleted', async ({ mount }) => {
   await soundboardsEditorPage.expectToastToBeShown('Deleted soundboard Untitled Soundboard')
 })
 
-test('a soundboard without a name is displayed as "Untitled Soundboard"', async ({ mount }) => {
-  const soundsEditorPage = await launchApp(mount)
-  const soundboardsEditorPage = await soundsEditorPage.navbar.pressSoundboardsLink()
-
+test('a soundboard without a name is displayed as "Untitled Soundboard"', async ({ soundboardsEditorPage }) => {
   await soundboardsEditorPage.sidebar.pressNewSoundboard()
 
   await soundboardsEditorPage.sidebar.expectSoundboardNamesToBe(['Untitled Soundboard'])
 })
 
-test('soundboards can be renamed', async ({ mount }) => {
-  const soundsEditorPage = await launchApp(mount)
-  const soundboardsEditorPage = await soundsEditorPage.navbar.pressSoundboardsLink()
-
+test('soundboards can be renamed', async ({ soundboardsEditorPage }) => {
   await soundboardsEditorPage.sidebar.pressNewSoundboard()
   await soundboardsEditorPage.enterSoundboardName('Soundboard AAA')
   await soundboardsEditorPage.sidebar.pressNewSoundboard()
@@ -53,8 +42,7 @@ test('soundboards can be renamed', async ({ mount }) => {
   await soundboardsEditorPage.sidebar.expectSoundboardNamesToBe(['Soundboard BBB', 'Soundboard CCC'])
 })
 
-test('a sound can be added to a soundboard if not already present', async ({ mount }) => {
-  const soundsEditorPage = await launchApp(mount)
+test('a sound can be added to a soundboard if not already present', async ({ soundsEditorPage }) => {
   await soundsEditorPage.createSound('ZZZ')
   await soundsEditorPage.createSound('XXX')
   await soundsEditorPage.createSound('YYY')
@@ -72,8 +60,7 @@ test('a sound can be added to a soundboard if not already present', async ({ mou
   await chooseSoundDialog.expectSoundOptionsToBe(['XXX', 'ZZZ'])
 })
 
-test('sounds can be rearranged by dragging', async ({ mount }) => {
-  const soundsEditorPage = await launchApp(mount)
+test('sounds can be rearranged by dragging', async ({ soundsEditorPage }) => {
   await soundsEditorPage.createSound('AAA')
   await soundsEditorPage.createSound('BBB')
   await soundsEditorPage.createSound('CCC')
@@ -89,8 +76,7 @@ test('sounds can be rearranged by dragging', async ({ mount }) => {
   await soundboardsEditorPage.expectSoundTilesToBe(['CCC', 'AAA', 'BBB'])
 })
 
-test('sounds can be removed from a soundboard', async ({ mount }) => {
-  const soundsEditorPage = await launchApp(mount)
+test('sounds can be removed from a soundboard', async ({ soundsEditorPage }) => {
   await soundsEditorPage.createSound(SoundTestConstants.name)
   const soundboardsEditorPage = await soundsEditorPage.navbar.pressSoundboardsLink()
   await soundboardsEditorPage.sidebar.pressNewSoundboard()

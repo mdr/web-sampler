@@ -2,12 +2,14 @@ import { test as ctBase, expect } from '@playwright/experimental-ct-react'
 import { addCoverageReport } from 'monocart-reporter'
 
 import { ImagesEditorPageObject } from './pageObjects/ImagesEditorPageObject.ts'
+import { SoundboardsEditorPageObject } from './pageObjects/SoundboardsEditorPageObject.ts'
 import { SoundsEditorPageObject } from './pageObjects/SoundsEditorPageObject.ts'
 import { launchApp } from './pageObjects/launchApp.tsx'
 
 export interface Fixture {
   autoTestFixture: string
   soundsEditorPage: SoundsEditorPageObject
+  soundboardsEditorPage: SoundboardsEditorPageObject
   imagesEditorPage: ImagesEditorPageObject
 }
 
@@ -36,6 +38,10 @@ const test = ctBase.extend<Fixture>({
   soundsEditorPage: async ({ mount }, use) => {
     const soundsEditorPage = await launchApp(mount)
     await use(soundsEditorPage)
+  },
+  soundboardsEditorPage: async ({ soundsEditorPage }, use) => {
+    const soundboardsEditorPage = await soundsEditorPage.navbar.pressSoundboardsLink()
+    await use(soundboardsEditorPage)
   },
   imagesEditorPage: async ({ soundsEditorPage }, use) => {
     const imagesEditorPage = await soundsEditorPage.navbar.pressImagesLink()
