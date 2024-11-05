@@ -75,7 +75,7 @@ export class SoundboardsEditorPageObject extends PageObject {
   expectSoundTilesToBe = (expectedSoundNames: string[]): Promise<void> =>
     this.step(`expectSoundTilesToBe ${expectedSoundNames.join(', ')}`, async () =>
       expect(async () => {
-        const soundTiles = this.page.getByTestId(EditSoundboardPaneTestIds.soundTile)
+        const soundTiles = this.page.getByTestId(EditSoundboardPaneTestIds.soundTileName)
         const textContents = await soundTiles.evaluateAll((nodes) =>
           nodes.map((node) => (node as HTMLElement).innerText),
         )
