@@ -149,8 +149,7 @@ export class SoundLibrary implements SoundActions, SoundboardActions, ImageActio
   deleteSound = (id: SoundId): void => {
     const updatedSounds = this.sounds.filter((sound) => sound.id !== id)
     const updatedSoundboards = this.soundboards.map((soundboard) => removeSoundFromSoundboard(soundboard, id))
-    const newState = { ...this.soundState, sounds: updatedSounds, soundboards: updatedSoundboards }
-    this.setState(newState)
+    this.setState({ sounds: updatedSounds, soundboards: updatedSoundboards })
   }
 
   duplicateSound = (id: SoundId): void => {
@@ -312,20 +311,19 @@ export class SoundLibrary implements SoundActions, SoundboardActions, ImageActio
   }
 
   private setSounds = (sounds: readonly Sound[]): void => {
-    const newState = { ...this.soundState, sounds }
-    this.setState(newState)
+    this.setState({ sounds })
   }
 
   private setSoundboards = (soundboards: readonly Soundboard[]): void => {
-    const newState = { ...this.soundState, soundboards }
-    this.setState(newState)
+    this.setState({ soundboards })
   }
 
-  private setState = (state: SoundState): void => {
+  private setState = (state: Partial<SoundState> = {}): void => {
+    const fullState = { ...this.soundState, ...state }
     this.checkNotLoading()
-    validateSoundState(state)
-    this.undoRedoManager.change(state)
-    this.soundSyncer.soundsUpdated(state)
+    validateSoundState(fullState)
+    this.undoRedoManager.change(fullState)
+    this.soundSyncer.soundsUpdated(fullState)
     this.notifyListeners()
   }
 
@@ -336,8 +334,7 @@ export class SoundLibrary implements SoundActions, SoundboardActions, ImageActio
   }
 
   private setImages = (images: readonly Image[]): void => {
-    const newState = { ...this.soundState, images }
-    this.setState(newState)
+    this.setState({ images })
   }
 
   newImage = (): Image => {
@@ -345,6 +342,12 @@ export class SoundLibrary implements SoundActions, SoundboardActions, ImageActio
     const updatedImages = [...this.images, image]
     this.setImages(updatedImages)
     return image
+  }
+
+  deleteImage = (id: ImageId): void => {
+    const updatedImages = this.images.filter((image) => image.id !== id)
+    const updatedSounds = this.sounds.map((sound) => (sound.image === id ? { ...sound, image: undefined } : sound))
+    this.setState({ sounds: updatedSounds, images: updatedImages })
   }
 
   findImage = (id: ImageId): Option<Image> => this.images.find((image) => image.id === id)

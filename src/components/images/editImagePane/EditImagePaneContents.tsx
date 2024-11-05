@@ -6,6 +6,7 @@ import { useImageActions } from '../../../sounds/library/soundHooks.ts'
 import { ImageId, getImageDisplayName } from '../../../types/Image.ts'
 import { Option } from '../../../utils/types/Option.ts'
 import { Url } from '../../../utils/types/brandedTypes.ts'
+import { DeleteImageButton } from './DeleteImageButton.tsx'
 import { EditImagePaneTestIds } from './EditImagePaneTestIds.ts'
 import { ImageNameTextField } from './ImageNameTextField.tsx'
 import { ImageUploadZone } from './ImageUploadZone.tsx'
@@ -49,6 +50,9 @@ export const EditImagePaneContents = ({ imageId }: EditImagePaneContentsProps) =
   return (
     <div className="flex flex-col space-y-4 px-4 pt-4">
       <ImageNameTextField name={image.name} setName={setImageName} />
+      <div className="flex space-x-2">
+        <DeleteImageButton imageId={imageId} />
+      </div>
       {image.data === undefined && <ImageUploadZone imageId={imageId} />}
       {imageUrl && (
         <ReactCrop

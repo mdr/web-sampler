@@ -3,6 +3,7 @@ import { expect, it } from 'vitest'
 
 import { ImageData } from '../../types/Image.ts'
 import { ImageTestConstants, makeImage, makeImageCrop, makeImageData } from '../../types/image.testSupport.ts'
+import { makeSound } from '../../types/sound.testSupport.ts'
 import { JPEG_MEDIA_TYPE } from '../../utils/types/brandedTypes.ts'
 import { setUpTest } from './SoundLibrary.testSupport.ts'
 
@@ -16,6 +17,21 @@ it('should allow an image to be created', async () => {
   expect(library.images).toEqual([image])
   await flushPromises()
   expect(soundStore.images).toEqual([image])
+})
+
+it('should allow an image to be deleted', async () => {
+  const image = makeImage()
+  const sound = makeSound({ image: image.id })
+  const { library, soundStore, listener } = await setUpTest({ images: [image], sounds: [sound] })
+
+  library.deleteImage(image.id)
+
+  expect(listener).toHaveBeenCalledTimes(1)
+  expect(library.images).toEqual([])
+  expect(library.getSound(sound.id).image).toBeUndefined()
+  await flushPromises()
+  expect(soundStore.images).toEqual([])
+  expect(soundStore.getSound(sound.id).image).toBeUndefined()
 })
 
 it('should allow an image name to be changed', async () => {

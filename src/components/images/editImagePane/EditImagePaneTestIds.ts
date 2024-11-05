@@ -5,6 +5,7 @@ export const EditImagePaneTestIds = {
   dropzone: TestId('EditSoundPane.dropzone'),
   image: TestId('EditSoundPane.image'),
   addImageButton: TestId('EditSoundPane.addImageButton'),
+  deleteButton: TestId('EditSoundPane.deleteButton'),
 }
 
 export const ChooseImageDialogTestIds = {

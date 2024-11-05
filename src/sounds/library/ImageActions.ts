@@ -4,6 +4,8 @@ import { ImageBytes, MediaType } from '../../utils/types/brandedTypes.ts'
 export interface ImageActions {
   newImage(): Image
 
+  deleteImage(id: ImageId): void
+
   setImageName(id: ImageId, name: string): void
 
   setImageData(id: ImageId, data: ImageBytes, mediaType: MediaType): void
