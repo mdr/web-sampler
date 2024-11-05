@@ -13,19 +13,19 @@ export class NavbarPageObject extends PageObject {
   pressSoundboardsLink = (): Promise<SoundboardsEditorPageObject> =>
     this.step('pressSoundboardsLink', async () => {
       await this.press(NavbarTestIds.soundboardsLink)
-      return SoundboardsEditorPageObject.verifyIsShown(this.mountResult)
+      return new SoundboardsEditorPageObject(this.mountResult).verifyIsShown()
     })
 
   pressImagesLink = (): Promise<ImagesEditorPageObject> =>
     this.step('pressImagesLink', async () => {
       await this.press(NavbarTestIds.imagesLink)
-      return ImagesEditorPageObject.verifyIsShown(this.mountResult)
+      return new ImagesEditorPageObject(this.mountResult).verifyIsShown()
     })
 
   pressHomeLink = (): Promise<SoundsEditorPageObject> =>
     this.step('pressHomeLink', async () => {
       await this.press(NavbarTestIds.homeLink)
-      return SoundsEditorPageObject.verifyIsShown(this.mountResult)
+      return new SoundsEditorPageObject(this.mountResult).verifyIsShown()
     })
 
   pressUndo = (): Promise<void> => this.step('pressUndo', () => this.press(NavbarTestIds.undoButton))
@@ -40,7 +40,7 @@ export class NavbarPageObject extends PageObject {
   pressStorageWarningButton = (): Promise<StorageWarningDialogPageObject> =>
     this.step('pressStorageWarningButton', async () => {
       await this.press(NavbarTestIds.storageWarningButton)
-      return await StorageWarningDialogPageObject.verifyIsShown(this.mountResult)
+      return await new StorageWarningDialogPageObject(this.mountResult).verifyIsShown()
     })
 
   expectStorageWarningButtonToBeShown = (): Promise<void> =>

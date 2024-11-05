@@ -1,4 +1,4 @@
-import { MountResult, expect } from '@playwright/experimental-ct-react'
+import { expect } from '@playwright/experimental-ct-react'
 import { Locator } from 'playwright'
 
 import { EditSoundboardPaneTestIds } from '../../../components/soundboardsEditor/editSoundboardPane/EditSoundboardPaneTestIds.ts'
@@ -12,10 +12,11 @@ import { SoundsEditorPageObject } from './SoundsEditorPageObject.ts'
 export class SoundboardsEditorPageObject extends PageObject {
   protected readonly name = 'SoundboardsEditor'
 
-  static verifyIsShown = async (mountResult: MountResult): Promise<SoundboardsEditorPageObject> => {
-    await expect(mountResult.getByTestId(SoundboardsSidebarTestIds.sidebar)).toBeVisible()
-    return new SoundboardsEditorPageObject(mountResult)
-  }
+  verifyIsShown = async (): Promise<SoundboardsEditorPageObject> =>
+    this.step(`verifyIsShown`, async () => {
+      await expect(this.get(SoundboardsSidebarTestIds.sidebar)).toBeVisible()
+      return this
+    })
 
   get sidebar(): SoundboardsSidebarPageObject {
     return new SoundboardsSidebarPageObject(this.mountResult)
@@ -35,13 +36,13 @@ export class SoundboardsEditorPageObject extends PageObject {
   pressAddSound = (): Promise<ChooseSoundDialogPageObject> =>
     this.step('pressAddSound', async () => {
       await this.get(EditSoundboardPaneTestIds.addSoundButton).click()
-      return await ChooseSoundDialogPageObject.verifyIsShown(this.mountResult)
+      return await new ChooseSoundDialogPageObject(this.mountResult).verifyIsShown()
     })
 
   pressDeleteSoundboard = (): Promise<SoundboardsEditorPageObject> =>
     this.step('pressDeleteSoundboard', async () => {
       await this.get(EditSoundboardPaneTestIds.deleteButton).click()
-      return SoundboardsEditorPageObject.verifyIsShown(this.mountResult)
+      return new SoundboardsEditorPageObject(this.mountResult).verifyIsShown()
     })
 
   addSound = async (soundName: string): Promise<void> => {
@@ -69,7 +70,7 @@ export class SoundboardsEditorPageObject extends PageObject {
   editSound = (soundName: string): Promise<SoundsEditorPageObject> =>
     this.step(`editSound ${soundName}`, async () => {
       await this.getSoundTile(soundName).getByTestId(EditSoundboardPaneTestIds.editSoundButton).click()
-      return await SoundsEditorPageObject.verifyIsShown(this.mountResult)
+      return await new SoundsEditorPageObject(this.mountResult).verifyIsShown()
     })
 
   expectSoundTilesToBe = (expectedSoundNames: string[]): Promise<void> =>

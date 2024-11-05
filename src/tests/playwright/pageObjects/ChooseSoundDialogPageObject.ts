@@ -1,4 +1,4 @@
-import { MountResult, expect } from '@playwright/experimental-ct-react'
+import { expect } from '@playwright/experimental-ct-react'
 
 import { ChooseSoundDialogTestIds } from '../../../components/soundboardsEditor/editSoundboardPane/EditSoundboardPaneTestIds.ts'
 import { PageObject } from './PageObject.ts'
@@ -6,22 +6,17 @@ import { PageObject } from './PageObject.ts'
 export class ChooseSoundDialogPageObject extends PageObject {
   protected readonly name = 'ChooseSoundDialog'
 
-  static verifyIsShown = async (mountResult: MountResult): Promise<ChooseSoundDialogPageObject> => {
-    await expect(mountResult.page().getByTestId(ChooseSoundDialogTestIds.dialog)).toBeVisible()
-    return new ChooseSoundDialogPageObject(mountResult)
-  }
+  verifyIsShown = async (): Promise<ChooseSoundDialogPageObject> =>
+    this.step(`verifyIsShown`, async () => {
+      await expect(this.page.getByTestId(ChooseSoundDialogTestIds.dialog)).toBeVisible()
+      return this
+    })
 
   pressDropdownButton = (): Promise<void> =>
     this.step(`pressDropdownButton`, () => this.press(ChooseSoundDialogTestIds.comboBoxDropdownButton))
 
   selectSoundOption = (name: string): Promise<void> =>
     this.step(`selectSoundOption ${name}`, async () => {
-      await this.get(ChooseSoundDialogTestIds.comboBoxItems).getByText(name).click()
-    })
-
-  pickSound = (name: string): Promise<void> =>
-    this.step(`pickSound ${name}`, async () => {
-      await this.press(ChooseSoundDialogTestIds.comboBoxDropdownButton)
       await this.get(ChooseSoundDialogTestIds.comboBoxItems).getByText(name).click()
     })
 

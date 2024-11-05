@@ -21,12 +21,12 @@ const mountAppAndWaitForTestHooks = async (mount: MountFunction, props: TestAppP
 export const launchApp = (mount: MountFunction, props: TestAppProps = {}): Promise<SoundsEditorPageObject> =>
   test.step('launchApp', async () => {
     const mountResult = await mountAppAndWaitForTestHooks(mount, props)
-    return SoundsEditorPageObject.verifyIsShown(mountResult)
+    return new SoundsEditorPageObject(mountResult).verifyIsShown()
   })
 
 export const launchNotFoundPage = (mount: MountFunction, props: TestAppProps = {}): Promise<NotFoundPageObject> =>
   test.step('launchNotFoundPage', async () => {
     const mountResult = await mountAppAndWaitForTestHooks(mount, props)
     await new ProxyWindowTestHooks(mountResult).visitNotFoundPage()
-    return await NotFoundPageObject.verifyIsShown(mountResult)
+    return await new NotFoundPageObject(mountResult).verifyIsShown()
   })

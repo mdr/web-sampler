@@ -1,4 +1,4 @@
-import { MountResult, expect } from '@playwright/experimental-ct-react'
+import { expect } from '@playwright/experimental-ct-react'
 import { Locator } from 'playwright'
 
 import { AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
@@ -16,10 +16,11 @@ import { launchApp } from './launchApp.tsx'
 export class SoundsEditorPageObject extends PageObject {
   protected readonly name = 'SoundsEditorPage'
 
-  static verifyIsShown = async (mountResult: MountResult): Promise<SoundsEditorPageObject> => {
-    await expect(mountResult.getByTestId(SoundsSidebarTestIds.sidebar)).toBeVisible()
-    return new SoundsEditorPageObject(mountResult)
-  }
+  verifyIsShown = async (): Promise<SoundsEditorPageObject> =>
+    this.step(`verifyIsShown`, async () => {
+      await expect(this.get(SoundsSidebarTestIds.sidebar)).toBeVisible()
+      return this
+    })
 
   get sidebar(): SoundsSidebarPageObject {
     return new SoundsSidebarPageObject(this.mountResult)

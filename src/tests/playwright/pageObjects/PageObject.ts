@@ -13,7 +13,7 @@ import { ProxyWindowTestHooks } from '../testApp/ProxyWindowTestHooks.ts'
 import { deserialiseSounds } from '../testApp/soundsSerialisation.ts'
 
 export abstract class PageObject {
-  protected constructor(protected readonly mountResult: MountResult) {}
+  constructor(protected readonly mountResult: MountResult) {}
 
   protected get page(): Page {
     return this.mountResult.page()
