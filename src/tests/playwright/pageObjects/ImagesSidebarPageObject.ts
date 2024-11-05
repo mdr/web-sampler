@@ -4,8 +4,6 @@ import { ImagesSidebarTestIds } from '../../../components/images/sidebar/ImagesS
 import { PageObject } from './PageObject.ts'
 
 export class ImagesSidebarPageObject extends PageObject {
-  protected readonly name = 'ImagesSidebar'
-
   pressNewImage = (): Promise<void> => this.step('pressNewImage', () => this.press(ImagesSidebarTestIds.newImageButton))
 
   expectImageNamesToBe = (expectedNamesInOrder: string[]) =>

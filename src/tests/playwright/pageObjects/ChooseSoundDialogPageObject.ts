@@ -4,8 +4,6 @@ import { ChooseSoundDialogTestIds } from '../../../components/soundboardsEditor/
 import { PageObject } from './PageObject.ts'
 
 export class ChooseSoundDialogPageObject extends PageObject {
-  protected readonly name = 'ChooseSoundDialog'
-
   verifyIsShown = async (): Promise<ChooseSoundDialogPageObject> =>
     this.step(`verifyIsShown`, async () => {
       await expect(this.page.getByTestId(ChooseSoundDialogTestIds.dialog)).toBeVisible()

@@ -3,8 +3,6 @@ import { platform } from 'node:os'
 import { PageObject } from './PageObject.ts'
 
 export class SoundsEditorKeyboardShortcutsPageObject extends PageObject {
-  protected readonly name = 'SoundsEditorPage.shortcuts'
-
   togglePlayPause = (): Promise<void> => this.step('togglePlayPause', () => this.page.keyboard.press('Space'))
 
   undo = (): Promise<void> =>

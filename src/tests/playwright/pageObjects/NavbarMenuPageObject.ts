@@ -3,8 +3,6 @@ import { Path } from '../../../utils/types/brandedTypes.ts'
 import { PageObject } from './PageObject.ts'
 
 export class NavbarMenuPageObject extends PageObject {
-  protected readonly name = 'NavbarMenu'
-
   pressExportAllSounds = (): Promise<Path> =>
     this.step('pressExportAllSounds', () =>
       this.triggerDownload(async () => {

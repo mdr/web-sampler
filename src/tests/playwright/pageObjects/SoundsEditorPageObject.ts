@@ -14,8 +14,6 @@ import { SoundsSidebarPageObject } from './SoundsSidebarPageObject.ts'
 import { launchApp } from './launchApp.tsx'
 
 export class SoundsEditorPageObject extends PageObject {
-  protected readonly name = 'SoundsEditorPage'
-
   verifyIsShown = async (): Promise<SoundsEditorPageObject> =>
     this.step(`verifyIsShown`, async () => {
       await expect(this.get(SoundsSidebarTestIds.sidebar)).toBeVisible()

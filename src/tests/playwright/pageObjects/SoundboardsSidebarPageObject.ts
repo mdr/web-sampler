@@ -4,8 +4,6 @@ import { SoundboardsSidebarTestIds } from '../../../components/soundboardsEditor
 import { PageObject } from './PageObject.ts'
 
 export class SoundboardsSidebarPageObject extends PageObject {
-  protected readonly name = 'SoundboardsSidebar'
-
   pressNewSoundboard = (): Promise<void> =>
     this.step('pressNewSoundboard', () => this.press(SoundboardsSidebarTestIds.newSoundboardButton))
 

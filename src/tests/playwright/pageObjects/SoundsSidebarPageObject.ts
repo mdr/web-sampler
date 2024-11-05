@@ -4,8 +4,6 @@ import { SoundsSidebarTestIds } from '../../../components/soundsEditor/sidebar/S
 import { PageObject } from './PageObject.ts'
 
 export class SoundsSidebarPageObject extends PageObject {
-  protected readonly name = 'SoundsSidebar'
-
   pressNewSound = (): Promise<void> => this.step('pressNewSound', () => this.press(SoundsSidebarTestIds.newSoundButton))
 
   expectSoundNamesToBe = (expectedNamesInOrder: string[]) =>

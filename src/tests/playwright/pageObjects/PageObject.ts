@@ -13,13 +13,19 @@ import { ProxyWindowTestHooks } from '../testApp/ProxyWindowTestHooks.ts'
 import { deserialiseSounds } from '../testApp/soundsSerialisation.ts'
 
 export abstract class PageObject {
-  constructor(protected readonly mountResult: MountResult) {}
+  protected readonly name: string
+
+  constructor(protected readonly mountResult: MountResult) {
+    const constructorName = this.constructor.name
+    if (!constructorName.endsWith('PageObject')) {
+      throw new Error(`A Page Object name must end with 'PageObject', but was '${constructorName}'`)
+    }
+    this.name = constructorName.replace('PageObject', '')
+  }
 
   protected get page(): Page {
     return this.mountResult.page()
   }
-
-  protected abstract readonly name: string
 
   protected step = <T>(name: string, body: () => T | Promise<T>): Promise<T> => test.step(`${this.name}.${name}`, body)
 

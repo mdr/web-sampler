@@ -7,8 +7,6 @@ import { ImagesSidebarPageObject } from './ImagesSidebarPageObject.ts'
 import { PageObject } from './PageObject.ts'
 
 export class ImagesEditorPageObject extends PageObject {
-  protected readonly name = 'ImagesEditor'
-
   verifyIsShown = async (): Promise<ImagesEditorPageObject> =>
     this.step(`verifyIsShown`, async () => {
       await expect(this.get(ImagesSidebarTestIds.sidebar)).toBeVisible()

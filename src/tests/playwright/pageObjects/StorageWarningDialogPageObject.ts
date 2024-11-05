@@ -4,8 +4,6 @@ import { StorageWarningDialogTestIds } from '../../../components/navbar/StorageW
 import { PageObject } from './PageObject.ts'
 
 export class StorageWarningDialogPageObject extends PageObject {
-  protected readonly name = 'StorageWarningDialog'
-
   verifyIsShown = async (): Promise<StorageWarningDialogPageObject> =>
     this.step(`verifyIsShown`, async () => {
       await expect(this.get(StorageWarningDialogTestIds.dialog)).toBeVisible()

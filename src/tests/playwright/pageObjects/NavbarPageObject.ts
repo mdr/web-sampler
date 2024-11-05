@@ -8,8 +8,6 @@ import { SoundsEditorPageObject } from './SoundsEditorPageObject.ts'
 import { StorageWarningDialogPageObject } from './StorageWarningDialogPageObject.ts'
 
 export class NavbarPageObject extends PageObject {
-  protected readonly name = 'Navbar'
-
   pressSoundboardsLink = (): Promise<SoundboardsEditorPageObject> =>
     this.step('pressSoundboardsLink', async () => {
       await this.press(NavbarTestIds.soundboardsLink)
