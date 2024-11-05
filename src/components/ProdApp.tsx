@@ -8,15 +8,10 @@ import { App } from './App.tsx'
 const makeProdAppConfig = (): AppConfig => {
   const audioContextProvider = new LazyAudioContextProvider()
   const audioOperations = new AudioOperations(audioContextProvider)
-  return makeAppConfig(
-    new WebAudioRecorder(audioContextProvider),
-    new Audio(),
-    new WebStorageManager(),
-    audioOperations,
-  )
+  const webAudioRecorder = new WebAudioRecorder(audioContextProvider)
+  const audio = new Audio()
+  const webStorageManager = new WebStorageManager()
+  return makeAppConfig(webAudioRecorder, audio, webStorageManager, audioOperations)
 }
 
-export const ProdApp = () => {
-  const config = makeProdAppConfig()
-  return <App config={config} />
-}
+export const ProdApp = () => <App config={makeProdAppConfig()} />
