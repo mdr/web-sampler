@@ -1,5 +1,5 @@
 jq 1.7.1
 nodejs 22.11.0
 pre-commit 4.0.1
-task 3.39.2
+task 3.40.0
 yarn 1.22.22
