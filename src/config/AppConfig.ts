@@ -5,7 +5,7 @@ import { AudioRecorder } from '../audioRecorder/AudioRecorder.ts'
 import { SoundLibrary } from '../sounds/library/SoundLibrary.ts'
 import { AppDb } from '../sounds/store/AppDb.ts'
 import { DexieSoundStore } from '../sounds/store/DexieSoundStore.ts'
-import { StorageManager } from '../storage/StorageManager.tsx'
+import { StorageManager } from '../storage/StorageManager.ts'
 
 export interface AppConfig {
   audioRecorder: AudioRecorder

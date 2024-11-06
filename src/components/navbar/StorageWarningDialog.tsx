@@ -3,7 +3,7 @@ import Icon from '@mdi/react'
 import { Dialog, Heading } from 'react-aria-components'
 import { toast } from 'react-toastify'
 
-import { AttemptToMakeStoragePersistentResult } from '../../storage/AttemptToMakeStoragePersistentResult.tsx'
+import { AttemptToMakeStoragePersistentResult } from '../../storage/AttemptToMakeStoragePersistentResult.ts'
 import { useStorageManagerActions } from '../../storage/storageManagerHooks.ts'
 import { isChromiumBasedBrowser } from '../../utils/browserUtils.ts'
 import { fireAndForget } from '../../utils/utils.ts'

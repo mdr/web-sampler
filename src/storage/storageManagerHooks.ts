@@ -1,5 +1,5 @@
 import { createOptionalContext, useService, useServiceStateSelector } from '../utils/providerish/serviceHooks.ts'
-import { StorageManager, StorageManagerActions, StorageManagerState } from './StorageManager.tsx'
+import { StorageManager, StorageManagerActions, StorageManagerState } from './StorageManager.ts'
 
 export const StorageManagerContext = createOptionalContext<StorageManager>()
 
