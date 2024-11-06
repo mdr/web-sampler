@@ -2,12 +2,11 @@ import { Children, ReactElement, ReactNode, cloneElement, isValidElement } from 
 
 import { Option } from '../../utils/types/Option.ts'
 
+const hasCondition = (props: unknown): props is { condition: boolean } =>
+  typeof props === 'object' && props !== null && 'condition' in props
+
 export interface SwitchProps {
   children: ReactNode
-}
-
-const hasCondition = (props: unknown): props is { condition: boolean } => {
-  return typeof props === 'object' && props !== null && 'condition' in props
 }
 
 export const Switch = ({ children }: SwitchProps) => {
