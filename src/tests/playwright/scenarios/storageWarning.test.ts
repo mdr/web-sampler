@@ -1,4 +1,4 @@
-import { AttemptToMakeStoragePersistentResult } from '../../../storage/StorageManager.tsx'
+import { AttemptToMakeStoragePersistentResult } from '../../../storage/AttemptToMakeStoragePersistentResult.tsx'
 import { test } from '../fixtures.ts'
 import { launchApp } from '../pageObjects/launchApp.tsx'
 

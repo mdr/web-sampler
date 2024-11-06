@@ -1,22 +1,23 @@
-import { AbstractStorageManager } from './AbstractStorageManager.tsx'
-import { AttemptToMakeStoragePersistentResult, StorageManager } from './StorageManager.tsx'
+import { AbstractService } from '../utils/providerish/AbstractService.ts'
+import { AttemptToMakeStoragePersistentResult } from './AttemptToMakeStoragePersistentResult.tsx'
+import { StorageManager, StorageManagerState } from './StorageManager.tsx'
 
-export class FakeStorageManager extends AbstractStorageManager implements StorageManager {
+export class FakeStorageManager extends AbstractService<StorageManagerState> implements StorageManager {
   constructor(
     private readonly initiallyIsPersistent: boolean,
     private readonly result: AttemptToMakeStoragePersistentResult,
   ) {
-    super()
+    super({ isStoragePersistent: initiallyIsPersistent })
   }
 
   // eslint-disable-next-line @typescript-eslint/require-await
   checkIfStorageIsPersistent = async (): Promise<void> => {
-    this.setIsStoragePersistent(this.initiallyIsPersistent)
+    this.setState({ isStoragePersistent: this.initiallyIsPersistent })
   }
 
   attemptToMakeStoragePersistent = (): Promise<AttemptToMakeStoragePersistentResult> => {
     if (this.result === AttemptToMakeStoragePersistentResult.SUCCESSFUL) {
-      this.setIsStoragePersistent(true)
+      this.setState({ isStoragePersistent: true })
     }
     return Promise.resolve(this.result)
   }
