@@ -1,5 +1,5 @@
 import Konva from 'konva'
-import { FC, memo, useCallback, useState } from 'react'
+import { memo, useCallback, useState } from 'react'
 import { Layer, Line, Rect, Stage } from 'react-konva'
 import { useMeasure } from 'react-use'
 
@@ -27,7 +27,7 @@ export interface WaveformVisualiserProps {
   onFinishTimeChanged(finishTime: Seconds): void
 }
 
-export const WaveformVisualiser: FC<WaveformVisualiserProps> = memo(
+export const WaveformVisualiser = memo(
   ({
     startTime,
     finishTime,
@@ -37,7 +37,7 @@ export const WaveformVisualiser: FC<WaveformVisualiserProps> = memo(
     onPositionChange,
     onStartTimeChanged,
     onFinishTimeChanged,
-  }) => {
+  }: WaveformVisualiserProps) => {
     const [ref, rect] = useMeasure<HTMLDivElement>()
     const width = Pixels(rect.width)
     // Used while dragging:

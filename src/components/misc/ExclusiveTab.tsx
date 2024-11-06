@@ -1,4 +1,4 @@
-import { FC, ReactNode, useEffect, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { useTimeout } from 'react-use'
 
 import { Millis } from '../../utils/types/brandedTypes.ts'
@@ -11,7 +11,7 @@ export interface ExclusiveTabProps {
 
 const LOADING_FLASH_TIMEOUT = Millis(500)
 
-export const ExclusiveTab: FC<ExclusiveTabProps> = ({ children, fallback }) => {
+export const ExclusiveTab = ({ children, fallback }: ExclusiveTabProps) => {
   const [timeoutHasExpired] = useTimeout(LOADING_FLASH_TIMEOUT)
   const [isTabLeader, setIsTabLeader] = useState(false)
   useEffect(() => {

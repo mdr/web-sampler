@@ -1,5 +1,4 @@
 import { mdiStop } from '@mdi/js'
-import { FC } from 'react'
 
 import { doNothing } from '../../../utils/utils.ts'
 import { Button } from '../../shared/Button.tsx'
@@ -9,6 +8,6 @@ interface StopButtonProps {
   onPress?: () => void
 }
 
-export const StopButton: FC<StopButtonProps> = ({ onPress = doNothing }) => (
+export const StopButton = ({ onPress = doNothing }: StopButtonProps) => (
   <Button testId={EditSoundPaneTestIds.stopButton} icon={mdiStop} label="Stop Capture" onPress={onPress} />
 )

@@ -1,5 +1,3 @@
-import { FC } from 'react'
-
 import { useIsLoading, useSoundboards } from '../../sounds/library/soundHooks.ts'
 import { useImageIdParam } from '../routeHooks.ts'
 import { EditOrCreateImageMessage } from './EditOrCreateImageMessage.tsx'
@@ -7,7 +5,7 @@ import { ImagesEditorPageLayout } from './ImagesEditorPageLayout.tsx'
 import { NoImagesMessage } from './NoImagesMessage.tsx'
 import { EditImagePane } from './editImagePane/EditImagePane.tsx'
 
-export const ImagesEditorPage: FC = () => {
+export const ImagesEditorPage = () => {
   const imageId = useImageIdParam()
   const soundboards = useSoundboards()
   const isLoading = useIsLoading()

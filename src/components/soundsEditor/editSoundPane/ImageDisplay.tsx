@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { useImage } from '../../../sounds/library/imageHooks.ts'
 import { ImageId } from '../../../types/Image.ts'
@@ -10,7 +10,7 @@ export interface ImageDisplayProps {
   imageId: ImageId
 }
 
-export const ImageDisplay: FC<ImageDisplayProps> = ({ imageId }) => {
+export const ImageDisplay = ({ imageId }: ImageDisplayProps) => {
   const image = useImage(imageId)
   const [imageUrl, setImageUrl] = useState<Option<Url>>(undefined)
   const [croppedImageUrl, setCroppedImageUrl] = useState<Option<Url>>(undefined)

@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode } from 'react'
+import { Children, ReactElement, ReactNode, cloneElement, isValidElement } from 'react'
 
 import { Option } from '../../utils/types/Option.ts'
 
@@ -6,20 +6,15 @@ export interface SwitchProps {
   children: ReactNode
 }
 
-export interface CaseProps {
-  children: ReactNode
-  condition?: boolean
-}
-
 const hasCondition = (props: unknown): props is { condition: boolean } => {
   return typeof props === 'object' && props !== null && 'condition' in props
 }
 
-export const Switch: React.FC<SwitchProps> = ({ children }) => {
+export const Switch = ({ children }: SwitchProps) => {
   let match: Option<ReactElement> = undefined
   let defaultCase: Option<ReactElement> = undefined
-  for (const child of React.Children.toArray(children)) {
-    if (React.isValidElement(child)) {
+  for (const child of Children.toArray(children)) {
+    if (isValidElement(child)) {
       const childProps: unknown = child.props
       if (hasCondition(childProps)) {
         if (childProps.condition) {
@@ -31,8 +26,17 @@ export const Switch: React.FC<SwitchProps> = ({ children }) => {
       }
     }
   }
-  return match === undefined ? defaultCase : React.cloneElement(match)
+  return match === undefined ? defaultCase : cloneElement(match)
 }
 
-export const Case: React.FC<CaseProps> = ({ children }) => <>{children}</>
-export const Default: React.FC<{ children: ReactNode }> = ({ children }) => <Case>{children}</Case>
+export interface CaseProps {
+  children: ReactNode
+  condition?: boolean
+}
+export const Case = ({ children }: CaseProps) => <>{children}</>
+
+export interface DefaultProps {
+  children: ReactNode
+}
+
+export const Default = ({ children }: DefaultProps) => <Case>{children}</Case>

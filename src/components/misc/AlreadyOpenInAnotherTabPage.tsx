@@ -1,8 +1,7 @@
 import { mdiAlertOctagon } from '@mdi/js'
 import Icon from '@mdi/react'
-import { FC } from 'react'
 
-export const AlreadyOpenInAnotherTabPage: FC = () => (
+export const AlreadyOpenInAnotherTabPage = () => (
   <div className="flex h-screen">
     <div className="m-auto text-center">
       <Icon path={mdiAlertOctagon} size={3} className="m-auto text-red-500" />
