@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 
 import { useSound, useSoundActions } from '../../../sounds/library/soundHooks.ts'
 import { SoundId, getSoundDisplayName } from '../../../types/Sound.ts'
-import { Routes } from '../../routes.ts'
+import { Routes } from '../../app/routes.ts'
 import { Button } from '../../shared/Button.tsx'
 import { ButtonVariant } from '../../shared/ButtonVariant.tsx'
 import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'

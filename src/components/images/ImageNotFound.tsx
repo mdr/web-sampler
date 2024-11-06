@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 
-import { Routes } from '../routes.ts'
+import { Routes } from '../app/routes.ts'
 import { Button } from '../shared/Button.tsx'
 import { ButtonVariant } from '../shared/ButtonVariant.tsx'
 

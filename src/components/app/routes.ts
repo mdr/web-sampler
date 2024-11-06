@@ -1,6 +1,6 @@
-import { ImageId } from '../types/Image.ts'
-import { SoundId } from '../types/Sound.ts'
-import { SoundboardId } from '../types/Soundboard.ts'
+import { ImageId } from '../../types/Image.ts'
+import { SoundId } from '../../types/Sound.ts'
+import { SoundboardId } from '../../types/Soundboard.ts'
 
 export const Routes = {
   sounds: '/sounds',

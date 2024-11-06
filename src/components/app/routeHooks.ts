@@ -1,9 +1,9 @@
 import { useParams } from 'react-router-dom'
 
-import { ImageId } from '../types/Image.ts'
-import { SoundId } from '../types/Sound.ts'
-import { SoundboardId } from '../types/Soundboard.ts'
-import { Option } from '../utils/types/Option.ts'
+import { ImageId } from '../../types/Image.ts'
+import { SoundId } from '../../types/Sound.ts'
+import { SoundboardId } from '../../types/Soundboard.ts'
+import { Option } from '../../utils/types/Option.ts'
 
 export const useSoundIdParam = (): Option<SoundId> => {
   const { soundId } = useParams()

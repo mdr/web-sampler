@@ -1,5 +1,5 @@
 import { useIsLoading, useSounds } from '../../sounds/library/soundHooks.ts'
-import { useSoundIdParam } from '../routeHooks.ts'
+import { useSoundIdParam } from '../app/routeHooks.ts'
 import { EditOrCreateSoundMessage } from './EditOrCreateSoundMessage.tsx'
 import { NoSoundsMessage } from './NoSoundsMessage.tsx'
 import { SoundsEditorPageLayout } from './SoundsEditorPageLayout.tsx'

@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom'
 
 import { useImages } from '../../../sounds/library/imageHooks.ts'
 import { getImageDisplayName, sortImagesByDisplayName } from '../../../types/Image.ts'
-import { useImageIdParam } from '../../routeHooks.ts'
-import { Routes } from '../../routes.ts'
+import { useImageIdParam } from '../../app/routeHooks.ts'
+import { Routes } from '../../app/routes.ts'
 import { NewImageButton } from '../NewImageButton.tsx'
 import { ImagesSidebarTestIds } from './ImagesSidebarTestIds.ts'
 

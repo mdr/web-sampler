@@ -3,7 +3,7 @@ import useDidMount from 'beautiful-react-hooks/useDidMount'
 
 import { AudioOperations } from '../../audioOperations/AudioOperations.ts'
 import { LazyAudioContextProvider } from '../../audioRecorder/AudioContextProvider.ts'
-import { App } from '../../components/App.tsx'
+import { App } from '../../components/app/App.tsx'
 import { AppConfig, makeAppConfig } from '../../config/AppConfig.ts'
 import { AttemptToMakeStoragePersistentResult } from '../../storage/AttemptToMakeStoragePersistentResult.tsx'
 import { FakeStorageManager } from '../../storage/FakeStorageManager.tsx'

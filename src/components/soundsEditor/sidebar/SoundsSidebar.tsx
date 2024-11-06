@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom'
 
 import { useSounds } from '../../../sounds/library/soundHooks.ts'
 import { getSoundDisplayName, sortSoundsByDisplayName } from '../../../types/Sound.ts'
-import { useSoundIdParam } from '../../routeHooks.ts'
-import { Routes } from '../../routes.ts'
+import { useSoundIdParam } from '../../app/routeHooks.ts'
+import { Routes } from '../../app/routes.ts'
 import { NewSoundButton } from '../NewSoundButton.tsx'
 import { SoundsSidebarTestIds } from './SoundsSidebarTestIds.ts'
 

@@ -1,12 +1,12 @@
 import { Navigate, createHashRouter } from 'react-router-dom'
 
-import { ImagesEditorPage } from './images/ImagesEditorPage.tsx'
-import { ErrorFallback } from './misc/ErrorFallback.tsx'
-import { NotFoundPage } from './misc/NotFoundPage.tsx'
+import { ImagesEditorPage } from '../images/ImagesEditorPage.tsx'
+import { ErrorFallback } from '../misc/ErrorFallback.tsx'
+import { NotFoundPage } from '../misc/NotFoundPage.tsx'
+import { SoundboardPage } from '../soundboard/SoundboardPage.tsx'
+import { SoundboardsEditorPage } from '../soundboardsEditor/SoundboardsEditorPage.tsx'
+import { SoundsEditorPage } from '../soundsEditor/SoundsEditorPage.tsx'
 import { Routes } from './routes.ts'
-import { SoundboardPage } from './soundboard/SoundboardPage.tsx'
-import { SoundboardsEditorPage } from './soundboardsEditor/SoundboardsEditorPage.tsx'
-import { SoundsEditorPage } from './soundsEditor/SoundsEditorPage.tsx'
 
 export const router = createHashRouter([
   {

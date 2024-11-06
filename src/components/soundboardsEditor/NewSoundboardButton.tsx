@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { useSoundboardActions } from '../../sounds/library/soundHooks.ts'
 import { TestId } from '../../utils/types/brandedTypes.ts'
-import { Routes } from '../routes.ts'
+import { Routes } from '../app/routes.ts'
 import { Button } from '../shared/Button.tsx'
 import { ButtonVariant } from '../shared/ButtonVariant.tsx'
 

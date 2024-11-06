@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom'
 
 import { useCanRedo, useCanUndo, useMiscActions } from '../../sounds/library/soundHooks.ts'
 import { useStorageManagerState } from '../../storage/storageManagerHooks.ts'
-import { Routes } from '../routes.ts'
+import { Routes } from '../app/routes.ts'
 import { NavbarIconButton } from './NavbarIconButton.tsx'
 import { NavbarMenu } from './NavbarMenu.tsx'
 import { NavbarTestIds } from './NavbarTestIds.ts'

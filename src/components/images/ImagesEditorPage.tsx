@@ -1,5 +1,5 @@
 import { useIsLoading, useSoundboards } from '../../sounds/library/soundHooks.ts'
-import { useImageIdParam } from '../routeHooks.ts'
+import { useImageIdParam } from '../app/routeHooks.ts'
 import { EditOrCreateImageMessage } from './EditOrCreateImageMessage.tsx'
 import { ImagesEditorPageLayout } from './ImagesEditorPageLayout.tsx'
 import { NoImagesMessage } from './NoImagesMessage.tsx'

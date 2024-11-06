@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/react'
 import ReactDOM from 'react-dom/client'
 import 'typeface-roboto'
 
-import { ProdApp } from './components/ProdApp.tsx'
+import { ProdApp } from './components/app/ProdApp.tsx'
 import { TestApp } from './tests/playwright/TestApp.tsx'
 import { getDocumentRoot } from './utils/domUtils.ts'
 

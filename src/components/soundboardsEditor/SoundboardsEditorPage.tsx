@@ -1,5 +1,5 @@
 import { useIsLoading, useSoundboards } from '../../sounds/library/soundHooks.ts'
-import { useSoundboardIdParam } from '../routeHooks.ts'
+import { useSoundboardIdParam } from '../app/routeHooks.ts'
 import { EditOrCreateSoundboardMessage } from './EditOrCreateSoundboardMessage.tsx'
 import { NoSoundboardsMessage } from './NoSoundboardsMessage.tsx'
 import { SoundboardsEditorPageLayout } from './SoundboardsEditorPageLayout.tsx'
