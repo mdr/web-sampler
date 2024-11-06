@@ -1,11 +1,11 @@
-import React from 'react'
+import { ReactNode } from 'react'
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels'
 
 import { Navbar } from '../navbar/Navbar.tsx'
 import { SoundboardsSidebar } from './sidebar/SoundboardsSidebar.tsx'
 
 interface SoundboardsEditorPageLayoutProps {
-  children?: React.ReactNode
+  children?: ReactNode
 }
 
 export const SoundboardsEditorPageLayout = ({ children }: SoundboardsEditorPageLayoutProps) => (

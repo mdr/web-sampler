@@ -1,4 +1,4 @@
-import React from 'react'
+import { FC } from 'react'
 
 import { useIsLoading, useSoundboards } from '../../sounds/library/soundHooks.ts'
 import { useSoundboardIdParam } from '../routeHooks.ts'
@@ -7,7 +7,7 @@ import { NoSoundboardsMessage } from './NoSoundboardsMessage.tsx'
 import { SoundboardsEditorPageLayout } from './SoundboardsEditorPageLayout.tsx'
 import { EditSoundboardPane } from './editSoundboardPane/EditSoundboardPane.tsx'
 
-export const SoundboardsEditorPage: React.FC = () => {
+export const SoundboardsEditorPage: FC = () => {
   const soundboardId = useSoundboardIdParam()
   const soundboards = useSoundboards()
   const isLoading = useIsLoading()

@@ -2,7 +2,7 @@ import { fixupConfigRules } from '@eslint/compat'
 import pluginJs from '@eslint/js'
 import tsParser from '@typescript-eslint/parser'
 import reactRefresh from 'eslint-plugin-react-refresh'
-import pluginReactConfig from 'eslint-plugin-react/configs/recommended.js'
+import eslintRecommendedConfig from 'eslint-plugin-react/configs/recommended.js'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
@@ -53,7 +53,7 @@ const configs = [
   pluginJs.configs.recommended,
   ...tseslint.configs.stylisticTypeChecked.map(restrictToTsFiles),
   ...tseslint.configs.strictTypeChecked.map(restrictToTsFiles),
-  ...fixupConfigRules({ ...pluginReactConfig, settings: { react: { version: 'detect' } } }),
+  ...fixupConfigRules({ ...eslintRecommendedConfig, settings: { react: { version: 'detect' } } }),
   {
     files: tsFilePatterns,
     rules: {

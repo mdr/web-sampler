@@ -84,3 +84,8 @@ tasks:
     cmds:
       - yarn
       - yarn lint
+  tsc:
+    desc: Check TypeScript types
+    cmds:
+      - yarn
+      - yarn tsc

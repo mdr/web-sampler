@@ -1,11 +1,11 @@
-import React from 'react'
+import { ReactNode } from 'react'
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels'
 
 import { Navbar } from '../navbar/Navbar.tsx'
 import { ImagesSidebar } from './sidebar/ImagesSidebar.tsx'
 
 interface ImagesEditorPageLayoutProps {
-  children?: React.ReactNode
+  children?: ReactNode
 }
 
 export const ImagesEditorPageLayout = ({ children }: ImagesEditorPageLayoutProps) => (
