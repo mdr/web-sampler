@@ -2,7 +2,7 @@ import { AbstractService } from '../utils/providerish/AbstractService.ts'
 import { AttemptToMakeStoragePersistentResult } from './AttemptToMakeStoragePersistentResult.ts'
 import { StorageActions, StorageState } from './StorageService.ts'
 
-export class FakeStorageManager extends AbstractService<StorageState> implements StorageActions {
+export class FakeStorageManagerTestSupport extends AbstractService<StorageState> implements StorageActions {
   constructor(
     private readonly initiallyIsPersistent: boolean,
     private readonly result: AttemptToMakeStoragePersistentResult,

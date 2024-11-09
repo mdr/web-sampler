@@ -6,7 +6,7 @@ import { LazyAudioContextProvider } from '../../audioRecorder/AudioContextProvid
 import { App } from '../../components/app/App.tsx'
 import { AppConfig, makeAppConfig } from '../../config/AppConfig.ts'
 import { AttemptToMakeStoragePersistentResult } from '../../storage/AttemptToMakeStoragePersistentResult.ts'
-import { FakeStorageManager } from '../../storage/FakeStorageManager.ts'
+import { FakeStorageManagerTestSupport } from '../../storage/FakeStorageManager.testSupport.ts'
 import { StorageService } from '../../storage/StorageService.ts'
 import { MockAudioElement, castPartial } from './mocks/MockAudioElement.ts'
 import { MockAudioRecorder } from './mocks/MockAudioRecorder.ts'
@@ -46,7 +46,7 @@ const makeTestAppConfig = (
   isStoragePersistent: boolean,
   attemptToMakeStoragePersistentResult: AttemptToMakeStoragePersistentResult,
 ): AppConfig => {
-  const storageManager = new FakeStorageManager(
+  const storageManager = new FakeStorageManagerTestSupport(
     isStoragePersistent,
     attemptToMakeStoragePersistentResult,
   ) as unknown as StorageService
