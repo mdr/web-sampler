@@ -34,7 +34,8 @@ export class StorageService extends AbstractService<StorageState> implements Sto
 
   attemptToMakeStoragePersistent = (): Promise<AttemptToMakeStoragePersistentResult> =>
     this.lock.acquire('lock', async () => {
-      if (await this.persistentStorageManager.isStoragePersistent()) {
+      const isAlreadyPersistent = await this.persistentStorageManager.isStoragePersistent()
+      if (isAlreadyPersistent) {
         this.setState({ isStoragePersistent: true })
         return AttemptToMakeStoragePersistentResult.SUCCESSFUL
       }
@@ -42,7 +43,7 @@ export class StorageService extends AbstractService<StorageState> implements Sto
       // notification permission:
       if (this.systemDetector.isChromiumBasedBrowser()) {
         const success = await this.permissionManager.requestNotificationPermission()
-        if (success) {
+        if (!success) {
           return AttemptToMakeStoragePersistentResult.NOTIFICATION_PERMISSION_DENIED
         }
       }
