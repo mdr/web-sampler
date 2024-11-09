@@ -1,10 +1,10 @@
 import { createOptionalContext, useService, useServiceStateSelector } from '../utils/providerish/serviceHooks.ts'
-import { StorageManager, StorageManagerActions, StorageManagerState } from './StorageManager.ts'
+import { StorageActions, StorageService, StorageState } from './StorageService.ts'
 
-export const StorageManagerContext = createOptionalContext<StorageManager>()
+export const StorageManagerContext = createOptionalContext<StorageService>()
 
-export const useStorageManagerState = <Selected = StorageManagerState>(
-  selector: (state: StorageManagerState) => Selected = (state) => state as Selected,
-): Selected => useServiceStateSelector<StorageManagerState, StorageManager, Selected>(StorageManagerContext, selector)
+export const useStorageManagerState = <Selected = StorageState>(
+  selector: (state: StorageState) => Selected = (state) => state as Selected,
+): Selected => useServiceStateSelector<StorageState, StorageService, Selected>(StorageManagerContext, selector)
 
-export const useStorageManagerActions = (): StorageManagerActions => useService(StorageManagerContext)
+export const useStorageManagerActions = (): StorageActions => useService(StorageManagerContext)

@@ -20,12 +20,12 @@ export const AllProviders = ({ config, children }: AllProvidersProps) => {
 }
 
 const nestProviders = (config: AppConfig): FC<PropsWithChildren> => {
-  const { audioRecorder, audioPlayer, soundLibrary, storageManager, audioOperations } = config
+  const { audioRecorder, audioPlayer, soundLibrary, storageService, audioOperations } = config
   return reactArrayToTree([
     <AudioRecorderContext.Provider value={audioRecorder} />,
     <AudioPlayerContext.Provider value={audioPlayer} />,
     <AudioOperationsContext.Provider value={audioOperations} />,
     <SoundLibraryContext.Provider value={soundLibrary} />,
-    <StorageManagerContext.Provider value={storageManager} />,
+    <StorageManagerContext.Provider value={storageService} />,
   ]) as FC<PropsWithChildren>
 }

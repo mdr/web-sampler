@@ -7,7 +7,7 @@ import { App } from '../../components/app/App.tsx'
 import { AppConfig, makeAppConfig } from '../../config/AppConfig.ts'
 import { AttemptToMakeStoragePersistentResult } from '../../storage/AttemptToMakeStoragePersistentResult.ts'
 import { FakeStorageManager } from '../../storage/FakeStorageManager.ts'
-import { StorageManager } from '../../storage/StorageManager.ts'
+import { StorageService } from '../../storage/StorageService.ts'
 import { MockAudioElement, castPartial } from './mocks/MockAudioElement.ts'
 import { MockAudioRecorder } from './mocks/MockAudioRecorder.ts'
 import { DefaultWindowTestHooks } from './testApp/DefaultWindowTestHooks.tsx'
@@ -49,7 +49,7 @@ const makeTestAppConfig = (
   const storageManager = new FakeStorageManager(
     isStoragePersistent,
     attemptToMakeStoragePersistentResult,
-  ) as unknown as StorageManager
+  ) as unknown as StorageService
   const audioElement = castPartial<HTMLAudioElement>(mockAudioElement)
   const audioContextProvider = new LazyAudioContextProvider()
   const audioOperations = new AudioOperations(audioContextProvider)

@@ -5,23 +5,23 @@ import { AudioRecorder } from '../audioRecorder/AudioRecorder.ts'
 import { SoundLibrary } from '../sounds/library/SoundLibrary.ts'
 import { AppDb } from '../sounds/store/AppDb.ts'
 import { DexieSoundStore } from '../sounds/store/DexieSoundStore.ts'
-import { StorageManager } from '../storage/StorageManager.ts'
+import { StorageService } from '../storage/StorageService.ts'
 
 export interface AppConfig {
   audioRecorder: AudioRecorder
   audioPlayer: AudioPlayer
   soundLibrary: SoundLibrary
-  storageManager: StorageManager
+  storageService: StorageService
   audioOperations: AudioOperations
 }
 
 export const makeAppConfig = (
   audioRecorder: AudioRecorder,
   audioElement: HTMLAudioElement,
-  storageManager: StorageManager,
+  storageService: StorageService,
   audioOperations: AudioOperations,
 ): AppConfig => {
   const audioPlayer = new DefaultAudioPlayer(audioElement)
   const soundLibrary = new SoundLibrary(new DexieSoundStore(new AppDb()))
-  return { audioRecorder, audioPlayer, soundLibrary, storageManager, audioOperations }
+  return { audioRecorder, audioPlayer, soundLibrary, storageService, audioOperations }
 }

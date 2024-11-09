@@ -18,7 +18,7 @@ export interface AppProps {
 }
 
 export const App = ({ config }: AppProps) => {
-  useDidMount(() => unawaited(config.storageManager.checkIfStorageIsPersistent()))
+  useDidMount(() => unawaited(config.storageService.checkIfStorageIsPersistent()))
   return (
     <ConditionalWrap condition={true} wrap={(children) => <React.StrictMode>{children}</React.StrictMode>}>
       <ErrorBoundary fallback={<ErrorFallback />}>
