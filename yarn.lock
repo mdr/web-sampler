@@ -12260,10 +12260,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsafe@npm:^1.7.5":
-  version: 1.7.5
-  resolution: "tsafe@npm:1.7.5"
-  checksum: 10c0/e12854bc25986e1ebf5af44fcbdb4c69c4e1c5fe8c3e0a52ce212ecb65af29cfe796f9cb864e84cab73b00cfb9e7026696c4f6c4b7056bfcc4eb53a9b24beb50
+"tsafe@npm:^1.8.0":
+  version: 1.8.0
+  resolution: "tsafe@npm:1.8.0"
+  checksum: 10c0/16d6ddbcd07efc0bce1315419d96ea82f21434d12d887c12fb1379dd5f07ca026cf68eb280bff8b34bbe4a247a18bf2c7762c4906048c602370fbdce9245de0d
   languageName: node
   linkType: hard
 
@@ -13035,7 +13035,7 @@ __metadata:
     tailwindcss: "npm:^3.4.14"
     tailwindcss-react-aria-components: "npm:^1.1.6"
     tmp: "npm:^0.2.3"
-    tsafe: "npm:^1.7.5"
+    tsafe: "npm:^1.8.0"
     typeface-roboto: "npm:^1.1.13"
     typescript: "npm:^5.6.3"
     typescript-eslint: "npm:^8.13.0"
