@@ -1,3 +1,4 @@
+import { Mocked } from '@storybook/test'
 import { Mock, vi } from 'vitest'
 
 /**
@@ -6,26 +7,26 @@ import { Mock, vi } from 'vitest'
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const mockFunction = <T extends (...args: any) => any>(): Mock<T> => vi.fn()
 
-export const mockObjectMethods = <T extends object>(obj: T): T => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-  const mockCache = new WeakMap<object, Map<string | symbol, Function>>()
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+type FunctionMap = Map<string | symbol, Function>
+
+/**
+ * Mock every method on the given object, defaulting to the original implementation.
+ */
+export const mockObjectMethods = <T extends object>(obj: T): Mocked<T> => {
+  const functionMap: FunctionMap = new Map()
   return new Proxy(obj, {
     get(target, prop, receiver) {
       const originalValue = Reflect.get(target, prop, receiver)
       if (typeof originalValue === 'function') {
-        let targetCache = mockCache.get(target)
-        if (!targetCache) {
-          targetCache = new Map()
-          mockCache.set(target, targetCache)
-        }
-        if (!targetCache.has(prop)) {
+        if (!functionMap.has(prop)) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-return
           const mockedFn = vi.fn((...args: any[]) => originalValue.apply(target, args))
-          targetCache.set(prop, mockedFn)
+          functionMap.set(prop, mockedFn)
         }
-        return targetCache.get(prop)
+        return functionMap.get(prop)
       }
       return originalValue
     },
-  })
+  }) as Mocked<T>
 }
