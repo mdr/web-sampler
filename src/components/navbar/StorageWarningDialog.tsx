@@ -4,7 +4,7 @@ import { Dialog, Heading } from 'react-aria-components'
 import { toast } from 'react-toastify'
 
 import { AttemptToMakeStoragePersistentResult } from '../../storage/AttemptToMakeStoragePersistentResult.ts'
-import { useStorageManagerActions } from '../../storage/storageManagerHooks.ts'
+import { useStorageActions } from '../../storage/storageHooks.ts'
 import { isChromiumBasedBrowser } from '../../utils/browserUtils.ts'
 import { fireAndForget } from '../../utils/utils.ts'
 import { Button } from '../shared/Button.tsx'
@@ -12,13 +12,13 @@ import { ButtonVariant } from '../shared/ButtonVariant.tsx'
 import { StorageWarningDialogTestIds } from './StorageWarningDialogTestIds.ts'
 
 export const StorageWarningDialog = () => {
-  const storageManagerActions = useStorageManagerActions()
+  const storageActions = useStorageActions()
   return (
     <Dialog data-testid={StorageWarningDialogTestIds.dialog} className="relative outline-none">
       {({ close }) => {
         const handleAttemptToMakePersistent = () => {
           fireAndForget(async () => {
-            const result = await storageManagerActions.attemptToMakeStoragePersistent()
+            const result = await storageActions.attemptToMakeStoragePersistent()
             switch (result) {
               case AttemptToMakeStoragePersistentResult.SUCCESSFUL:
                 toast.info('Storage is now persistent. Your recordings are safe in local storage.')

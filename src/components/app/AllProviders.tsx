@@ -7,7 +7,7 @@ import { AudioPlayerContext } from '../../audioPlayer/AudioPlayerContext.ts'
 import { AudioRecorderContext } from '../../audioRecorder/AudioRecorderContext.ts'
 import { AppConfig } from '../../config/AppConfig.ts'
 import { SoundLibraryContext } from '../../sounds/library/SoundLibraryContext.ts'
-import { StorageManagerContext } from '../../storage/storageManagerHooks.ts'
+import { StorageServiceContext } from '../../storage/storageHooks.ts'
 
 export interface AllProvidersProps {
   config: AppConfig
@@ -26,6 +26,6 @@ const nestProviders = (config: AppConfig): FC<PropsWithChildren> => {
     <AudioPlayerContext.Provider value={audioPlayer} />,
     <AudioOperationsContext.Provider value={audioOperations} />,
     <SoundLibraryContext.Provider value={soundLibrary} />,
-    <StorageManagerContext.Provider value={storageService} />,
+    <StorageServiceContext.Provider value={storageService} />,
   ]) as FC<PropsWithChildren>
 }

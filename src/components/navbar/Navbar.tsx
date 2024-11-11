@@ -5,7 +5,7 @@ import { useHotkeys } from 'react-hotkeys-hook'
 import { NavLink } from 'react-router-dom'
 
 import { useCanRedo, useCanUndo, useMiscActions } from '../../sounds/library/soundHooks.ts'
-import { useStorageManagerState } from '../../storage/storageManagerHooks.ts'
+import { useStorageState } from '../../storage/storageHooks.ts'
 import { Routes } from '../app/routes.ts'
 import { NavbarIconButton } from './NavbarIconButton.tsx'
 import { NavbarMenu } from './NavbarMenu.tsx'
@@ -16,7 +16,7 @@ export const Navbar = () => {
   const miscActions = useMiscActions()
   const canUndo = useCanUndo()
   const canRedo = useCanRedo()
-  const { isStoragePersistent } = useStorageManagerState()
+  const { isStoragePersistent } = useStorageState()
 
   useHotkeys('mod+z', () => miscActions.undo(), { preventDefault: true }, [miscActions])
   useHotkeys('mod+shift+z', () => miscActions.redo(), { preventDefault: true }, [miscActions])
