@@ -1,5 +1,3 @@
-import { vi } from 'vitest'
-
 import { PermissionManager } from './PermissionManager.ts'
 
 export class MockPermissionManager implements PermissionManager {
@@ -7,10 +5,10 @@ export class MockPermissionManager implements PermissionManager {
 
   constructor(private readonly grantNotificationPermission: boolean = true) {}
 
-  requestNotificationPermission = vi.fn(() => {
+  requestNotificationPermission = (): Promise<boolean> => {
     if (this.grantNotificationPermission) {
       this.notificationPermissionGranted = true
     }
     return Promise.resolve(this.notificationPermissionGranted)
-  })
+  }
 }

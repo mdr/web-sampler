@@ -1,5 +1,6 @@
 import { describe, expect, it, test, vi } from 'vitest'
 
+import { mockObjectMethods } from '../utils/mockUtils.testSupport.ts'
 import { AttemptToMakeStoragePersistentResult } from './AttemptToMakeStoragePersistentResult.ts'
 import { MockPermissionManager } from './MockPermissionManager.testSupport.ts'
 import { MockPersistentStorageManager } from './MockPersistentStorageManager.testSupport.ts'
@@ -119,11 +120,10 @@ const makeStorageService = ({
   grantNotificationPermission = false,
   grantPersistentStorage = false,
 }: MakeStorageServiceOptions) => {
-  const persistentStorageManager = new MockPersistentStorageManager(
-    isStorageInitiallyPersistent,
-    grantPersistentStorage,
+  const persistentStorageManager = mockObjectMethods(
+    new MockPersistentStorageManager(isStorageInitiallyPersistent, grantPersistentStorage),
   )
-  const permissionManager = new MockPermissionManager(grantNotificationPermission)
+  const permissionManager = mockObjectMethods(new MockPermissionManager(grantNotificationPermission))
   const systemDetector = new MockSystemDetectorTestSupport(isChromiumBasedBrowser)
   const storageService = new StorageService(persistentStorageManager, permissionManager, systemDetector)
   return { storageService, persistentStorageManager, permissionManager, systemDetector }

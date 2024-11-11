@@ -1,5 +1,3 @@
-import { vi } from 'vitest'
-
 import { PersistentStorageManager } from './PersistentStorageManager.ts'
 
 export class MockPersistentStorageManager implements PersistentStorageManager {
@@ -12,12 +10,12 @@ export class MockPersistentStorageManager implements PersistentStorageManager {
     this._isStoragePersistent = isStorageInitiallyPersistent
   }
 
-  isStoragePersistent = () => Promise.resolve(this._isStoragePersistent)
+  isStoragePersistent = (): Promise<boolean> => Promise.resolve(this._isStoragePersistent)
 
-  attemptToMakeStoragePersistent = vi.fn(() => {
+  attemptToMakeStoragePersistent = (): Promise<boolean> => {
     if (this.grantPersistentStorage) {
       this._isStoragePersistent = true
     }
     return Promise.resolve(this._isStoragePersistent)
-  })
+  }
 }

@@ -5,8 +5,9 @@ import { AudioOperations } from '../../audioOperations/AudioOperations.ts'
 import { LazyAudioContextProvider } from '../../audioRecorder/AudioContextProvider.ts'
 import { App } from '../../components/app/App.tsx'
 import { AppConfig, makeAppConfig } from '../../config/AppConfig.ts'
-import { AttemptToMakeStoragePersistentResult } from '../../storage/AttemptToMakeStoragePersistentResult.ts'
-import { FakeStorageManagerTestSupport } from '../../storage/FakeStorageManager.testSupport.ts'
+import { ActualSystemDetector } from '../../storage/ActualSystemDetector.ts'
+import { MockPermissionManager } from '../../storage/MockPermissionManager.testSupport.ts'
+import { MockPersistentStorageManager } from '../../storage/MockPersistentStorageManager.testSupport.ts'
 import { StorageService } from '../../storage/StorageService.ts'
 import { MockAudioElement, castPartial } from './mocks/MockAudioElement.ts'
 import { MockAudioRecorder } from './mocks/MockAudioRecorder.ts'
@@ -14,22 +15,25 @@ import { DefaultWindowTestHooks } from './testApp/DefaultWindowTestHooks.tsx'
 
 export interface TestAppProps {
   useFakeTimers?: boolean
-  isStoragePersistent?: boolean
-  attemptToMakeStoragePersistentResult?: AttemptToMakeStoragePersistentResult
+  isStorageInitiallyPersistent?: boolean
+  grantNotificationPermission?: boolean
+  grantPersistentStorage?: boolean
 }
 
 export const TestApp = ({
   useFakeTimers = true,
-  isStoragePersistent = false,
-  attemptToMakeStoragePersistentResult = AttemptToMakeStoragePersistentResult.SUCCESSFUL,
+  isStorageInitiallyPersistent = false,
+  grantNotificationPermission = true,
+  grantPersistentStorage = true,
 }: TestAppProps) => {
   const audioRecorder = new MockAudioRecorder()
   const mockAudioElement = new MockAudioElement()
   const config = makeTestAppConfig(
     audioRecorder,
     mockAudioElement,
-    isStoragePersistent,
-    attemptToMakeStoragePersistentResult,
+    isStorageInitiallyPersistent,
+    grantNotificationPermission,
+    grantPersistentStorage,
   )
 
   useDidMount(() => {
@@ -43,17 +47,21 @@ export const TestApp = ({
 const makeTestAppConfig = (
   audioRecorder: MockAudioRecorder,
   mockAudioElement: MockAudioElement,
-  isStoragePersistent: boolean,
-  attemptToMakeStoragePersistentResult: AttemptToMakeStoragePersistentResult,
+  isStorageInitiallyPersistent: boolean,
+  grantNotificationPermission: boolean,
+  grantPersistentStorage: boolean,
 ): AppConfig => {
-  const storageManager = new FakeStorageManagerTestSupport(
-    isStoragePersistent,
-    attemptToMakeStoragePersistentResult,
-  ) as unknown as StorageService
+  const persistentStorageManager = new MockPersistentStorageManager(
+    isStorageInitiallyPersistent,
+    grantPersistentStorage,
+  )
+  const permissionManager = new MockPermissionManager(grantNotificationPermission)
+  const systemDetector = new ActualSystemDetector()
+  const storageService = new StorageService(persistentStorageManager, permissionManager, systemDetector)
   const audioElement = castPartial<HTMLAudioElement>(mockAudioElement)
   const audioContextProvider = new LazyAudioContextProvider()
   const audioOperations = new AudioOperations(audioContextProvider)
-  return makeAppConfig(audioRecorder, audioElement, storageManager, audioOperations)
+  return makeAppConfig(audioRecorder, audioElement, storageService, audioOperations)
 }
 
 const installFakeTimers = (): InstalledClock =>

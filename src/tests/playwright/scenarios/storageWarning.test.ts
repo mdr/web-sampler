@@ -1,4 +1,3 @@
-import { AttemptToMakeStoragePersistentResult } from '../../../storage/AttemptToMakeStoragePersistentResult.ts'
 import { test } from '../fixtures.ts'
 import { launchApp } from '../pageObjects/launchApp.tsx'
 
@@ -6,8 +5,7 @@ test('if storage has not been made persistent, a warning button is shown, and th
   mount,
 }) => {
   const soundsEditorPage = await launchApp(mount, {
-    isStoragePersistent: false,
-    attemptToMakeStoragePersistentResult: AttemptToMakeStoragePersistentResult.SUCCESSFUL,
+    isStorageInitiallyPersistent: false,
   })
   await soundsEditorPage.navbar.expectStorageWarningButtonToBeShown()
   const dialog = await soundsEditorPage.navbar.pressStorageWarningButton()
@@ -21,8 +19,8 @@ test('if storage has not been made persistent, a warning button is shown, and th
 
 test('if notification permission is denied, show an appropriate toast', async ({ mount }) => {
   const soundsEditorPage = await launchApp(mount, {
-    isStoragePersistent: false,
-    attemptToMakeStoragePersistentResult: AttemptToMakeStoragePersistentResult.NOTIFICATION_PERMISSION_DENIED,
+    isStorageInitiallyPersistent: false,
+    grantNotificationPermission: false,
   })
   const dialog = await soundsEditorPage.navbar.pressStorageWarningButton()
 
@@ -34,8 +32,8 @@ test('if notification permission is denied, show an appropriate toast', async ({
 
 test('if storage cannot be made persistent, show an appropriate toast', async ({ mount }) => {
   const soundsEditorPage = await launchApp(mount, {
-    isStoragePersistent: false,
-    attemptToMakeStoragePersistentResult: AttemptToMakeStoragePersistentResult.UNSUCCESSFUL,
+    isStorageInitiallyPersistent: false,
+    grantPersistentStorage: false,
   })
   const dialog = await soundsEditorPage.navbar.pressStorageWarningButton()
 
@@ -46,7 +44,7 @@ test('if storage cannot be made persistent, show an appropriate toast', async ({
 })
 
 test('if storage is already persistent, no warning button is shown', async ({ mount }) => {
-  const soundsEditorPage = await launchApp(mount, { isStoragePersistent: true })
+  const soundsEditorPage = await launchApp(mount, { isStorageInitiallyPersistent: true })
 
   await soundsEditorPage.navbar.expectStorageWarningButtonToNotBeShown()
 })
