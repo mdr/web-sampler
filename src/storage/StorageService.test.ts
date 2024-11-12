@@ -1,11 +1,11 @@
 import { describe, expect, it, test, vi } from 'vitest'
 
 import { mockObjectMethods } from '../utils/mockUtils.testSupport.ts'
-import { FakeToastManager } from './FakeToastManager.testSupport.ts'
 import { MockPermissionManager } from './MockPermissionManager.testSupport.ts'
 import { MockPersistentStorageManager } from './MockPersistentStorageManager.testSupport.ts'
 import { MockSystemDetectorTestSupport } from './MockSystemDetector.testSupport.ts'
 import { StorageService, StorageServiceToastMessages } from './StorageService.ts'
+import { ReactToastifyToastManager } from './ToastManager.ts'
 
 describe('checkIfStorageIsPersistent', () => {
   it('should should update isStoragePersistent state if storage is persistent', async () => {
@@ -124,7 +124,7 @@ const makeStorageService = ({
   )
   const permissionManager = mockObjectMethods(new MockPermissionManager(grantNotificationPermission))
   const systemDetector = new MockSystemDetectorTestSupport(isChromiumBasedBrowser)
-  const toastManager = mockObjectMethods(new FakeToastManager())
+  const toastManager = mockObjectMethods(new ReactToastifyToastManager())
   const storageService = new StorageService(persistentStorageManager, permissionManager, systemDetector, toastManager)
   return { storageService, persistentStorageManager, permissionManager, systemDetector, toastManager }
 }
