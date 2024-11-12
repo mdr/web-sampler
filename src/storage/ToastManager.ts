@@ -6,11 +6,7 @@ export interface ToastManager {
 }
 
 export class ReactToastifyToastManager implements ToastManager {
-  info = (message: string) => {
-    toast.info(message)
-  }
+  info = (message: string) => toast.info(message)
 
-  error = (message: string) => {
-    toast.error(message)
-  }
+  error = (message: string) => toast.error(message)
 }

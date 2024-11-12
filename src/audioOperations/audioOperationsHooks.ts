@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 
-import { AudioOperations } from '../audioOperations/AudioOperations.ts'
-import { AudioOperationsContext } from '../audioOperations/AudioOperationsContext.ts'
+import { AudioOperations } from './AudioOperations.ts'
+import { AudioOperationsContext } from './AudioOperationsContext.ts'
 
 export const useAudioOperations = (): AudioOperations => {
   const audioOperations = useContext(AudioOperationsContext)
