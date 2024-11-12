@@ -5,10 +5,11 @@ import { AudioOperations } from '../../audioOperations/AudioOperations.ts'
 import { LazyAudioContextProvider } from '../../audioRecorder/AudioContextProvider.ts'
 import { App } from '../../components/app/App.tsx'
 import { AppConfig, makeAppConfig } from '../../config/AppConfig.ts'
-import { ActualSystemDetector } from '../../storage/ActualSystemDetector.ts'
 import { MockPermissionManager } from '../../storage/MockPermissionManager.testSupport.ts'
 import { MockPersistentStorageManager } from '../../storage/MockPersistentStorageManager.testSupport.ts'
 import { StorageService } from '../../storage/StorageService.ts'
+import { BowserSystemDetector } from '../../storage/SystemDetector.ts'
+import { ReactToastifyToastManager } from '../../storage/ToastManager.ts'
 import { MockAudioElement, castPartial } from './mocks/MockAudioElement.ts'
 import { MockAudioRecorder } from './mocks/MockAudioRecorder.ts'
 import { DefaultWindowTestHooks } from './testApp/DefaultWindowTestHooks.tsx'
@@ -56,8 +57,9 @@ const makeTestAppConfig = (
     grantPersistentStorage,
   )
   const permissionManager = new MockPermissionManager(grantNotificationPermission)
-  const systemDetector = new ActualSystemDetector()
-  const storageService = new StorageService(persistentStorageManager, permissionManager, systemDetector)
+  const systemDetector = new BowserSystemDetector()
+  const toastManager = new ReactToastifyToastManager()
+  const storageService = new StorageService(persistentStorageManager, permissionManager, systemDetector, toastManager)
   const audioElement = castPartial<HTMLAudioElement>(mockAudioElement)
   const audioContextProvider = new LazyAudioContextProvider()
   const audioOperations = new AudioOperations(audioContextProvider)

@@ -1,11 +1,11 @@
 import { describe, expect, it, test, vi } from 'vitest'
 
 import { mockObjectMethods } from '../utils/mockUtils.testSupport.ts'
-import { AttemptToMakeStoragePersistentResult } from './AttemptToMakeStoragePersistentResult.ts'
+import { FakeToastManager } from './FakeToastManager.testSupport.ts'
 import { MockPermissionManager } from './MockPermissionManager.testSupport.ts'
 import { MockPersistentStorageManager } from './MockPersistentStorageManager.testSupport.ts'
 import { MockSystemDetectorTestSupport } from './MockSystemDetector.testSupport.ts'
-import { StorageService } from './StorageService.ts'
+import { StorageService, StorageServiceToastMessages } from './StorageService.ts'
 
 describe('checkIfStorageIsPersistent', () => {
   it('should should update isStoragePersistent state if storage is persistent', async () => {
@@ -29,28 +29,28 @@ describe('checkIfStorageIsPersistent', () => {
 })
 
 describe('attemptToMakeStoragePersistent', () => {
-  test('if storage is already persistent, return SUCCESSFUL taking no action', async () => {
-    const { storageService, permissionManager, persistentStorageManager } = makeStorageService({
+  test('if storage is already persistent, post a success toast taking no action', async () => {
+    const { storageService, permissionManager, persistentStorageManager, toastManager } = makeStorageService({
       isStorageInitiallyPersistent: true,
     })
 
-    const result = await storageService.attemptToMakeStoragePersistent()
+    await storageService.attemptToMakeStoragePersistent()
 
-    expect(result).toBe(AttemptToMakeStoragePersistentResult.SUCCESSFUL)
+    expect(toastManager.info).toHaveBeenCalledWith(StorageServiceToastMessages.SUCCESS)
     expect(storageService.state.isStoragePersistent).toBe(true)
     expect(persistentStorageManager.attemptToMakeStoragePersistent).not.toHaveBeenCalled()
     expect(permissionManager.requestNotificationPermission).not.toHaveBeenCalled()
   })
 
-  it('should attempt to request persistent storage, and return SUCCESSFUL if it succeeds', async () => {
-    const { storageService, persistentStorageManager } = makeStorageService({
+  it('should attempt to request persistent storage and post a success toast if successful', async () => {
+    const { storageService, persistentStorageManager, toastManager } = makeStorageService({
       isStorageInitiallyPersistent: false,
       grantPersistentStorage: true,
     })
 
-    const result = await storageService.attemptToMakeStoragePersistent()
+    await storageService.attemptToMakeStoragePersistent()
 
-    expect(result).toBe(AttemptToMakeStoragePersistentResult.SUCCESSFUL)
+    expect(toastManager.info).toHaveBeenCalledWith(StorageServiceToastMessages.SUCCESS)
     expect(storageService.state.isStoragePersistent).toBe(true)
     expect(persistentStorageManager.attemptToMakeStoragePersistent).toHaveBeenCalled()
   })
@@ -66,14 +66,14 @@ describe('attemptToMakeStoragePersistent', () => {
   })
 
   it('should return UNSUCCESSFUL if persistent storage is not granted', async () => {
-    const { storageService } = makeStorageService({
+    const { storageService, toastManager } = makeStorageService({
       isStorageInitiallyPersistent: false,
       grantPersistentStorage: false,
     })
 
-    const result = await storageService.attemptToMakeStoragePersistent()
+    await storageService.attemptToMakeStoragePersistent()
 
-    expect(result).toBe(AttemptToMakeStoragePersistentResult.UNSUCCESSFUL)
+    expect(toastManager.error).toHaveBeenCalledWith(StorageServiceToastMessages.UNSUCCESSFUL)
     expect(storageService.state.isStoragePersistent).toBe(false)
   })
 
@@ -85,24 +85,23 @@ describe('attemptToMakeStoragePersistent', () => {
       grantPersistentStorage: true,
     })
 
-    const result = await storageService.attemptToMakeStoragePersistent()
+    await storageService.attemptToMakeStoragePersistent()
 
-    expect(result).toBe(AttemptToMakeStoragePersistentResult.SUCCESSFUL)
     expect(storageService.state.isStoragePersistent).toBe(true)
     expect(permissionManager.notificationPermissionGranted).toBe(true)
     expect(persistentStorageManager.attemptToMakeStoragePersistent).toHaveBeenCalled()
   })
 
   it('should return NOTIFICATION_PERMISSION_DENIED if notification permission is not granted on a Chromium-based browser', async () => {
-    const { storageService } = makeStorageService({
+    const { storageService, toastManager } = makeStorageService({
       isStorageInitiallyPersistent: false,
       isChromiumBasedBrowser: true,
       grantNotificationPermission: false,
     })
 
-    const result = await storageService.attemptToMakeStoragePersistent()
+    await storageService.attemptToMakeStoragePersistent()
 
-    expect(result).toBe(AttemptToMakeStoragePersistentResult.NOTIFICATION_PERMISSION_DENIED)
+    expect(toastManager.error).toHaveBeenCalledWith(StorageServiceToastMessages.NOTIFICATION_PERMISSION_DENIED)
     expect(storageService.state.isStoragePersistent).toBe(false)
   })
 })
@@ -125,6 +124,7 @@ const makeStorageService = ({
   )
   const permissionManager = mockObjectMethods(new MockPermissionManager(grantNotificationPermission))
   const systemDetector = new MockSystemDetectorTestSupport(isChromiumBasedBrowser)
-  const storageService = new StorageService(persistentStorageManager, permissionManager, systemDetector)
-  return { storageService, persistentStorageManager, permissionManager, systemDetector }
+  const toastManager = mockObjectMethods(new FakeToastManager())
+  const storageService = new StorageService(persistentStorageManager, permissionManager, systemDetector, toastManager)
+  return { storageService, persistentStorageManager, permissionManager, systemDetector, toastManager }
 }

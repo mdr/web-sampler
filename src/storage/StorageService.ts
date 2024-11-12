@@ -1,18 +1,24 @@
 import AsyncLock from 'async-lock'
 
 import { AbstractService } from '../utils/providerish/AbstractService.ts'
-import { AttemptToMakeStoragePersistentResult } from './AttemptToMakeStoragePersistentResult.ts'
 import { PermissionManager } from './PermissionManager.ts'
 import { PersistentStorageManager } from './PersistentStorageManager.ts'
 import { SystemDetector } from './SystemDetector.ts'
+import { ToastManager } from './ToastManager.ts'
 
 export interface StorageState {
   readonly isStoragePersistent: boolean
 }
 
 export interface StorageActions {
-  attemptToMakeStoragePersistent(): Promise<AttemptToMakeStoragePersistentResult>
+  attemptToMakeStoragePersistent(): Promise<void>
   checkIfStorageIsPersistent(): Promise<void>
+}
+
+export const StorageServiceToastMessages = {
+  SUCCESS: 'Storage is now persistent. Your recordings are safe in local storage.',
+  NOTIFICATION_PERMISSION_DENIED: 'Grant notification permission to make storage persistent.',
+  UNSUCCESSFUL: 'Unable to make storage persistent.',
 }
 
 export class StorageService extends AbstractService<StorageState> implements StorageActions {
@@ -22,6 +28,7 @@ export class StorageService extends AbstractService<StorageState> implements Sto
     private readonly persistentStorageManager: PersistentStorageManager,
     private readonly permissionManager: PermissionManager,
     private readonly systemDetector: SystemDetector,
+    private readonly toastManager: ToastManager,
   ) {
     super({ isStoragePersistent: false })
   }
@@ -32,25 +39,29 @@ export class StorageService extends AbstractService<StorageState> implements Sto
       this.setState({ isStoragePersistent })
     })
 
-  attemptToMakeStoragePersistent = (): Promise<AttemptToMakeStoragePersistentResult> =>
+  attemptToMakeStoragePersistent = (): Promise<void> =>
     this.lock.acquire('lock', async () => {
       const isAlreadyPersistent = await this.persistentStorageManager.isStoragePersistent()
       if (isAlreadyPersistent) {
         this.setState({ isStoragePersistent: true })
-        return AttemptToMakeStoragePersistentResult.SUCCESSFUL
+        this.toastManager.info(StorageServiceToastMessages.SUCCESS)
+        return
       }
       // On Chromium-based browsers, the most reliable way to make storage persistent is to request
       // notification permission:
       if (this.systemDetector.isChromiumBasedBrowser()) {
         const success = await this.permissionManager.requestNotificationPermission()
         if (!success) {
-          return AttemptToMakeStoragePersistentResult.NOTIFICATION_PERMISSION_DENIED
+          this.toastManager.error(StorageServiceToastMessages.NOTIFICATION_PERMISSION_DENIED)
+          return
         }
       }
       const isStoragePersistent = await this.persistentStorageManager.attemptToMakeStoragePersistent()
       this.setState({ isStoragePersistent })
-      return isStoragePersistent
-        ? AttemptToMakeStoragePersistentResult.SUCCESSFUL
-        : AttemptToMakeStoragePersistentResult.UNSUCCESSFUL
+      if (isStoragePersistent) {
+        this.toastManager.info(StorageServiceToastMessages.SUCCESS)
+      } else {
+        this.toastManager.error(StorageServiceToastMessages.UNSUCCESSFUL)
+      }
     })
 }

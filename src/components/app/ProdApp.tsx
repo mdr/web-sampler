@@ -2,10 +2,11 @@ import { AudioOperations } from '../../audioOperations/AudioOperations.ts'
 import { LazyAudioContextProvider } from '../../audioRecorder/AudioContextProvider.ts'
 import { WebAudioRecorder } from '../../audioRecorder/WebAudioRecorder.ts'
 import { AppConfig, makeAppConfig } from '../../config/AppConfig.ts'
-import { ActualSystemDetector } from '../../storage/ActualSystemDetector.ts'
-import { BrowserPermissionManager } from '../../storage/BrowserPermissionManager.ts'
 import { BrowserPersistentStorageManager } from '../../storage/BrowserPersistentStorageManager.ts'
+import { BrowserPermissionManager } from '../../storage/PermissionManager.ts'
 import { StorageService } from '../../storage/StorageService.ts'
+import { BowserSystemDetector } from '../../storage/SystemDetector.ts'
+import { ReactToastifyToastManager } from '../../storage/ToastManager.ts'
 import { App } from './App.tsx'
 
 const makeProdAppConfig = (): AppConfig => {
@@ -16,7 +17,8 @@ const makeProdAppConfig = (): AppConfig => {
   const storageManager = new StorageService(
     new BrowserPersistentStorageManager(),
     new BrowserPermissionManager(),
-    new ActualSystemDetector(),
+    new BowserSystemDetector(),
+    new ReactToastifyToastManager(),
   )
   return makeAppConfig(webAudioRecorder, audio, storageManager, audioOperations)
 }
