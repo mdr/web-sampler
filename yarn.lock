@@ -5853,6 +5853,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vitest/pretty-format@npm:2.1.5":
+  version: 2.1.5
+  resolution: "@vitest/pretty-format@npm:2.1.5"
+  dependencies:
+    tinyrainbow: "npm:^1.2.0"
+  checksum: 10c0/d6667f1e5d272f557f8cca440af65645346b5aa74a04041466859087f14a78a296e3f1928caa05de0cc558880cc8a49ce14696fef7b8f5dbc3eb856d672b0abf
+  languageName: node
+  linkType: hard
+
 "@vitest/runner@npm:2.1.4":
   version: 2.1.4
   resolution: "@vitest/runner@npm:2.1.4"
@@ -5892,20 +5901,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/ui@npm:^2.1.4":
-  version: 2.1.4
-  resolution: "@vitest/ui@npm:2.1.4"
+"@vitest/ui@npm:^2.1.5":
+  version: 2.1.5
+  resolution: "@vitest/ui@npm:2.1.5"
   dependencies:
-    "@vitest/utils": "npm:2.1.4"
+    "@vitest/utils": "npm:2.1.5"
     fflate: "npm:^0.8.2"
     flatted: "npm:^3.3.1"
     pathe: "npm:^1.1.2"
     sirv: "npm:^3.0.0"
-    tinyglobby: "npm:^0.2.9"
+    tinyglobby: "npm:^0.2.10"
     tinyrainbow: "npm:^1.2.0"
   peerDependencies:
-    vitest: 2.1.4
-  checksum: 10c0/28bb190a4a077b3511a19312bad06fdf526e0b6d216bc249df7d9f4d214106382da1b5ab1a6893153493150ca13fbeb42222fd4d90e9f41198401734d8662c2d
+    vitest: 2.1.5
+  checksum: 10c0/73e1bb289bfc190e2fc61cabc8777088c7507b16ff2f695cedaa15a65f5405c84c89c4423b5b63d19953d4b2ec7f0680e05cfcee346d1c5b4099fa0534e8ae9f
   languageName: node
   linkType: hard
 
@@ -5929,6 +5938,17 @@ __metadata:
     loupe: "npm:^3.1.2"
     tinyrainbow: "npm:^1.2.0"
   checksum: 10c0/fd632dbc2496d14bcc609230f1dad73039c9f52f4ca533d6b68fa1a04dd448e03510f2a8e4a368fd274cbb8902a6cd800140ab366dd055256beb2c0dcafcd9f2
+  languageName: node
+  linkType: hard
+
+"@vitest/utils@npm:2.1.5":
+  version: 2.1.5
+  resolution: "@vitest/utils@npm:2.1.5"
+  dependencies:
+    "@vitest/pretty-format": "npm:2.1.5"
+    loupe: "npm:^3.1.2"
+    tinyrainbow: "npm:^1.2.0"
+  checksum: 10c0/3d1e65025e418948b215b8856548a91856522660d898b872485a91acf397e085e90968ee9c3f521589b5274717da32e954ef8a549aa60cc1c3338224fdfb4c5e
   languageName: node
   linkType: hard
 
@@ -12112,7 +12132,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tinyglobby@npm:^0.2.9":
+"tinyglobby@npm:^0.2.10":
   version: 0.2.10
   resolution: "tinyglobby@npm:0.2.10"
   dependencies:
@@ -12984,7 +13004,7 @@ __metadata:
     "@ungap/structured-clone": "npm:^1.2.0"
     "@vitejs/plugin-react": "npm:^4.3.3"
     "@vitest/coverage-v8": "npm:^2.1.4"
-    "@vitest/ui": "npm:^2.1.4"
+    "@vitest/ui": "npm:^2.1.5"
     "@zip.js/zip.js": "npm:^2.7.53"
     async-lock: "npm:^1.4.1"
     autoprefixer: "npm:^10.4.20"
