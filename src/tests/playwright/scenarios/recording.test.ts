@@ -1,4 +1,5 @@
-import { AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
+import { StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
+import { AudioRecorderStatus } from '../../../audioRecorder/AudioRecorderService.ts'
 import { MAX_RECORDING_DURATION } from '../../../components/soundsEditor/recordingConstants.ts'
 import { Volume } from '../../../utils/types/brandedTypes.ts'
 import { test } from '../fixtures.ts'
@@ -40,7 +41,7 @@ test('a user can cancel selecting a source for recording', async ({ mount }) => 
 
   await soundsEditorPage.pressCaptureAudio({ primedOutcome: StartRecordingOutcome.CANCELLED_BY_USER })
 
-  await soundsEditorPage.expectAudioRecorderStateToBe(AudioRecorderState.IDLE)
+  await soundsEditorPage.expectAudioRecorderStatusToBe(AudioRecorderStatus.IDLE)
   await soundsEditorPage.expectCaptureButtonToBeShown()
 })
 
@@ -55,11 +56,11 @@ test('an error toast should be shown if no audio is available on the selected so
 
 test('navigating away from the page should cancel recording', async ({ mount }) => {
   const soundsEditorPage = await launchAndStartAudioCapture(mount)
-  await soundsEditorPage.expectAudioRecorderStateToBe(AudioRecorderState.RECORDING)
+  await soundsEditorPage.expectAudioRecorderStatusToBe(AudioRecorderStatus.RECORDING)
 
   await soundsEditorPage.navbar.pressSoundboardsLink()
 
-  await soundsEditorPage.expectAudioRecorderStateToBe(AudioRecorderState.IDLE)
+  await soundsEditorPage.expectAudioRecorderStatusToBe(AudioRecorderStatus.IDLE)
 })
 
 test('a toast should be shown if no audio was captured', async ({ mount }) => {

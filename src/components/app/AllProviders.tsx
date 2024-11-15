@@ -4,7 +4,7 @@ import reactArrayToTree from 'react-array-to-tree'
 
 import { AudioOperationsContext } from '../../audioOperations/AudioOperationsContext.ts'
 import { AudioPlayerContext } from '../../audioPlayer/AudioPlayerContext.ts'
-import { AudioRecorderContext } from '../../audioRecorder/AudioRecorderContext.ts'
+import { AudioRecorderServiceContext } from '../../audioRecorder/audioRecorderHooks.ts'
 import { AppConfig } from '../../config/AppConfig.ts'
 import { SoundLibraryContext } from '../../sounds/library/SoundLibraryContext.ts'
 import { StorageServiceContext } from '../../storage/storageHooks.ts'
@@ -20,9 +20,9 @@ export const AllProviders = ({ config, children }: AllProvidersProps) => {
 }
 
 const nestProviders = (config: AppConfig): FC<PropsWithChildren> => {
-  const { audioRecorder, audioPlayer, soundLibrary, storageService, audioOperations } = config
+  const { audioRecorderService, audioPlayer, soundLibrary, storageService, audioOperations } = config
   return reactArrayToTree([
-    <AudioRecorderContext.Provider value={audioRecorder} />,
+    <AudioRecorderServiceContext.Provider value={audioRecorderService} />,
     <AudioPlayerContext.Provider value={audioPlayer} />,
     <AudioOperationsContext.Provider value={audioOperations} />,
     <SoundLibraryContext.Provider value={soundLibrary} />,

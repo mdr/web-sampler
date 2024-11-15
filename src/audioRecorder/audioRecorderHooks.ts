@@ -1,31 +1,22 @@
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { useRequestAnimationFrame } from '../utils/hooks/useRequestAnimationFrame.ts'
+import { createOptionalContext, useService, useServiceStateSelector } from '../utils/providerish/serviceHooks.ts'
 import { Volume } from '../utils/types/brandedTypes.ts'
-import { AudioRecorder, AudioRecorderState, RecordingCompleteListener, StartRecordingOutcome } from './AudioRecorder.ts'
-import { AudioRecorderContext } from './AudioRecorderContext.ts'
+import { RecordingCompleteListener } from './AudioRecorder.ts'
+import { AudioRecorderActions, AudioRecorderService, AudioRecorderState } from './AudioRecorderService.ts'
 
-const useAudioRecorder = (): AudioRecorder => {
-  const audioRecorder = useContext(AudioRecorderContext)
-  if (audioRecorder === undefined) {
-    throw new Error('no AudioRecorder available in context')
-  }
-  return audioRecorder
-}
+export const AudioRecorderServiceContext = createOptionalContext<AudioRecorderService>()
 
-export const useAudioRecorderState = (): AudioRecorderState => {
-  const audioRecorder = useAudioRecorder()
-  const [state, setState] = useState<AudioRecorderState>(audioRecorder.state)
-  const handleStateChanged = useCallback((newState: AudioRecorderState) => setState(newState), [setState])
-  useEffect(() => {
-    audioRecorder.addStateChangeListener(handleStateChanged)
-    return () => audioRecorder.removeStateChangeListener(handleStateChanged)
-  }, [audioRecorder, handleStateChanged])
-  return state
-}
+export const useAudioRecorderState = <Selected = AudioRecorderState>(
+  selector: (state: AudioRecorderState) => Selected = (state) => state as Selected,
+): Selected =>
+  useServiceStateSelector<AudioRecorderState, AudioRecorderService, Selected>(AudioRecorderServiceContext, selector)
+
+export const useAudioRecorderActions = (): AudioRecorderActions => useService(AudioRecorderServiceContext)
 
 export const useAudioRecorderVolumeRaf = (): Volume => {
-  const audioRecorder = useAudioRecorder()
+  const audioRecorder = useService(AudioRecorderServiceContext)
   const [volume, setVolume] = useState<Volume>(audioRecorder.volume)
   const handleAnimationFrame = useCallback(() => setVolume(audioRecorder.volume), [setVolume, audioRecorder])
   useRequestAnimationFrame(handleAnimationFrame)
@@ -33,17 +24,9 @@ export const useAudioRecorderVolumeRaf = (): Volume => {
 }
 
 export const useAudioRecordingComplete = (onRecordingComplete: RecordingCompleteListener): void => {
-  const audioRecorder = useAudioRecorder()
+  const audioRecorder = useService(AudioRecorderServiceContext)
   useEffect(() => {
     audioRecorder.addRecordingCompleteListener(onRecordingComplete)
     return () => audioRecorder.removeRecordingCompleteListener(onRecordingComplete)
   }, [audioRecorder, onRecordingComplete])
 }
-
-export interface AudioRecorderActions {
-  startRecording(): Promise<StartRecordingOutcome>
-
-  stopRecording(): void
-}
-
-export const useAudioRecorderActions = (): AudioRecorderActions => useAudioRecorder()

@@ -1,6 +1,7 @@
 import { MountResult } from '@playwright/experimental-ct-react'
 
-import { AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
+import { StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
+import { AudioRecorderStatus } from '../../../audioRecorder/AudioRecorderService.ts'
 import { Millis, Seconds, Volume } from '../../../utils/types/brandedTypes.ts'
 import { WindowTestHooks } from './WindowTestHooks.ts'
 
@@ -29,8 +30,8 @@ export class ProxyWindowTestHooks implements Asyncify<WindowTestHooks> {
   primeNoAudioOnStopRecording = (): Promise<void> =>
     this.mountResult.page().evaluate(() => this.testHooks.primeNoAudioOnStopRecording())
 
-  getAudioRecorderState = (): Promise<AudioRecorderState> =>
-    this.mountResult.page().evaluate(() => this.testHooks.getAudioRecorderState())
+  getAudioRecorderStatus = (): Promise<AudioRecorderStatus> =>
+    this.mountResult.page().evaluate(() => this.testHooks.getAudioRecorderStatus())
 
   simulateAudioPlaybackComplete = (): Promise<void> =>
     this.mountResult.page().evaluate(() => this.testHooks.simulateAudioPlaybackComplete())

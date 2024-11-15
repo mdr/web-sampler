@@ -1,21 +1,42 @@
-import { Option } from '../utils/types/Option.ts'
-import { Hz, Pcm, Volume } from '../utils/types/brandedTypes.ts'
-import { average, concatenateFloat32Arrays } from '../utils/utils.ts'
-import { AbstractAudioRecorder } from './AbstractAudioRecorder.ts'
-import { AudioContextProvider } from './AudioContextProvider.ts'
-import { AudioRecorder, AudioRecorderState, StartRecordingOutcome } from './AudioRecorder.ts'
-import { CAPTURING_AUDIO_WORKLET_NAME, STOP_MESSAGE } from './CapturingAudioWorkletConstants.ts'
-import workletUrl from './CapturingAudioWorkletProcessor?worker&url'
+import _ from 'lodash'
 
-export class WebAudioRecorder extends AbstractAudioRecorder implements AudioRecorder {
+import { AudioData } from '../types/AudioData.ts'
+import { AbstractService } from '../utils/providerish/AbstractService.ts'
+import { Option } from '../utils/types/Option.ts'
+import { Hz, Pcm, Url, Volume } from '../utils/types/brandedTypes.ts'
+import { average, concatenateFloat32Arrays } from '../utils/utils.ts'
+import { AudioContextProvider } from './AudioContextProvider.ts'
+import { RecordingCompleteListener, StartRecordingOutcome } from './AudioRecorder.ts'
+import { CAPTURING_AUDIO_WORKLET_NAME, STOP_MESSAGE } from './CapturingAudioWorkletConstants.ts'
+
+export enum AudioRecorderStatus {
+  IDLE = 'IDLE',
+  RECORDING = 'RECORDING',
+}
+
+export interface AudioRecorderState {
+  status: AudioRecorderStatus
+}
+
+export interface AudioRecorderActions {
+  startRecording(): Promise<StartRecordingOutcome>
+
+  stopRecording(): void
+}
+
+export class AudioRecorderService extends AbstractService<AudioRecorderState> implements AudioRecorderActions {
   private mediaStream: Option<MediaStream> = undefined
   private getVolume: Option<() => Volume> = undefined
   private audioPieces: Float32Array[] = []
   private captureAudioWorkletNode: Option<AudioWorkletNode> = undefined
   private source: Option<MediaStreamAudioSourceNode> = undefined
+  private readonly recordingCompleteListeners: RecordingCompleteListener[] = []
 
-  constructor(private readonly audioContextProvider: AudioContextProvider) {
-    super()
+  constructor(
+    private readonly audioContextProvider: AudioContextProvider,
+    private readonly workletUrl: Url,
+  ) {
+    super({ status: AudioRecorderStatus.IDLE })
   }
 
   private get audioContext(): AudioContext {
@@ -35,7 +56,7 @@ export class WebAudioRecorder extends AbstractAudioRecorder implements AudioReco
   }
 
   startRecording = async (): Promise<StartRecordingOutcome> => {
-    if (this.state !== AudioRecorderState.IDLE) {
+    if (this.state.status !== AudioRecorderStatus.IDLE) {
       throw new Error('Already recording')
     }
 
@@ -63,8 +84,8 @@ export class WebAudioRecorder extends AbstractAudioRecorder implements AudioReco
 
     this.mediaStream = mediaStream
 
-    this.setState(AudioRecorderState.RECORDING)
-    await this.audioContext.audioWorklet.addModule(workletUrl)
+    this.setState({ status: AudioRecorderStatus.RECORDING })
+    await this.audioContext.audioWorklet.addModule(this.workletUrl)
     mediaStream.addEventListener('inactive', this.handleStreamInactive)
     const source = this.audioContext.createMediaStreamSource(this.mediaStream)
     this.source = source
@@ -86,10 +107,10 @@ export class WebAudioRecorder extends AbstractAudioRecorder implements AudioReco
   }
 
   stopRecording = (): void => {
-    if (this.state !== AudioRecorderState.RECORDING) {
+    if (this.state.status !== AudioRecorderStatus.RECORDING) {
       return
     }
-    this.setState(AudioRecorderState.IDLE)
+    this.setState({ status: AudioRecorderStatus.IDLE })
     const pcm = Pcm(concatenateFloat32Arrays(this.audioPieces))
     this.audioPieces = []
     const sampleRate = Hz(this.audioContext.sampleRate)
@@ -110,5 +131,17 @@ export class WebAudioRecorder extends AbstractAudioRecorder implements AudioReco
     this.mediaStream = undefined
 
     this.getVolume = undefined
+  }
+
+  addRecordingCompleteListener = (listener: RecordingCompleteListener): void => {
+    this.recordingCompleteListeners.push(listener)
+  }
+
+  removeRecordingCompleteListener = (listener: RecordingCompleteListener): void => {
+    _.remove(this.recordingCompleteListeners, (l) => l === listener)
+  }
+
+  protected fireRecordingCompleteListeners = (audioData: Option<AudioData>): void => {
+    this.recordingCompleteListeners.forEach((listener) => listener(audioData))
   }
 }

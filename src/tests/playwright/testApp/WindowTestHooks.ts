@@ -1,4 +1,5 @@
-import { AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
+import { StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
+import { AudioRecorderStatus } from '../../../audioRecorder/AudioRecorderService.ts'
 import { Millis, Seconds, Volume } from '../../../utils/types/brandedTypes.ts'
 
 export interface WindowTestHooks {
@@ -9,7 +10,7 @@ export interface WindowTestHooks {
 
   primeNoAudioOnStopRecording(): void
 
-  getAudioRecorderState(): AudioRecorderState
+  getAudioRecorderStatus(): AudioRecorderStatus
 
   // Playback
   simulateAudioPlaybackComplete(): void
