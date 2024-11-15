@@ -3,6 +3,7 @@ import useDidMount from 'beautiful-react-hooks/useDidMount'
 
 import { AudioOperations } from '../../audioOperations/AudioOperations.ts'
 import { LazyAudioContextProvider } from '../../audioRecorder/AudioContextProvider.ts'
+import { AudioRecorderService } from '../../audioRecorder/AudioRecorderService.ts'
 import { App } from '../../components/app/App.tsx'
 import { AppConfig, makeAppConfig } from '../../config/AppConfig.ts'
 import { MockPermissionManager } from '../../storage/MockPermissionManager.testSupport.ts'
@@ -10,8 +11,8 @@ import { MockPersistentStorageManager } from '../../storage/MockPersistentStorag
 import { StorageService } from '../../storage/StorageService.ts'
 import { BowserSystemDetector } from '../../storage/SystemDetector.ts'
 import { ReactToastifyToastManager } from '../../storage/ToastManager.ts'
-import { MockAudioElement, castPartial } from './mocks/MockAudioElement.ts'
-import { MockAudioRecorder } from './mocks/MockAudioRecorder.ts'
+import { MockAudioElement, castPartial } from './mocks/MockAudioElement.testSupport.ts'
+import { MockAudioRecorderService } from './mocks/MockAudioRecorderService.testSupport.ts'
 import { DefaultWindowTestHooks } from './testApp/DefaultWindowTestHooks.tsx'
 
 export interface TestAppProps {
@@ -27,10 +28,10 @@ export const TestApp = ({
   grantNotificationPermission = true,
   grantPersistentStorage = true,
 }: TestAppProps) => {
-  const audioRecorder = new MockAudioRecorder()
+  const audioRecorderService = new MockAudioRecorderService()
   const mockAudioElement = new MockAudioElement()
   const config = makeTestAppConfig(
-    audioRecorder,
+    audioRecorderService,
     mockAudioElement,
     isStorageInitiallyPersistent,
     grantNotificationPermission,
@@ -39,14 +40,14 @@ export const TestApp = ({
 
   useDidMount(() => {
     const clock = useFakeTimers ? installFakeTimers() : undefined
-    window.testHooks = new DefaultWindowTestHooks(audioRecorder, mockAudioElement, clock, config.soundLibrary)
+    window.testHooks = new DefaultWindowTestHooks(audioRecorderService, mockAudioElement, clock, config.soundLibrary)
     return () => clock?.uninstall()
   })
   return <App config={config} />
 }
 
 const makeTestAppConfig = (
-  audioRecorder: MockAudioRecorder,
+  audioRecorderService: MockAudioRecorderService,
   mockAudioElement: MockAudioElement,
   isStorageInitiallyPersistent: boolean,
   grantNotificationPermission: boolean,
@@ -63,7 +64,7 @@ const makeTestAppConfig = (
   const audioElement = castPartial<HTMLAudioElement>(mockAudioElement)
   const audioContextProvider = new LazyAudioContextProvider()
   const audioOperations = new AudioOperations(audioContextProvider)
-  return makeAppConfig(audioRecorder, audioElement, storageService, audioOperations)
+  return makeAppConfig(audioRecorderService as AudioRecorderService, audioElement, storageService, audioOperations)
 }
 
 const installFakeTimers = (): InstalledClock =>

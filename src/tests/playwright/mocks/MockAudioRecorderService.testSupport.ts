@@ -1,28 +1,41 @@
-import { AbstractAudioRecorder } from '../../../audioRecorder/AbstractAudioRecorder.ts'
-import { AudioRecorder, AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
+import { LazyAudioContextProvider } from '../../../audioRecorder/AudioContextProvider.ts'
+import { StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
+import { AudioRecorderService, AudioRecorderStatus } from '../../../audioRecorder/AudioRecorderService.ts'
 import { AudioData } from '../../../types/AudioData.ts'
 import { samplesToSeconds, secondsToSamples } from '../../../types/sampleConversions.ts'
 import { SoundTestConstants } from '../../../types/sound.testSupport.ts'
 import { Hz, MIN_VOLUME, Pcm, Samples, Seconds, Volume } from '../../../utils/types/brandedTypes.ts'
 import { SOUND_DURATION } from '../testConstants.ts'
 
-export class MockAudioRecorder extends AbstractAudioRecorder implements AudioRecorder {
-  volume: Volume = MIN_VOLUME
+export class MockAudioRecorderService extends AudioRecorderService {
+  private _volume: Volume = MIN_VOLUME
   startRecordingOutcome: StartRecordingOutcome = StartRecordingOutcome.SUCCESS
   noAudioOnStopRecording: boolean = false
 
+  constructor() {
+    super(new LazyAudioContextProvider())
+  }
+
+  get volume(): Volume {
+    return this._volume
+  }
+
+  setVolume = (volume: Volume): void => {
+    this._volume = volume
+  }
+
   startRecording = (): Promise<StartRecordingOutcome> => {
     if (this.startRecordingOutcome === StartRecordingOutcome.SUCCESS) {
-      this.setState(AudioRecorderState.RECORDING)
+      this.setState({ status: AudioRecorderStatus.RECORDING })
     }
     return Promise.resolve(this.startRecordingOutcome)
   }
 
   stopRecording = (): void => {
-    if (this.state !== AudioRecorderState.RECORDING) {
+    if (this.state.status !== AudioRecorderStatus.RECORDING) {
       return
     }
-    this.setState(AudioRecorderState.IDLE)
+    this.setState({ status: AudioRecorderStatus.IDLE })
     const audioData: AudioData = {
       pcm: createSampleAudio(SOUND_DURATION, SoundTestConstants.sampleRate),
       sampleRate: SoundTestConstants.sampleRate,

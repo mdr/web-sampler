@@ -3,7 +3,8 @@ import { useCallback, useRef } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { toast } from 'react-toastify'
 
-import { AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
+import { StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
+import { AudioRecorderStatus } from '../../../audioRecorder/AudioRecorderService.ts'
 import {
   useAudioRecorderActions,
   useAudioRecorderState,
@@ -46,7 +47,7 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPaneProps) => {
   const sound = useSound(soundId)
   const soundActions = useSoundActions()
   const audioRecorderActions = useAudioRecorderActions()
-  const audioRecorderState = useAudioRecorderState()
+  const { status: audioRecorderStatus } = useAudioRecorderState()
   const timerIdRef = useRef<Option<TimerId>>()
 
   useHotkeys('shift+?', () => undefined)
@@ -119,11 +120,11 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPaneProps) => {
       {sound.image !== undefined && <ImageDisplay imageId={sound.image} />}
       <h2 className="text-xl" data-testid={EditSoundPaneTestIds.audioHeading}>
         Audio
-        {audio !== undefined && audioRecorderState === AudioRecorderState.IDLE && (
+        {audio !== undefined && audioRecorderStatus === AudioRecorderStatus.IDLE && (
           <> ({getPlayRegionDurationFriendly(audio)})</>
         )}
       </h2>
-      {audioRecorderState === AudioRecorderState.IDLE && (
+      {audioRecorderStatus === AudioRecorderStatus.IDLE && (
         <>
           <div className="flex space-x-2">
             <CaptureAudioButton onPress={handleCaptureAudioButtonPressed} />
@@ -135,7 +136,7 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPaneProps) => {
           {soundHasAudio(sound) && <AudioSection sound={sound} />}
         </>
       )}
-      {audioRecorderState === AudioRecorderState.RECORDING && (
+      {audioRecorderStatus === AudioRecorderStatus.RECORDING && (
         <div className="flex items-center space-x-4">
           <StopButton onPress={handleStopButtonPressed} />
           <VolumeMeter />

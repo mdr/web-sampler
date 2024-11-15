@@ -1,7 +1,8 @@
 import { expect } from '@playwright/experimental-ct-react'
 import { Locator } from 'playwright'
 
-import { AudioRecorderState, StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
+import { StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
+import { AudioRecorderStatus } from '../../../audioRecorder/AudioRecorderService.ts'
 import { EditSoundPaneTestIds } from '../../../components/soundsEditor/editSoundPane/EditSoundPaneTestIds.ts'
 import { SoundsSidebarTestIds } from '../../../components/soundsEditor/sidebar/SoundsSidebarTestIds.ts'
 import { Path, Volume } from '../../../utils/types/brandedTypes.ts'
@@ -110,7 +111,7 @@ export class SoundsEditorPageObject extends PageObject {
   simulateAudioPlaybackComplete = (): Promise<void> =>
     this.step('simulateAudioPlaybackComplete', () => this.testHooks.simulateAudioPlaybackComplete())
 
-  getAudioRecorderState = (): Promise<AudioRecorderState> => this.testHooks.getAudioRecorderState()
+  getAudioRecorderState = (): Promise<AudioRecorderStatus> => this.testHooks.getAudioRecorderStatus()
 
   get waveformCanvas(): Locator {
     return this.get(EditSoundPaneTestIds.waveformCanvas)
@@ -124,9 +125,9 @@ export class SoundsEditorPageObject extends PageObject {
       }),
     )
 
-  expectAudioRecorderStateToBe = (state: AudioRecorderState): Promise<void> =>
-    this.step(`expectAudioRecorderStateToBe ${state}`, async () => {
-      expect(await this.getAudioRecorderState()).toBe(state)
+  expectAudioRecorderStatusToBe = (status: AudioRecorderStatus): Promise<void> =>
+    this.step(`expectAudioRecorderStatusToBe ${status}`, async () => {
+      expect(await this.getAudioRecorderState()).toBe(status)
     })
 
   expectVolumeMeterToShowLevel = (volume: Volume): Promise<void> =>
