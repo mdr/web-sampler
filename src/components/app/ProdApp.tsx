@@ -1,6 +1,7 @@
 import { AudioOperations } from '../../audioOperations/AudioOperations.ts'
 import { LazyAudioContextProvider } from '../../audioRecorder/AudioContextProvider.ts'
 import { AudioRecorderService } from '../../audioRecorder/AudioRecorderService.ts'
+import workletUrl from '../../audioRecorder/CapturingAudioWorkletProcessor?worker&url'
 import { AppConfig, makeAppConfig } from '../../config/AppConfig.ts'
 import { BrowserPersistentStorageManager } from '../../storage/BrowserPersistentStorageManager.ts'
 import { BrowserPermissionManager } from '../../storage/PermissionManager.ts'
@@ -9,7 +10,6 @@ import { BowserSystemDetector } from '../../storage/SystemDetector.ts'
 import { ReactToastifyToastManager } from '../../storage/ToastManager.ts'
 import { Url } from '../../utils/types/brandedTypes.ts'
 import { App } from './App.tsx'
-import workletUrl from './CapturingAudioWorkletProcessor?worker&url'
 
 const makeProdAppConfig = (): AppConfig => {
   const audioContextProvider = new LazyAudioContextProvider()
