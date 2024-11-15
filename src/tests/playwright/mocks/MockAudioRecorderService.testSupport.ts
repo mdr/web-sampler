@@ -4,7 +4,7 @@ import { AudioRecorderService, AudioRecorderStatus } from '../../../audioRecorde
 import { AudioData } from '../../../types/AudioData.ts'
 import { samplesToSeconds, secondsToSamples } from '../../../types/sampleConversions.ts'
 import { SoundTestConstants } from '../../../types/sound.testSupport.ts'
-import { Hz, MIN_VOLUME, Pcm, Samples, Seconds, Volume } from '../../../utils/types/brandedTypes.ts'
+import { Hz, MIN_VOLUME, Pcm, Samples, Seconds, Url, Volume } from '../../../utils/types/brandedTypes.ts'
 import { SOUND_DURATION } from '../testConstants.ts'
 
 export class MockAudioRecorderService extends AudioRecorderService {
@@ -13,7 +13,7 @@ export class MockAudioRecorderService extends AudioRecorderService {
   noAudioOnStopRecording: boolean = false
 
   constructor() {
-    super(new LazyAudioContextProvider())
+    super(new LazyAudioContextProvider(), Url('fakeWorkletUrl'))
   }
 
   get volume(): Volume {

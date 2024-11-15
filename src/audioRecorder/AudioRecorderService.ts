@@ -3,12 +3,11 @@ import _ from 'lodash'
 import { AudioData } from '../types/AudioData.ts'
 import { AbstractService } from '../utils/providerish/AbstractService.ts'
 import { Option } from '../utils/types/Option.ts'
-import { Hz, Pcm, Volume } from '../utils/types/brandedTypes.ts'
+import { Hz, Pcm, Url, Volume } from '../utils/types/brandedTypes.ts'
 import { average, concatenateFloat32Arrays } from '../utils/utils.ts'
 import { AudioContextProvider } from './AudioContextProvider.ts'
 import { RecordingCompleteListener, StartRecordingOutcome } from './AudioRecorder.ts'
 import { CAPTURING_AUDIO_WORKLET_NAME, STOP_MESSAGE } from './CapturingAudioWorkletConstants.ts'
-import workletUrl from './CapturingAudioWorkletProcessor?worker&url'
 
 export enum AudioRecorderStatus {
   IDLE = 'IDLE',
@@ -33,7 +32,10 @@ export class AudioRecorderService extends AbstractService<AudioRecorderState> im
   private source: Option<MediaStreamAudioSourceNode> = undefined
   private readonly recordingCompleteListeners: RecordingCompleteListener[] = []
 
-  constructor(private readonly audioContextProvider: AudioContextProvider) {
+  constructor(
+    private readonly audioContextProvider: AudioContextProvider,
+    private readonly workletUrl: Url,
+  ) {
     super({ status: AudioRecorderStatus.IDLE })
   }
 
@@ -83,7 +85,7 @@ export class AudioRecorderService extends AbstractService<AudioRecorderState> im
     this.mediaStream = mediaStream
 
     this.setState({ status: AudioRecorderStatus.RECORDING })
-    await this.audioContext.audioWorklet.addModule(workletUrl)
+    await this.audioContext.audioWorklet.addModule(this.workletUrl)
     mediaStream.addEventListener('inactive', this.handleStreamInactive)
     const source = this.audioContext.createMediaStreamSource(this.mediaStream)
     this.source = source

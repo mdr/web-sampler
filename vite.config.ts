@@ -1,5 +1,5 @@
-/// <reference types="vitest" />
 import react from '@vitejs/plugin-react'
+/// <reference types="vitest/config" />
 import { defineConfig } from 'vite'
 import checker from 'vite-plugin-checker'
 import circleDependency from 'vite-plugin-circular-dependency'
