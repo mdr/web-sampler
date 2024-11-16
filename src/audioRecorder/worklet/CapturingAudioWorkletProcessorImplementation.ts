@@ -19,6 +19,10 @@ export class CapturingAudioWorkletProcessorImplementation implements AudioWorkle
     const input = inputs.at(0)
     const channel = input?.at(0)
     if (channel !== undefined) {
+      // We sometimes get sent samples slightly outside the [-1, 1] range, e.g. -1.000229835510254
+      // (A video that exhibits this behaviour is: https://www.youtube.com/watch?v=uelA7KRLINA)
+      // To avoid this, we clamp the samples.
+      // Docs: https://developer.mozilla.org/en-US/docs/Web/API/AudioWorkletProcessor/process#inputs
       const clampedData = channel.map(clampSample)
       port.postMessage(clampedData)
     }
