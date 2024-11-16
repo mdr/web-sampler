@@ -1,7 +1,7 @@
 import { AudioOperations } from '../../audioOperations/AudioOperations.ts'
 import { LazyAudioContextProvider } from '../../audioRecorder/AudioContextProvider.ts'
 import { AudioRecorderService } from '../../audioRecorder/AudioRecorderService.ts'
-import workletUrl from '../../audioRecorder/CapturingAudioWorkletProcessor?worker&url'
+import workletUrl from '../../audioRecorder/worklet/CapturingAudioWorkletProcessor.ts?worker&url'
 import { AppConfig, makeAppConfig } from '../../config/AppConfig.ts'
 import { BrowserPersistentStorageManager } from '../../storage/BrowserPersistentStorageManager.ts'
 import { BrowserPermissionManager } from '../../storage/PermissionManager.ts'

@@ -7,7 +7,7 @@ import { Hz, Pcm, Url, Volume } from '../utils/types/brandedTypes.ts'
 import { average, concatenateFloat32Arrays } from '../utils/utils.ts'
 import { AudioContextProvider } from './AudioContextProvider.ts'
 import { RecordingCompleteListener, StartRecordingOutcome } from './AudioRecorder.ts'
-import { CAPTURING_AUDIO_WORKLET_NAME, STOP_MESSAGE } from './CapturingAudioWorkletConstants.ts'
+import { CAPTURING_AUDIO_WORKLET_NAME, STOP_MESSAGE } from './worklet/CapturingAudioWorkletConstants.ts'
 
 export enum AudioRecorderStatus {
   IDLE = 'IDLE',
