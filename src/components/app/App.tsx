@@ -25,7 +25,11 @@ export const App = ({ config }: AppProps) => {
         <ExclusiveTab fallback={<AlreadyOpenInAnotherTabPage />}>
           <ToastContainer position="top-center" hideProgressBar closeOnClick closeButton={false} />
           <AllProviders config={config}>
-            <RouterProvider router={router} />
+            <RouterProvider
+              router={router}
+              // suppress warnings per https://github.com/remix-run/react-router/issues/12245#issuecomment-2466956607
+              future={{ v7_startTransition: true }}
+            />
           </AllProviders>
         </ExclusiveTab>
       </ErrorBoundary>
