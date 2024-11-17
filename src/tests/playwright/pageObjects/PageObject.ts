@@ -99,9 +99,9 @@ export abstract class PageObject {
     })
 
   wait = (duration: Seconds): Promise<void> =>
-    this.step(`wait ${duration}s`, () => this.testHooks.clockTick(secondsToMillis(duration)))
+    this.step(`wait ${duration}s`, () => this.page.clock.fastForward(secondsToMillis(duration)))
 
-  protected clockNext = (): Promise<void> => this.testHooks.clockNext()
+  protected shortWait = (): Promise<void> => this.page.clock.runFor(50)
 
   checkScreenshot = async (name: string, testId: Option<TestId> = undefined): Promise<void> => {
     if (platform() !== 'linux') {
@@ -124,7 +124,7 @@ export abstract class PageObject {
   protected triggerDownload = async (fn: () => Promise<void>): Promise<Path> => {
     const downloadPromise = this.page.waitForEvent('download')
     await fn()
-    await this.clockNext() // May be needed for the download to kick off
+    await this.shortWait() // May be needed for the download to kick off
     const download = await downloadPromise
     const path = Path(tmp.fileSync().name)
     await download.saveAs(path)

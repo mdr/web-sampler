@@ -14,6 +14,7 @@ const waitForTestHooksToBeInstalled = (mountResult: MountResult): Promise<void> 
 
 const mountAppAndWaitForTestHooks = async (mount: MountFunction, props: TestAppProps = {}): Promise<MountResult> => {
   const mountResult = await mount(<TestApp {...props} />)
+  await mountResult.page().clock.install()
   await waitForTestHooksToBeInstalled(mountResult)
   return mountResult
 }

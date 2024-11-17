@@ -91,7 +91,7 @@ export class SoundsEditorPageObject extends PageObject {
   clickCentreOfWaveform = (): Promise<void> =>
     this.step('clickCentreOfWaveform', async () => {
       await this.get(EditSoundPaneTestIds.waveformCanvas).click()
-      await this.clockNext()
+      await this.shortWait()
     })
 
   moveVolumeSliderLeft = (times: number): Promise<void> =>
@@ -105,7 +105,7 @@ export class SoundsEditorPageObject extends PageObject {
   simulateAudioRecordingVolume = (volume: Volume): Promise<void> =>
     this.step(`simulateAudioRecordingVolume ${volume}`, async () => {
       await this.testHooks.simulateAudioRecordingVolume(volume)
-      await this.clockNext()
+      await this.shortWait()
     })
 
   simulateAudioPlaybackComplete = (): Promise<void> =>
@@ -148,7 +148,7 @@ export class SoundsEditorPageObject extends PageObject {
 
   expectAudioWaveformToBeShown = (): Promise<void> =>
     this.step('expectAudioWaveformToBeShown', async () => {
-      await this.clockNext()
+      await this.shortWait()
       await this.expectToBeVisible(EditSoundPaneTestIds.waveformCanvas)
     })
 

@@ -2,7 +2,7 @@ import { MountResult } from '@playwright/experimental-ct-react'
 
 import { StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
 import { AudioRecorderStatus } from '../../../audioRecorder/AudioRecorderService.ts'
-import { Millis, Seconds, Volume } from '../../../utils/types/brandedTypes.ts'
+import { Seconds, Volume } from '../../../utils/types/brandedTypes.ts'
 import { WindowTestHooks } from './WindowTestHooks.ts'
 
 type Asyncify<T> = {
@@ -47,11 +47,6 @@ export class ProxyWindowTestHooks implements Asyncify<WindowTestHooks> {
 
   getSoundboardsJson = (): Promise<string> =>
     this.mountResult.page().evaluate(() => this.testHooks.getSoundboardsJson())
-
-  clockNext = (): Promise<void> => this.mountResult.page().evaluate(() => this.testHooks.clockNext())
-
-  clockTick = (millis: Millis): Promise<void> =>
-    this.mountResult.page().evaluate((millis: Millis) => this.testHooks.clockTick(millis), millis)
 
   visitNotFoundPage = (): Promise<void> => this.mountResult.page().evaluate(() => this.testHooks.visitNotFoundPage())
 }

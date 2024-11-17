@@ -1,4 +1,3 @@
-import { default as FakeTimers, InstalledClock } from '@sinonjs/fake-timers'
 import useDidMount from 'beautiful-react-hooks/useDidMount'
 
 import { AudioOperations } from '../../audioOperations/AudioOperations.ts'
@@ -16,14 +15,12 @@ import { MockAudioRecorderService } from './mocks/MockAudioRecorderService.testS
 import { DefaultWindowTestHooks } from './testApp/DefaultWindowTestHooks.tsx'
 
 export interface TestAppProps {
-  useFakeTimers?: boolean
   isStorageInitiallyPersistent?: boolean
   grantNotificationPermission?: boolean
   grantPersistentStorage?: boolean
 }
 
 export const TestApp = ({
-  useFakeTimers = true,
   isStorageInitiallyPersistent = false,
   grantNotificationPermission = true,
   grantPersistentStorage = true,
@@ -39,9 +36,7 @@ export const TestApp = ({
   )
 
   useDidMount(() => {
-    const clock = useFakeTimers ? installFakeTimers() : undefined
-    window.testHooks = new DefaultWindowTestHooks(audioRecorderService, mockAudioElement, clock, config.soundLibrary)
-    return () => clock?.uninstall()
+    window.testHooks = new DefaultWindowTestHooks(audioRecorderService, mockAudioElement, config.soundLibrary)
   })
   return <App config={config} />
 }
@@ -66,17 +61,3 @@ const makeTestAppConfig = (
   const audioOperations = new AudioOperations(audioContextProvider)
   return makeAppConfig(audioRecorderService as AudioRecorderService, audioElement, storageService, audioOperations)
 }
-
-const installFakeTimers = (): InstalledClock =>
-  FakeTimers.install({
-    toFake: [
-      'setTimeout',
-      'clearTimeout',
-      'setInterval',
-      'clearInterval',
-      'Date',
-      'requestAnimationFrame',
-      'cancelAnimationFrame',
-      'performance',
-    ],
-  })

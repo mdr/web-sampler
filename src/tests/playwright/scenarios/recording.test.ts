@@ -28,7 +28,7 @@ test('a volume meter should indicate audio level during recording', async ({ mou
 })
 
 test('audio capture should stop automatically after the maximum recording duration', async ({ mount }) => {
-  const soundsEditorPage = await launchAndStartAudioCapture(mount, { useFakeTimers: true })
+  const soundsEditorPage = await launchAndStartAudioCapture(mount)
 
   await soundsEditorPage.wait(MAX_RECORDING_DURATION)
 

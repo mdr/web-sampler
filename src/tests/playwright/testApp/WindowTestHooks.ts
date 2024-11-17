@@ -1,6 +1,6 @@
 import { StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
 import { AudioRecorderStatus } from '../../../audioRecorder/AudioRecorderService.ts'
-import { Millis, Seconds, Volume } from '../../../utils/types/brandedTypes.ts'
+import { Seconds, Volume } from '../../../utils/types/brandedTypes.ts'
 
 export interface WindowTestHooks {
   // Recording
@@ -25,11 +25,6 @@ export interface WindowTestHooks {
   getSoundsJson(): string
 
   getSoundboardsJson(): string
-
-  // Clock
-  clockNext(): void
-
-  clockTick(millis: Millis): void
 
   // Misc
   visitNotFoundPage(): void
