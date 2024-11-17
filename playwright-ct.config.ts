@@ -23,10 +23,10 @@ export default defineConfig({
         outputFile: 'report/index.html',
         // logging: 'debug',
         coverage: {
-          sourceFilter: (sourcePath) =>
+          sourceFilter: (sourcePath: string) =>
             !(sourcePath.startsWith('node_modules/') || sourcePath === '__vite-browser-external'),
 
-          sourcePath: (sp) => {
+          sourcePath: (sp: string) => {
             const list = sp.split('/')
 
             // locate to playwright dist path
@@ -55,11 +55,7 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         launchOptions: {
-          args: [
-            // '--use-fake-ui-for-media-stream',
-            // '--use-fake-device-for-media-stream',
-            // '--use-file-for-fake-audio-capture=/Users/matt/Downloads/78084f90-c328-4866-8127-a84cbfff7233.wav',
-          ],
+          args: ['--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream'],
         },
       },
     },
