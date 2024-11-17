@@ -48,7 +48,7 @@
     "react-hotkeys-hook": "^4.6.1",
     "react-image-crop": "^11.0.7",
     "react-konva": "^18.2.10",
-    "react-resizable-panels": "^2.1.6",
+    "react-resizable-panels": "^2.1.7",
     "react-resize-detector": "^11.0.1",
     "react-router-dom": "^6.28.0",
     "react-spinners": "^0.14.1",
