@@ -90,6 +90,16 @@ export class AudioRecorderService extends AbstractService<AudioRecorderState> im
     const source = this.audioContext.createMediaStreamSource(this.mediaStream)
     this.source = source
 
+    this.startMonitoringVolume(source)
+
+    const captureAudioWorkletNode = new AudioWorkletNode(this.audioContext, CAPTURING_AUDIO_WORKLET_NAME)
+    source.connect(captureAudioWorkletNode)
+    captureAudioWorkletNode.port.onmessage = this.handleWorkletMessage
+    this.captureAudioWorkletNode = captureAudioWorkletNode
+    return StartRecordingOutcome.SUCCESS
+  }
+
+  private startMonitoringVolume = (source: MediaStreamAudioSourceNode): void => {
     const analyser = this.audioContext.createAnalyser()
     analyser.fftSize = 256
     source.connect(analyser)
@@ -98,12 +108,6 @@ export class AudioRecorderService extends AbstractService<AudioRecorderState> im
       analyser.getByteFrequencyData(dataArray)
       return Volume((average(dataArray) ?? 0) / 255)
     }
-
-    const captureAudioWorkletNode = new AudioWorkletNode(this.audioContext, CAPTURING_AUDIO_WORKLET_NAME)
-    source.connect(captureAudioWorkletNode)
-    captureAudioWorkletNode.port.onmessage = this.handleWorkletMessage
-    this.captureAudioWorkletNode = captureAudioWorkletNode
-    return StartRecordingOutcome.SUCCESS
   }
 
   stopRecording = (): void => {
