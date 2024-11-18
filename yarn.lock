@@ -2878,26 +2878,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/experimental-ct-core@npm:1.48.2":
-  version: 1.48.2
-  resolution: "@playwright/experimental-ct-core@npm:1.48.2"
+"@playwright/experimental-ct-core@npm:1.49.0":
+  version: 1.49.0
+  resolution: "@playwright/experimental-ct-core@npm:1.49.0"
   dependencies:
-    playwright: "npm:1.48.2"
-    playwright-core: "npm:1.48.2"
+    playwright: "npm:1.49.0"
+    playwright-core: "npm:1.49.0"
     vite: "npm:^5.2.8"
-  checksum: 10c0/69d0df26b0a955c1f77d07fe993c11cc4f0428f30638838f6085df57b413026c57b2d4203c405b85f6e600192c32c77f372dac231373ed0912cbd07e0174c801
+  checksum: 10c0/037cea427babccd160fe3250cb3070306a773e67af77a33bf576a0aa5fd0ec483718b050f5497d571de443a343187421eca874d513dd17c4e402a7568f41a4e7
   languageName: node
   linkType: hard
 
-"@playwright/experimental-ct-react@npm:^1.48.2":
-  version: 1.48.2
-  resolution: "@playwright/experimental-ct-react@npm:1.48.2"
+"@playwright/experimental-ct-react@npm:^1.49.0":
+  version: 1.49.0
+  resolution: "@playwright/experimental-ct-react@npm:1.49.0"
   dependencies:
-    "@playwright/experimental-ct-core": "npm:1.48.2"
+    "@playwright/experimental-ct-core": "npm:1.49.0"
     "@vitejs/plugin-react": "npm:^4.2.1"
   bin:
     playwright: cli.js
-  checksum: 10c0/5a07715bd0dca63c0dbe55a2d10fb25b897f0d3119fd678516bdbdea6400491aa5ec96ecd3547baffdc8dcc73adf480149198aab395581e7f238cea34913882b
+  checksum: 10c0/0adba78e4de8b178f8c3ff3bc76a46189a49b8ba961b1d74d38986340d7f2d1d42af9de120b0084df9484bd8af6669f1e2ef38ff896a77df7dd21fa9179f3d2a
   languageName: node
   linkType: hard
 
@@ -10435,27 +10435,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.48.2":
-  version: 1.48.2
-  resolution: "playwright-core@npm:1.48.2"
+"playwright-core@npm:1.49.0":
+  version: 1.49.0
+  resolution: "playwright-core@npm:1.49.0"
   bin:
     playwright-core: cli.js
-  checksum: 10c0/511da53d9df01fec5e5798915c68e7d1574890a504d1aae05430bf538d0080efa8db86e3dafdcd450f084ce7622f6bbede23ca52e798bfc4c3b3ea8da52a51f5
+  checksum: 10c0/22c1a72fabdcc87bd1cd4d40a032d2c5b94cf94ba7484dc182048c3fa1c8ec26180b559d8cac4ca9870e8fd6bdf5ef9d9f54e7a31fd60d67d098fcffc5e4253b
   languageName: node
   linkType: hard
 
-"playwright@npm:1.48.2, playwright@npm:^1.48.2":
-  version: 1.48.2
-  resolution: "playwright@npm:1.48.2"
+"playwright@npm:1.49.0, playwright@npm:^1.49.0":
+  version: 1.49.0
+  resolution: "playwright@npm:1.49.0"
   dependencies:
     fsevents: "npm:2.3.2"
-    playwright-core: "npm:1.48.2"
+    playwright-core: "npm:1.49.0"
   dependenciesMeta:
     fsevents:
       optional: true
   bin:
     playwright: cli.js
-  checksum: 10c0/ecde4ee4767556868b24d7700f3502692a3cb14c8ef127052b51b48833ffcce80942954fb188a9b72505122b48b1b625d1bb486721e1c4f2e980215328ba1ad5
+  checksum: 10c0/e94d662747cd147d0573570fec90dadc013c1097595714036fc8934a075c5a82ab04a49111b03b1f762ea86429bdb7c94460901896901e20970b30ce817cc93f
   languageName: node
   linkType: hard
 
@@ -12277,10 +12277,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsafe@npm:^1.8.4":
-  version: 1.8.4
-  resolution: "tsafe@npm:1.8.4"
-  checksum: 10c0/8226f4d81dbd7707f7ffb40fee12e9b7eae68a231679efadc4f367e08c3f33252db6d180ec336894ef623c58b59b43f137872f8d1d73e8d3024596e0217cbf14
+"tsafe@npm:^1.8.5":
+  version: 1.8.5
+  resolution: "tsafe@npm:1.8.5"
+  checksum: 10c0/5eb88061c640a11035aa8f7d9713cf9d1e9d479b417ed5f7094151d891b76160d17dd3a8718d624b95a77240e1221fd2a6b6064a25447ca9983088f92442450b
   languageName: node
   linkType: hard
 
@@ -12965,7 +12965,7 @@ __metadata:
     "@eslint/js": "npm:^9.15.0"
     "@mdi/js": "npm:^7.4.47"
     "@mdi/react": "npm:^1.6.1"
-    "@playwright/experimental-ct-react": "npm:^1.48.2"
+    "@playwright/experimental-ct-react": "npm:^1.49.0"
     "@sentry/react": "npm:^8.38.0"
     "@storybook/addon-essentials": "npm:^8.4.4"
     "@storybook/addon-interactions": "npm:^8.4.4"
@@ -13024,7 +13024,7 @@ __metadata:
     konva: "npm:^9.3.16"
     lodash: "npm:^4.17.21"
     monocart-reporter: "npm:^2.9.10"
-    playwright: "npm:^1.48.2"
+    playwright: "npm:^1.49.0"
     postcss: "npm:^8.4.49"
     prettier: "npm:3.3.3"
     prettier-plugin-tailwindcss: "npm:^0.6.8"
@@ -13047,7 +13047,7 @@ __metadata:
     tailwindcss: "npm:^3.4.15"
     tailwindcss-react-aria-components: "npm:^1.1.6"
     tmp: "npm:^0.2.3"
-    tsafe: "npm:^1.8.4"
+    tsafe: "npm:^1.8.5"
     typeface-roboto: "npm:^1.1.13"
     typescript: "npm:^5.6.3"
     typescript-eslint: "npm:^8.15.0"
