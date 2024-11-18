@@ -54,6 +54,8 @@ export default defineConfig({
       name: 'chromium',
       use: {
         ...devices['Desktop Chrome'],
+        // new Chromium headless (https://playwright.dev/docs/release-notes#try-new-chromium-headless):
+        channel: 'chromium',
         launchOptions: {
           args: ['--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream'],
         },
