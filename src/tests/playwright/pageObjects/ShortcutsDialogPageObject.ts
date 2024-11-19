@@ -11,5 +11,5 @@ export class ShortcutsDialogPageObject extends PageObject {
       return this
     })
 
-  shortcutCells = (): Promise<Locator[]> => this.page.locator(ShortcutsDialogTestIds.shortcut).all()
+  shortcutCellLocator = (): Locator => this.get(ShortcutsDialogTestIds.shortcut)
 }

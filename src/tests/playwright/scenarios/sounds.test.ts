@@ -248,8 +248,7 @@ test('display of shortcuts dialog', async ({ mount }) => {
   const shortcutsDialog = await soundsEditorPage.pressShortcutsButton()
 
   await shortcutsDialog.checkScreenshot('shortcuts-dialog', {
-    elementsToMask:
-      // The ⌘ / ⇧ characters render differently in CI to when running locally
-      await shortcutsDialog.shortcutCells(),
+    // The ⌘ / ⇧ characters render differently in CI to when running locally
+    elementsToMask: [shortcutsDialog.shortcutCellLocator()],
   })
 })
