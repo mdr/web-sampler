@@ -1,8 +1,8 @@
 import { isMacOs } from '../../../utils/browserUtils.ts'
-import { TableHeader } from './TableHeader.tsx'
-import { TableRow } from './TableRow.tsx'
+import { ShortcutsTableHeader } from './ShortcutsTableHeader.tsx'
+import { ShortcutsTableRow } from './ShortcutsTableRow.tsx'
 
-export const ShortcutTable = () => {
+export const ShortcutsTable = () => {
   const shortcuts = [
     { key: 'Space', action: 'Toggle play/pause' },
     { key: '←', action: 'Large seek back' },
@@ -16,10 +16,10 @@ export const ShortcutTable = () => {
   ]
   return (
     <table className="min-w-full divide-y divide-gray-200">
-      <TableHeader />
+      <ShortcutsTableHeader />
       <tbody className="divide-y divide-gray-200 bg-white">
         {shortcuts.map((shortcut, index) => (
-          <TableRow key={index} shortcut={shortcut.key} action={shortcut.action} />
+          <ShortcutsTableRow key={index} shortcut={shortcut.key} action={shortcut.action} />
         ))}
       </tbody>
     </table>

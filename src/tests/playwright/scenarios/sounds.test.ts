@@ -245,7 +245,11 @@ test('can export and import sounds', async ({ mount }) => {
 test('display of shortcuts dialog', async ({ mount }) => {
   const soundsEditorPage = await launchAndCreateNewSound(mount)
 
-  await soundsEditorPage.pressShortcutsButton()
+  const shortcutsDialog = await soundsEditorPage.pressShortcutsButton()
 
-  await soundsEditorPage.checkScreenshot('shortcuts-dialog')
+  await shortcutsDialog.checkScreenshot('shortcuts-dialog', {
+    elementsToMask:
+      // The ⌘ / ⇧ characters render differently in CI to when running locally
+      await shortcutsDialog.shortcutCells(),
+  })
 })

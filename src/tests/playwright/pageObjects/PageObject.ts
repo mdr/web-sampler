@@ -7,7 +7,6 @@ import { z } from 'zod'
 
 import { Sound } from '../../../types/Sound.ts'
 import { Soundboard, soundboardSchema } from '../../../types/Soundboard.ts'
-import { Option } from '../../../utils/types/Option.ts'
 import { Path, Seconds, TestId, Volume, secondsToMillis } from '../../../utils/types/brandedTypes.ts'
 import { ProxyWindowTestHooks } from '../testApp/ProxyWindowTestHooks.ts'
 import { deserialiseSounds } from '../testApp/soundsSerialisation.ts'
@@ -103,15 +102,15 @@ export abstract class PageObject {
 
   protected shortWait = (): Promise<void> => this.page.clock.runFor(50)
 
-  checkScreenshot = async (name: string, testId: Option<TestId> = undefined): Promise<void> => {
+  checkScreenshot = async (
+    name: string,
+    { testIdToCapture, elementsToMask }: ScreenshotOptions = {},
+  ): Promise<void> => {
     if (platform() !== 'linux') {
       return
     }
-    if (testId !== undefined) {
-      await expect(this.get(testId)).toHaveScreenshot(`${name}.png`)
-    } else {
-      await expect(this.mountResult).toHaveScreenshot(`${name}.png`)
-    }
+    const locator = testIdToCapture === undefined ? this.mountResult : this.get(testIdToCapture)
+    await expect(locator).toHaveScreenshot(`${name}.png`, { mask: elementsToMask })
   }
 
   protected clickAndUploadFile = async (testId: TestId, path: Path): Promise<void> => {
@@ -135,4 +134,9 @@ export abstract class PageObject {
     this.step('navigateBack', async () => {
       await this.page.goBack()
     })
+}
+
+export interface ScreenshotOptions {
+  testIdToCapture?: TestId
+  elementsToMask?: Locator[]
 }

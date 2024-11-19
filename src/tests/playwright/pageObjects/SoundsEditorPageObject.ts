@@ -10,6 +10,7 @@ import { TestAppProps } from '../TestApp.tsx'
 import { MountFunction } from '../types.ts'
 import { NavbarPageObject } from './NavbarPageObject.ts'
 import { PageObject } from './PageObject.ts'
+import { ShortcutsDialogPageObject } from './ShortcutsDialogPageObject.ts'
 import { SoundsEditorKeyboardShortcutsPageObject } from './SoundsEditorKeyboardShortcutsPageObject.ts'
 import { SoundsSidebarPageObject } from './SoundsSidebarPageObject.ts'
 import { launchApp } from './launchApp.tsx'
@@ -82,8 +83,11 @@ export class SoundsEditorPageObject extends PageObject {
 
   pressDelete = (): Promise<void> => this.step('pressDelete', () => this.press(EditSoundPaneTestIds.deleteButton))
 
-  pressShortcutsButton = (): Promise<void> =>
-    this.step('pressShortcutsButton', () => this.press(EditSoundPaneTestIds.shortcutsButton))
+  pressShortcutsButton = (): Promise<ShortcutsDialogPageObject> =>
+    this.step('pressShortcutsButton', async () => {
+      await this.press(EditSoundPaneTestIds.shortcutsButton)
+      return new ShortcutsDialogPageObject(this.mountResult).verifyIsShown()
+    })
 
   pressDuplicateSound = (): Promise<void> =>
     this.step('pressDuplicateSound', () => this.press(EditSoundPaneTestIds.duplicateButton))
