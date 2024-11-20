@@ -1,6 +1,5 @@
 import useUnmount from 'beautiful-react-hooks/useUnmount'
 import { useCallback, useRef } from 'react'
-import { useHotkeys } from 'react-hotkeys-hook'
 import { toast } from 'react-toastify'
 
 import { StartRecordingOutcome } from '../../../audioRecorder/AudioRecorder.ts'
@@ -49,8 +48,6 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPaneProps) => {
   const audioRecorderActions = useAudioRecorderActions()
   const { status: audioRecorderStatus } = useAudioRecorderState()
   const timerIdRef = useRef<Option<TimerId>>()
-
-  useHotkeys('shift+?', () => undefined)
 
   const handleRecordingComplete = useCallback(
     (audioData: Option<AudioData>) => {
