@@ -101,11 +101,13 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
     [audioPlayerActions, sampleRate, sound.audio, startTime],
   )
 
-  const seekBack = (amount: Seconds) => () => seek(Seconds(currentPosition - amount))
+  const seekBack = (amount: Seconds) =>
+    useCallback(() => seek(Seconds(currentPosition - amount)), [seek, currentPosition])
   useHotkeys('left', seekBack(BIG_SEEK_JUMP), [seekBack])
   useHotkeys('shift+left', seekBack(SMALL_SEEK_JUMP), [seekBack])
 
-  const seekForward = (amount: Seconds) => () => seek(Seconds(currentPosition + amount))
+  const seekForward = (amount: Seconds) =>
+    useCallback(() => seek(Seconds(currentPosition + amount)), [seek, currentPosition])
   useHotkeys('right', seekForward(BIG_SEEK_JUMP), [seekForward])
   useHotkeys('shift+right', seekForward(SMALL_SEEK_JUMP), [seekForward])
 
@@ -127,10 +129,10 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
     [currentPosition, isPlaying, soundActions, sound.id, sampleRate],
   )
 
-  const markStart = () => setStartTime(currentPosition)
+  const markStart = useCallback(() => setStartTime(currentPosition), [currentPosition])
   useHotkeys('s', markStart, [markStart])
 
-  const markFinish = () => setFinishTime(currentPosition)
+  const markFinish = useCallback(() => setFinishTime(currentPosition), [currentPosition])
   useHotkeys('f', markFinish, [markFinish])
 
   return (

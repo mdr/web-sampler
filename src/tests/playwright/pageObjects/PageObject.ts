@@ -100,7 +100,7 @@ export abstract class PageObject {
   wait = (duration: Seconds): Promise<void> =>
     this.step(`wait ${duration}s`, () => this.page.clock.fastForward(secondsToMillis(duration)))
 
-  protected shortWait = (): Promise<void> => this.page.clock.runFor(50)
+  protected shortWait = (): Promise<void> => this.page.clock.runFor(500)
 
   checkScreenshot = async (
     name: string,

@@ -28,11 +28,11 @@ export interface PartialAudioElement extends Partial<HTMLAudioElement> {
 export class MockAudioElement implements PartialAudioElement {
   private _currentTime: Seconds = Seconds(0)
 
-  get currentTime(): number {
+  get currentTime(): Seconds {
     return this._currentTime
   }
 
-  set currentTime(value: number) {
+  set currentTime(value: Seconds) {
     this._currentTime = Seconds(value)
   }
 
@@ -67,7 +67,7 @@ export class MockAudioElement implements PartialAudioElement {
   }
 
   private _duration: Seconds = Seconds(Number.NaN)
-  get duration(): number {
+  get duration(): Seconds {
     return this._duration
   }
 
@@ -78,7 +78,7 @@ export class MockAudioElement implements PartialAudioElement {
 
   play = (): Promise<void> => {
     if (this.currentTime >= this.duration) {
-      this.currentTime = 0
+      this.currentTime = Seconds(0)
     }
     this._paused = false
     this._ended = false
