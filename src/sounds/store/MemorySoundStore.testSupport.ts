@@ -12,14 +12,10 @@ export class MemorySoundStore implements SoundStore {
   soundboards: Soundboard[] = []
   images: Image[] = []
 
-  constructor(
-    initialSounds: readonly Sound[] = [],
-    initialSoundboards: readonly Soundboard[] = [],
-    initialImages: readonly Image[] = [],
-  ) {
-    this.sounds = [...initialSounds]
-    this.soundboards = [...initialSoundboards]
-    this.images = [...initialImages]
+  constructor({ sounds = [], soundboards = [], images = [] }: Partial<SoundState> = {}) {
+    this.sounds = [...sounds]
+    this.soundboards = [...soundboards]
+    this.images = [...images]
   }
 
   getSound = (soundId: SoundId): Sound => {

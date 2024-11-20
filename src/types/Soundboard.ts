@@ -67,3 +67,6 @@ export const getTile = (soundboard: Soundboard, soundId: SoundId): SoundboardTil
   }
   return tile
 }
+
+export const soundboardHasSound = (soundboard: Soundboard, soundId: SoundId): boolean =>
+  soundboard.tiles.some((tile) => tile.soundId === soundId)

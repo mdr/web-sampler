@@ -10,9 +10,9 @@ import { SoundLibrary } from './SoundLibrary.ts'
 
 it('should load data from the store on creation', async () => {
   const sounds = [makeSound()]
-  const soundBoards = [makeSoundboard()]
+  const soundboards = [makeSoundboard()]
   const images = [makeImage()]
-  const soundStore = new MemorySoundStore(sounds, soundBoards, images)
+  const soundStore = new MemorySoundStore({ sounds, soundboards, images })
   const library = new SoundLibrary(soundStore)
   expect(library.isLoading).toBe(true)
   expect(library.sounds).toEqual([])
@@ -23,7 +23,7 @@ it('should load data from the store on creation', async () => {
 
   expect(library.isLoading).toBe(false)
   expect(library.sounds).toIncludeSameMembers(sounds)
-  expect(library.soundboards).toIncludeSameMembers(soundBoards)
+  expect(library.soundboards).toIncludeSameMembers(soundboards)
   expect(library.images).toIncludeSameMembers(images)
 })
 
@@ -31,7 +31,7 @@ it('should not allow sounds to be modified while still loading', () => {
   const sound = makeSound()
   const soundboard = makeSoundboard()
   const image = makeImage()
-  const soundStore = new MemorySoundStore([sound], [soundboard], [image])
+  const soundStore = new MemorySoundStore({ sounds: [sound], soundboards: [soundboard], images: [image] })
   const library = new SoundLibrary(soundStore)
   expect(library.isLoading).toBe(true)
 

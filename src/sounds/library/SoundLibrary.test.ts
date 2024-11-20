@@ -14,7 +14,7 @@ import { makeLoadedSoundLibrary, setUpTest } from './SoundLibrary.testSupport.ts
 
 it('should allow sounds to be queried', async () => {
   const sound = makeSound()
-  const library = await makeLoadedSoundLibrary(new MemorySoundStore([sound]))
+  const library = await makeLoadedSoundLibrary(new MemorySoundStore({ sounds: [sound] }))
 
   expect(library.findSound(sound.id)).toEqual(sound)
   expect(library.findSound(newSoundId())).toBeUndefined()

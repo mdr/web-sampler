@@ -2,7 +2,7 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 
 import { Image } from '../../types/Image.ts'
 import { Sound, SoundId } from '../../types/Sound.ts'
-import { Soundboard, SoundboardId, SoundboardTile } from '../../types/Soundboard.ts'
+import { Soundboard, SoundboardId, SoundboardTile, soundboardHasSound } from '../../types/Soundboard.ts'
 import { Option } from '../../utils/types/Option.ts'
 import { ImageActions } from './ImageActions.ts'
 import { MiscActions } from './MiscActions.ts'
@@ -19,7 +19,7 @@ const useSoundLibrary = (): SoundLibrary => {
   return soundLibrary
 }
 
-interface SoundLibraryState {
+export interface SoundLibraryState {
   sounds: readonly Sound[]
   soundboards: readonly Soundboard[]
   images: readonly Image[]
@@ -28,7 +28,7 @@ interface SoundLibraryState {
   canRedo: boolean
 }
 
-const getSoundLibraryState = (soundLibrary: SoundLibrary): SoundLibraryState => ({
+export const getSoundLibraryState = (soundLibrary: SoundLibrary): SoundLibraryState => ({
   sounds: soundLibrary.sounds,
   soundboards: soundLibrary.soundboards,
   images: soundLibrary.images,
@@ -113,3 +113,6 @@ export const useSoundboardActions = (): SoundboardActions => useSoundLibrary()
 export const useImageActions = (): ImageActions => useSoundLibrary()
 
 export const useMiscActions = (): MiscActions => useSoundLibrary()
+
+export const getSoundboardsContainingSound = (state: SoundLibraryState, soundId: SoundId): readonly Soundboard[] =>
+  state.soundboards.filter((soundboard) => soundboardHasSound(soundboard, soundId))
