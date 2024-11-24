@@ -21,6 +21,6 @@ export const ShortcutsButton = () => {
 
 const ActualShortcutsButton = () => {
   const state = useContext(OverlayTriggerStateContext)
-  useHotkeys('shift+?', () => state.toggle())
+  useHotkeys('shift+?', () => state?.toggle())
   return <Button testId={EditSoundPaneTestIds.shortcutsButton} icon={mdiKeyboard} label="Shortcuts" />
 }
