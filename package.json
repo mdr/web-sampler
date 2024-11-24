@@ -121,5 +121,5 @@
     "vite-plugin-circular-dependency": "^0.5.0",
     "vitest": "^2.1.5"
   },
-  "packageManager": "yarn@4.5.1"
+  "packageManager": "yarn@4.5.2"
 }
