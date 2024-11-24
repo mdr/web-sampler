@@ -1,4 +1,3 @@
-import { mdiPause, mdiPlay } from '@mdi/js'
 import useUnmount from 'beautiful-react-hooks/useUnmount'
 import { useCallback, useEffect, useRef } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
@@ -17,8 +16,8 @@ import { Option } from '../../../utils/types/Option.ts'
 import { Samples, Seconds, Url } from '../../../utils/types/brandedTypes.ts'
 import { unawaited } from '../../../utils/utils.ts'
 import { pcmToWavBlob } from '../../../utils/wav.ts'
-import { Button } from '../../shared/Button.tsx'
-import { EditSoundPaneTestIds } from '../editSoundPane/EditSoundPaneTestIds.ts'
+import { PauseButton } from './PauseButton.tsx'
+import { PlayButton } from './PlayButton.tsx'
 import { VolumeSlider } from './VolumeSlider.tsx'
 import { WaveformVisualiser } from './WaveformVisualiser.tsx'
 
@@ -81,15 +80,6 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
     audioPlayerActions.setUrl(undefined)
   })
 
-  const togglePlayPause = () => {
-    if (isPlaying) {
-      audioPlayerActions.pause()
-    } else {
-      unawaited(audioPlayerActions.play())
-    }
-  }
-  useHotkeys('space', togglePlayPause, [togglePlayPause])
-
   const seek = useCallback(
     (position: Seconds) => {
       const playRegionSamples = Samples(getPlayRegionPcm(sound.audio).length)
@@ -147,18 +137,8 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
         onStartTimeChanged={setStartTime}
         onFinishTimeChanged={setFinishTime}
       />
-      <div className="mt-4">
-        <Button
-          testId={isPlaying ? EditSoundPaneTestIds.pauseButton : EditSoundPaneTestIds.playButton}
-          icon={isPlaying ? mdiPause : mdiPlay}
-          iconOnly
-          label={isPlaying ? 'Pause' : 'Play'}
-          onPress={togglePlayPause}
-        />
-      </div>
-      <div>
-        <VolumeSlider volume={volume} onVolumeChange={(volume) => soundActions.setVolume(sound.id, volume)} />
-      </div>
+      <div className="mt-4">{isPlaying ? <PauseButton /> : <PlayButton />}</div>
+      <VolumeSlider volume={volume} onVolumeChange={(volume) => soundActions.setVolume(sound.id, volume)} />
     </div>
   )
 }
