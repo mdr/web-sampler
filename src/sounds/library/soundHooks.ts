@@ -37,18 +37,25 @@ export const getSoundLibraryState = (soundLibrary: SoundLibrary): SoundLibrarySt
   canRedo: soundLibrary.canRedo,
 })
 
-export const useSoundLibraryState = (): SoundLibraryState => {
+export const useSoundLibraryState = <Selected = SoundLibraryState>(
+  selector: (state: SoundLibraryState) => Selected = (state) => state as Selected,
+): Selected => {
   const soundLibrary = useSoundLibrary()
-  const [state, setState] = useState(getSoundLibraryState(soundLibrary))
-  const handleUpdate = useCallback(() => setState(getSoundLibraryState(soundLibrary)), [soundLibrary, setState])
+  const [selectedState, setSelectedState] = useState(selector(getSoundLibraryState(soundLibrary)))
+  const handleUpdate = useCallback(
+    () => setSelectedState(selector(getSoundLibraryState(soundLibrary))),
+    [soundLibrary, setSelectedState],
+  )
   useEffect(() => {
     soundLibrary.addListener(handleUpdate)
     return () => soundLibrary.removeListener(handleUpdate)
   }, [soundLibrary, handleUpdate])
-  return state
+  return selectedState
 }
 
-export const useSounds = (): readonly Sound[] => useSoundLibraryState().sounds
+export const useSounds = (): readonly Sound[] => useSoundLibraryState((state) => state.sounds)
+
+export const useSoundCount = (): number => useSoundLibraryState((state) => state.sounds.length)
 
 export const useMaybeSound = (id: SoundId): Option<Sound> => useSounds().find((sound) => sound.id === id)
 
@@ -60,7 +67,7 @@ export const useSound = (id: SoundId): Sound => {
   return sound
 }
 
-export const useSoundboards = (): readonly Soundboard[] => useSoundLibraryState().soundboards
+export const useSoundboards = (): readonly Soundboard[] => useSoundLibraryState((state) => state.soundboards)
 
 export const useMaybeSoundboard = (id: SoundboardId): Option<Soundboard> =>
   useSoundboards().find((soundboard) => soundboard.id === id)
@@ -100,11 +107,11 @@ export const useSoundboardAndSounds = (soundboardId: SoundboardId): SoundboardAn
   return { soundboard, tiles }
 }
 
-export const useIsLoading = (): boolean => useSoundLibraryState().isLoading
+export const useIsLoading = (): boolean => useSoundLibraryState((state) => state.isLoading)
 
-export const useCanUndo = (): boolean => useSoundLibraryState().canUndo
+export const useCanUndo = (): boolean => useSoundLibraryState((state) => state.canUndo)
 
-export const useCanRedo = (): boolean => useSoundLibraryState().canRedo
+export const useCanRedo = (): boolean => useSoundLibraryState((state) => state.canRedo)
 
 export const useSoundActions = (): SoundActions => useSoundLibrary()
 

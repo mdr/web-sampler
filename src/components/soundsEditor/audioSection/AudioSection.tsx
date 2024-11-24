@@ -60,9 +60,9 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
       return
     }
     const audioData = { pcm: playablePcm, sampleRate }
-    const blob = pcmToWavBlob(audioData)
-    const objectUrl = Url(URL.createObjectURL(blob))
-    audioPlayerActions.setUrl(objectUrl)
+    const wavBlob = pcmToWavBlob(audioData)
+    const audioUrl = Url(URL.createObjectURL(wavBlob))
+    audioPlayerActions.setUrl(audioUrl)
     if (stashedTime !== undefined) {
       if (stashedTime <= finishTime) {
         audioPlayerActions.seek(Seconds(Math.max(0, stashedTime - startTime)))
@@ -72,7 +72,7 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
       }
     }
     return () => {
-      URL.revokeObjectURL(objectUrl)
+      URL.revokeObjectURL(audioUrl)
     }
   }, [startTime, finishTime, pcm, audioPlayerActions, sampleRate])
 
