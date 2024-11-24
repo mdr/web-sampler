@@ -1,7 +1,7 @@
 import { mdiPlus } from '@mdi/js'
-import { useNavigate } from 'react-router-dom'
 
 import { useSoundActions } from '../../sounds/library/soundHooks.ts'
+import { useNavigate } from '../../utils/hooks/useNavigate.ts'
 import { TestId } from '../../utils/types/brandedTypes.ts'
 import { Routes } from '../app/routes.ts'
 import { Button } from '../shared/Button.tsx'

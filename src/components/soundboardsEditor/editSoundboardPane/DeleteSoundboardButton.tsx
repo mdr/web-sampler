@@ -1,9 +1,9 @@
 import { mdiTrashCan } from '@mdi/js'
-import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { useSoundboard, useSoundboardActions } from '../../../sounds/library/soundHooks.ts'
 import { SoundboardId, getSoundboardDisplayName } from '../../../types/Soundboard.ts'
+import { useNavigate } from '../../../utils/hooks/useNavigate.ts'
 import { Routes } from '../../app/routes.ts'
 import { Button } from '../../shared/Button.tsx'
 import { ButtonVariant } from '../../shared/ButtonVariant.tsx'
