@@ -8,16 +8,14 @@ import { Modal } from '../../shared/Modal.tsx'
 import { ShortcutsDialog } from '../shortcutsDialog/ShortcutsDialog.tsx'
 import { EditSoundPaneTestIds } from './EditSoundPaneTestIds.ts'
 
-export const ShortcutsButton = () => {
-  return (
-    <DialogTrigger>
-      <Modal>
-        <ShortcutsDialog />
-      </Modal>
-      <ActualShortcutsButton />
-    </DialogTrigger>
-  )
-}
+export const ShortcutsButton = () => (
+  <DialogTrigger>
+    <Modal>
+      <ShortcutsDialog />
+    </Modal>
+    <ActualShortcutsButton />
+  </DialogTrigger>
+)
 
 const ActualShortcutsButton = () => {
   const state = useContext(OverlayTriggerStateContext)
