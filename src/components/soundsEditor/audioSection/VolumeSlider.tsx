@@ -1,15 +1,27 @@
+import { useEffect } from 'react'
 import { Label, Slider, SliderOutput, SliderThumb, SliderTrack } from 'react-aria-components'
 
-import { Volume } from '../../../utils/types/brandedTypes.ts'
+import { useAudioPlayerActions } from '../../../audioPlayer/audioPlayerHooks.ts'
+import { useSound, useSoundActions } from '../../../sounds/library/soundHooks.ts'
+import { SoundId } from '../../../types/Sound.ts'
+import { MIN_VOLUME, Volume } from '../../../utils/types/brandedTypes.ts'
 import { EditSoundPaneTestIds } from '../editSoundPane/EditSoundPaneTestIds.ts'
 
 export interface VolumeProps {
-  volume: Volume
-  onVolumeChange: (volume: Volume) => void
+  soundId: SoundId
 }
 
-export const VolumeSlider = ({ volume, onVolumeChange }: VolumeProps) => {
-  const onSliderChange = (value: number) => onVolumeChange(Volume(value / 100))
+export const VolumeSlider = ({ soundId }: VolumeProps) => {
+  const sound = useSound(soundId)
+  const volume = sound.audio?.volume ?? MIN_VOLUME
+  const soundActions = useSoundActions()
+  const audioPlayerActions = useAudioPlayerActions()
+
+  useEffect(() => {
+    audioPlayerActions.setVolume(volume)
+  }, [audioPlayerActions, volume])
+
+  const onSliderChange = (value: number) => soundActions.setVolume(soundId, Volume(value / 100))
   return (
     <div className="mt-4 flex justify-center rounded-lg bg-blue-500 px-6 py-4">
       <Slider value={volume * 100} onChange={onSliderChange} className="w-[250px]">

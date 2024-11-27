@@ -38,16 +38,12 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
   const stashedTimeRef = useRef<Option<Seconds>>(undefined)
   const stashedIsPlayingRef = useRef<Option<boolean>>(undefined)
 
-  const { pcm, sampleRate, volume } = sound.audio
+  const { pcm, sampleRate } = sound.audio
   const startTime = getStartTime(sound.audio)
   const finishTime = getFinishTime(sound.audio)
 
   const currentPosition = Seconds(currentAudioPlayerPosition + startTime)
   const totalAudioDuration = getTotalAudioDuration(sound.audio)
-
-  useEffect(() => {
-    audioPlayerActions.setVolume(volume)
-  }, [audioPlayerActions, volume])
 
   // Create a new audio URL every time the key data (PCM or start/finish time) change.
   // If the start/finish time are changed, we will have stashed the current position and playback state immediately
@@ -142,7 +138,7 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
         onFinishTimeChanged={setFinishTime}
       />
       <div className="mt-4">{isPlaying ? <PauseButton /> : <PlayButton />}</div>
-      <VolumeSlider volume={volume} onVolumeChange={(volume) => soundActions.setVolume(sound.id, volume)} />
+      <VolumeSlider soundId={sound.id} />
     </div>
   )
 }
