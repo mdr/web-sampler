@@ -139,7 +139,7 @@ test('adjusting the start and finish times of a sound via keyboard shortcuts', a
   await soundsEditorPage.checkScreenshot('constrained-audio')
 })
 
-test.skip('bug - adjusting the start time should not trigger playback', async ({ mount }) => {
+test('bug - adjusting the start time should not trigger playback', async ({ mount }) => {
   const soundsEditorPage = await launchAndRecordNewSound(mount)
   await soundsEditorPage.pressPlayButton()
   await soundsEditorPage.expectAudioToBePlaying(true)

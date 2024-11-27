@@ -63,6 +63,7 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
     const wavBlob = pcmToWavBlob(audioData)
     const audioUrl = Url(URL.createObjectURL(wavBlob))
     audioPlayerActions.setUrl(audioUrl)
+    console.log('main effect', { stashedTime, wasPlaying })
     if (stashedTime !== undefined) {
       if (stashedTime <= finishTime) {
         audioPlayerActions.seek(Seconds(Math.max(0, stashedTime - startTime)))
@@ -103,6 +104,7 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
 
   const setStartTime = useCallback(
     (startTime: Seconds) => {
+      console.log('setStartTime', { isPlaying })
       stashedTimeRef.current = currentPosition
       stashedIsPlayingRef.current = isPlaying
       soundActions.setAudioStart(sound.id, secondsToSamples(startTime, sampleRate))
@@ -119,10 +121,10 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
     [currentPosition, isPlaying, soundActions, sound.id, sampleRate],
   )
 
-  const markStart = useCallback(() => setStartTime(currentPosition), [currentPosition])
+  const markStart = useCallback(() => setStartTime(currentPosition), [currentPosition, setStartTime])
   useHotkeys('s', markStart, [markStart])
 
-  const markFinish = useCallback(() => setFinishTime(currentPosition), [currentPosition])
+  const markFinish = useCallback(() => setFinishTime(currentPosition), [currentPosition, setFinishTime])
   useHotkeys('f', markFinish, [markFinish])
 
   return (
