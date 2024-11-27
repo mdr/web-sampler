@@ -36,6 +36,10 @@ export class DefaultWindowTestHooks implements WindowTestHooks {
 
   getAudioPosition = (): Seconds => Seconds(this.audioElement.currentTime)
 
+  setAudioPosition = (position: Seconds) => {
+    this.audioElement.currentTime = position
+  }
+
   getAudioPlaybackVolume = (): Volume => Volume(this.audioElement.volume)
 
   getSoundsJson = (): string => serialiseSounds(this.soundLibrary.sounds)

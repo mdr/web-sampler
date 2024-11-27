@@ -69,6 +69,9 @@ export abstract class PageObject {
 
   private getAudioPosition = (): Promise<Seconds> => this.testHooks.getAudioPosition()
 
+  setAudioPosition = (position: Seconds): Promise<void> =>
+    this.step(`setAudioPosition ${position}s`, () => this.testHooks.setAudioPosition(position))
+
   expectAudioPlaybackVolumeToBe = (expectedVolume: Volume): Promise<void> =>
     this.step(`expectAudioVolumeToBe ${expectedVolume}`, async () => {
       const actualVolume = await this.getAudioPlaybackVolume()

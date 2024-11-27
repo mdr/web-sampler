@@ -19,6 +19,8 @@ export interface WindowTestHooks {
 
   getAudioPosition(): Seconds
 
+  setAudioPosition(position: Seconds): void
+
   getAudioPlaybackVolume(): Volume
 
   // Sounds

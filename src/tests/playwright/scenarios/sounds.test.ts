@@ -139,6 +139,19 @@ test('adjusting the start and finish times of a sound via keyboard shortcuts', a
   await soundsEditorPage.checkScreenshot('constrained-audio')
 })
 
+test.skip('bug - adjusting the start time should not trigger playback', async ({ mount }) => {
+  const soundsEditorPage = await launchAndRecordNewSound(mount)
+  await soundsEditorPage.pressPlayButton()
+  await soundsEditorPage.expectAudioToBePlaying(true)
+  await soundsEditorPage.setAudioPosition(Seconds(1))
+  await soundsEditorPage.pressPauseButton()
+  await soundsEditorPage.expectAudioToBePlaying(false)
+
+  await soundsEditorPage.shortcuts.setStartPosition()
+
+  await soundsEditorPage.expectAudioToBePlaying(false)
+})
+
 test('adjusting the start time of a sound via mouse drag', async ({ mount }) => {
   const soundsEditorPage = await launchAndStartAudioCapture(mount)
   await soundsEditorPage.pressStop()

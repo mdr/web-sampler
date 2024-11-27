@@ -40,6 +40,9 @@ export class ProxyWindowTestHooks implements Asyncify<WindowTestHooks> {
 
   getAudioPosition = (): Promise<Seconds> => this.mountResult.page().evaluate(() => this.testHooks.getAudioPosition())
 
+  setAudioPosition = (position: Seconds): Promise<void> =>
+    this.mountResult.page().evaluate((position: Seconds) => this.testHooks.setAudioPosition(position), position)
+
   getAudioPlaybackVolume = (): Promise<Volume> =>
     this.mountResult.page().evaluate(() => this.testHooks.getAudioPlaybackVolume())
 
