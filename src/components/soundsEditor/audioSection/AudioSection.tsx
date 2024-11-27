@@ -38,12 +38,13 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
   const stashedTimeRef = useRef<Option<Seconds>>(undefined)
   const stashedIsPlayingRef = useRef<Option<boolean>>(undefined)
 
-  const { pcm, sampleRate } = sound.audio
-  const startTime = getStartTime(sound.audio)
-  const finishTime = getFinishTime(sound.audio)
+  const audio = sound.audio
+  const { pcm, sampleRate } = audio
+  const startTime = getStartTime(audio)
+  const finishTime = getFinishTime(audio)
 
   const currentPosition = Seconds(currentAudioPlayerPosition + startTime)
-  const totalAudioDuration = getTotalAudioDuration(sound.audio)
+  const totalAudioDuration = getTotalAudioDuration(audio)
 
   // Create a new audio URL every time the key data (PCM or start/finish time) change.
   // If the start/finish time are changed, we will have stashed the current position and playback state immediately
@@ -82,24 +83,22 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
 
   const seek = useCallback(
     (position: Seconds) => {
-      const playRegionSamples = Samples(getPlayRegionPcm(sound.audio).length)
+      const playRegionSamples = Samples(getPlayRegionPcm(audio).length)
       const strictFinishTime = startTime + samplesToSeconds(playRegionSamples, sampleRate)
       const clampedPosition = Math.min(Math.max(position, startTime), strictFinishTime)
       const seekPosition = Seconds(clampedPosition - startTime)
       audioPlayerActions.seek(seekPosition)
     },
-    [audioPlayerActions, sampleRate, sound.audio, startTime],
+    [audio, startTime, sampleRate, audioPlayerActions],
   )
 
-  const seekBack = (amount: Seconds) =>
-    useCallback(() => seek(Seconds(currentPosition - amount)), [seek, currentPosition])
-  useHotkeys('left', seekBack(BIG_SEEK_JUMP), [seekBack])
-  useHotkeys('shift+left', seekBack(SMALL_SEEK_JUMP), [seekBack])
+  const seekBack = useCallback((amount: Seconds) => seek(Seconds(currentPosition - amount)), [seek, currentPosition])
+  useHotkeys('left', () => seekBack(BIG_SEEK_JUMP), [seekBack])
+  useHotkeys('shift+left', () => seekBack(SMALL_SEEK_JUMP), [seekBack])
 
-  const seekForward = (amount: Seconds) =>
-    useCallback(() => seek(Seconds(currentPosition + amount)), [seek, currentPosition])
-  useHotkeys('right', seekForward(BIG_SEEK_JUMP), [seekForward])
-  useHotkeys('shift+right', seekForward(SMALL_SEEK_JUMP), [seekForward])
+  const seekForward = useCallback((amount: Seconds) => seek(Seconds(currentPosition + amount)), [seek, currentPosition])
+  useHotkeys('right', () => seekForward(BIG_SEEK_JUMP), [seekForward])
+  useHotkeys('shift+right', () => seekForward(SMALL_SEEK_JUMP), [seekForward])
 
   const setStartTime = useCallback(
     (startTime: Seconds) => {

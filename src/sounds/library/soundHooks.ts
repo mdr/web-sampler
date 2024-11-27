@@ -44,7 +44,7 @@ export const useSoundLibraryState = <Selected = SoundLibraryState>(
   const [selectedState, setSelectedState] = useState(selector(getSoundLibraryState(soundLibrary)))
   const handleUpdate = useCallback(
     () => setSelectedState(selector(getSoundLibraryState(soundLibrary))),
-    [soundLibrary, setSelectedState],
+    [soundLibrary, setSelectedState, selector],
   )
   useEffect(() => {
     soundLibrary.addListener(handleUpdate)

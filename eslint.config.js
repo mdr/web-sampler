@@ -1,6 +1,7 @@
 import { fixupConfigRules } from '@eslint/compat'
 import pluginJs from '@eslint/js'
 import tsParser from '@typescript-eslint/parser'
+import hooksPlugin from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import eslintRecommendedConfig from 'eslint-plugin-react/configs/recommended.js'
 import globals from 'globals'
@@ -68,6 +69,15 @@ const configs = [
       'react/react-in-jsx-scope': 'off',
       quotes: ['error', 'single', { avoidEscape: true }],
     },
+  },
+  {
+    plugins: {
+      'react-hooks': hooksPlugin,
+    },
+    rules: {
+      ...hooksPlugin.configs.recommended.rules,
+    },
+    ignores: ['src/tests/**/*.ts'],
   },
 ]
 export default configs

@@ -16,11 +16,10 @@ export const ImageDisplay = ({ imageId }: ImageDisplayProps) => {
   const [croppedImageUrl, setCroppedImageUrl] = useState<Option<Url>>(undefined)
   const { data: imageData } = image
 
-  if (imageData === undefined) {
-    return null
-  }
-
   useEffect(() => {
+    if (imageData === undefined) {
+      return
+    }
     const blob = new Blob([imageData.bytes], { type: imageData.mediaType })
     const url = Url(URL.createObjectURL(blob))
     setImageUrl(url)
@@ -28,17 +27,19 @@ export const ImageDisplay = ({ imageId }: ImageDisplayProps) => {
     return () => URL.revokeObjectURL(url)
   }, [imageData])
 
-  const crop = imageData.crop
+  const crop = imageData?.crop
 
   useEffect(() => {
-    if (crop && imageUrl) {
+    if (crop !== undefined && imageUrl !== undefined) {
       const image = new Image()
       image.src = imageUrl
 
       image.onload = () => {
         const canvas = document.createElement('canvas')
-        const ctx = canvas.getContext('2d')
-        if (!ctx) return
+        const ctx = canvas.getContext('2d') ?? undefined
+        if (ctx === undefined) {
+          return
+        }
 
         canvas.width = SOUND_TILE_SIZE
         canvas.height = SOUND_TILE_SIZE

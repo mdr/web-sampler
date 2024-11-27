@@ -16,20 +16,23 @@ export interface ImageUploadZoneProps {
 export const ImageUploadZone = ({ imageId }: ImageUploadZoneProps) => {
   const imageActions = useImageActions()
 
-  const onDrop = (acceptedFiles: File[]) => {
-    if (acceptedFiles.length === 0) {
-      return
-    }
-    if (acceptedFiles.length > 1) {
-      alert('Only one image file is allowed.')
-      return
-    }
-    const file = acceptedFiles[0]
-    fireAndForget(async () => {
-      const fileData = await fileToUint8Array(file)
-      imageActions.setImageData(imageId, ImageBytes(fileData), MediaType(file.type))
-    })
-  }
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      if (acceptedFiles.length === 0) {
+        return
+      }
+      if (acceptedFiles.length > 1) {
+        alert('Only one image file is allowed.')
+        return
+      }
+      const file = acceptedFiles[0]
+      fireAndForget(async () => {
+        const fileData = await fileToUint8Array(file)
+        imageActions.setImageData(imageId, ImageBytes(fileData), MediaType(file.type))
+      })
+    },
+    [imageActions, imageId],
+  )
 
   const onDropRejected = (fileRejections: FileRejection[]) => {
     console.warn('Rejected files:', fileRejections)
