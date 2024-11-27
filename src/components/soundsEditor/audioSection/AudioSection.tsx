@@ -63,7 +63,6 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
     const wavBlob = pcmToWavBlob(audioData)
     const audioUrl = Url(URL.createObjectURL(wavBlob))
     audioPlayerActions.setUrl(audioUrl)
-    console.log('main effect', { stashedTime, wasPlaying })
     if (stashedTime !== undefined) {
       if (stashedTime <= finishTime) {
         audioPlayerActions.seek(Seconds(Math.max(0, stashedTime - startTime)))
@@ -104,7 +103,6 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
 
   const setStartTime = useCallback(
     (startTime: Seconds) => {
-      console.log('setStartTime', { isPlaying })
       stashedTimeRef.current = currentPosition
       stashedIsPlayingRef.current = isPlaying
       soundActions.setAudioStart(sound.id, secondsToSamples(startTime, sampleRate))
