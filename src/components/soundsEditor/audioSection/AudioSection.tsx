@@ -34,7 +34,7 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
   const isPlaying = useAudioPlayerIsPlaying()
   const soundActions = useSoundActions()
 
-  // Keep track of position and playback state when audio boundaries are changed:
+  // Keep track of position and playback state when start/finish time are changed:
   const stashedTimeRef = useRef<Option<Seconds>>(undefined)
   const stashedIsPlayingRef = useRef<Option<boolean>>(undefined)
 
@@ -49,11 +49,14 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
     audioPlayerActions.setVolume(volume)
   }, [audioPlayerActions, volume])
 
+  // Create a new audio URL every time the key data (PCM or start/finish time) change.
+  // If the start/finish time are changed, we will have stashed the current position and playback state immediately
+  // before in the refs to allow us to restore them after creating the new audio URL (as this would otherwise be reset).
   useEffect(() => {
     const playablePcm = pcmSlice(pcm, secondsToSamples(startTime, sampleRate), secondsToSamples(finishTime, sampleRate))
     const stashedTime = stashedTimeRef.current
-    stashedTimeRef.current = undefined
     const wasPlaying = stashedIsPlayingRef.current
+    stashedTimeRef.current = undefined
     stashedIsPlayingRef.current = undefined
     if (playablePcm.length === 0) {
       audioPlayerActions.setUrl(undefined)
@@ -65,7 +68,8 @@ export const AudioSection = ({ sound }: AudioSectionProps) => {
     audioPlayerActions.setUrl(audioUrl)
     if (stashedTime !== undefined) {
       if (stashedTime <= finishTime) {
-        audioPlayerActions.seek(Seconds(Math.max(0, stashedTime - startTime)))
+        const timeRelativeToAudioClip = Seconds(Math.max(0, stashedTime - startTime))
+        audioPlayerActions.seek(timeRelativeToAudioClip)
         if (wasPlaying) {
           unawaited(audioPlayerActions.play())
         }
