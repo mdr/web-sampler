@@ -89,3 +89,7 @@ tasks:
     cmds:
       - yarn
       - yarn tsc
+  bundle-visualizer:
+    desc: Visualise bundle size
+    cmds:
+      - npx --yes vite-bundle-visualizer
