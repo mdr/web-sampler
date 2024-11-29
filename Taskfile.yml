@@ -37,19 +37,19 @@ tasks:
       - task: prettier-check
       - yarn test --run
       - yarn playwright install
-      - yarn test-ct
+      - yarn test-ct --project chromium
   iwft:
     desc: Run Isolated Whole-Frontend Tests (IWFTs) using Playwright Component Testing
     cmds:
       - yarn
       - yarn playwright install
-      - yarn test-ct
+      - yarn test-ct --project chromium
   iwft-ui:
     desc: Run Isolated Whole-Frontend Tests (IWFTs) using Playwright Component Testing with Test Runner UI
     cmds:
       - yarn
       - yarn playwright install
-      - yarn test-ct --ui
+      - yarn test-ct --ui --project chromium
   update-yarn:
     desc: Update yarn to the latest version
     cmds:
