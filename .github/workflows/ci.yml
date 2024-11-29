@@ -36,7 +36,7 @@ jobs:
         run: yarn test
 
       - name: Install Playwright Browsers 🌐
-        run: yarn playwright install chromium
+        run: yarn playwright install chromium firefox
 
       - name: Run component tests 🎭
         run: yarn test-ct
