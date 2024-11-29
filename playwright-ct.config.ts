@@ -1,10 +1,8 @@
 import { defineConfig, devices } from '@playwright/experimental-ct-react'
 
-/**
- * See https://playwright.dev/docs/test-configuration.
- */
 export default defineConfig({
   testDir: 'src/tests/playwright',
+  testMatch: '**/*.iwft.ts',
   snapshotDir: 'tests/__snapshots__',
   timeout: 10 * 1000,
   fullyParallel: true,
