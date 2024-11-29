@@ -17,7 +17,8 @@ test('if storage has not been made persistent, a warning button is shown, and th
   await soundsEditorPage.navbar.expectStorageWarningDialogToNotBeShown()
 })
 
-test('if notification permission is denied, show an appropriate toast', async ({ mount }) => {
+test('if notification permission is denied, show an appropriate toast', async ({ mount, browserName }) => {
+  test.skip(browserName !== 'chromium', 'We only request notification permission on Chromium browsers')
   const soundsEditorPage = await launchApp(mount, {
     isStorageInitiallyPersistent: false,
     grantNotificationPermission: false,

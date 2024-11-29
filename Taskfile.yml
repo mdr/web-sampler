@@ -38,10 +38,14 @@ tasks:
       - yarn test --run
       - yarn playwright install
       - yarn test-ct
-  run-component-tests:
-    aliases:
-      - ct
-    desc: Run component tests (with UI)
+  iwft:
+    desc: Run Isolated Whole-Frontend Tests (IWFTs) using Playwright Component Testing
+    cmds:
+      - yarn
+      - yarn playwright install
+      - yarn test-ct
+  iwft-ui:
+    desc: Run Isolated Whole-Frontend Tests (IWFTs) using Playwright Component Testing with Test Runner UI
     cmds:
       - yarn
       - yarn playwright install
