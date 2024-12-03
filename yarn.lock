@@ -5405,6 +5405,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vitest/pretty-format@npm:2.1.8":
+  version: 2.1.8
+  resolution: "@vitest/pretty-format@npm:2.1.8"
+  dependencies:
+    tinyrainbow: "npm:^1.2.0"
+  checksum: 10c0/1dc5c9b1c7c7e78e46a2a16033b6b20be05958bbebc5a5b78f29e32718c80252034804fccd23f34db6b3583239db47e68fc5a8e41942c54b8047cc3b4133a052
+  languageName: node
+  linkType: hard
+
 "@vitest/runner@npm:2.1.6":
   version: 2.1.6
   resolution: "@vitest/runner@npm:2.1.6"
@@ -5444,11 +5453,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/ui@npm:^2.1.6":
-  version: 2.1.6
-  resolution: "@vitest/ui@npm:2.1.6"
+"@vitest/ui@npm:^2.1.8":
+  version: 2.1.8
+  resolution: "@vitest/ui@npm:2.1.8"
   dependencies:
-    "@vitest/utils": "npm:2.1.6"
+    "@vitest/utils": "npm:2.1.8"
     fflate: "npm:^0.8.2"
     flatted: "npm:^3.3.1"
     pathe: "npm:^1.1.2"
@@ -5456,8 +5465,8 @@ __metadata:
     tinyglobby: "npm:^0.2.10"
     tinyrainbow: "npm:^1.2.0"
   peerDependencies:
-    vitest: 2.1.6
-  checksum: 10c0/f942a64be455d19c09396827851de0026c46824f5771b917111ac2b5b0cf40d5badfa171fb6953a3504438a1de2481ec705fd2155c538db12401d1eb94100bf0
+    vitest: 2.1.8
+  checksum: 10c0/aebc803f60d8e1d7cd6228e0d05a2b2b24b30ee74fbdba5942872dea23bde7c9041667427f4bcadfc230604721cbb3806bf13446917b84670b4ab6c9f6a46e53
   languageName: node
   linkType: hard
 
@@ -5481,6 +5490,17 @@ __metadata:
     loupe: "npm:^3.1.2"
     tinyrainbow: "npm:^1.2.0"
   checksum: 10c0/1ec077b9707ec627075348f1a98687c7bb2fcbf9edf6e73dea6842c328d0d51a33663d22679e2a90a75f45afca9246f8fa3ea452447f474ae9d5f4eca4023b91
+  languageName: node
+  linkType: hard
+
+"@vitest/utils@npm:2.1.8":
+  version: 2.1.8
+  resolution: "@vitest/utils@npm:2.1.8"
+  dependencies:
+    "@vitest/pretty-format": "npm:2.1.8"
+    loupe: "npm:^3.1.2"
+    tinyrainbow: "npm:^1.2.0"
+  checksum: 10c0/d4a29ecd8f6c24c790e4c009f313a044d89e664e331bc9c3cfb57fe1380fb1d2999706dbbfc291f067d6c489602e76d00435309fbc906197c0d01f831ca17d64
   languageName: node
   linkType: hard
 
@@ -12454,7 +12474,7 @@ __metadata:
     "@ungap/structured-clone": "npm:^1.2.0"
     "@vitejs/plugin-react": "npm:^4.3.4"
     "@vitest/coverage-v8": "npm:^2.1.6"
-    "@vitest/ui": "npm:^2.1.6"
+    "@vitest/ui": "npm:^2.1.8"
     "@zip.js/zip.js": "npm:^2.7.53"
     async-lock: "npm:^1.4.1"
     autoprefixer: "npm:^10.4.20"
