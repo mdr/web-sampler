@@ -103,7 +103,7 @@
     "eslint-plugin-storybook": "^0.11.1",
     "fake-indexeddb": "^6.0.0",
     "flush-promises": "^1.0.2",
-    "globals": "^15.12.0",
+    "globals": "^15.13.0",
     "jest-extended": "^4.0.2",
     "jsdom": "^25.0.1",
     "monocart-reporter": "^2.9.11",
