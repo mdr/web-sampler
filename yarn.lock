@@ -10338,12 +10338,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-array-to-tree@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "react-array-to-tree@npm:2.0.1"
+"react-array-to-tree@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "react-array-to-tree@npm:2.0.2"
   peerDependencies:
-    react: ^16.12.0
-  checksum: 10c0/838e30f0efc1bb6288426c95830fc57019bdb0ba5734ac6327a547cbd1a3069864d3e9efbf4457eee4309bf6a3ed5c219d9e6ab14d2bda65e718f4c72ddb5fab
+    react: ^16.12.0 || ^17 || ^18 || ^19
+  checksum: 10c0/5198b01e4f44026d9ac27df125550e50fe6db178d69fb1f2f1dcaa3a68f473b946e2c8ef65da830ef7f9c660844ec105bd1baa039ba7b6e2b5eebb38919fa9ef
   languageName: node
   linkType: hard
 
@@ -12632,7 +12632,7 @@ __metadata:
     prettier-plugin-tailwindcss: "npm:^0.6.9"
     react: "npm:^18.3.1"
     react-aria-components: "npm:^1.5.0"
-    react-array-to-tree: "npm:^2.0.1"
+    react-array-to-tree: "npm:^2.0.2"
     react-dom: "npm:^18.3.1"
     react-dropzone: "npm:^14.3.5"
     react-error-boundary: "npm:^4.1.2"
