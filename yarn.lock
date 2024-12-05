@@ -1484,9 +1484,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@dnd-kit/core@npm:^6.2.0":
-  version: 6.2.0
-  resolution: "@dnd-kit/core@npm:6.2.0"
+"@dnd-kit/core@npm:^6.3.1":
+  version: 6.3.1
+  resolution: "@dnd-kit/core@npm:6.3.1"
   dependencies:
     "@dnd-kit/accessibility": "npm:^3.1.1"
     "@dnd-kit/utilities": "npm:^3.2.2"
@@ -1494,7 +1494,7 @@ __metadata:
   peerDependencies:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: 10c0/478d6bb027441b0e5fa5ecd9a4da8a5876811505147303de1a5a0783a4418c5f7f464bd3eb07b4be77ef7626364d1b905dc2a4f9055093b845cf39e1d6f13b73
+  checksum: 10c0/196db95d81096d9dc248983533eab91ba83591770fa5c894b1ac776f42af0d99522b3fd5bb3923411470e4733fcfa103e6ee17adc17b9b7eb54c7fbec5ff7c52
   languageName: node
   linkType: hard
 
@@ -12894,7 +12894,7 @@ __metadata:
     "@atlaskit/inline-edit": "npm:^13.7.9"
     "@breezystack/lamejs": "npm:^1.2.7"
     "@chromatic-com/storybook": "npm:^3.2.2"
-    "@dnd-kit/core": "npm:^6.2.0"
+    "@dnd-kit/core": "npm:^6.3.1"
     "@eslint/compat": "npm:^1.2.3"
     "@eslint/js": "npm:^9.16.0"
     "@mdi/js": "npm:^7.4.47"
