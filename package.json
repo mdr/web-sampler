@@ -46,7 +46,7 @@
     "react-error-boundary": "^4.1.2",
     "react-hotkeys-hook": "^4.6.1",
     "react-image-crop": "^11.0.7",
-    "react-konva": "^18.2.10",
+    "react-konva": "^19.0.1",
     "react-resizable-panels": "^2.1.7",
     "react-resize-detector": "^11.0.1",
     "react-router-dom": "^7.0.2",
