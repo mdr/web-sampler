@@ -10799,15 +10799,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-resize-detector@npm:^11.0.1":
-  version: 11.0.1
-  resolution: "react-resize-detector@npm:11.0.1"
+"react-resize-detector@npm:^12.0.2":
+  version: 12.0.2
+  resolution: "react-resize-detector@npm:12.0.2"
   dependencies:
     lodash: "npm:^4.17.21"
   peerDependencies:
-    react: ^18.0.0
-    react-dom: ^18.0.0
-  checksum: 10c0/94f3c016355c1f5a07f2f66f07fc8a7fec3da0a48b2ffdf472c8d00633fbd3e38d0c8b597586626e4f2495a8cd2826fbd32e24b8a966062b9603afe0c2ce9e6f
+    react: ^18.0.0 || ^19.0.0
+  checksum: 10c0/93c05569223a9a48a170e053f7c7fc54bb4e467fb85b6c66e9de5ed99d08b347ff927a8076986f39950d1b038d4944e365c2fc35853a89f0dbe98ae95bc0913b
   languageName: node
   linkType: hard
 
@@ -12957,7 +12956,7 @@ __metadata:
     react-image-crop: "npm:^11.0.7"
     react-konva: "npm:^18.2.10"
     react-resizable-panels: "npm:^2.1.7"
-    react-resize-detector: "npm:^11.0.1"
+    react-resize-detector: "npm:^12.0.2"
     react-router-dom: "npm:^7.0.2"
     react-spinners: "npm:^0.14.1"
     react-toastify: "npm:^10.0.6"
