@@ -5244,12 +5244,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-reconciler@npm:^0.28.0, @types/react-reconciler@npm:^0.28.2":
+"@types/react-reconciler@npm:^0.28.0":
   version: 0.28.8
   resolution: "@types/react-reconciler@npm:0.28.8"
   dependencies:
     "@types/react": "npm:*"
   checksum: 10c0/ca95cffcdf58591679c6c87dcc6f2c50cef9c6b2772d089ec0c695567656f34a30a0f2592f391d99b0e877f94afd67347082c55eb1dc5cb8000e23c8efc0fafc
+  languageName: node
+  linkType: hard
+
+"@types/react-reconciler@npm:^0.28.8":
+  version: 0.28.9
+  resolution: "@types/react-reconciler@npm:0.28.9"
+  peerDependencies:
+    "@types/react": "*"
+  checksum: 10c0/9fe71fa856aab2cd4742fe0416bdd4f5c82ecc05ef6451ee7fcb65a5efdf5fa588f5820fbe2a665b15371b0da3bfc4097f28bb6d450b9a834af2d0fc00f403bd
   languageName: node
   linkType: hard
 
@@ -8967,14 +8976,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"its-fine@npm:^1.1.1":
-  version: 1.1.1
-  resolution: "its-fine@npm:1.1.1"
+"its-fine@npm:^1.2.5":
+  version: 1.2.5
+  resolution: "its-fine@npm:1.2.5"
   dependencies:
     "@types/react-reconciler": "npm:^0.28.0"
   peerDependencies:
     react: ">=18.0"
-  checksum: 10c0/66059a859720de19563a8abdb10f06eb6117df1897d984a54b0a71ab9dc02da3dc366428b1f0c5e085740962abb7d6ccc0b8c3e00725b0a2120c846f352adffc
+  checksum: 10c0/5618955ac7ae0d7788580186f91ac9989301ead2c87250883258cd7ee32f9a4e08574728506d1deb90477090d7a688ba19571126aae9fb25661e90057dd772df
   languageName: node
   linkType: hard
 
@@ -10726,19 +10735,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-konva@npm:^18.2.10":
-  version: 18.2.10
-  resolution: "react-konva@npm:18.2.10"
+"react-konva@npm:^19.0.2":
+  version: 19.0.2
+  resolution: "react-konva@npm:19.0.2"
   dependencies:
-    "@types/react-reconciler": "npm:^0.28.2"
-    its-fine: "npm:^1.1.1"
-    react-reconciler: "npm:~0.29.0"
-    scheduler: "npm:^0.23.0"
+    "@types/react-reconciler": "npm:^0.28.8"
+    its-fine: "npm:^1.2.5"
+    react-reconciler: "npm:0.31.0"
+    scheduler: "npm:0.25.0"
   peerDependencies:
     konva: ^8.0.1 || ^7.2.5 || ^9.0.0
-    react: ">=18.0.0"
-    react-dom: ">=18.0.0"
-  checksum: 10c0/4eb2e961829f25ac6e396fc29cacd54344f0a1df598ccdbe2ceec0e3a465a9b0115daa8700dd630e7aeaf0568580d7a6d798d97f91f14f6970c9fd2e765289bd
+    react: ^18.3.1 || ^19.0.0
+    react-dom: ^18.3.1 || ^19.0.0
+  checksum: 10c0/b259368780d72965360b3ab0abdf1362386bca127d0ba67fe7bf604c1b797f000e31dd42613023c80b6e0505d33eea1219561c34e4def986354afded90df433e
   languageName: node
   linkType: hard
 
@@ -10763,15 +10772,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-reconciler@npm:~0.29.0":
-  version: 0.29.0
-  resolution: "react-reconciler@npm:0.29.0"
+"react-reconciler@npm:0.31.0":
+  version: 0.31.0
+  resolution: "react-reconciler@npm:0.31.0"
   dependencies:
-    loose-envify: "npm:^1.1.0"
-    scheduler: "npm:^0.23.0"
+    scheduler: "npm:^0.25.0"
   peerDependencies:
-    react: ^18.2.0
-  checksum: 10c0/637442f98ee816b8f86586f537712a0463b53e12c0f4dec716dfdde68dfa52cef1d10138acfad194d5571296cde8715c331aa3986e538087acdc1ef83187a9b0
+    react: ^19.0.0
+  checksum: 10c0/97920e1866c7206e200c3920c133c2e85f62a3c54fd9bc4b83c10c558d83d98eb378caab4fe37498e0cc1b1b2665d898627f2ae2537b29c8ab295ec8abc0c580
   languageName: node
   linkType: hard
 
@@ -11384,12 +11392,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"scheduler@npm:^0.23.0":
-  version: 0.23.0
-  resolution: "scheduler@npm:0.23.0"
-  dependencies:
-    loose-envify: "npm:^1.1.0"
-  checksum: 10c0/b777f7ca0115e6d93e126ac490dbd82642d14983b3079f58f35519d992fa46260be7d6e6cede433a92db70306310c6f5f06e144f0e40c484199e09c1f7be53dd
+"scheduler@npm:0.25.0, scheduler@npm:^0.25.0":
+  version: 0.25.0
+  resolution: "scheduler@npm:0.25.0"
+  checksum: 10c0/a4bb1da406b613ce72c1299db43759526058fdcc413999c3c3e0db8956df7633acf395cb20eb2303b6a65d658d66b6585d344460abaee8080b4aa931f10eaafe
   languageName: node
   linkType: hard
 
@@ -12955,7 +12961,7 @@ __metadata:
     react-error-boundary: "npm:^4.1.2"
     react-hotkeys-hook: "npm:^4.6.1"
     react-image-crop: "npm:^11.0.7"
-    react-konva: "npm:^18.2.10"
+    react-konva: "npm:^19.0.2"
     react-resizable-panels: "npm:^2.1.7"
     react-resize-detector: "npm:^11.0.1"
     react-router-dom: "npm:^7.0.2"
