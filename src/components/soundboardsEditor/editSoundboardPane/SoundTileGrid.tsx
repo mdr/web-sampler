@@ -11,8 +11,7 @@ import {
 } from '@dnd-kit/core'
 import { useAtom } from 'jotai'
 import { Fragment, useState } from 'react'
-import { useResizeDetector } from 'react-resize-detector'
-import { ResizePayload } from 'react-resize-detector/build/types/types'
+import { ResizePayload, useResizeDetector } from 'react-resize-detector'
 
 import { useSoundboardActions, useSoundboardAndSounds } from '../../../sounds/library/soundHooks.ts'
 import { SoundId } from '../../../types/Sound.ts'
