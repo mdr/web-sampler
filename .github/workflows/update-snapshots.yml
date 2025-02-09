@@ -33,14 +33,14 @@ jobs:
           # Only check snapshot directory for changes
           cd tests/__snapshots__
           git add .
-          
+
           # Store list of changed files
           changed_files=$(git status --porcelain)
-          
+
           # Count changes
           change_count=$(echo "$changed_files" | wc -l)
           echo "changes=$change_count" >> $GITHUB_OUTPUT
-          
+
           # Log the changed files
           if [ -n "$changed_files" ]; then
             echo "The following snapshot files were updated:"
@@ -61,4 +61,4 @@ jobs:
           echo "Updated snapshot files:" >> commit-message.txt
           echo "${{ steps.git-check.outputs.changed_files }}" >> commit-message.txt
           git commit -F commit-message.txt
-          git push 
+          git push
