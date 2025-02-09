@@ -1,0 +1,64 @@
+name: Update Component Test Snapshots
+
+permissions:
+  contents: write
+
+on:
+  workflow_dispatch:
+
+jobs:
+  update-snapshots:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install asdf tools 📦
+        uses: asdf-vm/actions/install@v3
+
+      - name: Install dependencies 📦
+        run: yarn install
+
+      - name: Install Playwright Browsers 🌐
+        run: yarn playwright install chromium firefox
+
+      - name: Update component test snapshots 🔄
+        run: yarn test-ct --update-snapshots
+
+      - name: Check for changes 🔍
+        id: git-check
+        run: |
+          # Only check snapshot directory for changes
+          cd tests/__snapshots__
+          git add .
+          
+          # Store list of changed files
+          changed_files=$(git status --porcelain)
+          
+          # Count changes
+          change_count=$(echo "$changed_files" | wc -l)
+          echo "changes=$change_count" >> $GITHUB_OUTPUT
+          
+          # Log the changed files
+          if [ -n "$changed_files" ]; then
+            echo "The following snapshot files were updated:"
+            echo "$changed_files"
+            # Store the list for the commit message
+            echo "changed_files<<EOF" >> $GITHUB_OUTPUT
+            echo "$changed_files" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push if snapshots changed 📸
+        if: steps.git-check.outputs.changes > 0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          echo "Updated snapshot files:" >> commit-message.txt
+          echo "${{ steps.git-check.outputs.changed_files }}" >> commit-message.txt
+          git commit -F commit-message.txt
+          git push 

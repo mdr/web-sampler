@@ -26,6 +26,12 @@ tasks:
         -v $(pwd):$(pwd) 
         mcr.microsoft.com/playwright:v{{.PLAYWRIGHT_VERSION}}-jammy 
         sh -c "cd $(pwd) && yarn && NODE_OPTIONS=--max_old_space_size=8192 yarn test-ct --update-snapshots"
+  update-screenshots-ci:
+    aliases:
+      - us-ci
+    desc: Trigger GitHub Actions workflow to update component test snapshots
+    cmds:
+      - gh workflow run update-snapshots.yml --ref main
   check-all:
     aliases:
       - ca
