@@ -12,7 +12,7 @@ export const ImagesSidebar = () => {
   const images = sortImagesByDisplayName(useImages())
   return (
     <div data-testid={ImagesSidebarTestIds.sidebar} className="flex h-full flex-col">
-      <div className="flex-grow overflow-auto">
+      <div className="grow overflow-auto">
         <ul>
           {images.map((image) => (
             <li
@@ -22,7 +22,7 @@ export const ImagesSidebar = () => {
               <div className="flex items-center justify-between">
                 <Link
                   to={Routes.editImage(image.id)}
-                  className="block w-full p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  className="block w-full p-2 focus:outline-hidden focus:ring-2 focus:ring-blue-300"
                   draggable={false}
                   data-testid={ImagesSidebarTestIds.imageName}
                 >

@@ -13,7 +13,7 @@ export interface SoundTileIconButtonProps {
 export const SoundTileIconButton = ({ testId, label, icon, onPress }: SoundTileIconButtonProps) => (
   <Button
     data-testid={testId}
-    className="rounded px-1 py-1 hover:bg-blue-300 focus:bg-blue-400"
+    className="rounded-sm px-1 py-1 hover:bg-blue-300 focus:bg-blue-400"
     onPress={onPress}
     aria-label={label}
   >

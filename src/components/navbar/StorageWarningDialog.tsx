@@ -12,7 +12,7 @@ import { StorageWarningDialogTestIds } from './StorageWarningDialogTestIds.ts'
 export const StorageWarningDialog = () => {
   const storageActions = useStorageActions()
   return (
-    <Dialog data-testid={StorageWarningDialogTestIds.dialog} className="relative outline-none">
+    <Dialog data-testid={StorageWarningDialogTestIds.dialog} className="relative outline-hidden">
       {({ close }) => (
         <>
           <Heading slot="title" className="my-0 text-lg font-semibold leading-6 text-slate-700">

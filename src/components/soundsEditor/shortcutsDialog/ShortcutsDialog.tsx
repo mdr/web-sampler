@@ -6,7 +6,7 @@ import { ShortcutsDialogTestIds } from './ShortcutsDialogTestIds.ts'
 import { ShortcutsTable } from './ShortcutsTable.tsx'
 
 export const ShortcutsDialog = () => (
-  <Dialog data-testid={ShortcutsDialogTestIds.dialog} aria-label="Shortcuts" className="relative outline-none">
+  <Dialog data-testid={ShortcutsDialogTestIds.dialog} aria-label="Shortcuts" className="relative outline-hidden">
     {({ close }) => (
       <div>
         <ShortcutsTable />

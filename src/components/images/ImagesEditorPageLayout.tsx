@@ -11,7 +11,7 @@ interface ImagesEditorPageLayoutProps {
 export const ImagesEditorPageLayout = ({ children }: ImagesEditorPageLayoutProps) => (
   <div className="flex min-h-screen flex-col">
     <Navbar />
-    <PanelGroup autoSaveId="ImagesEditorPage" className="flex-grow" direction="horizontal">
+    <PanelGroup autoSaveId="ImagesEditorPage" className="grow" direction="horizontal">
       <Panel collapsible={true} defaultSize={15} minSize={5}>
         <ImagesSidebar />
       </Panel>

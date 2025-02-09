@@ -54,7 +54,7 @@ export const SoundTile = ({ soundboardId, sound, shortcut }: SoundTileProps) => 
       <>
         <DialogTrigger onOpenChange={(isOpen) => setShowingDialog(isOpen)}>
           <Button
-            className="absolute right-0 top-0 m-2 rounded bg-gray-800 p-1 px-1 py-1 text-xs text-white hover:bg-blue-500 focus:bg-blue-600"
+            className="absolute right-0 top-0 m-2 rounded-sm bg-gray-800 p-1 px-1 py-1 text-xs text-white hover:bg-blue-500 focus:bg-blue-600"
             aria-label={`Edit shortcut for sound ${getSoundDisplayName(sound)}`}
           >
             {shortcut ?? (
@@ -68,7 +68,7 @@ export const SoundTile = ({ soundboardId, sound, shortcut }: SoundTileProps) => 
       </>
       <div
         data-testid={EditSoundboardPaneTestIds.soundTileName}
-        className="flex flex-grow items-center justify-center text-center"
+        className="flex grow items-center justify-center text-center"
       >
         {getSoundDisplayName(sound)}
       </div>

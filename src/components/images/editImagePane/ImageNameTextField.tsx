@@ -18,7 +18,7 @@ export const ImageNameTextField = ({ name, setName }: ImageNameTextFieldProps) =
       <TextField aria-label="Sound name" className="my-[2px] flex flex-col space-y-2">
         <Input
           data-testid={EditImagePaneTestIds.imageNameInput}
-          className="block w-full rounded-md border border-gray-300 px-3 text-2xl shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+          className="block w-full rounded-md border border-gray-300 px-3 text-2xl shadow-xs focus:border-indigo-500 focus:outline-hidden focus:ring-indigo-500"
           value={value}
           autoFocus
           placeholder="Enter image name"

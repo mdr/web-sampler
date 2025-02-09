@@ -32,7 +32,7 @@ export const ChooseShortcutDialog = ({ soundId, soundboardId }: ChooseShortcutDi
     soundboardActions.clearSoundboardTileShortcut(soundboardId, soundId)
   }
   return (
-    <Dialog data-testid={EditSoundboardPaneTestIds.chooseShortcutDialog} className="relative outline-none">
+    <Dialog data-testid={EditSoundboardPaneTestIds.chooseShortcutDialog} className="relative outline-hidden">
       {({ close }) => {
         return (
           <>

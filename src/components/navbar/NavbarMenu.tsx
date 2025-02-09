@@ -65,18 +65,18 @@ export const NavbarMenu = () => {
     }
   }
   return (
-    <Menu onAction={handleAction} className="outline-none">
+    <Menu onAction={handleAction} className="outline-hidden">
       <MenuItem
         id={NavbarMenuIds.exportAllSounds}
         data-testid={NavbarTestIds.exportAllSoundsMenuItem}
-        className="group box-border flex w-full cursor-default items-center rounded-md px-3 py-2 text-gray-900 outline-none focus:bg-gray-500 focus:text-white"
+        className="group box-border flex w-full cursor-default items-center rounded-md px-3 py-2 text-gray-900 outline-hidden focus:bg-gray-500 focus:text-white"
       >
         <Icon path={mdiExport} size={1} className="mr-2" /> Export All Sounds
       </MenuItem>
       <MenuItem
         id={NavbarMenuIds.importSounds}
         data-testid={NavbarTestIds.importSoundsMenuItem}
-        className="group box-border flex w-full cursor-default items-center rounded-md px-3 py-2 text-gray-900 outline-none focus:bg-gray-500 focus:text-white"
+        className="group box-border flex w-full cursor-default items-center rounded-md px-3 py-2 text-gray-900 outline-hidden focus:bg-gray-500 focus:text-white"
       >
         <Icon path={mdiImport} size={1} className="mr-2" /> Import Sounds…
       </MenuItem>

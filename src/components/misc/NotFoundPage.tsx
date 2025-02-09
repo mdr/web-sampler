@@ -11,7 +11,7 @@ export const NotFoundPage = () => (
   >
     <h1 className="mb-4 text-4xl font-bold text-red-600">Not Found</h1>
     <p className="mb-6 text-lg">We couldn't find anything at this location.</p>
-    <Link to="/" className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700">
+    <Link to="/" className="rounded-sm bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700">
       Home
     </Link>
   </div>

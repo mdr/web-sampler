@@ -63,7 +63,7 @@ export const Navbar = () => {
             onPress={() => miscActions.redo()}
           />
         </li>
-        <div className="flex-grow" />
+        <div className="grow" />
         {!isStoragePersistent && (
           <li className="flex justify-center">
             <StorageWarningButton />

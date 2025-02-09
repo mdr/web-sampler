@@ -12,7 +12,7 @@ export const SoundsSidebar = () => {
   const sounds = sortSoundsByDisplayName(useSounds())
   return (
     <div data-testid={SoundsSidebarTestIds.sidebar} className="flex h-full flex-col">
-      <div className="flex-grow overflow-auto">
+      <div className="grow overflow-auto">
         <ul>
           {sounds.map((sound) => (
             <li
@@ -22,7 +22,7 @@ export const SoundsSidebar = () => {
               <div className="flex items-center justify-between">
                 <Link
                   to={Routes.editSound(sound.id)}
-                  className="block w-full p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  className="block w-full p-2 focus:outline-hidden focus:ring-2 focus:ring-blue-300"
                   draggable={false}
                   data-testid={SoundsSidebarTestIds.soundName}
                 >

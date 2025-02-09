@@ -11,7 +11,7 @@ interface SoundsEditorPageLayoutProps {
 export const SoundsEditorPageLayout = ({ children }: SoundsEditorPageLayoutProps) => (
   <div className="flex min-h-screen flex-col">
     <Navbar />
-    <PanelGroup autoSaveId="SoundsEditorPage" className="flex-grow" direction="horizontal">
+    <PanelGroup autoSaveId="SoundsEditorPage" className="grow" direction="horizontal">
       <Panel collapsible={true} defaultSize={15} minSize={5}>
         <SoundsSidebar />
       </Panel>

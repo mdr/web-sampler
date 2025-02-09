@@ -48,7 +48,7 @@ export const ChooseImageDialog = ({ soundId }: ChooseImageDialogProps) => {
   }
 
   return (
-    <Dialog data-testid={ChooseImageDialogTestIds.dialog} className="relative outline-none">
+    <Dialog data-testid={ChooseImageDialogTestIds.dialog} className="relative outline-hidden">
       {({ close }) => {
         return (
           <>
@@ -57,7 +57,7 @@ export const ChooseImageDialog = ({ soundId }: ChooseImageDialogProps) => {
             </Heading>
             <ComboBox aria-label="Image" defaultItems={images} onSelectionChange={handleSelectionChange}>
               <div className="mt-2 flex items-center">
-                <Input className="flex-grow rounded-l-md rounded-r-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                <Input className="grow rounded-l-md rounded-r-md border border-gray-300 px-3 py-2 focus:outline-hidden focus:ring-2 focus:ring-blue-500" />
                 <RacButton
                   data-testid={ChooseImageDialogTestIds.comboBoxDropdownButton}
                   className="-ml-10 bg-transparent px-3 py-2 text-gray-700"
@@ -65,7 +65,7 @@ export const ChooseImageDialog = ({ soundId }: ChooseImageDialogProps) => {
                   ▼
                 </RacButton>
               </div>
-              <Popover className="entering:animate-in entering:fade-in exiting:animate-out exiting:fade-out mt-2 w-[--trigger-width] rounded-md bg-white shadow-lg">
+              <Popover className="entering:animate-in entering:fade-in exiting:animate-out exiting:fade-out mt-2 w-(--trigger-width) rounded-md bg-white shadow-lg">
                 <ListBox
                   data-testid={ChooseImageDialogTestIds.comboBoxItems}
                   className="max-h-60 overflow-y-auto rounded-md border border-gray-300"
@@ -74,7 +74,7 @@ export const ChooseImageDialog = ({ soundId }: ChooseImageDialogProps) => {
                     <ListBoxItem
                       key={image.id}
                       textValue={getImageDisplayName(image)}
-                      className="flex cursor-pointer items-center justify-between px-4 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white focus:outline-none"
+                      className="flex cursor-pointer items-center justify-between px-4 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white focus:outline-hidden"
                     >
                       {({ isSelected }) => (
                         <>

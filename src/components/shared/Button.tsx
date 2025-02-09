@@ -35,7 +35,7 @@ export const Button = ({
       data-testid={testId}
       aria-label={iconOnly ? label : undefined}
       className={clsx(
-        'whitespace-nowrap rounded py-2 text-white focus:outline-none focus:ring-2',
+        'whitespace-nowrap rounded-sm py-2 text-white focus:outline-hidden focus:ring-2',
         variant === ButtonVariant.PRIMARY
           ? 'bg-blue-500 active:bg-blue-800 hover:bg-blue-700 focus:ring-blue-300'
           : variant === ButtonVariant.DANGEROUS
@@ -45,11 +45,11 @@ export const Button = ({
       )}
       onPress={onPress}
     >
-      <div className="flex flex-grow">
+      <div className="flex grow">
         {icon && (
           <Icon className={clsx({ 'mr-2': !iconOnly })} path={icon} size={1} title={iconOnly ? label : undefined} />
         )}
-        {!iconOnly && <span className="flex-grow">{label}</span>}
+        {!iconOnly && <span className="grow">{label}</span>}
       </div>
     </ReactAriaComponents.Button>
   )

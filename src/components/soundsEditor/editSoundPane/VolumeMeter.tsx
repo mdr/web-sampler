@@ -7,7 +7,7 @@ export const VolumeMeter = () => {
   const displayVolume = Math.min(1, Math.max(0, volume * 2.5))
   const volumeBarStyle = { height: `${100 * displayVolume}%` }
   return (
-    <div className="flex h-20 w-8 flex-col justify-end rounded bg-gray-200">
+    <div className="flex h-20 w-8 flex-col justify-end rounded-sm bg-gray-200">
       <div
         data-volume={volume}
         data-testid={EditSoundPaneTestIds.volumeMeter}

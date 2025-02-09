@@ -49,7 +49,7 @@ export const ChooseSoundDialog = ({ soundboardId }: ChooseSoundDialogProps) => {
   }
 
   return (
-    <Dialog data-testid={ChooseSoundDialogTestIds.dialog} className="relative outline-none">
+    <Dialog data-testid={ChooseSoundDialogTestIds.dialog} className="relative outline-hidden">
       {({ close }) => {
         return (
           <>
@@ -58,7 +58,7 @@ export const ChooseSoundDialog = ({ soundboardId }: ChooseSoundDialogProps) => {
             </Heading>
             <ComboBox aria-label="Sound" defaultItems={availableSounds} onSelectionChange={handleSelectionChange}>
               <div className="mt-2 flex items-center">
-                <Input className="flex-grow rounded-l-md rounded-r-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                <Input className="grow rounded-l-md rounded-r-md border border-gray-300 px-3 py-2 focus:outline-hidden focus:ring-2 focus:ring-blue-500" />
                 <RacButton
                   data-testid={ChooseSoundDialogTestIds.comboBoxDropdownButton}
                   className="-ml-10 bg-transparent px-3 py-2 text-gray-700"
@@ -66,7 +66,7 @@ export const ChooseSoundDialog = ({ soundboardId }: ChooseSoundDialogProps) => {
                   ▼
                 </RacButton>
               </div>
-              <Popover className="entering:animate-in entering:fade-in exiting:animate-out exiting:fade-out mt-2 w-[--trigger-width] rounded-md bg-white shadow-lg">
+              <Popover className="entering:animate-in entering:fade-in exiting:animate-out exiting:fade-out mt-2 w-(--trigger-width) rounded-md bg-white shadow-lg">
                 <ListBox
                   data-testid={ChooseSoundDialogTestIds.comboBoxItems}
                   className="max-h-60 overflow-y-auto rounded-md border border-gray-300"
@@ -75,7 +75,7 @@ export const ChooseSoundDialog = ({ soundboardId }: ChooseSoundDialogProps) => {
                     <ListBoxItem
                       key={sound.id}
                       textValue={getSoundDisplayName(sound)}
-                      className="flex cursor-pointer items-center justify-between px-4 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white focus:outline-none"
+                      className="flex cursor-pointer items-center justify-between px-4 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white focus:outline-hidden"
                     >
                       {({ isSelected }) => (
                         <>

@@ -43,7 +43,7 @@ export const VolumeSlider = ({ soundId }: VolumeProps) => {
               />
               <SliderThumb
                 data-testid={EditSoundPaneTestIds.volumeSlider}
-                className="top-[50%] h-7 w-7 rounded-full border border-solid border-gray-800/75 bg-white outline-none ring-black transition focus-visible:ring-2 dragging:bg-gray-100"
+                className="top-[50%] h-7 w-7 rounded-full border border-solid border-gray-800/75 bg-white outline-hidden ring-black transition focus-visible:ring-2 dragging:bg-gray-100"
               />
             </>
           )}
