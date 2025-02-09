@@ -1,6 +1,6 @@
+github-cli 2.66.1
 jq 1.7.1
 nodejs 22.11.0
-pre-commit 4.0.1
-task 3.40.0
+pre-commit 4.1.0
+task 3.41.0
 yarn 1.22.22
-github-cli 2.43.1
