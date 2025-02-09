@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useRef } from 'react'
 
+import { Option } from '../types/Option.ts'
+
 export const useRequestAnimationFrame = (callback: () => void) => {
-  const requestRef = useRef<number>()
+  const requestRef = useRef<Option<number>>(undefined)
 
   const animate = useCallback(() => {
     callback()
@@ -11,7 +13,7 @@ export const useRequestAnimationFrame = (callback: () => void) => {
   useEffect(() => {
     requestRef.current = requestAnimationFrame(animate)
     return () => {
-      if (requestRef.current) {
+      if (requestRef.current !== undefined) {
         cancelAnimationFrame(requestRef.current)
       }
     }

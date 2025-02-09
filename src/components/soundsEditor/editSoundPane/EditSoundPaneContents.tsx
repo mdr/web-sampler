@@ -47,7 +47,7 @@ export const EditSoundPaneContents = ({ soundId }: EditSoundPaneProps) => {
   const soundActions = useSoundActions()
   const audioRecorderActions = useAudioRecorderActions()
   const { status: audioRecorderStatus } = useAudioRecorderState()
-  const timerIdRef = useRef<Option<TimerId>>()
+  const timerIdRef = useRef<Option<TimerId>>(undefined)
 
   const handleRecordingComplete = useCallback(
     (audioData: Option<AudioData>) => {
