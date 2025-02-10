@@ -111,19 +111,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/button@npm:^20.4.0":
-  version: 20.5.0
-  resolution: "@atlaskit/button@npm:20.5.0"
+"@atlaskit/button@npm:^20.5.0":
+  version: 20.5.1
+  resolution: "@atlaskit/button@npm:20.5.1"
   dependencies:
     "@atlaskit/analytics-next": "npm:^10.3.0"
     "@atlaskit/ds-lib": "npm:^3.5.0"
     "@atlaskit/focus-ring": "npm:^2.1.0"
-    "@atlaskit/icon": "npm:^23.6.0"
+    "@atlaskit/icon": "npm:^23.7.0"
     "@atlaskit/interaction-context": "npm:^2.6.0"
     "@atlaskit/platform-feature-flags": "npm:^1.0.0"
     "@atlaskit/primitives": "npm:^13.4.0"
     "@atlaskit/spinner": "npm:^17.1.0"
-    "@atlaskit/theme": "npm:^14.1.0"
+    "@atlaskit/theme": "npm:^15.0.0"
     "@atlaskit/tokens": "npm:^3.3.0"
     "@atlaskit/tooltip": "npm:^19.1.0"
     "@atlaskit/visually-hidden": "npm:^1.6.0"
@@ -131,7 +131,7 @@ __metadata:
     "@emotion/react": "npm:^11.7.1"
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 10c0/64dd5949b0fc748dbe47fa7bb8ea02b76dde23d22f44a543553667e0dc3e25831d97d2f46e4a2f401f51db98cfec1f811cc3630ffaa8c1b2f348d5394ef298a2
+  checksum: 10c0/cc01d28b00d1bfbd3b14141dd7e33c40d234924672d586f2f6d2f79a79f3a33a4151a4541822aaa69d4ac89fc91beddad90021a653fb117e40327ee4812ab37a
   languageName: node
   linkType: hard
 
@@ -235,7 +235,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/icon@npm:^23.5.0, @atlaskit/icon@npm:^23.6.0":
+"@atlaskit/icon@npm:^23.5.0, @atlaskit/icon@npm:^23.7.0":
   version: 23.7.1
   resolution: "@atlaskit/icon@npm:23.7.1"
   dependencies:
@@ -274,28 +274,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/inline-edit@npm:^14.2.1":
-  version: 14.2.1
-  resolution: "@atlaskit/inline-edit@npm:14.2.1"
+"@atlaskit/inline-edit@npm:^14.2.2":
+  version: 14.2.2
+  resolution: "@atlaskit/inline-edit@npm:14.2.2"
   dependencies:
     "@atlaskit/analytics-next": "npm:^10.3.0"
-    "@atlaskit/button": "npm:^20.4.0"
+    "@atlaskit/button": "npm:^20.5.0"
     "@atlaskit/codemod-utils": "npm:^4.2.0"
     "@atlaskit/css": "npm:^0.8.0"
     "@atlaskit/form": "npm:^11.1.0"
-    "@atlaskit/icon": "npm:^23.6.0"
+    "@atlaskit/icon": "npm:^23.7.0"
     "@atlaskit/inline-dialog": "npm:^16.1.0"
     "@atlaskit/platform-feature-flags": "npm:^1.0.0"
     "@atlaskit/primitives": "npm:^13.4.0"
     "@atlaskit/textfield": "npm:^6.8.0"
-    "@atlaskit/theme": "npm:^14.1.0"
+    "@atlaskit/theme": "npm:^15.0.0"
     "@atlaskit/tokens": "npm:^3.3.0"
     "@atlaskit/visually-hidden": "npm:^1.6.0"
     "@babel/runtime": "npm:^7.0.0"
     "@compiled/react": "npm:^0.18.1"
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 10c0/e470044416383d6c65ad0d555984055e1310ef83333e91cae6bc88379a4c41a806297c603786546590b33e562ac760e54c3b0be8ddc16ecc97e86e14d06426d2
+  checksum: 10c0/cefa4439bbead5f046587fe61f436439d3053a8d28430f5f07d4f5181bbd32403021a8df3b510b443edfef2b6556d7ec1c0270761a9370eff7b54e608408bcbd
   languageName: node
   linkType: hard
 
@@ -442,6 +442,20 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
   checksum: 10c0/0ce53c3b2c68e4bf223e0accf63a72d619dab3bb8ba47dd7789f64b62694bc5405d9c0563a238f0cb9d4ab3c1b1ef80e577301203f72507745a5535d730b6279
+  languageName: node
+  linkType: hard
+
+"@atlaskit/theme@npm:^15.0.0":
+  version: 15.0.0
+  resolution: "@atlaskit/theme@npm:15.0.0"
+  dependencies:
+    "@atlaskit/codemod-utils": "npm:^4.2.0"
+    "@atlaskit/ds-lib": "npm:^3.5.0"
+    "@atlaskit/tokens": "npm:^3.3.0"
+    "@babel/runtime": "npm:^7.0.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 10c0/33b36dedc4bf7dc5bd48792484aa3641a99dcf4e0580b465709d158dfb2c6b2a5e12eab696faa2b923c3e3d4341054b2b53f81b97105ee85c7ac35455f7950a5
   languageName: node
   linkType: hard
 
@@ -13909,7 +13923,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "web-sampler@workspace:."
   dependencies:
-    "@atlaskit/inline-edit": "npm:^14.2.1"
+    "@atlaskit/inline-edit": "npm:^14.2.2"
     "@breezystack/lamejs": "npm:^1.2.7"
     "@chromatic-com/storybook": "npm:^3.2.4"
     "@dnd-kit/core": "npm:^6.3.1"
