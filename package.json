@@ -51,7 +51,7 @@
     "react-resize-detector": "^12.0.2",
     "react-router-dom": "^7.2.0",
     "react-spinners": "^0.15.0",
-    "react-toastify": "^11.0.3",
+    "react-toastify": "^11.0.5",
     "react-use": "^17.6.0",
     "tailwindcss-react-aria-components": "^1.2.0",
     "tsafe": "^1.8.5",
