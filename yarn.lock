@@ -4508,6 +4508,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@standard-schema/spec@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@standard-schema/spec@npm:1.0.0"
+  checksum: 10c0/a1ab9a8bdc09b5b47aa8365d0e0ec40cc2df6437be02853696a0e377321653b0d3ac6f079a8c67d5ddbe9821025584b1fb71d9cc041a6666a96f1fadf2ece15f
+  languageName: node
+  linkType: hard
+
 "@statsig/client-core@npm:3.12.1, @statsig/client-core@npm:^3.10.0":
   version: 3.12.1
   resolution: "@statsig/client-core@npm:3.12.1"
@@ -7278,12 +7285,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"effect@npm:^3.12.11":
-  version: 3.12.11
-  resolution: "effect@npm:3.12.11"
+"effect@npm:^3.13.6":
+  version: 3.13.6
+  resolution: "effect@npm:3.13.6"
   dependencies:
+    "@standard-schema/spec": "npm:^1.0.0"
     fast-check: "npm:^3.23.1"
-  checksum: 10c0/3b1503f06ba8781bb2e8712f5a685f51f3104d4a9d18ac03dd68c7e08aec9d8b3a94bca1911fa67b2e7d42620fce5b3fc5015acd7d2e67b4fc2ad08cf9976183
+  checksum: 10c0/546959e4ee75dba6f53d6d794b37b094b38e076cf3dd50848869d11806f958b81e52bdb98fb7813d420c46132b309ca88df236ee3210a3b1b28bca9432dd883b
   languageName: node
   linkType: hard
 
@@ -13740,7 +13748,7 @@ __metadata:
     clsx: "npm:^2.1.1"
     conditional-wrap: "npm:^1.0.3"
     dexie: "npm:^4.0.11"
-    effect: "npm:^3.12.11"
+    effect: "npm:^3.13.6"
     eslint: "npm:^9.21.0"
     eslint-plugin-react: "npm:^7.37.4"
     eslint-plugin-react-hooks: "npm:^5.2.0"
