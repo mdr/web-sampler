@@ -42,7 +42,7 @@
     "react-aria-components": "^1.6.0",
     "react-array-to-tree": "^2.0.2",
     "react-dom": "^19.0.0",
-    "react-dropzone": "^14.3.5",
+    "react-dropzone": "^14.3.8",
     "react-error-boundary": "^5.0.0",
     "react-hotkeys-hook": "^4.6.1",
     "react-image-crop": "^11.0.7",
