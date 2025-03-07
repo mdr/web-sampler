@@ -9618,9 +9618,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jotai@npm:^2.12.0":
-  version: 2.12.0
-  resolution: "jotai@npm:2.12.0"
+"jotai@npm:^2.12.1":
+  version: 2.12.1
+  resolution: "jotai@npm:2.12.1"
   peerDependencies:
     "@types/react": ">=17.0.0"
     react: ">=17.0.0"
@@ -9629,7 +9629,7 @@ __metadata:
       optional: true
     react:
       optional: true
-  checksum: 10c0/8a66bcb15183ed4e8ce35d84fd32f72d239092f0c5226cf652f37757489cd1b635183105c3c23ea7e21eb646074a91a4585a3cdaa12d72dfce79e7397b0ed623
+  checksum: 10c0/8ef622b7d626919d87595d7382467cb81698a14925befdd27abc3b03d441077eca35328d51d10dc6fe3e91ee4d4e9ba7456bacbdf36940161bd2afeba861ac83
   languageName: node
   linkType: hard
 
@@ -13768,7 +13768,7 @@ __metadata:
     humanize-duration: "npm:^3.32.1"
     immer: "npm:^10.1.1"
     jest-extended: "npm:^4.0.2"
-    jotai: "npm:^2.12.0"
+    jotai: "npm:^2.12.1"
     jsdom: "npm:^26.0.0"
     konva: "npm:^9.3.18"
     lodash: "npm:^4.17.21"
