@@ -39,7 +39,7 @@
     "konva": "^9.3.18",
     "lodash": "^4.17.21",
     "react": "^19.0.0",
-    "react-aria-components": "^1.6.0",
+    "react-aria-components": "^1.7.0",
     "react-array-to-tree": "^2.0.2",
     "react-dom": "^19.0.0",
     "react-dropzone": "^14.3.8",
