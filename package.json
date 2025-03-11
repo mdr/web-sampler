@@ -57,7 +57,7 @@
     "tsafe": "^1.8.5",
     "typeface-roboto": "^1.1.13",
     "use-file-picker": "^2.1.2",
-    "uuid": "^11.0.5",
+    "uuid": "^11.1.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {
