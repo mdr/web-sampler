@@ -11034,7 +11034,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright@npm:1.50.1, playwright@npm:^1.50.1":
+"playwright-core@npm:1.51.1":
+  version: 1.51.1
+  resolution: "playwright-core@npm:1.51.1"
+  bin:
+    playwright-core: cli.js
+  checksum: 10c0/4f004d9dea5ecbd76b84c858fa4880ed955600b6cda972a3e8093ea47e150ce20bf2ea806e73e740497d34f4b61b080c208339a661fc75ad04d8f00bedcc21e0
+  languageName: node
+  linkType: hard
+
+"playwright@npm:1.50.1":
   version: 1.50.1
   resolution: "playwright@npm:1.50.1"
   dependencies:
@@ -11046,6 +11055,21 @@ __metadata:
   bin:
     playwright: cli.js
   checksum: 10c0/b292ee6e0d122748a3d024b85ace86a0d9c848fc4121685d90ffc5d43d6bcf13ed7dc7488b1055f69040599c420052306ccba6fabfe2f69a15fc109c55171207
+  languageName: node
+  linkType: hard
+
+"playwright@npm:^1.51.1":
+  version: 1.51.1
+  resolution: "playwright@npm:1.51.1"
+  dependencies:
+    fsevents: "npm:2.3.2"
+    playwright-core: "npm:1.51.1"
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  bin:
+    playwright: cli.js
+  checksum: 10c0/2aea553b8b1086ee419e72c9d4f4117686e6bdb5e09e0f47dfe563ce0f0bd79c4ee79dd9c8a0f023a2fb7803b81d4fdc552887410d16c036be07f21ab72b3f46
   languageName: node
   linkType: hard
 
@@ -13811,7 +13835,7 @@ __metadata:
     konva: "npm:^9.3.18"
     lodash: "npm:^4.17.21"
     monocart-reporter: "npm:^2.9.15"
-    playwright: "npm:^1.50.1"
+    playwright: "npm:^1.51.1"
     postcss: "npm:^8.5.3"
     prettier: "npm:3.5.1"
     prettier-plugin-tailwindcss: "npm:^0.6.11"
