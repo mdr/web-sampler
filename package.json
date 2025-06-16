@@ -106,7 +106,7 @@
     "globals": "^16.0.0",
     "jest-extended": "^4.0.2",
     "jsdom": "^26.0.0",
-    "monocart-reporter": "^2.9.15",
+    "monocart-reporter": "^2.9.21",
     "playwright": "^1.50.1",
     "postcss": "^8.5.3",
     "prettier": "3.5.1",
