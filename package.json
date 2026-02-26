@@ -111,7 +111,7 @@
     "postcss": "^8.5.3",
     "prettier": "3.5.1",
     "prettier-plugin-tailwindcss": "^0.6.11",
-    "storybook": "^8.6.15",
+    "storybook": "^8.6.17",
     "tailwindcss": "4.1.10",
     "tmp": "^0.2.4",
     "typescript": "^5.8.2",
