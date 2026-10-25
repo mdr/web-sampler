@@ -1,15 +1,19 @@
-import { platform } from 'node:os'
-
 import { PageObject } from './PageObject.ts'
 
 export class SoundsEditorKeyboardShortcutsPageObject extends PageObject {
   togglePlayPause = (): Promise<void> => this.step('togglePlayPause', () => this.page.keyboard.press('Space'))
 
   undo = (): Promise<void> =>
-    this.step('undo', () => this.page.keyboard.press(platform() === 'darwin' ? 'Meta+KeyZ' : 'Control+KeyZ'))
+    this.step('undo', async () => this.page.keyboard.press((await this.isMacBrowser()) ? 'Meta+KeyZ' : 'Control+KeyZ'))
 
   redo = (): Promise<void> =>
-    this.step('redo', () => this.page.keyboard.press(platform() === 'darwin' ? 'Meta+Shift+KeyZ' : 'Control+KeyY'))
+    this.step('redo', async () =>
+      this.page.keyboard.press((await this.isMacBrowser()) ? 'Meta+Shift+KeyZ' : 'Control+KeyY'),
+    )
+
+  // Shortcuts follow the platform reported by the browser's user agent, which Playwright's device emulation
+  // may set independently of the host OS
+  private isMacBrowser = (): Promise<boolean> => this.page.evaluate(() => /mac/i.test(navigator.userAgent))
 
   seekRight = (): Promise<void> =>
     this.step('seekRight', async () => {
