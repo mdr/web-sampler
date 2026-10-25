@@ -8,9 +8,7 @@ export class LazyAudioContextProvider implements AudioContextProvider {
   private _audioContext: Option<AudioContext> = undefined
 
   get audioContext(): AudioContext {
-    if (this._audioContext === undefined) {
-      this._audioContext = new AudioContext()
-    }
+    this._audioContext ??= new AudioContext()
     return this._audioContext
   }
 }

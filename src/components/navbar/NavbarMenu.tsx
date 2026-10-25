@@ -1,5 +1,5 @@
 import { mdiExport, mdiImport } from '@mdi/js'
-import Icon from '@mdi/react'
+import { Icon } from '@mdi/react'
 import saveAs from 'file-saver'
 import { Key, Menu, MenuItem } from 'react-aria-components'
 import { toast } from 'react-toastify'

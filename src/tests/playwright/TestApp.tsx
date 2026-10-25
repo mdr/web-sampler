@@ -2,7 +2,6 @@ import useDidMount from 'beautiful-react-hooks/useDidMount'
 
 import { AudioOperations } from '../../audioOperations/AudioOperations.ts'
 import { LazyAudioContextProvider } from '../../audioRecorder/AudioContextProvider.ts'
-import { AudioRecorderService } from '../../audioRecorder/AudioRecorderService.ts'
 import { App } from '../../components/app/App.tsx'
 import { AppConfig, makeAppConfig } from '../../config/AppConfig.ts'
 import { MockPermissionManager } from '../../storage/MockPermissionManager.testSupport.ts'
@@ -59,5 +58,5 @@ const makeTestAppConfig = (
   const audioElement = castPartial<HTMLAudioElement>(mockAudioElement)
   const audioContextProvider = new LazyAudioContextProvider()
   const audioOperations = new AudioOperations(audioContextProvider)
-  return makeAppConfig(audioRecorderService as AudioRecorderService, audioElement, storageService, audioOperations)
+  return makeAppConfig(audioRecorderService, audioElement, storageService, audioOperations)
 }

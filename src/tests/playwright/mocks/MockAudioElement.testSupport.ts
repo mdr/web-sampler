@@ -138,16 +138,16 @@ export class MockAudioElement implements PartialAudioElement {
   removeEventListener<K extends keyof HTMLMediaElementEventMap>(type: K, listener: AudioElementListener<K>): void {
     switch (type) {
       case 'play':
-        _.remove<AudioElementListener<'play'>>(this.playListeners, listener)
+        _.remove(this.playListeners, (l) => l === listener)
         break
       case 'pause':
-        _.remove<AudioElementListener<'pause'>>(this.pauseListeners, listener)
+        _.remove(this.pauseListeners, (l) => l === listener)
         break
       case 'ended':
-        _.remove<AudioElementListener<'ended'>>(this.endedListeners, listener)
+        _.remove(this.endedListeners, (l) => l === listener)
         break
       case 'loadstart':
-        _.remove<AudioElementListener<'loadstart'>>(this.loadStartListeners, listener)
+        _.remove(this.loadStartListeners, (l) => l === listener)
         break
     }
   }

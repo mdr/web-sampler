@@ -44,7 +44,7 @@ export const Volume = Brand.refined<Volume>(
 export const MIN_VOLUME: Volume = Volume(0)
 export const MAX_VOLUME: Volume = Volume(1)
 
-export type ImageBytes = Uint8Array & Brand.Brand<'ImageBytes'>
+export type ImageBytes = Uint8Array<ArrayBuffer> & Brand.Brand<'ImageBytes'>
 export const ImageBytes = Brand.nominal<ImageBytes>()
 
 export type MediaType = string & Brand.Brand<'MediaType'>

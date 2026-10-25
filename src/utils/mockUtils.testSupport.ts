@@ -1,5 +1,4 @@
-import { Mocked } from '@storybook/test'
-import { Mock, vi } from 'vitest'
+import { Mock, Mocked, vi } from 'vitest'
 
 /**
  * Create a mock of the given function type.
@@ -15,6 +14,8 @@ type FunctionMap = Map<string | symbol, Function>
  */
 export const mockObjectMethods = <T extends object>(obj: T): Mocked<T> => {
   const functionMap: FunctionMap = new Map()
+  // The assertion is required by tsc, but the rule misreads the generic Proxy type
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
   return new Proxy(obj, {
     get(target, prop, receiver) {
       const originalValue = Reflect.get(target, prop, receiver)
