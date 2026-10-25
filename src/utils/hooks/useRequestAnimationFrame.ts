@@ -1,21 +1,13 @@
-import { useCallback, useEffect, useRef } from 'react'
-
-import { Option } from '../types/Option.ts'
+import { useEffect } from 'react'
 
 export const useRequestAnimationFrame = (callback: () => void) => {
-  const requestRef = useRef<Option<number>>(undefined)
-
-  const animate = useCallback(() => {
-    callback()
-    requestRef.current = requestAnimationFrame(animate)
-  }, [callback])
-
   useEffect(() => {
-    requestRef.current = requestAnimationFrame(animate)
-    return () => {
-      if (requestRef.current !== undefined) {
-        cancelAnimationFrame(requestRef.current)
-      }
+    let requestId: number
+    const animate = () => {
+      callback()
+      requestId = requestAnimationFrame(animate)
     }
-  }, [animate])
+    requestId = requestAnimationFrame(animate)
+    return () => cancelAnimationFrame(requestId)
+  }, [callback])
 }
