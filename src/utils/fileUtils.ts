@@ -1,4 +1,4 @@
-export const fileToUint8Array = (file: File): Promise<Uint8Array> => {
+export const fileToUint8Array = (file: File): Promise<Uint8Array<ArrayBuffer>> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
     reader.onload = () => {

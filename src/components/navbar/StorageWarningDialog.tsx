@@ -1,5 +1,5 @@
 import { mdiAlert, mdiDatabaseLock } from '@mdi/js'
-import Icon from '@mdi/react'
+import { Icon } from '@mdi/react'
 import { Dialog, Heading } from 'react-aria-components'
 
 import { useStorageActions } from '../../storage/storageHooks.ts'

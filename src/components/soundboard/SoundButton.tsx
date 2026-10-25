@@ -1,14 +1,13 @@
 import { mdiPlay } from '@mdi/js'
-import Icon from '@mdi/react'
+import { Icon } from '@mdi/react'
 import clsx from 'clsx'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Button } from 'react-aria-components'
 import { useHotkeys } from 'react-hotkeys-hook'
 
 import { SoundWithDefiniteAudio, getSoundDisplayName } from '../../types/Sound.ts'
 import { getPlayRegionAudioData } from '../../types/SoundAudio.ts'
-import { Option } from '../../utils/types/Option.ts'
-import { Url } from '../../utils/types/brandedTypes.ts'
+import { useObjectUrl } from '../../utils/hooks/useObjectUrl.ts'
 import { unawaited } from '../../utils/utils.ts'
 import { pcmToWavBlob } from '../../utils/wav.ts'
 
@@ -19,45 +18,37 @@ export interface SoundButtonProps {
 
 export const SoundButton = ({ sound, hotkey }: SoundButtonProps) => {
   const { audio } = sound
-  const [url, setUrl] = useState<Option<Url>>(undefined)
   const [isPlaying, setIsPlaying] = useState(false)
 
   const audioRef = useRef<HTMLAudioElement>(null)
 
-  useEffect(() => {
-    const audioData = getPlayRegionAudioData(audio)
-    const blob = pcmToWavBlob(audioData)
-    const objectUrl = Url(URL.createObjectURL(blob))
-    setUrl(objectUrl)
-    return () => {
-      URL.revokeObjectURL(objectUrl)
-    }
-  }, [audio])
+  const blob = useMemo(() => pcmToWavBlob(getPlayRegionAudioData(audio)), [audio])
+  const url = useObjectUrl(blob)
 
   const handleAudioEnded = useCallback(() => {
     setIsPlaying(false)
   }, [setIsPlaying])
 
   useEffect(() => {
-    const audioElement = audioRef.current ?? undefined
-    if (audioElement !== undefined) {
+    const audioElement = audioRef.current
+    if (audioElement !== null) {
       audioElement.volume = audio.volume
     }
   }, [audio.volume])
 
   useEffect(() => {
-    const audioElement = audioRef.current ?? undefined
-    if (audioElement !== undefined) {
+    const audioElement = audioRef.current
+    if (audioElement !== null) {
       audioElement.addEventListener('ended', handleAudioEnded)
       return () => {
         audioElement.removeEventListener('ended', handleAudioEnded)
       }
     }
-  }, [audioRef, handleAudioEnded])
+  }, [handleAudioEnded])
 
   const handlePress = () => {
-    const audioElement = audioRef.current ?? undefined
-    if (audioElement !== undefined) {
+    const audioElement = audioRef.current
+    if (audioElement !== null) {
       if (isPlaying) {
         audioElement.pause()
         setIsPlaying(false)
@@ -70,8 +61,8 @@ export const SoundButton = ({ sound, hotkey }: SoundButtonProps) => {
   }
 
   const handleHotkeyPress = () => {
-    const audioElement = audioRef.current ?? undefined
-    if (audioElement !== undefined) {
+    const audioElement = audioRef.current
+    if (audioElement !== null) {
       audioElement.currentTime = 0
       setIsPlaying(true)
       unawaited(audioElement.play())

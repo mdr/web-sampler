@@ -19,7 +19,8 @@ export const pcmToMp3Blob = (audioData: AudioData): Blob => {
   if (mp3buf.length > 0) {
     mp3Data.push(mp3buf)
   }
-  return new Blob(mp3Data, { type: 'audio/mp3' })
+  // lamejs types its output as Uint8Array<ArrayBufferLike>, but it is always backed by a plain ArrayBuffer
+  return new Blob(mp3Data as Uint8Array<ArrayBuffer>[], { type: 'audio/mp3' })
 }
 
 const to16BitPcm = (pcm: Pcm): Int16Array => {

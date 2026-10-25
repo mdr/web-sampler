@@ -1,7 +1,7 @@
 import { useDraggable, useDroppable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 import { mdiClose, mdiKeyboard, mdiPencil } from '@mdi/js'
-import Icon from '@mdi/react'
+import { Icon } from '@mdi/react'
 import { useSetAtom } from 'jotai'
 import { Button, DialogTrigger, Toolbar } from 'react-aria-components'
 

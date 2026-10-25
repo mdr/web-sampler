@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { useImage } from '../../../sounds/library/imageHooks.ts'
 import { ImageId } from '../../../types/Image.ts'
+import { useObjectUrl } from '../../../utils/hooks/useObjectUrl.ts'
 import { Option } from '../../../utils/types/Option.ts'
 import { Url } from '../../../utils/types/brandedTypes.ts'
 import { SOUND_TILE_SIZE } from '../../soundboardsEditor/editSoundboardPane/soundTileConstants.ts'
@@ -12,20 +13,14 @@ export interface ImageDisplayProps {
 
 export const ImageDisplay = ({ imageId }: ImageDisplayProps) => {
   const image = useImage(imageId)
-  const [imageUrl, setImageUrl] = useState<Option<Url>>(undefined)
   const [croppedImageUrl, setCroppedImageUrl] = useState<Option<Url>>(undefined)
   const { data: imageData } = image
 
-  useEffect(() => {
-    if (imageData === undefined) {
-      return
-    }
-    const blob = new Blob([imageData.bytes], { type: imageData.mediaType })
-    const url = Url(URL.createObjectURL(blob))
-    setImageUrl(url)
-
-    return () => URL.revokeObjectURL(url)
-  }, [imageData])
+  const blob = useMemo(
+    () => (imageData === undefined ? undefined : new Blob([imageData.bytes], { type: imageData.mediaType })),
+    [imageData],
+  )
+  const imageUrl = useObjectUrl(blob)
 
   const crop = imageData?.crop
 

@@ -82,13 +82,10 @@ tasks:
       - yarn playwright install
       - yarn test-ct
       - open report/coverage/index.html
-  bump-asdf-versions:
-    desc: Update asdf plugins
-    dir: .
+  update-nix:
+    desc: Update the Nix flake inputs (bumps the dev shell tools)
     cmds:
-      - asdf plugin update --all
-      - scripts/bump-asdf-versions.sh
-      - asdf install
+      - nix flake update
   lint:
     desc: Run ESLint
     cmds:

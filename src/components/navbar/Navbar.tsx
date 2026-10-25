@@ -1,5 +1,5 @@
 import { mdiImage, mdiMenu, mdiRedo, mdiUndo, mdiViewGridOutline, mdiVolumeHigh } from '@mdi/js'
-import Icon from '@mdi/react'
+import { Icon } from '@mdi/react'
 import { MenuTrigger, Popover } from 'react-aria-components'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { NavLink } from 'react-router-dom'

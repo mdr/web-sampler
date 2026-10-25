@@ -1,4 +1,4 @@
-import Icon from '@mdi/react'
+import { Icon } from '@mdi/react'
 import clsx from 'clsx'
 import { Button as RacButton } from 'react-aria-components'
 

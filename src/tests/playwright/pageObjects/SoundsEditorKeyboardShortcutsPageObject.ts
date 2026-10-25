@@ -1,15 +1,29 @@
-import { platform } from 'node:os'
-
+import { EditSoundPaneTestIds } from '../../../components/soundsEditor/editSoundPane/EditSoundPaneTestIds.ts'
 import { PageObject } from './PageObject.ts'
+import { ShortcutsDialogPageObject } from './ShortcutsDialogPageObject.ts'
 
 export class SoundsEditorKeyboardShortcutsPageObject extends PageObject {
   togglePlayPause = (): Promise<void> => this.step('togglePlayPause', () => this.page.keyboard.press('Space'))
 
   undo = (): Promise<void> =>
-    this.step('undo', () => this.page.keyboard.press(platform() === 'darwin' ? 'Meta+KeyZ' : 'Control+KeyZ'))
+    this.step('undo', async () => this.page.keyboard.press((await this.isMacBrowser()) ? 'Meta+KeyZ' : 'Control+KeyZ'))
 
   redo = (): Promise<void> =>
-    this.step('redo', () => this.page.keyboard.press(platform() === 'darwin' ? 'Meta+Shift+KeyZ' : 'Control+KeyY'))
+    this.step('redo', async () =>
+      this.page.keyboard.press((await this.isMacBrowser()) ? 'Meta+Shift+KeyZ' : 'Control+KeyY'),
+    )
+
+  // Shortcuts follow the platform reported by the browser's user agent, which Playwright's device emulation
+  // may set independently of the host OS
+  private isMacBrowser = (): Promise<boolean> => this.page.evaluate(() => /mac/i.test(navigator.userAgent))
+
+  showShortcuts = (): Promise<ShortcutsDialogPageObject> =>
+    this.step('showShortcuts', async () => {
+      // The hotkey is registered by the Shortcuts button, so wait for it to be rendered
+      await this.expectToBeVisible(EditSoundPaneTestIds.shortcutsButton)
+      await this.page.keyboard.press('Shift+Slash')
+      return new ShortcutsDialogPageObject(this.mountResult).verifyIsShown()
+    })
 
   seekRight = (): Promise<void> =>
     this.step('seekRight', async () => {

@@ -72,6 +72,6 @@ describe.each([
     const badSound = { ...makeSound(), foo: 42 } as Sound
     await store.bulkUpdate(makeSoundStateDiff({ soundsToUpsert: [badSound] }))
 
-    await expect(store.getSoundState()).rejects.toThrowError()
+    await expect(store.getSoundState()).rejects.toThrow()
   })
 })

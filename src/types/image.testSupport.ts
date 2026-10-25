@@ -20,7 +20,7 @@ export const makeImage = ({ id = newImageId(), name = ImageTestConstants.name, d
 export const makeImageData = ({
   bytes = ImageTestConstants.imageBytes,
   mediaType = JPEG_MEDIA_TYPE,
-  crop = undefined,
+  crop,
 }: Partial<ImageData> = {}): ImageData => ({
   bytes,
   mediaType,

@@ -22,8 +22,8 @@ export const SoundTestConstants = {
 export const makeSound = ({
   id = newSoundId(),
   name = SoundTestConstants.name,
-  audio = undefined,
-  image = undefined,
+  audio,
+  image,
 }: Partial<Sound> = {}): Sound => ({
   id,
   name,

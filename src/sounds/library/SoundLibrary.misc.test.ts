@@ -47,7 +47,7 @@ it('should not allow sounds to be modified while still loading', () => {
   expect(() => library.deleteSound(sound.id)).toThrowErrorMatchingInlineSnapshot(
     '[Error: Cannot manipulate sounds yet as they are still loading]',
   )
-  expect(() => library.setSoundName(sound.id, SoundTestConstants.name)).toThrowError()
+  expect(() => library.setSoundName(sound.id, SoundTestConstants.name)).toThrow()
 })
 
 describe('undo/redo', () => {

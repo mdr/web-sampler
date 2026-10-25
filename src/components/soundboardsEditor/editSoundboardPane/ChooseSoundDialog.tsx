@@ -1,5 +1,5 @@
 import { mdiCheck } from '@mdi/js'
-import Icon from '@mdi/react'
+import { Icon } from '@mdi/react'
 import { useState } from 'react'
 import {
   ComboBox,
@@ -56,7 +56,7 @@ export const ChooseSoundDialog = ({ soundboardId }: ChooseSoundDialogProps) => {
             <Heading slot="title" className="my-0 text-lg font-semibold leading-6 text-slate-700">
               Choose Sound
             </Heading>
-            <ComboBox aria-label="Sound" defaultItems={availableSounds} onSelectionChange={handleSelectionChange}>
+            <ComboBox aria-label="Sound" defaultItems={availableSounds} onChange={handleSelectionChange}>
               <div className="mt-2 flex items-center">
                 <Input className="grow rounded-l-md rounded-r-md border border-gray-300 px-3 py-2 focus:outline-hidden focus:ring-2 focus:ring-blue-500" />
                 <RacButton

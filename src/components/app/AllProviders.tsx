@@ -1,6 +1,4 @@
-/* eslint-disable react/jsx-key */
-import React, { FC, PropsWithChildren } from 'react'
-import reactArrayToTree from 'react-array-to-tree'
+import React from 'react'
 
 import { AudioOperationsContext } from '../../audioOperations/AudioOperationsContext.ts'
 import { AudioPlayerContext } from '../../audioPlayer/AudioPlayerContext.ts'
@@ -15,17 +13,16 @@ export interface AllProvidersProps {
 }
 
 export const AllProviders = ({ config, children }: AllProvidersProps) => {
-  const NestedProviders = nestProviders(config)
-  return <NestedProviders>{children}</NestedProviders>
-}
-
-const nestProviders = (config: AppConfig): FC<PropsWithChildren> => {
   const { audioRecorderService, audioPlayer, soundLibrary, storageService, audioOperations } = config
-  return reactArrayToTree([
-    <AudioRecorderServiceContext.Provider value={audioRecorderService} />,
-    <AudioPlayerContext.Provider value={audioPlayer} />,
-    <AudioOperationsContext.Provider value={audioOperations} />,
-    <SoundLibraryContext.Provider value={soundLibrary} />,
-    <StorageServiceContext.Provider value={storageService} />,
-  ]) as FC<PropsWithChildren>
+  return (
+    <AudioRecorderServiceContext.Provider value={audioRecorderService}>
+      <AudioPlayerContext.Provider value={audioPlayer}>
+        <AudioOperationsContext.Provider value={audioOperations}>
+          <SoundLibraryContext.Provider value={soundLibrary}>
+            <StorageServiceContext.Provider value={storageService}>{children}</StorageServiceContext.Provider>
+          </SoundLibraryContext.Provider>
+        </AudioOperationsContext.Provider>
+      </AudioPlayerContext.Provider>
+    </AudioRecorderServiceContext.Provider>
+  )
 }

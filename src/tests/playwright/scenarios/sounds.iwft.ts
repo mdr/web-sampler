@@ -265,3 +265,9 @@ test('display of shortcuts dialog', async ({ mount }) => {
     elementsToMask: [shortcutsDialog.shortcutCellLocator()],
   })
 })
+
+test('shortcuts dialog can be shown with a keyboard shortcut', async ({ mount }) => {
+  const soundsEditorPage = await launchAndCreateNewSound(mount)
+
+  await soundsEditorPage.shortcuts.showShortcuts()
+})

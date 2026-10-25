@@ -1,13 +1,13 @@
 import { Table } from 'dexie'
-import { ZodTypeAny } from 'zod'
+import { ZodType } from 'zod'
 
 export class SchemaCheckedTable<T, TKey> {
   constructor(
     readonly dexieTable: Table<T, TKey>,
-    private readonly schema: ZodTypeAny,
+    private readonly schema: ZodType<T>,
   ) {}
 
-  private parse = (item: unknown): T => this.schema.parse(item) as T
+  private parse = (item: unknown): T => this.schema.parse(item)
 
   toArray = async (): Promise<T[]> => {
     const items = await this.dexieTable.toArray()

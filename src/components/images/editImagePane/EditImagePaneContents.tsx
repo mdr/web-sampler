@@ -1,11 +1,11 @@
-import { ReactEventHandler, useEffect, useState } from 'react'
+import { ReactEventHandler, useMemo, useState } from 'react'
 import { PercentCrop, ReactCrop, centerCrop, makeAspectCrop } from 'react-image-crop'
 
 import { useImage } from '../../../sounds/library/imageHooks.ts'
 import { useImageActions } from '../../../sounds/library/soundHooks.ts'
 import { ImageId, getImageDisplayName } from '../../../types/Image.ts'
+import { useObjectUrl } from '../../../utils/hooks/useObjectUrl.ts'
 import { Option } from '../../../utils/types/Option.ts'
-import { Url } from '../../../utils/types/brandedTypes.ts'
 import { DeleteImageButton } from './DeleteImageButton.tsx'
 import { EditImagePaneTestIds } from './EditImagePaneTestIds.ts'
 import { ImageNameTextField } from './ImageNameTextField.tsx'
@@ -24,7 +24,6 @@ export const EditImagePaneContents = ({ imageId }: EditImagePaneContentsProps) =
   const [crop, setCrop] = useState<Option<PercentCrop>>(initialCrop)
   const imageActions = useImageActions()
   const setImageName = (name: string) => imageActions.setImageName(imageId, name)
-  const [imageUrl, setImageUrl] = useState<Option<Url>>(undefined)
   const onImageLoad: ReactEventHandler<HTMLImageElement> = (e) => {
     const { naturalWidth: width, naturalHeight: height } = e.currentTarget
     const crop = centerCrop(makeAspectCrop({ unit: '%', height: 100 }, 1, width, height), width, height)
@@ -37,16 +36,11 @@ export const EditImagePaneContents = ({ imageId }: EditImagePaneContentsProps) =
     imageActions.setImageCrop(imageId, percentCropToImageCrop(percentageCrop))
   }
 
-  useEffect(() => {
-    if (imageData !== undefined) {
-      const blob = new Blob([imageData.bytes], { type: imageData.mediaType })
-      const url = Url(URL.createObjectURL(blob))
-      setImageUrl(url)
-      return () => URL.revokeObjectURL(url)
-    } else {
-      setImageUrl(undefined)
-    }
-  }, [imageData])
+  const blob = useMemo(
+    () => (imageData === undefined ? undefined : new Blob([imageData.bytes], { type: imageData.mediaType })),
+    [imageData],
+  )
+  const imageUrl = useObjectUrl(blob)
   return (
     <div className="flex flex-col space-y-4 px-4 pt-4">
       <ImageNameTextField name={image.name} setName={setImageName} />

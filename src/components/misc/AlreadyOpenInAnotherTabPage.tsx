@@ -1,5 +1,5 @@
 import { mdiAlertOctagon } from '@mdi/js'
-import Icon from '@mdi/react'
+import { Icon } from '@mdi/react'
 
 export const AlreadyOpenInAnotherTabPage = () => (
   <div className="flex h-screen">

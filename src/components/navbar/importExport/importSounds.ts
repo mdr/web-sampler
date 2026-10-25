@@ -28,8 +28,8 @@ const asSoundAudio = (exportedSoundAudio: ExportedSoundAudio, pcm: Pcm): SoundAu
 })
 
 const getData = <Type>(entry: Entry, writer: Writer<Type> | WritableWriter): Promise<Type> => {
-  if (entry.getData === undefined) {
-    throw new Error('getData is not defined on the entry')
+  if (entry.directory) {
+    throw new Error(`Unexpected directory in zip: ${entry.filename}`)
   }
   return entry.getData(writer)
 }
