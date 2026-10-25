@@ -1,4 +1,5 @@
 import { PageObject } from './PageObject.ts'
+import { ShortcutsDialogPageObject } from './ShortcutsDialogPageObject.ts'
 
 export class SoundsEditorKeyboardShortcutsPageObject extends PageObject {
   togglePlayPause = (): Promise<void> => this.step('togglePlayPause', () => this.page.keyboard.press('Space'))
@@ -14,6 +15,12 @@ export class SoundsEditorKeyboardShortcutsPageObject extends PageObject {
   // Shortcuts follow the platform reported by the browser's user agent, which Playwright's device emulation
   // may set independently of the host OS
   private isMacBrowser = (): Promise<boolean> => this.page.evaluate(() => /mac/i.test(navigator.userAgent))
+
+  showShortcuts = (): Promise<ShortcutsDialogPageObject> =>
+    this.step('showShortcuts', async () => {
+      await this.page.keyboard.press('Shift+Slash')
+      return new ShortcutsDialogPageObject(this.mountResult).verifyIsShown()
+    })
 
   seekRight = (): Promise<void> =>
     this.step('seekRight', async () => {
