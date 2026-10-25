@@ -12,13 +12,20 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        # Run every step inside the Nix dev shell defined in flake.nix
+        shell: nix develop --command bash -e {0}
 
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v7
 
-      - name: Install asdf tools 📦
-        uses: asdf-vm/actions/install@v4
+      - name: Install Nix ❄️
+        uses: cachix/install-nix-action@v31
+
+      - name: Load Nix dev shell ❄️
+        run: node --version && yarn --version
 
       - name: Install dependencies 📦
         run: yarn install
