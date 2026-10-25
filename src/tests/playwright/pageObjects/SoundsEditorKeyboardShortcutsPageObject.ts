@@ -1,3 +1,4 @@
+import { EditSoundPaneTestIds } from '../../../components/soundsEditor/editSoundPane/EditSoundPaneTestIds.ts'
 import { PageObject } from './PageObject.ts'
 import { ShortcutsDialogPageObject } from './ShortcutsDialogPageObject.ts'
 
@@ -18,6 +19,8 @@ export class SoundsEditorKeyboardShortcutsPageObject extends PageObject {
 
   showShortcuts = (): Promise<ShortcutsDialogPageObject> =>
     this.step('showShortcuts', async () => {
+      // The hotkey is registered by the Shortcuts button, so wait for it to be rendered
+      await this.expectToBeVisible(EditSoundPaneTestIds.shortcutsButton)
       await this.page.keyboard.press('Shift+Slash')
       return new ShortcutsDialogPageObject(this.mountResult).verifyIsShown()
     })

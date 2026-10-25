@@ -17,7 +17,9 @@
     in
     {
       devShells = forAllSystems (pkgs: {
-        default = pkgs.mkShell {
+        # No C toolchain: it would put Nix's glibc ldd on the PATH, which can't see the host's libraries, so
+        # Playwright's host dependency check fails for the (non-Nix) browsers it downloads
+        default = pkgs.mkShellNoCC {
           packages = with pkgs; [
             nodejs_24
             # Yarn classic is only a launcher: it hands off to the version pinned by yarnPath in .yarnrc.yml
