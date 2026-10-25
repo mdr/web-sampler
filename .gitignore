@@ -40,3 +40,4 @@ storybook-static/
 
 coverage/
 report/
+.direnv/
